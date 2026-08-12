@@ -175,6 +175,11 @@ def make_client():
 
 
 def translate(client, model, prompt):
+    # temperature 를 지정하지 않습니다.
+    # 최근 추론형 모델(gpt-5.6-terra 등)은 기본값(1) 외의 temperature 를
+    # 거부합니다 — 실제로 "Unsupported value: 'temperature' does not
+    # support 0.2 with this model" 오류로 확인됐습니다.
+    # 번역처럼 창의성보다 정확성이 중요한 작업에서는 기본값도 충분합니다.
     res = client.chat.completions.create(
         model=model,
         messages=[
@@ -183,7 +188,6 @@ def translate(client, model, prompt):
                         'Follow the provided glossary exactly.'},
             {'role': 'user', 'content': prompt},
         ],
-        temperature=0.2,
     )
     return res.choices[0].message.content.strip()
 
