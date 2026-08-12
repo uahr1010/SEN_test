@@ -88,7 +88,7 @@ git branch -M main && git remote add origin https://github.com/사용자명/senk
 1. https://app.pagescms.org 접속 → **Sign in with GitHub**
 2. 권한 요청 시 위에서 만든 저장소를 선택해 접근 허용
 3. 저장소 목록에서 `senkuzo-homepage` 선택
-4. 루트의 `.pages.yml` 을 자동으로 읽어 **① 프로젝트 / ② 뉴스 / ③ 채용공고 / ④ 용어집** 4개 편집 메뉴가 나타납니다
+4. 루트의 `.pages.yml` 을 자동으로 읽어 **① 프로젝트 / ② 뉴스 / ③ 채용공고 / ④ 용어집 / ⑤ 기사 초안** 5개 편집 메뉴가 나타납니다
 
 편집 후 **Save**를 누르면 Pages CMS가 GitHub에 커밋하고,
 GitHub Pages가 자동으로 다시 배포합니다. **약 1분 뒤 사이트에 반영**됩니다.
@@ -102,7 +102,7 @@ GitHub Pages가 자동으로 다시 배포합니다. **약 1분 뒤 사이트에
 
 ## 5. 콘텐츠 수정 방법
 
-Pages CMS 왼쪽 메뉴가 곧 편집 대상입니다. **편집할 수 있는 것은 네 가지입니다.**
+Pages CMS 왼쪽 메뉴가 곧 편집 대상입니다. **편집할 수 있는 것은 다섯 가지입니다.**
 
 | 메뉴 | 편집 내용 | 파일 |
 |---|---|---|
@@ -110,6 +110,7 @@ Pages CMS 왼쪽 메뉴가 곧 편집 대상입니다. **편집할 수 있는 �
 | ② 뉴스 | 뉴스 추가·수정 | `content/news.json` |
 | ③ 채용공고 | 채용공고 추가·수정 | `content/careers.json` |
 | ④ 용어집 | 고유명사 표기 통일 (번역용) | `content/glossary.json` |
+| ⑤ 기사 초안 | 한국어로 쓰면 자동 번역 | `drafts/*.md` |
 
 회사소개·연혁·주요공법·CONTACT·히어로 문구·메뉴 이름 등 **나머지는 전부 고정값**입니다.
 실수로 건드리기 쉬워 CMS에서 걷어냈습니다. 바꿔야 할 일이 생기면
@@ -140,84 +141,72 @@ Pages CMS 왼쪽 메뉴가 곧 편집 대상입니다. **편집할 수 있는 �
 **추가·수정은 Pages CMS → `④ 용어집`** 에서 합니다. 네 칸(한/영/일/중)을
 모두 채워 주세요 — 비우면 번역기가 그 말을 임의로 옮깁니다.
 
-#### 엑셀로 보고 싶을 때
-
-여러 사람이 한꺼번에 검토하거나 인쇄할 때는 엑셀로 뽑아 쓸 수 있습니다.
-
-```bash
-python tools/glossary_xlsx.py export
-```
-
-`tools/glossary.xlsx` 가 만들어집니다. 엑셀에서 고친 내용을 되돌려 넣으려면:
-
-```bash
-python tools/glossary_xlsx.py import
-```
-
-> ⚠️ **원본은 어디까지나 `content/glossary.json` 입니다.**
-> 엑셀만 고치고 `import` 를 안 하면 사이트에 반영되지 않습니다.
-> 반대로 `import` 는 JSON 을 통째로 덮어쓰므로, CMS 에서 편집한 내용이 있다면
-> 먼저 `export` 로 최신본을 받아 두세요.
+용어집은 JSON 하나로 관리합니다. **엑셀은 쓰지 않습니다** —
+Pages CMS 는 엑셀 안의 내용을 편집하지 못하고 업로드/다운로드만 되기 때문에,
+"CMS 에서 용어를 추가" 가 성립하지 않습니다.
+CMS 에서 용어를 추가하면 기존 `content/glossary.json` 의 `terms` 배열에 그대로 덧붙습니다.
 
 ---
 
-### 새 기사 등록 — 한국어로 쓰면 4개 국어로 번역
+### 새 기사 등록 — 한국어로 쓰면 자동으로 4개 국어 번역
 
-기사는 **사장님 PC 에서 번역해서 결과만 올립니다.** 홈페이지가 방문자 브라우저에서
-번역 API 를 부르는 방식이 아닙니다 — 그러려면 API 키를 자바스크립트에 넣어야 하는데,
-이 저장소는 public 이라 키가 즉시 공개되기 때문입니다.
+**Pages CMS `⑤ 기사 초안` 에 한국어로 쓰고 저장하면 끝입니다.**
+GitHub Actions 가 용어집을 참고해 번역하고 `[② 뉴스]` 에 넣은 뒤 초안을 지웁니다.
+1~2분 걸립니다.
 
 ```text
-한국어 기사 (article.txt)
-        ↓
-tools/translate_news.py     ← 이 PC 에서 실행. API 키는 이 PC 에만 있음
-        ↓
-용어집에서 이 기사에 쓰인 고유명사만 추려 프롬프트에 첨부
-        ↓
+Pages CMS ⑤ 기사 초안  (또는 drafts/ 에 .md 직접 올리기)
+        ↓  저장 → GitHub 에 커밋
+GitHub Actions 가 자동 실행
+        ↓  용어집에서 이 기사에 쓰인 고유명사만 추려 프롬프트에 첨부
 번역 API 호출 (영어 · 일본어 · 중국어)
         ↓
-content/news.json 에 4개 국어 항목 추가
+content/news.json 에 4개 국어 항목 추가 + 초안 삭제 후 자동 커밋
         ↓
-git push → 홈페이지 반영
+홈페이지 반영
 ```
 
-#### 준비 (최초 한 번)
+#### API 키 등록 (최초 한 번)
+
+키는 **GitHub Secrets** 에 넣습니다. 공개 저장소라도 외부에서 볼 수 없고,
+Actions 로그에도 `***` 로 가려집니다. **코드나 홈페이지에는 절대 들어가지 않습니다.**
+
+1. 저장소 → **Settings**
+2. 왼쪽 **Secrets and variables** → **Actions**
+3. **New repository secret**
+   - Name: `OPENAI_API_KEY`
+   - Secret: 발급받은 키
+4. **Add secret**
+
+쓸 모델은 같은 화면의 **Variables** 탭에서 지정합니다 (Secret 아님).
+
+| 이름 | 값 | 필요 여부 |
+|---|---|---|
+| `SEN_TRANSLATE_MODEL` | 쓸 모델 이름 | 지정 안 하면 `gpt-4o` |
+| `SEN_TRANSLATE_BASE_URL` | OpenAI 가 아닌 주소를 쓸 때만 | 대개 불필요 |
+
+#### 잘 됐는지 확인
+
+저장소 **Actions** 탭 → `기사 번역` 에서 실행 기록을 볼 수 있습니다.
+번역이 끝나면 **용어집대로 안 나온 항목이 있는지 자동 검사**해서 경고를 남깁니다.
+경고가 있으면 `[② 뉴스]` 에서 해당 문장을 확인하세요.
+
+#### 내 PC 에서 직접 돌려 보기 (선택)
 
 ```bash
-pip install openai openpyxl
+pip install openai
 ```
 
 ```bash
 setx OPENAI_API_KEY "sk-여기에-키"
 ```
 
-`setx` 후에는 **터미널을 새로 열어야** 적용됩니다.
-**키를 저장소 안 어떤 파일에도 적지 마세요.**
-
-#### 사용
-
-`article.txt` 를 이렇게 씁니다 — 첫 줄 제목, 빈 줄, 그다음 본문:
-
-```text
-싱가포르 BC4:2025 개정 관련 기술 세미나 개최
-
-센 엔지니어링그룹은 싱가포르 건설청 (BCA) 과 함께 ...
-```
-
 ```bash
-python tools/translate_news.py article.txt --category 언론보도
+python tools/translate_news.py drafts/파일명.md --dry-run
 ```
 
-먼저 결과만 보고 싶으면 `--dry-run` 을 붙이면 `news.json` 을 건드리지 않습니다.
-
-번역이 끝나면 **용어집대로 안 나온 항목이 있는지 자동으로 검사**해서 알려 줍니다.
-경고가 뜨면 해당 문장을 직접 확인하세요.
-
-> 쓸 모델은 환경변수로 정합니다 (모델명은 자주 바뀌므로 코드에 박아 두지 않았습니다).
-> ```bash
-> setx SEN_TRANSLATE_MODEL "모델명"
-> ```
-> 지정하지 않으면 `gpt-4o` 를 씁니다. `--model 모델명` 으로 그때그때 바꿀 수도 있습니다.
+`--dry-run` 은 결과만 보여 주고 `news.json` 을 건드리지 않습니다.
+**키를 저장소 안 어떤 파일에도 적지 마세요.**
 
 ---
 
