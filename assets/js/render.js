@@ -271,7 +271,6 @@ window.SEN = window.SEN || {};
         var href = 'news.html?id=' + encodeURIComponent(it.id || '');
         return '' +
           '<a class="card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
-            '<div class="card__thumb"></div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
                 (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +

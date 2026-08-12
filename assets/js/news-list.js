@@ -2,8 +2,8 @@
    news-list.js — news-list.html 전용 진입점
 
    홈페이지 뉴스 섹션의 "더 보기"를 누르면 오는 페이지입니다.
-   전체 뉴스를 이미지 없는 카드(.card__thumb 비움 — 홈 목록과 동일한 폼)로
-   보여주고, 분류 필터·쪽번호는 전부 ?cat=...&page=... 쿼리로 다루는
+   전체 뉴스를 이미지 없는 카드(썸네일 영역 자체를 안 넣음 — 홈 목록과
+   동일한 폼)로 보여주고, 분류 필터·쪽번호는 전부 ?cat=...&page=... 쿼리로 다루는
    평범한 <a> 링크입니다 (새로고침해도, 링크를 그대로 공유해도 같은 화면).
    ========================================================================== */
 window.SEN = window.SEN || {};
@@ -46,7 +46,6 @@ window.SEN = window.SEN || {};
     var href = 'news.html?id=' + encodeURIComponent(it.id || '');
     return '' +
       '<a class="card reveal is-in" href="' + esc(href) + '">' +
-        '<div class="card__thumb"></div>' +
         '<div class="card__body">' +
           '<div class="card__meta">' +
             (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +

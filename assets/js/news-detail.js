@@ -114,7 +114,12 @@ window.SEN = window.SEN || {};
 
       var url = location.href;
 
-      if (navigator.share) {
+      /* PC는 navigator.share 를 지원해도 그냥 링크만 복사합니다 —
+         터치 기반 기기(pointer: coarse)일 때만 OS 공유시트(앱으로 전달)를 씁니다.
+         창 너비가 아니라 실제 입력 방식으로 판단해, 데스크톱 창을 좁혀도
+         공유시트가 뜨지 않습니다. */
+      var isMobile = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if (isMobile && navigator.share) {
         navigator.share({ title: document.title, url: url }).catch(function () {});
         return;
       }
