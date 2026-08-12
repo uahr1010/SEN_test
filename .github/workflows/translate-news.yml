@@ -38,6 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 기본값(커밋 1개만 받기)이면 이전 커밋과 비교할 수 없어
+          # 어떤 초안이 새로 올라왔는지 알아내지 못합니다.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -54,8 +58,12 @@ jobs:
           if [ -n "$MANUAL" ]; then
             files="$MANUAL"
           else
-            # 이번 push 에서 추가·수정된 drafts/*.md 만 고릅니다
-            files=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} -- 'drafts/*.md' | grep -v 'drafts/README.md' || true)
+            # drafts/ 에 남아 있는 .md 를 전부 대상으로 삼습니다.
+            # 번역이 끝난 초안은 지우므로, 남아 있다는 것 자체가
+            # "아직 번역 안 된 글" 이라는 뜻입니다.
+            # (이전 커밋과 diff 를 뜨는 방식은 checkout 깊이·강제푸시 등에
+            #  영향을 받아 조용히 아무것도 못 찾는 일이 있었습니다)
+            files=$(ls drafts/*.md 2>/dev/null | grep -v 'drafts/README.md' || true)
           fi
           if [ -z "$files" ]; then
             echo "번역할 초안이 없습니다."
