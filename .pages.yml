@@ -92,7 +92,6 @@ content:
           collapsible:
             collapsed: true
             summary: "{title}"
-        description: 날짜 기준 최신순으로 자동 정렬됩니다.
         fields:
           - name: id
             label: 고유 ID
