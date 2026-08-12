@@ -7,7 +7,7 @@ window.SEN = window.SEN || {};
 (function (SEN) {
   'use strict';
 
-  var FILES = ['site', 'about', 'news', 'projects', 'careers'];
+  var FILES = ['site', 'about', 'news', 'news-i18n', 'projects', 'careers'];
 
   /* ---------- 목록 상태 (필터 · 더보기) ---------- */
   SEN.state = {
@@ -217,6 +217,7 @@ window.SEN = window.SEN || {};
 
     loadContent().then(function (data) {
       SEN.data = data;
+      SEN.util.mergeNewsI18n(data.news, data['news-i18n']);
 
       SEN.render(data);
       applyMeta(data);

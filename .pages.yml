@@ -4,9 +4,11 @@
 #
 #  ── 편집 가능한 것 ──
 #    ① 프로젝트  : 새 프로젝트의 공개 위치 입력 (지구본에 자동으로 찍힘)
-#    ② 뉴스      : 새 뉴스 추가
-#    ③ 채용      : 새 채용공고 추가
+#    ② 뉴스      : 새 뉴스 추가 (한국어만)
+#    ③ 채용      : 새 채용공고 추가 (한국어만)
 #    ④ 용어집    : 고유명사 표기 통일 (기사 번역에 사용)
+#    ⑤ 기사 초안 : 한국어로 쓰면 자동 번역돼 ② 뉴스에 들어감
+#    ⑥ 번역      : ⑤ 에서 자동 번역된 뉴스 en/中文/日本語를 손으로 고칠 때만
 #
 #  회사 소개·연혁·주요공법·CONTACT·섹션 문구 등 나머지는 전부 고정값입니다.
 #  바꿔야 할 일이 생기면 content/*.json 파일을 직접 수정하세요.
@@ -14,8 +16,9 @@
 #
 #  다국어 필드는 { ko, en, zh, ja } 4칸입니다. 한국어만 채워도 되고,
 #  비워 둔 언어는 자동으로 한국어가 표시됩니다.
-#  (단, ③ 채용공고는 번역하지 않기로 해서 한국어 한 칸만 있습니다 —
-#   다른 언어로 봐도 채용공고 내용은 항상 한국어 그대로 나옵니다.)
+#  (단, ② 뉴스 · ③ 채용공고는 번역을 손으로 같이 입력하지 않습니다 —
+#   ② 뉴스의 번역은 [⑤ 기사 초안]에서 자동 생성되어 [⑥ 번역]에 저장되고,
+#   ③ 채용공고는 아예 번역하지 않기로 해서 한국어 한 칸만 있습니다.)
 # ============================================================================
 
 media:
@@ -68,6 +71,13 @@ content:
 
   # --------------------------------------------------------------------------
   # ② 뉴스
+  #
+  #    한국어만 입력합니다. 번역(en/中文/日本語)은 여기서 손대지 않습니다 —
+  #    "⑤ 기사 초안"에 한국어로 쓰면 GitHub Actions 가 자동 번역해서
+  #    content/news-i18n.json 에 넣고, 여기 title/excerpt 와 화면에서
+  #    자동으로 합쳐집니다. 번역을 손으로 고치고 싶으면 [⑥ 번역] 탭에서
+  #    하세요 (같은 파일을 두 탭이 같이 손대면 CMS 특성상 저장할 때
+  #    서로 덮어써서 데이터가 지워질 수 있어 탭을 분리해 두었습니다).
   # --------------------------------------------------------------------------
   - name: news
     label: ② 뉴스
@@ -78,29 +88,30 @@ content:
       - name: items
         label: 뉴스 목록
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
         description: 날짜 기준 최신순으로 자동 정렬됩니다.
         fields:
           - name: id
             label: 고유 ID
             type: string
             required: true
-            description: 영문·숫자·하이픈 (예 news-2026-09-award). 중복만 아니면 됩니다.
+            description: >
+              영문·숫자·하이픈 (예 news-2026-09-award). 중복만 아니면 됩니다.
+              [⑥ 번역] 탭에서 번역을 연결할 때도 이 ID를 씁니다.
           - name: date
             label: 날짜
             type: date
             required: true
           - name: category
             label: 분류
-            type: object
+            type: string
             description: >
               기존 분류(언론보도 / 행사 / 논문 / 기술자료)와 똑같이 적어야
-              같은 필터 버튼으로 묶입니다.
-            fields:
-              - { name: ko, label: 한국어, type: string }
-              - { name: en, label: English, type: string }
-              - { name: zh, label: 中文,    type: string }
-              - { name: ja, label: 日本語,  type: string }
+              같은 필터 버튼으로 묶입니다. 번역하지 않고 이 한국어 표기가
+              모든 언어에 그대로 쓰입니다.
           - name: image
             label: 썸네일
             type: image
@@ -113,21 +124,13 @@ content:
               카드를 누르면 항상 이 사이트 안의 상세 페이지가 먼저 열리고,
               그 페이지 안에 "원문 보기" 버튼으로 표시됩니다. 비워도 됩니다.
           - name: title
-            label: 제목
-            type: object
-            fields:
-              - { name: ko, label: 한국어, type: string }
-              - { name: en, label: English, type: string }
-              - { name: zh, label: 中文,    type: string }
-              - { name: ja, label: 日本語,  type: string }
+            label: 제목 (한국어)
+            type: string
+            required: true
           - name: excerpt
-            label: 요약
-            type: object
-            fields:
-              - { name: ko, label: 한국어, type: text }
-              - { name: en, label: English, type: text }
-              - { name: zh, label: 中文,    type: text }
-              - { name: ja, label: 日本語,  type: text }
+            label: 요약 (한국어)
+            type: text
+            required: true
 
   # --------------------------------------------------------------------------
   # ③ 채용공고
@@ -274,3 +277,45 @@ content:
         description: >
           문단은 빈 줄로 나눕니다. 고유명사는 [④ 용어집] 에 등록된 표기를
           그대로 쓰면 번역도 그 표기로 나갑니다.
+
+  # --------------------------------------------------------------------------
+  # ⑥ 번역 — 뉴스 en/中文/日本語 손보기
+  #
+  #    [⑤ 기사 초안]에 한국어로 쓰면 자동 번역돼 여기 채워집니다.
+  #    번역이 어색하면 여기서 직접 고치세요. ID는 [② 뉴스]의 "고유 ID"와
+  #    똑같아야 그 글에 연결됩니다 (다르면 화면에 반영되지 않습니다).
+  #    항목을 새로 만들 필요는 거의 없습니다 — 자동 번역이 이미 다 채워 줍니다.
+  # --------------------------------------------------------------------------
+  - name: news-i18n
+    label: ⑥ 번역
+    type: file
+    path: content/news-i18n.json
+    format: json
+    fields:
+      - name: items
+        label: 뉴스 번역 목록
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{id}"
+        fields:
+          - name: id
+            label: 연결할 뉴스 ID
+            type: string
+            required: true
+            description: "[② 뉴스] 항목의 \"고유 ID\"와 정확히 같아야 합니다."
+          - name: title
+            label: 제목 번역
+            type: object
+            fields:
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: excerpt
+            label: 요약 번역
+            type: object
+            fields:
+              - { name: en, label: English, type: text }
+              - { name: zh, label: 中文,    type: text }
+              - { name: ja, label: 日本語,  type: text }

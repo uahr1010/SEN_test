@@ -16,7 +16,7 @@ window.SEN = window.SEN || {};
   'use strict';
 
   function loadContent() {
-    return Promise.all(['site', 'news'].map(function (name) {
+    return Promise.all(['site', 'news', 'news-i18n'].map(function (name) {
       return fetch('content/' + name + '.json', { cache: 'no-cache' })
         .then(function (res) {
           if (!res.ok) throw new Error(name + '.json (' + res.status + ')');
@@ -102,6 +102,7 @@ window.SEN = window.SEN || {};
     initImageFallback();
 
     loadContent().then(function (data) {
+      SEN.util.mergeNewsI18n(data.news, data['news-i18n']);
       SEN.render(data);
       SEN.atlas.initLang();
 

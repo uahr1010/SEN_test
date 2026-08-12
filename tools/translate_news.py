@@ -46,6 +46,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 GLOSSARY = os.path.join(ROOT, 'content', 'glossary.json')
 NEWS = os.path.join(ROOT, 'content', 'news.json')
+# 한국어 원문은 news.json 에, 번역(en/zh/ja)은 news-i18n.json 에 따로 저장합니다.
+# Pages CMS 는 폼에 없는 필드를 저장 시 통째로 지워버려서, "② 뉴스" 탭을
+# 한국어 전용으로 두려면 번역을 아예 다른 파일(다른 탭)에 둘 수밖에 없었습니다.
+NEWS_I18N = os.path.join(ROOT, 'content', 'news-i18n.json')
 
 LANGS = [('en', 'English'), ('ja', 'Japanese'), ('zh', 'Simplified Chinese')]
 
@@ -240,31 +244,45 @@ def main():
             print('  용어집 표기 모두 반영됨')
 
     slug = re.sub(r'[^a-z0-9]+', '-', title.get('en', '').lower()).strip('-')[:40] or 'news'
-    item = {
+    news_item = {
         'id': 'news-%s-%s' % (date, slug),
         'date': date,
-        'category': {'ko': category, 'en': category, 'ja': category, 'zh': category},
+        'category': category,   # 번역하지 않고 한국어 그대로 — 언어별로 갈리면 분류 필터가 어긋남
         'image': '',
         'link': link,
-        'title': title,
-        'excerpt': excerpt,
+        'title': title_ko,
+        'excerpt': body_ko,
+    }
+    i18n_item = {
+        'id': news_item['id'],
+        'title': {'en': title['en'], 'zh': title['zh'], 'ja': title['ja']},
+        'excerpt': {'en': excerpt['en'], 'zh': excerpt['zh'], 'ja': excerpt['ja']},
     }
 
     if args.dry_run:
         print('\n--- 미리보기 (저장 안 함) ---')
-        print(json.dumps(item, ensure_ascii=False, indent=2))
+        print('[content/news.json 에 들어갈 항목]')
+        print(json.dumps(news_item, ensure_ascii=False, indent=2))
+        print('[content/news-i18n.json 에 들어갈 항목]')
+        print(json.dumps(i18n_item, ensure_ascii=False, indent=2))
         return
 
     doc = json.load(io.open(NEWS, encoding='utf-8'))
     items = doc.setdefault('items', [])
     # 같은 id 가 이미 있으면 덮어씁니다 (초안을 고쳐 다시 돌린 경우)
-    items[:] = [x for x in items if x.get('id') != item['id']]
-    items.insert(0, item)
+    items[:] = [x for x in items if x.get('id') != news_item['id']]
+    items.insert(0, news_item)
     io.open(NEWS, 'w', encoding='utf-8').write(
         json.dumps(doc, ensure_ascii=False, indent=2) + u'\n')
 
-    print('\ncontent/news.json 에 추가했습니다 (id: %s)' % item['id'])
-    print('분류는 4개 국어가 같은 값으로 들어갔습니다. 필요하면 직접 고치세요.')
+    i18n_doc = json.load(io.open(NEWS_I18N, encoding='utf-8'))
+    i18n_items = i18n_doc.setdefault('items', [])
+    i18n_items[:] = [x for x in i18n_items if x.get('id') != i18n_item['id']]
+    i18n_items.insert(0, i18n_item)
+    io.open(NEWS_I18N, 'w', encoding='utf-8').write(
+        json.dumps(i18n_doc, ensure_ascii=False, indent=2) + u'\n')
+
+    print('\ncontent/news.json + content/news-i18n.json 에 추가했습니다 (id: %s)' % news_item['id'])
     if warnings:
         print('\n⚠ 용어집과 다르게 번역된 항목이 있습니다. 게시 전에 확인하세요.')
 

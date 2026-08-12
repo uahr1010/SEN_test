@@ -59,6 +59,39 @@ window.SEN = window.SEN || {};
            (cls ? ' class="' + cls + '"' : '') + '>';
   }
 
+  /* 뉴스는 한국어(content/news.json, 평문 문자열)와 번역
+     (content/news-i18n.json, id로 연결된 {en,zh,ja})이 서로 다른 파일에
+     나뉘어 있습니다 — Pages CMS는 폼에 없는 필드는 저장할 때 통째로
+     지워버려서, "② 뉴스" 탭을 한국어 전용으로 두려면 번역을 아예 다른
+     파일(다른 탭)에 둘 수밖에 없었습니다.
+
+     불러온 직후 이 함수로 한 번 합쳐서 title/excerpt 를 기존 {ko,en,zh,ja}
+     모양으로 되돌려 두면, 그 뒤로는 render.js/news-detail.js 어디서도
+     이 둘이 원래 한 파일이었던 것처럼 SEN.i18n.t() 로 그대로 씁니다. */
+  function mergeNewsI18n(newsData, i18nData) {
+    var map = {};
+    ((i18nData && i18nData.items) || []).forEach(function (r) { map[r.id] = r; });
+    ((newsData && newsData.items) || []).forEach(function (it) {
+      var tr = map[it.id];
+      var merged = { ko: it.title };
+      if (tr && tr.title) {
+        if (tr.title.en) merged.en = tr.title.en;
+        if (tr.title.zh) merged.zh = tr.title.zh;
+        if (tr.title.ja) merged.ja = tr.title.ja;
+      }
+      it.title = merged;
+
+      merged = { ko: it.excerpt };
+      if (tr && tr.excerpt) {
+        if (tr.excerpt.en) merged.en = tr.excerpt.en;
+        if (tr.excerpt.zh) merged.zh = tr.excerpt.zh;
+        if (tr.excerpt.ja) merged.ja = tr.excerpt.ja;
+      }
+      it.excerpt = merged;
+    });
+    return newsData;
+  }
+
   /** +,− 로 여닫는 묶음 하나. CEO 약력과 회사연혁이 같은 모양을 씁니다.
       g.open 이 true 면 펼친 채로 시작합니다. */
   function accordion(g, inner) {
@@ -373,5 +406,5 @@ window.SEN = window.SEN || {};
   }
 
   SEN.render = render;
-  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName };
+  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName, mergeNewsI18n: mergeNewsI18n };
 })(window.SEN);
