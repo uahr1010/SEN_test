@@ -144,6 +144,25 @@ window.SEN = window.SEN || {};
     return i < 0 ? key : key.slice(i + 1);
   }
 
+  /* "필리핀 마닐라"/"필리핀 라구나"/"필리핀" 처럼 국외는 도시별로 갈라져
+     들어오는데, 지구본/목록에서는 나라 단위로만 보여 달라는 요청이 있어
+     이름의 첫 단어(나라)로 다시 묶습니다. 좌표는 나라 단위 항목(예: "필리핀")이
+     있으면 그 좌표를, 없으면 처음 만난 도시의 좌표를 그대로 씁니다. */
+  function groupByCountry(list) {
+    var byC = {}, order = [];
+    list.forEach(function (r) {
+      var country = r.name.split(' ')[0];
+      if (!byC[country]) {
+        byC[country] = { name: country, lat: r.lat, lng: r.lng, n: 0, overseas: true };
+        order.push(country);
+      }
+      byC[country].n += r.n;
+      if (r.name === country) { byC[country].lat = r.lat; byC[country].lng = r.lng; }
+    });
+    return order.map(function (c) { return byC[c]; })
+      .sort(function (a, b) { return b.n - a.n; });
+  }
+
   /* ---------- 지역별 집계 ---------- */
   function aggregate(projects) {
     var map = {}, stat = { exact: 0, city: 0, sido: 0, oversea: 0, none: 0 }, total = 0;
@@ -165,7 +184,7 @@ window.SEN = window.SEN || {};
     regions.sort(function (a, b) { return b.n - a.n; });
 
     var domestic = regions.filter(function (r) { return !r.overseas; });
-    var abroad = regions.filter(function (r) { return r.overseas; });
+    var abroad = groupByCountry(regions.filter(function (r) { return r.overseas; }));
 
     /* 시도별 합계 — 지구본 위 라벨, 한국 지도 색칠에 씁니다 */
     var byProv = {};

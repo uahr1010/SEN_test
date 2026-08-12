@@ -19,8 +19,18 @@ window.SEN = window.SEN || {};
   var TEX_URL = 'assets/img/world-map.jpg';
   var D2R = Math.PI / 180;
 
-  var api = { init: init };
+  var api = { init: init, refresh: refresh };
   SEN.globe = api;
+  var _refresh = null;
+
+  /* main.js 가 "국외" 탭을 열 때 부릅니다.
+     이 지구본은 국내 탭에 가려진 채로 딱 한 번만 초기화되는데, 이 환경에서는
+     IntersectionObserver/ResizeObserver 가 "숨김→보임" 전환을 다시 알려주지
+     않는 경우가 있어(둘 다 재현됨), 탭이 열리는 순간을 직접 알려줘야
+     지구본 점·라벨이 실제로 찍힙니다. */
+  function refresh() {
+    if (_refresh) _refresh();
+  }
 
   function init(data, els) {
     if (!data || !data.regions.length) return Promise.resolve(false);
@@ -109,7 +119,7 @@ window.SEN = window.SEN || {};
     var pills = data.regions.map(function (r) {
       var el = document.createElement('div');
       el.className = 'gpill';
-      el.innerHTML = esc(r.name) + ' <small>' + r.n + '건</small>';
+      el.innerHTML = esc(SEN.util.regionName(r.name)) + ' <small>' + r.n + '건</small>';
       pillWrap.appendChild(el);
       return { el: el, v: llToV3(r.lat, r.lng, R * 1.01), tmp: new THREE.Vector3() };
     });
@@ -155,7 +165,7 @@ window.SEN = window.SEN || {};
       });
       if (hit) {
         tip.hidden = false;
-        tip.innerHTML = '<strong>' + esc(hit.name) + '</strong><span>' + hit.n + '건</span>';
+        tip.innerHTML = '<strong>' + esc(SEN.util.regionName(hit.name)) + '</strong><span>' + hit.n + '건</span>';
         tip.style.left = (e.clientX - b.left) + 'px';
         tip.style.top = (e.clientY - b.top) + 'px';
       } else {
@@ -174,8 +184,18 @@ window.SEN = window.SEN || {};
     size();
     addEventListener('resize', size);
     /* 장면이 숨겨진 채로 초기화되면 이 시점의 폭이 0 입니다.
-       나중에 장면이 열려 크기가 잡히는 순간 다시 맞춰 줍니다. */
-    if ('ResizeObserver' in window) new ResizeObserver(size).observe(wrap);
+       나중에 장면이 열려 크기가 잡히는 순간 다시 맞춰 줍니다.
+       이때 IntersectionObserver 는 처음(숨겨진 상태)에 이미 "화면 밖"으로
+       한 번 판정해 visible 을 false 로 내려 버린 뒤, 부모의 [hidden] 이
+       풀리는 것만으로는 다시 알려주지 않는 경우가 있습니다(국내/국외 탭
+       전환 직후 점이 하나도 안 찍히던 버그의 원인). 크기가 실제로 잡히는
+       순간 visible 을 직접 켜서 이 문제를 우회합니다. */
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(function () {
+        size();
+        if (wrap.clientWidth > 0) visible = true;
+      }).observe(wrap);
+    }
 
     /* ---- 애니메이션 ----
        가만히 두면 한국이 정면에 오는 자세(qKorea)에서 멈춰 있습니다.
@@ -184,6 +204,7 @@ window.SEN = window.SEN || {};
        (예전엔 spin 값을 매 프레임 늘려 계속 돌아갔습니다). */
     var qKorea = quatFor(30, 127.5);
     var visible = true, last = performance.now();
+    _refresh = function () { size(); visible = true; };
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {

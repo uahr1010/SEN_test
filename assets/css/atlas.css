@@ -212,7 +212,11 @@ body {
   .topnav { gap: 12px; }
   .topnav button { font-size: .8rem; }
   #prog { right: 10px; }
-  .scene__scroll { max-height: 46vh; }
+  /* 예전 무대 고정형 디자인에서 쓰던 안쪽 스크롤 칸 높이 제한입니다.
+     지금은 페이지가 통째로 스크롤되고 .scene__scroll 기본값이
+     overflow:visible 이라, 여기서만 max-height 를 다시 주면 내용이
+     박스 밖으로 삐져나와 바로 아래 섹션과 겹칩니다 (연혁·주요공법 등).
+     되살리지 마세요 — 되살리려면 overflow:auto 도 같이 줘야 합니다. */
 }
 
 /* ---------- 공용 푸터 ----------

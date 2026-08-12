@@ -152,7 +152,7 @@ window.SEN = window.SEN || {};
     }
     if (elList) {
       elList.innerHTML = !group.regions.length ? '' : group.regions.slice(0, 12).map(function (r) {
-        return '<li><span class="regions__name">' + SEN.util.esc(r.name) + '</span>' +
+        return '<li><span class="regions__name">' + SEN.util.esc(SEN.util.regionName(r.name)) + '</span>' +
                '<span class="regions__bar"><i style="width:' +
                Math.max(4, Math.round(r.n / group.regions[0].n * 100)) + '%"></i></span>' +
                '<span class="regions__n">' + r.n + '</span></li>';
@@ -167,6 +167,11 @@ window.SEN = window.SEN || {};
       btn.classList.toggle('is-on', on);
       btn.setAttribute('aria-selected', String(on));
     });
+
+    /* 지구본은 국내 탭에 가려진 채로 처음 한 번만 그려지는데, 가려진
+       상태로 초기화되면 크기를 못 잡아 점이 하나도 안 찍힙니다. 국외
+       탭이 열릴 때마다 직접 알려줘서 다시 맞추게 합니다. */
+    if (tab === 'overseas' && SEN.globe) SEN.globe.refresh();
   }
   SEN.renderProjectPanel = renderProjectPanel;
 

@@ -225,7 +225,7 @@ window.SEN = window.SEN || {};
     list.innerHTML = regions.length
       ? regions.map(function (r) {
           var pct = total ? Math.max(4, Math.round(r.n / regions[0].n * 100)) : 0;
-          return '<li><span class="regions__name">' + esc(r.name.split(' ').slice(1).join(' ') || r.name) +
+          return '<li><span class="regions__name">' + esc(SEN.util.regionName(r.name.split(' ').slice(1).join(' ') || r.name)) +
             '</span><span class="regions__bar"><i style="width:' + pct + '%"></i></span>' +
             '<span class="regions__n">' + r.n + '</span></li>';
         }).join('')
@@ -290,7 +290,7 @@ window.SEN = window.SEN || {};
       }
 
       var title = document.createElementNS(SVGNS, 'title');
-      title.textContent = name + (n ? ' — ' + Math.round(n) + '건' : ' — 실적 없음');
+      title.textContent = SEN.util.regionName(name) + (n ? ' — ' + Math.round(n) + '건' : ' — 실적 없음');
       path.appendChild(title);
     });
   }

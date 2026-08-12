@@ -313,6 +313,14 @@ window.SEN = window.SEN || {};
     host.innerHTML = html;
   }
 
+  /* "성남시분당구" 처럼 시/도 GeoJSON 원본에 공백 없이 붙어 있는
+     "OO시XX구(군)" 형태의 지역명을 화면에 보여줄 때만 "OO시 XX구"로
+     띄어 씁니다. 매칭에 쓰는 원본 키(geo.json/kmap.json)는 건드리지 않고,
+     화면에 표시하는 문자열에만 적용하세요. */
+  function regionName(s) {
+    return String(s || '').replace(/([가-힣]+시)([가-힣]+[구군])$/, '$1 $2');
+  }
+
   SEN.render = render;
-  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto };
+  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName };
 })(window.SEN);
