@@ -84,6 +84,8 @@
     "all":         { "ko": "전체",         "en": "All",          "zh": "全部",     "ja": "すべて" },
     "empty":       { "ko": "등록된 내용이 없습니다.", "en": "Nothing here yet.", "zh": "暂无内容。", "ja": "登録された内容がありません。" },
     "apply":       { "ko": "지원하기",     "en": "Apply now",    "zh": "立即申请", "ja": "応募する" },
+    "applyModalTo":{ "ko": "받는사람",     "en": "To",           "zh": "收件人",   "ja": "宛先" },
+    "applySend":   { "ko": "메일 보내기",  "en": "Send email",   "zh": "发送邮件", "ja": "メールを送る" },
     "backToNews":  { "ko": "뉴스 목록으로", "en": "Back to news", "zh": "返回新闻列表", "ja": "ニュース一覧へ" },
     "viewOriginal":{ "ko": "원문 보기",    "en": "View original source", "zh": "查看原文", "ja": "原文を見る" },
     "notFound":    { "ko": "요청하신 뉴스를 찾을 수 없습니다.", "en": "This article could not be found.", "zh": "未找到该新闻。", "ja": "該当の記事が見つかりません。" },

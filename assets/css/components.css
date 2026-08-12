@@ -399,3 +399,41 @@
   .ceo__media { position: static; aspect-ratio: 3 / 2; }
   .job__head { flex-wrap: wrap; }
 }
+
+/* ---------- 지원하기 팝업 ---------- */
+.apply-modal {
+  position: fixed; inset: 0; z-index: 130;
+  display: grid; place-items: center; padding: var(--sp-3);
+}
+.apply-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10, 37, 64, .55); backdrop-filter: blur(4px);
+}
+.apply-modal__panel {
+  position: relative; width: min(420px, 100%);
+  background: var(--c-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+  padding: var(--sp-4); text-align: center;
+  animation: applyModalIn .25s var(--ease);
+}
+@keyframes applyModalIn {
+  from { opacity: 0; transform: translateY(14px) scale(.98); }
+}
+.apply-modal__close {
+  position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+  border-radius: 50%; font-size: 1.3rem; line-height: 1; color: var(--c-muted);
+  transition: background .2s;
+}
+.apply-modal__close:hover { background: var(--c-tint); }
+.apply-modal__eyebrow {
+  font-size: var(--fs-xs); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--c-blue); font-weight: 800; margin-bottom: 6px;
+}
+.apply-modal__title { font-size: 1.2rem; margin-bottom: var(--sp-2); }
+.apply-modal__to {
+  font-size: var(--fs-small); color: var(--c-muted);
+  padding: 10px 14px; background: var(--c-tint); border-radius: var(--radius);
+  margin-bottom: var(--sp-2);
+}
+.apply-modal__to strong { color: var(--c-ink); }
+.apply-modal__hint { font-size: var(--fs-xs); color: var(--c-muted); margin-bottom: var(--sp-3); }
+.apply-modal__send { width: 100%; justify-content: center; }

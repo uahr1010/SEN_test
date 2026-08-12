@@ -210,9 +210,12 @@ window.SEN = window.SEN || {};
                 (req  ? '<div><p class="job__coltitle">' + esc(reqLabel)  + '</p><ul class="job__list">' + req  + '</ul></div>' : '') +
                 (pref ? '<div><p class="job__coltitle">' + esc(prefLabel) + '</p><ul class="job__list">' + pref + '</ul></div>' : '') +
               '</div>' +
-              '<a class="btn btn--primary" href="' + esc(mailto(email, subject, mailBody)) + '">' +
+              '<button type="button" class="btn btn--primary" data-apply' +
+                ' data-apply-title="' + esc(t(it.title)) + '"' +
+                ' data-apply-email="' + esc(email || '') + '"' +
+                ' data-apply-mailto="' + esc(mailto(email, subject, mailBody)) + '">' +
                 '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2.5 5.5h15v9h-15z" stroke="currentColor" stroke-width="1.5"/><path d="m2.5 6 7.5 5 7.5-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>' +
-                esc(applyLabel) + '</a>' +
+                esc(applyLabel) + '</button>' +
             '</div></div></div>' +
           '</article>';
       }).join('');

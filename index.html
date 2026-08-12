@@ -199,6 +199,23 @@
   </div>
 </footer>
 
+<!-- ============ 지원하기 팝업 ============
+     "지원하기" 버튼(위 careers.jobs 카드)을 누르면 뜹니다. 실제 메일 발송은
+     서버 없이는 할 수 없어서(공개 저장소에 발송 자격증명을 둘 수 없음),
+     사용자 본인의 메일 앱을 mailto: 링크로 열어 주는 방식입니다 —
+     이 팝업은 그 전에 받는사람·공고명을 한 번 보여주는 확인 단계입니다. -->
+<div class="apply-modal" data-apply-modal hidden>
+  <div class="apply-modal__backdrop" data-apply-close></div>
+  <div class="apply-modal__panel" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+    <button class="apply-modal__close" type="button" data-apply-close aria-label="닫기">&times;</button>
+    <p class="apply-modal__eyebrow" data-bind="site.ui.apply">지원하기</p>
+    <h3 class="apply-modal__title" id="applyModalTitle" data-apply-job></h3>
+    <p class="apply-modal__to"><span data-bind="site.ui.applyModalTo">받는사람</span> <strong data-apply-to></strong></p>
+    <p class="apply-modal__hint" data-bind="site.ui.sendMail">클릭하면 메일 작성 창이 열립니다</p>
+    <a class="btn btn--primary apply-modal__send" data-apply-send href="#" data-bind="site.ui.applySend">메일 보내기</a>
+  </div>
+</div>
+
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/render.js"></script>
 <script src="assets/js/projects.js"></script>
