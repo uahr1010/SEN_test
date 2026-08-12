@@ -42,16 +42,20 @@ window.SEN = window.SEN || {};
     var t = SEN.i18n.t, esc = SEN.util.esc, asset = SEN.util.asset;
     var pick = SEN.util.pick, fmtDate = SEN.i18n.formatDate;
 
+    /* 탭 제목 뒤에 붙는 사이트명은 site.company.name 이 아니라 site.seo.title 을
+       씁니다. index.html 의 탭 제목과 같은 값 하나를 공유해, 문구를 바꿀 때
+       site.json 한 곳만 고치면 두 페이지가 같이 바뀌도록 하기 위함입니다. */
+    var siteName = t(pick(data, 'site.seo.title')) || 'Senkuzo / SEN Engineering Group';
+
     if (!item) {
       host.innerHTML = '<p class="article__empty">' +
         esc(t(pick(data, 'site.ui.notFound')) || '요청하신 뉴스를 찾을 수 없습니다.') + '</p>';
-      document.title = 'SEN Engineering Group';
+      document.title = siteName;
       return;
     }
 
     var title = t(item.title);
-    var company = t(pick(data, 'site.company.name'));
-    document.title = company ? title + ' — ' + company : title;
+    document.title = title + ' — ' + siteName;
 
     var descMeta = document.querySelector('meta[name="description"]');
     if (descMeta) descMeta.setAttribute('content', t(item.excerpt).slice(0, 140));

@@ -322,7 +322,9 @@ python tools/translate_news.py drafts/파일명.md --dry-run
 표시 크기를 바꾸려면 `assets/css/atlas.css` 의 `.topbar__logo img`(헤더) ·
 `.site-footer__brand img`(푸터) 의 `height` 값을 고치세요.
 
-파비콘은 `assets/img/favicon.svg` 를 교체하면 됩니다.
+파비콘은 `assets/img/favicon.png` 를 교체하면 됩니다 (`index.html`, `news.html` 양쪽의
+`<link rel="icon">` 가 이 파일을 가리킵니다). 정사각형에 가까운 단순한 그림일수록
+작은 크기(16×16)에서도 잘 보입니다.
 
 ### 섹션 순서 바꾸기 / 추가
 
