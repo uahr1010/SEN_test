@@ -104,9 +104,12 @@ content:
             type: image
             description: 비워 두면 블루 그라디언트가 표시됩니다.
           - name: link
-            label: 원문 링크
+            label: 원문 링크 (선택)
             type: string
-            description: 입력하면 카드 전체가 새 탭 링크가 됩니다.
+            description: >
+              언론사 기사 등 외부 원문이 있으면 적어 주세요.
+              카드를 누르면 항상 이 사이트 안의 상세 페이지가 먼저 열리고,
+              그 페이지 안에 "원문 보기" 버튼으로 표시됩니다. 비워도 됩니다.
           - name: title
             label: 제목
             type: object

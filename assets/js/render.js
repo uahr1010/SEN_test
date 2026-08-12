@@ -135,17 +135,17 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 뉴스 카드 */
+    /* 뉴스 카드 — 클릭하면 news.html?id=... 상세 페이지로 이동합니다.
+       (외부 원문 링크가 있어도 카드 자체는 내부 상세 페이지를 열고,
+       원문은 상세 페이지 안의 "원문 보기" 버튼으로 뺍니다) */
     'news.items': function (items, ctx) {
       var readMore = t(pick(ctx, 'site.ui.readMore')) || '자세히 보기';
       if (!items.length) return '<p class="state">' + esc(t(pick(ctx, 'site.ui.empty')) || '등록된 글이 없습니다.') + '</p>';
 
       return items.map(function (it, i) {
-        var href = it.link ? esc(it.link) : '';
-        var tag = href ? 'a' : 'div';
-        var attrs = href ? ' href="' + href + '" target="_blank" rel="noopener"' : '';
+        var href = 'news.html?id=' + encodeURIComponent(it.id || '');
         return '' +
-          '<' + tag + ' class="card reveal" data-delay="' + (i % 4) + '"' + attrs + '>' +
+          '<a class="card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
             '<div class="card__thumb">' + imgTag(it.image, t(it.title)) + '</div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
@@ -154,9 +154,9 @@ window.SEN = window.SEN || {};
               '</div>' +
               '<h3 class="card__title">' + esc(t(it.title)) + '</h3>' +
               '<p class="card__excerpt">' + esc(t(it.excerpt)) + '</p>' +
-              (href ? '<span class="card__foot">' + esc(readMore) + '</span>' : '') +
+              '<span class="card__foot">' + esc(readMore) + '</span>' +
             '</div>' +
-          '</' + tag + '>';
+          '</a>';
       }).join('');
     },
 

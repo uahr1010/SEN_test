@@ -189,7 +189,12 @@
 }
 .card__cat { color: var(--c-blue); font-weight: 700; }
 .card__title { font-size: 1.08rem; line-height: 1.4; margin-bottom: 8px; }
-.card__excerpt { font-size: var(--fs-small); color: var(--c-muted); flex: 1; }
+.card__excerpt {
+  font-size: var(--fs-small); color: var(--c-muted); flex: 1;
+  /* 3줄까지만 보여주고 나머지는 ... 으로 생략. 전체 글은 상세 페이지(news.html)에서 보여줍니다. */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+  line-clamp: 3; overflow: hidden;
+}
 .card__foot {
   margin-top: var(--sp-3); font-size: var(--fs-small); font-weight: 700; color: var(--c-blue);
   display: inline-flex; align-items: center; gap: 6px;

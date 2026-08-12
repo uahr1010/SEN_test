@@ -27,10 +27,9 @@
 
 <!-- ============ 상단 고정 네비 ============ -->
 <header class="topbar">
-  <div class="topbar__logo">
-    <strong data-bind="site.company.shortName">SEN</strong>
-    <em data-bind="site.company.name">Engineering Group</em>
-  </div>
+  <a class="topbar__logo" href="#top">
+    <img src="assets/img/logo.png" alt="SEN Engineering Group" width="471" height="110">
+  </a>
 
   <nav class="topnav" aria-label="주 메뉴">
     <button type="button" data-scene="1" data-bind="site.nav.about">회사소개</button>
@@ -179,16 +178,26 @@
         <div class="jobs" data-list="careers.jobs"></div>
         <h3 class="block__title" data-bind="careers.processHeading"></h3>
         <ol class="process" data-list="careers.process"></ol>
-        <p class="scene__lead">
-          <span data-bind="site.footer.address"></span> ·
-          <span data-bind="site.footer.tel"></span><br>
-          <small data-bind="site.footer.copyright"></small>
-        </p>
       </div>
     </div>
   </section>
 
 </main>
+
+<!-- ============ 공용 푸터 ============
+     news.html 등 서브 페이지에도 이 블록을 그대로 복사해 씁니다. -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="assets/img/logo.png" alt="SEN Engineering Group" width="471" height="110">
+    </div>
+    <div class="site-footer__info">
+      <p data-bind="site.footer.address"></p>
+      <p data-bind="site.footer.tel"></p>
+      <p class="site-footer__copy" data-bind="site.footer.copyright"></p>
+    </div>
+  </div>
+</footer>
 
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/render.js"></script>

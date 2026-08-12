@@ -113,5 +113,7 @@ window.SEN = window.SEN || {};
     document.addEventListener('click', function () { wrap.classList.remove('is-open'); });
   }
 
-  SEN.atlas = { init: init, goTo: goTo };
+  /* initLang 은 news.html 처럼 .scene 이 없는 서브 페이지에서도
+     헤더의 언어 토글만 따로 살리기 위해 별도로 내보냅니다. */
+  SEN.atlas = { init: init, goTo: goTo, initLang: initLang };
 })(window.SEN);
