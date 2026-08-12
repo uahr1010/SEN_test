@@ -1,7 +1,17 @@
 {
   "section": {
-    "eyebrow": { "ko": "02 — NEWS", "en": "02 — NEWS", "zh": "02 — 新闻", "ja": "02 — ニュース" },
-    "title": { "ko": "뉴스 & 기술자료", "en": "News & Technical Archive", "zh": "新闻与技术资料", "ja": "ニュース & 技術資料" },
+    "eyebrow": {
+      "ko": "02 — NEWS",
+      "en": "02 — NEWS",
+      "zh": "02 — 新闻",
+      "ja": "02 — ニュース"
+    },
+    "title": {
+      "ko": "뉴스 & 기술자료",
+      "en": "News & Technical Archive",
+      "zh": "新闻与技术资料",
+      "ja": "ニュース & 技術資料"
+    },
     "lead": {
       "ko": "언론 보도, 학회 논문, 기술자료, 행사 소식을 한곳에서 확인하실 수 있습니다.",
       "en": "Press coverage, academic papers, technical notes and event news in one place.",
@@ -9,12 +19,40 @@
       "ja": "報道、学会論文、技術資料、イベント情報をまとめてご覧いただけます。"
     }
   },
-
   "items": [
+    {
+      "id": "news-2026-08-12-psrc-method-included-in-singapore-buildi",
+      "date": "2026-08-12",
+      "category": {
+        "ko": "언론보도",
+        "en": "언론보도",
+        "ja": "언론보도",
+        "zh": "언론보도"
+      },
+      "image": "",
+      "link": "",
+      "title": {
+        "ko": "PSRC 공법 싱가포르 건축설계기준 등재",
+        "en": "PSRC Method Included in Singapore Building Design Standards",
+        "ja": "PSRC工法、シンガポール建築設計基準に収載",
+        "zh": "PSRC工法纳入新加坡建筑设计标准"
+      },
+      "excerpt": {
+        "ko": "PSRC(Prefabricated SRC)기둥 공법이 싱가포르 건설청(BCA)의 고강도 강-콘크리트 합성기둥 설계가이드인 BC4:2025에 독립 장으로서 등재되었습니다.\n\nBC4:2025는 싱가포르에서 건설되는 모든 건물의 기본 설계 가이드이며 유로코드4를 기반으로 고강도 강재ㆍ콘크리트를 적용한 합성기둥의 설계 방법을 다루고 있습니다.\n\n싱가포르 건설청은 그동안 싱가포르에서 PSRC를 적용하여 건설된 여러 프로젝트들을 통해 본 공법의 안전성, 경제성, 혁신성에 주목하여 특정 공법을 위해 아예 새로운 장(Chapter 6)를 신설하고, 실무 예제 계산서(Example Calculations to the Requirement of BC4:2025)에도 다양한 PSRC 적용 예제를 수록하였습니다.\n\n건설업계의 차세대 화두로 각광받는 OSC(탈현장건설)의 선두주자중 하나인 PSRC는 AI(인공지능) 시대를 맞아 수요가 커진 반도체 공장, 데이터센터, 첨단 제조시설 등에 대거 적용되고 있습니다. 싱가포르에서는 현대차그룹 글로벌 혁신센터(HMGICS), JTC(주롱도시공사) 물류허브에 적용되었으며, 특히 JTC 물류허브는 2024년 BCA 올해의 프로젝트(산업부문)로 선정되기도 하였습니다.\n\n싱가포르는 건설 및 구조 안전 기준이 세계적으로 가장 엄격하면서도 기술 혁신에 적극적인 자세를 견지하고 있어 주변 동남아시아 건설 시장에 큰 영향력을 갖습니다. 이번 성과는 말레이시아ㆍ태국ㆍ베트남 등 동남아시아는 물론, 여타 해외 시장에서 PSRC공법의 신뢰성을 높이는 데 큰 도움이 될 것을 기대합니다.",
+        "en": "The PSRC (Prefabricated SRC) column method has been included as an independent chapter in BC4:2025, the Building and Construction Authority (BCA)’s design guide for high-strength steel-concrete composite columns.\n\nBC4:2025 is the fundamental design guide for all buildings constructed in Singapore and addresses design methods for composite columns incorporating high-strength steel and concrete based on Eurocode 4.\n\nThrough various projects constructed in Singapore using PSRC, the Building and Construction Authority (BCA) has recognized the safety, economic feasibility, and innovativeness of this method. It has therefore established an entirely new chapter (Chapter 6) specifically for this method and included various examples of PSRC applications in the practical example calculations, Example Calculations to the Requirement of BC4:2025.\n\nAs one of the leading technologies in OSC (Off-Site Construction), which is gaining attention as a next-generation key topic in the construction industry, PSRC is being extensively applied to semiconductor plants, data centers, and advanced manufacturing facilities, where demand has increased in the era of AI (artificial intelligence). In Singapore, it has been applied to Hyundai Motor Group Innovation Center Singapore (HMGICS) and JTC Corporation (formerly Jurong Town Corporation) Logistics Hub. In particular, JTC Logistics Hub was selected as the BCA Project of the Year 2024 (Industrial Buildings category).\n\nSingapore maintains some of the world’s most stringent construction and structural safety standards while actively embracing technological innovation, giving it significant influence over the construction market in neighboring Southeast Asia. This achievement is expected to greatly enhance the credibility of the PSRC method not only in Southeast Asia, including Malaysia, Thailand, and Vietnam, but also in other overseas markets.",
+        "ja": "PSRC（Prefabricated SRC）柱工法が、シンガポール建設庁（BCA）の高強度鋼・コンクリート合成柱設計ガイドであるBC4:2025に、独立した章として収載されました。\n\nBC4:2025は、シンガポールで建設されるすべての建築物の基本設計ガイドであり、Eurocode 4に基づき、高強度鋼材・コンクリートを適用した合成柱の設計方法を扱っています。\n\nシンガポール建設庁（BCA）はこれまで、シンガポールにおいてPSRCを適用して建設された複数のプロジェクトを通じて、本工法の安全性、経済性、革新性に着目し、特定工法のために新たな章（Chapter 6）を新設するとともに、実務用計算例（Example Calculations to the Requirement of BC4:2025）にも多様なPSRC適用事例を収録しました。\n\n建設業界における次世代の注目テーマであるOSC (Off-Site Construction)の先駆者の一つであるPSRCは、AI（人工知能）時代を迎え、需要が拡大した半導体工場、データセンター、先端製造施設などに広く適用されています。シンガポールでは、Hyundai Motor Group Innovation Center Singapore (HMGICS)、JTC Corporation (formerly Jurong Town Corporation)のJTC Logistics Hubに適用され、特にJTC Logistics Hubは2024年にBCA「Project of the Year 2024」（産業用建築部門）に選定されました。\n\nシンガポールは、建設および構造安全基準が世界的に最も厳格である一方、技術革新にも積極的な姿勢を維持しており、周辺の東南アジア建設市場に大きな影響力を有しています。今回の成果は、マレーシア・タイ・ベトナムなどの東南アジアはもちろん、その他の海外市場においても、PSRC工法の信頼性を高める上で大きく寄与することが期待されます。",
+        "zh": "PSRC（Prefabricated SRC）柱工法已作为独立章节被收录于新加坡建设局（BCA）的高强度钢-混凝土组合柱设计指南BC4:2025中。\n\nBC4:2025是适用于在新加坡建设的所有建筑物的基本设计指南，以Eurocode 4为基础，涵盖采用高强度钢材与混凝土的组合柱设计方法。\n\n新加坡建设局（BCA）通过迄今在新加坡采用PSRC工法建设的多个项目，关注到该工法的安全性、经济性和创新性，专门为该工法新设了全新的章节（Chapter 6），并在实务示例计算书（Example Calculations to the Requirement of BC4:2025）中收录了多种PSRC应用示例。\n\n作为备受瞩目的建筑业下一代热点——OSC (Off-Site Construction)的领先者之一，PSRC正被大量应用于迎来AI（人工智能）时代后需求不断增长的半导体工厂、数据中心和先进制造设施等。在新加坡，PSRC已应用于Hyundai Motor Group Innovation Center Singapore (HMGICS)和JTC Corporation (formerly Jurong Town Corporation) Logistics Hub，尤其是JTC Logistics Hub还于2024年获选为BCA「Project of the Year 2024」（工业建筑组）。\n\n新加坡的建筑及结构安全标准在全球最为严格，同时始终积极推动技术创新，因此对周边东南亚建筑市场具有重大影响力。期待此次成果不仅有助于提升马来西亚、泰国、越南等东南亚地区，也有助于提升其他海外市场对PSRC工法的信赖度。"
+      }
+    },
     {
       "id": "news-2026-08-datacenter",
       "date": "2026-08-06",
-      "category": { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      "category": {
+        "ko": "언론보도",
+        "en": "Press",
+        "zh": "媒体报道",
+        "ja": "報道"
+      },
       "image": "/uploads/images/news-01.jpg",
       "link": "",
       "title": {
@@ -33,7 +71,12 @@
     {
       "id": "news-2026-06-bca",
       "date": "2026-06-16",
-      "category": { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      "category": {
+        "ko": "언론보도",
+        "en": "Press",
+        "zh": "媒体报道",
+        "ja": "報道"
+      },
       "image": "/uploads/images/news-02.jpg",
       "link": "",
       "title": {
@@ -52,7 +95,12 @@
     {
       "id": "news-2026-01-kepco",
       "date": "2026-01-30",
-      "category": { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      "category": {
+        "ko": "언론보도",
+        "en": "Press",
+        "zh": "媒体报道",
+        "ja": "報道"
+      },
       "image": "/uploads/images/news-03.jpg",
       "link": "",
       "title": {
@@ -71,7 +119,12 @@
     {
       "id": "news-2026-01-vision",
       "date": "2026-01-29",
-      "category": { "ko": "행사", "en": "Events", "zh": "活动", "ja": "イベント" },
+      "category": {
+        "ko": "행사",
+        "en": "Events",
+        "zh": "活动",
+        "ja": "イベント"
+      },
       "image": "/uploads/images/news-04.jpg",
       "link": "",
       "title": {
@@ -90,7 +143,12 @@
     {
       "id": "news-2025-12-paper",
       "date": "2025-12-29",
-      "category": { "ko": "논문", "en": "Papers", "zh": "论文", "ja": "論文" },
+      "category": {
+        "ko": "논문",
+        "en": "Papers",
+        "zh": "论文",
+        "ja": "論文"
+      },
       "image": "/uploads/images/news-05.jpg",
       "link": "",
       "title": {
@@ -109,7 +167,12 @@
     {
       "id": "news-2025-07-osc",
       "date": "2025-07-23",
-      "category": { "ko": "기술자료", "en": "Technical", "zh": "技术资料", "ja": "技術資料" },
+      "category": {
+        "ko": "기술자료",
+        "en": "Technical",
+        "zh": "技术资料",
+        "ja": "技術資料"
+      },
       "image": "/uploads/images/news-06.jpg",
       "link": "",
       "title": {
@@ -128,7 +191,12 @@
     {
       "id": "news-dummy-07",
       "date": "2025-05-14",
-      "category": { "ko": "기술자료", "en": "Technical", "zh": "技术资料", "ja": "技術資料" },
+      "category": {
+        "ko": "기술자료",
+        "en": "Technical",
+        "zh": "技术资料",
+        "ja": "技術資料"
+      },
       "image": "",
       "link": "",
       "title": {
@@ -147,7 +215,12 @@
     {
       "id": "news-dummy-08",
       "date": "2025-03-02",
-      "category": { "ko": "행사", "en": "Events", "zh": "活动", "ja": "イベント" },
+      "category": {
+        "ko": "행사",
+        "en": "Events",
+        "zh": "活动",
+        "ja": "イベント"
+      },
       "image": "",
       "link": "",
       "title": {
