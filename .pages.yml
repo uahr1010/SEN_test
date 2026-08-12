@@ -149,7 +149,10 @@ content:
       - name: jobs
         label: 채용공고
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
         fields:
           - name: id
             label: 고유 ID
