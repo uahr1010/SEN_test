@@ -126,7 +126,7 @@ window.SEN = window.SEN || {};
     }).filter(Boolean);
 
     /* ---- 드래그 회전 ---- */
-    var yaw = 0, pitch = 0, dragging = false, lastX = 0, lastY = 0, spin = 0;
+    var yaw = 0, pitch = 0, dragging = false, lastX = 0, lastY = 0;
     wrap.addEventListener('pointerdown', function (e) {
       dragging = true; lastX = e.clientX; lastY = e.clientY;
       wrap.classList.add('is-dragging');
@@ -188,9 +188,12 @@ window.SEN = window.SEN || {};
        나중에 장면이 열려 크기가 잡히는 순간 다시 맞춰 줍니다. */
     if ('ResizeObserver' in window) new ResizeObserver(size).observe(wrap);
 
-    /* ---- 애니메이션 ---- */
+    /* ---- 애니메이션 ----
+       가만히 두면 한국이 정면에 오는 자세(qKorea)에서 멈춰 있습니다.
+       드래그하면 그만큼 돌아가고, 손을 떼면 지수 감쇠로 다시 그 자세로
+       스르륵 돌아옵니다. 자동으로 계속 도는 자전은 없습니다
+       (예전엔 spin 값을 매 프레임 늘려 계속 돌아갔습니다). */
     var qKorea = quatFor(30, 127.5);
-    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     var visible = true, last = performance.now();
 
     if ('IntersectionObserver' in window) {
@@ -208,10 +211,9 @@ window.SEN = window.SEN || {};
       if (!dragging) {
         var k = Math.exp(-dt * 0.6);
         yaw *= k; pitch *= k;
-        if (!reduce) spin += dt * 0.045;         /* 아주 천천히 자전 */
       }
       var qU = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), pitch)
-        .multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), yaw + spin));
+        .multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), yaw));
       globe.quaternion.copy(qU.multiply(qKorea));
       renderer.render(scene, camera);
 

@@ -198,7 +198,7 @@
       },
       {
         "tag": { "ko": "별관 / Annex", "en": "Annex", "zh": "分部", "ja": "別館" },
-        "name": { "ko": "SEN CORETECH 서울사무소", "en": "SEN CORETECH Seoul Office", "zh": "SEN CORETECH 首尔办事处", "ja": "SEN CORETECH ソウル事務所" },
+        "name": { "ko": "SEN CORETECH", "en": "SEN CORETECH", "zh": "SEN CORETECH", "ja": "SEN CORETECH" },
         "address": {
           "ko": "서울시 영등포구 버드나루로14가길 24 대한결핵협회 3층 (07230)",
           "en": "24 Beodeunaru-ro 14ga-gil, 3rd Floor, Yeongdeungpo-gu, Seoul 07230, South Korea",

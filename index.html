@@ -130,13 +130,27 @@
         <p class="scene__lead" data-bind="projects.section.lead"></p>
       </header>
 
+      <!-- 국내 / 국외 탭. 오른쪽 시각화가 탭에 따라 지도 ↔ 지구본으로 바뀝니다. -->
+      <div class="proj-tabs" role="tablist" data-proj-tabs>
+        <button type="button" class="proj-tab is-on" role="tab" aria-selected="true"
+                data-proj-tab="domestic" data-bind="projects.tabs.domestic">국내</button>
+        <button type="button" class="proj-tab" role="tab" aria-selected="false"
+                data-proj-tab="overseas" data-bind="projects.tabs.overseas">국외</button>
+      </div>
+
       <div class="about-grid">
         <div>
           <dl class="globe__stats" data-globe-stats></dl>
           <div class="scene__scroll"><ol class="regions" data-region-list></ol></div>
         </div>
         <div class="globe">
-          <div class="globe__stage" data-globe>
+          <!-- 국내 탭: 한국 지도. 시/도를 클릭하면 시군구 드릴다운이 열립니다. -->
+          <div class="kmap-stage" data-kmap-tab="domestic">
+            <svg class="kmap-svg" data-kmap-svg></svg>
+            <div class="kmap-tip" data-kmap-tip hidden></div>
+          </div>
+          <!-- 국외 탭: 지구본. 가만히 두면 한국이 정면에서 멈춰 있고, 드래그만 됩니다. -->
+          <div class="globe__stage" data-globe data-kmap-tab="overseas" hidden>
             <div class="globe__pills" data-globe-pills aria-hidden="true"></div>
             <div class="globe__tip" data-globe-tip hidden></div>
           </div>
@@ -145,6 +159,23 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ 시/도 드릴다운 팝업 ============
+     한국 지도에서 시/도를 클릭하면 뜹니다. [hidden] + display:grid 조합은
+     base.css 의 [hidden]{display:none!important} 가 이미 안전하게 막아 줍니다
+     (지원하기 팝업과 같은 패턴). -->
+  <div class="kmap-drill" data-kmap-drill hidden>
+    <div class="kmap-drill__backdrop" data-kmap-drill-close></div>
+    <div class="kmap-drill__panel" role="dialog" aria-modal="true">
+      <button class="apply-modal__close" type="button" data-kmap-drill-close aria-label="닫기">&times;</button>
+      <h3 class="kmap-drill__title" data-kmap-drill-title></h3>
+      <p class="kmap-drill__meta" data-kmap-drill-meta></p>
+      <div class="kmap-drill__body">
+        <svg class="kmap-drill__svg" data-kmap-drill-svg viewBox="0 0 640 620"></svg>
+        <ol class="regions" data-kmap-drill-list></ol>
+      </div>
+    </div>
+  </div>
 
   <!-- ---------- 장면 3 : 뉴스 ---------- -->
   <section class="scene scene--paper" id="scene-news" data-label="뉴스" data-section="news">
@@ -226,6 +257,7 @@
 <script src="assets/js/render.js"></script>
 <script src="assets/js/projects.js"></script>
 <script src="assets/js/globe.js"></script>
+<script src="assets/js/kmap.js"></script>
 <script src="assets/js/controls.js"></script>
 <script src="assets/js/atlas.js"></script>
 <script src="assets/js/main.js"></script>

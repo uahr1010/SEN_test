@@ -107,6 +107,31 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /* ---------- 프로젝트 국내/국외 탭 ---------- */
+  function initProjTabs() {
+    document.addEventListener('click', function (e) {
+      var tab = e.target.closest('[data-proj-tab]');
+      if (!tab || !SEN.renderProjectPanel) return;
+      SEN.renderProjectPanel(tab.getAttribute('data-proj-tab'));
+    });
+  }
+
+  /* ---------- 한국 지도 시/도 드릴다운 팝업 닫기 ----------
+     여는 쪽(openDrill)은 kmap.js 담당, 닫는 쪽만 여기서 —
+     지원하기 팝업과 같은 위임 클릭 패턴입니다. */
+  function initKmapDrill() {
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-kmap-drill-close]')) return;
+      var drill = document.querySelector('[data-kmap-drill]');
+      if (drill && SEN.kmap) SEN.kmap.closeDrill(drill);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var drill = document.querySelector('[data-kmap-drill]');
+      if (drill && !drill.hidden && SEN.kmap) SEN.kmap.closeDrill(drill);
+    });
+  }
+
   function initListControls() {
     document.addEventListener('click', function (e) {
       var chip = e.target.closest('[data-chip]');
@@ -126,5 +151,10 @@ window.SEN = window.SEN || {};
     });
   }
 
-  SEN.controls = { init: function () { initJobs(); initApplyModal(); initListControls(); } };
+  SEN.controls = {
+    init: function () {
+      initJobs(); initApplyModal(); initListControls();
+      initProjTabs(); initKmapDrill();
+    }
+  };
 })(window.SEN);

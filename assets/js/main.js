@@ -117,53 +117,87 @@ window.SEN = window.SEN || {};
     }, true);
   }
 
-  /* ---------- 실적 지구본 ----------
+  /* ---------- 실적 지도 / 지구본 ----------
      content/projects.json 은 이미 loadContent() 가 한 번에 받아 왔습니다.
      그 안의 projects 배열(공개 위치만 담긴 목록)을 그대로 넘기기만 하고,
      여기서 다시 fetch 하지 않습니다 (중복 요청 방지).
-     주소 → 좌표 변환과 집계는 projects.js, 그리기는 globe.js 가 맡습니다.
-     여기서는 둘을 잇고, 지구본이 못 뜨더라도 남아야 할 숫자·목록을 그립니다. */
-  function initGlobe(data) {
-    var stage = document.querySelector('[data-globe]');
-    if (!stage || !SEN.projects) return;
+     주소 → 좌표 변환과 집계는 projects.js, 그리기는 kmap.js(국내 지도)와
+     globe.js(국외 지구본)가 맡습니다. 둘 다 한 번씩만 그리고,
+     "국내/국외" 탭 전환은 이미 그려진 두 시각화 중 하나를 숨기고 보이는
+     것뿐입니다 (다시 그리지 않음) — SEN.projectPanel.setTab() 이 그 일을 합니다. */
+  SEN.projectPanel = { tab: 'domestic', data: null, ctx: null };
+
+  function renderProjectPanel(tab) {
+    var p = SEN.projectPanel;
+    if (!p.data) return;
+    p.tab = tab;
 
     var t = SEN.i18n.t;
-    var ui = SEN.util.pick(data, 'projects.ui') || {};
+    var ui = SEN.util.pick(p.ctx, 'projects.ui') || {};
     var elStats = document.querySelector('[data-globe-stats]');
     var elList = document.querySelector('[data-region-list]');
     var elHint = document.querySelector('[data-globe-hint]');
+    var group = tab === 'overseas' ? p.data.overseas : p.data.domestic;
+
+    if (elHint) {
+      elHint.textContent = tab === 'overseas' ? (t(ui.dragHint) || '') : (t(ui.mapHint) || '');
+    }
+    if (elStats) {
+      elStats.innerHTML = [
+        [t(ui.totalLabel) || '누적 실적', group.total.toLocaleString() + (t(ui.unit) || '건')],
+        [t(ui.regionLabel) || '수행 지역', group.regions.length + (t(ui.regionUnit) || '곳')]
+      ].map(function (r) {
+        return '<div><dt>' + SEN.util.esc(r[0]) + '</dt><dd>' + SEN.util.esc(r[1]) + '</dd></div>';
+      }).join('');
+    }
+    if (elList) {
+      elList.innerHTML = !group.regions.length ? '' : group.regions.slice(0, 12).map(function (r) {
+        return '<li><span class="regions__name">' + SEN.util.esc(r.name) + '</span>' +
+               '<span class="regions__bar"><i style="width:' +
+               Math.max(4, Math.round(r.n / group.regions[0].n * 100)) + '%"></i></span>' +
+               '<span class="regions__n">' + r.n + '</span></li>';
+      }).join('');
+    }
+
+    document.querySelectorAll('[data-kmap-tab]').forEach(function (el) {
+      el.hidden = el.getAttribute('data-kmap-tab') !== tab;
+    });
+    document.querySelectorAll('[data-proj-tab]').forEach(function (btn) {
+      var on = btn.getAttribute('data-proj-tab') === tab;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-selected', String(on));
+    });
+  }
+  SEN.renderProjectPanel = renderProjectPanel;
+
+  function initProjects(data) {
+    var kmapStage = document.querySelector('[data-kmap-tab="domestic"]');
+    var globeStage = document.querySelector('[data-kmap-tab="overseas"]');
+    if ((!kmapStage && !globeStage) || !SEN.projects) return;
 
     SEN.projects.load(SEN.util.pick(data, 'projects.projects') || []).then(function (res) {
       SEN.projectData = res;
+      SEN.projectPanel.data = res;
+      SEN.projectPanel.ctx = data;
+      renderProjectPanel(SEN.projectPanel.tab);
 
-      if (elHint) elHint.textContent = t(ui.dragHint) || '';
-
-      if (elStats) {
-        elStats.innerHTML = [
-          [t(ui.totalLabel) || '누적 실적', res.placed.toLocaleString() + (t(ui.unit) || '건')],
-          [t(ui.regionLabel) || '수행 지역', res.regions.length + (t(ui.regionUnit) || '곳')]
-        ].map(function (r) {
-          return '<div><dt>' + SEN.util.esc(r[0]) + '</dt><dd>' + SEN.util.esc(r[1]) + '</dd></div>';
-        }).join('');
+      if (kmapStage && SEN.kmap) {
+        SEN.kmap.init(res, {
+          wrap: kmapStage,
+          svg: kmapStage.querySelector('[data-kmap-svg]'),
+          tip: kmapStage.querySelector('[data-kmap-tip]'),
+          drill: document.querySelector('[data-kmap-drill]')
+        });
       }
-
-      if (elList) {
-        elList.innerHTML = res.regions.slice(0, 12).map(function (r) {
-          return '<li><span class="regions__name">' + SEN.util.esc(r.name) + '</span>' +
-                 '<span class="regions__bar"><i style="width:' +
-                 Math.max(4, Math.round(r.n / res.regions[0].n * 100)) + '%"></i></span>' +
-                 '<span class="regions__n">' + r.n + '</span></li>';
-        }).join('');
+      if (globeStage && SEN.globe) {
+        SEN.globe.init(res, {
+          wrap: globeStage,
+          pills: globeStage.querySelector('[data-globe-pills]'),
+          tip: globeStage.querySelector('[data-globe-tip]')
+        });
       }
-
-      return SEN.globe.init(res, {
-        wrap: stage,
-        pills: stage.querySelector('[data-globe-pills]'),
-        tip: stage.querySelector('[data-globe-tip]')
-      });
     }).catch(function (err) {
       console.warn('[SEN] 실적 데이터를 불러오지 못했습니다:', err && err.message);
-      if (elHint) elHint.textContent = '';
     });
   }
 
@@ -180,12 +214,13 @@ window.SEN = window.SEN || {};
 
       SEN.controls.init();
       SEN.atlas.init();
-      initGlobe(data);
+      initProjects(data);
 
       // 언어 변경 시 전체 다시 렌더
       SEN.i18n.onChange(function () {
         SEN.render(SEN.data);
         applyMeta(SEN.data);
+        renderProjectPanel(SEN.projectPanel.tab);   // 통계·지역 목록 라벨은 render() 대상이 아님
       });
 
       scrollToHash();

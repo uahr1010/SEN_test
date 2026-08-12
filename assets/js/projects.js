@@ -157,21 +157,30 @@ window.SEN = window.SEN || {};
       var r = matchAddress(addr);
       stat[r.acc]++;
       if (!r.key) return;
-      if (!map[r.key]) map[r.key] = { name: r.key, lat: r.lat, lng: r.lng, n: 0 };
+      if (!map[r.key]) map[r.key] = { name: r.key, lat: r.lat, lng: r.lng, n: 0, overseas: r.acc === 'oversea' };
       map[r.key].n++;
     });
 
     var regions = Object.keys(map).map(function (k) { return map[k]; });
     regions.sort(function (a, b) { return b.n - a.n; });
 
-    /* 시도별 합계 — 지구본 위 라벨에 씁니다 */
+    var domestic = regions.filter(function (r) { return !r.overseas; });
+    var abroad = regions.filter(function (r) { return r.overseas; });
+
+    /* 시도별 합계 — 지구본 위 라벨, 한국 지도 색칠에 씁니다 */
     var byProv = {};
-    regions.forEach(function (r) {
+    domestic.forEach(function (r) {
       var p = r.name.split(' ')[0];
       byProv[p] = (byProv[p] || 0) + r.n;
     });
 
-    return { regions: regions, byProv: byProv, stat: stat, total: total, placed: total - stat.none };
+    var sumN = function (list) { return list.reduce(function (s, r) { return s + r.n; }, 0); };
+
+    return {
+      regions: regions, byProv: byProv, stat: stat, total: total, placed: total - stat.none,
+      domestic: { regions: domestic, total: sumN(domestic) },
+      overseas: { regions: abroad, total: sumN(abroad) }
+    };
   }
 
   /* ---------- 진입점 ----------

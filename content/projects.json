@@ -13,11 +13,15 @@
       "ja": "プロジェクト"
     },
     "lead": {
-      "ko": "1973년부터 국내외에서 수행한 구조설계·진단·시공 실적입니다. 지구본을 돌려 지역별 실적을 확인해 보세요.",
-      "en": "Structural design, diagnostics and construction delivered in Korea and abroad since 1973. Spin the globe to see our work by region.",
-      "zh": "自1973年以来在国内外完成的结构设计、诊断与施工业绩。转动地球查看各地区实绩。",
-      "ja": "1973年以来、国内外で手がけた構造設計・診断・施工の実績です。地球儀を回して地域別の実績をご覧ください。"
+      "ko": "1973년부터 국내외에서 수행한 구조설계·진단·시공 실적입니다. 국내는 지도에서, 국외는 지구본에서 지역별 실적을 확인해 보세요.",
+      "en": "Structural design, diagnostics and construction delivered in Korea and abroad since 1973. See domestic results on the map and overseas results on the globe.",
+      "zh": "自1973年以来在国内外完成的结构设计、诊断与施工业绩。国内业绩请查看地图，海外业绩请查看地球仪。",
+      "ja": "1973年以来、国内外で手がけた構造設計・診断・施工の実績です。国内は地図で、海外は地球儀で地域別の実績をご覧ください。"
     }
+  },
+  "tabs": {
+    "domestic": { "ko": "국내", "en": "Domestic", "zh": "国内", "ja": "国内" },
+    "overseas": { "ko": "국외", "en": "Overseas", "zh": "海外", "ja": "海外" }
   },
   "ui": {
     "dragHint": {
@@ -25,6 +29,12 @@
       "en": "Drag to rotate · hover a dot to see the regional count",
       "zh": "拖动可旋转 · 将鼠标悬停在点上可查看该地区数量",
       "ja": "ドラッグで回転 · 点にカーソルを合わせると地域別件数が表示されます"
+    },
+    "mapHint": {
+      "ko": "시/도를 클릭하면 시군구별 실적을 볼 수 있습니다",
+      "en": "Click a province to see results by city/district",
+      "zh": "点击省/市可查看各市/区的业绩",
+      "ja": "都道府県をクリックすると市区郡別の実績が見られます"
     },
     "totalLabel": {
       "ko": "누적 실적",

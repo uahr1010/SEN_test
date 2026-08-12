@@ -137,34 +137,27 @@
 }
 .method__foot { margin-top: auto; }
 
-/* ---------- CONTACT ---------- */
-.contact__primary { margin-bottom: var(--sp-4); }
-.mailcard {
-  display: inline-flex; flex-direction: column; gap: 4px;
-  padding: var(--sp-3) var(--sp-4);
-  border: 1px solid rgba(255, 255, 255, .24); border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, .06);
-  transition: background .25s var(--ease), transform .25s var(--ease);
-}
-.mailcard:hover { background: rgba(255, 255, 255, .13); transform: translateY(-3px); }
-.mailcard__label { font-size: var(--fs-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--c-blue-soft); }
-.mailcard__value { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 2rem); }
-.mailcard__cta { font-size: var(--fs-small); color: rgba(255, 255, 255, .82); }
-
+/* ---------- CONTACT ----------
+   ⚠️ 흰색 글씨(rgba(255,255,255,…))로 되어 있던 옛 스타일입니다.
+   예전 디자인에서는 CONTACT가 짙은 남색 블록 위에 있어서 흰 글씨가 맞았지만,
+   지금은 about 장면 전체가 밝은 --paper 배경(.scene--paper)이라 흰 글씨가
+   거의 안 보였습니다. 밝은 배경 기준 토큰(--c-ink/--c-muted/--c-line)으로
+   다시 썼습니다 — 여기 두 톤(짙은 배경/밝은 배경)을 섞지 마세요. */
 .offices { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
 .office {
   padding: var(--sp-3); border-radius: var(--radius);
-  background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .1);
+  background: var(--c-white); border: 1px solid var(--c-line);
+  box-shadow: var(--shadow-sm);
 }
 .office__tag {
   font-size: var(--fs-xs); letter-spacing: .12em; text-transform: uppercase;
-  color: var(--c-blue-soft); margin-bottom: 6px;
+  color: var(--c-blue); font-weight: 700; margin-bottom: 6px;
 }
-.office__name { font-size: 1rem; margin-bottom: 8px; }
-.office__addr { font-size: var(--fs-small); color: rgba(255, 255, 255, .85); margin-bottom: 8px; }
-.office__meta { font-size: var(--fs-small); color: rgba(255, 255, 255, .93); display: grid; gap: 3px; }
-.office__meta a { border-bottom: 1px solid rgba(255, 255, 255, .35); }
-.office__meta a:hover { color: var(--c-blue-soft); border-color: var(--c-blue-soft); }
+.office__name { font-size: 1rem; margin-bottom: 8px; color: var(--c-ink); }
+.office__addr { font-size: var(--fs-small); color: var(--c-muted); margin-bottom: 8px; }
+.office__meta { font-size: var(--fs-small); color: var(--c-ink); display: grid; gap: 3px; }
+.office__meta a { border-bottom: 1px solid var(--c-line); }
+.office__meta a:hover { color: var(--c-blue); border-color: var(--c-blue); }
 
 /* ---------- 카드 그리드 (뉴스 / 프로젝트) ---------- */
 .cards { display: grid; gap: var(--sp-3); }
@@ -450,4 +443,80 @@
 .apply-modal__send { width: 100%; justify-content: center; }
 .apply-modal__fallback {
   margin-top: var(--sp-2); font-size: var(--fs-xs); color: var(--c-muted); line-height: 1.5;
+}
+
+/* ---------- 프로젝트 국내/국외 탭 ---------- */
+.proj-tabs { display: flex; gap: 8px; margin-bottom: var(--sp-3); }
+.proj-tab {
+  padding: 8px 20px; border-radius: 999px;
+  border: 1px solid var(--c-line); background: var(--c-white);
+  font-size: .88rem; font-weight: 700; color: var(--c-muted);
+  transition: all .2s var(--ease);
+}
+.proj-tab:hover { border-color: var(--c-blue-soft); color: var(--c-blue); }
+.proj-tab.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
+
+/* ---------- 한국 지도 ---------- */
+.kmap-stage {
+  position: relative; width: 100%; aspect-ratio: 1 / 1;
+  max-width: 660px; margin: 0 auto;
+}
+.kmap-stage.is-unavailable { display: none; }
+.kmap-stage.is-unavailable ~ .globe__hint { display: none; }
+.kmap-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+.kmap__prov {
+  stroke: var(--c-white); stroke-width: 1.5; cursor: pointer;
+  transition: opacity .15s var(--ease);
+}
+.kmap__prov:hover, .kmap__prov:focus-visible { opacity: .82; outline: none; }
+.kmap__label {
+  font-size: 12px; font-weight: 700; fill: var(--c-navy);
+  text-anchor: middle; pointer-events: none;
+  paint-order: stroke; stroke: var(--c-white); stroke-width: 3px;
+}
+
+.kmap-tip {
+  position: absolute; z-index: 3; pointer-events: none;
+  padding: 7px 12px; border-radius: var(--radius);
+  background: var(--c-navy); color: var(--c-white);
+  font-size: var(--fs-xs); line-height: 1.5; box-shadow: var(--shadow);
+  display: grid;
+}
+.kmap-tip strong { font-size: .82rem; }
+.kmap-tip span { color: var(--c-blue-soft); }
+
+/* ---------- 시/도 드릴다운 팝업 ---------- */
+.kmap-drill {
+  position: fixed; inset: 0; z-index: 130;
+  display: grid; place-items: center; padding: var(--sp-3);
+}
+.kmap-drill__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10, 37, 64, .55); backdrop-filter: blur(4px);
+}
+.kmap-drill__panel {
+  position: relative; width: min(760px, 100%); max-height: 86vh; overflow-y: auto;
+  background: var(--c-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+  padding: var(--sp-4);
+  animation: applyModalIn .25s var(--ease);
+}
+.kmap-drill__title { font-size: 1.4rem; padding-right: var(--sp-4); }
+.kmap-drill__meta { font-size: var(--fs-small); color: var(--c-muted); margin-bottom: var(--sp-3); }
+.kmap-drill__body {
+  display: grid; gap: var(--sp-4);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+}
+.kmap-drill__svg { width: 100%; height: auto; aspect-ratio: 640 / 620; overflow: visible; }
+.kmap__dist { stroke: var(--c-white); stroke-width: 1; }
+.kmap__dist.has { cursor: default; }
+.kmap__dist-label {
+  font-size: 10px; font-weight: 700; fill: var(--c-ink);
+  text-anchor: middle; pointer-events: none;
+  paint-order: stroke; stroke: rgba(255, 255, 255, .8); stroke-width: 2.5px;
+}
+
+@media (max-width: 640px) {
+  .kmap-drill__body { grid-template-columns: 1fr; }
 }
