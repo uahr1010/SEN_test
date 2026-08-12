@@ -217,11 +217,14 @@ python tools/translate_news.py drafts/파일명.md --dry-run
 
 ---
 
-### 공법 PDF 올리기
+### 회사소개서(PDF) 교체
 
-주요공법은 CMS에서 빠졌으므로 `content/about.json` 의 해당 공법 항목에
-`"pdf": "/uploads/docs/파일명.pdf"` 를 직접 적고, PDF는 `uploads/docs/` 에 올리세요.
-비워 두면 "자료 준비중"으로 표시됩니다.
+공법별 개별 PDF는 없고, "주요공법" 제목 옆 한국어/English/中文 3개 언어 박스로
+전체 공법을 아우르는 회사소개서 PDF 한 벌을 받습니다. 파일은
+`assets/pdf/senkuzo-brochure-{ko,en,zh}.pdf` 이고, `index.html` 의
+`.brochure__btn` 링크가 이 경로를 직접 가리킵니다. 교체할 땐 같은 파일명으로
+덮어쓰면 됩니다 (원본이 사진 위주로 과도하게 크면 PyMuPDF 등으로 내장 이미지만
+재압축하는 걸 권장합니다 — 텍스트 레이어는 그대로 두고 사진만 JPEG 재인코딩).
 
 ### 채용공고 추가 / "지원하기" 메일 주소 변경
 
@@ -332,8 +335,9 @@ python tools/translate_news.py drafts/파일명.md --dry-run
 
 ### 폰트 바꾸기
 
-같은 파일의 `--font-sans`(본문), `--font-display`(큰 제목).
-현재 제목은 Playfair Display(구글 폰트), 본문은 Pretendard(jsdelivr CDN)입니다.
+같은 파일의 `--font-sans`(본문), `--font-display`(숫자·연대·인용구 등 강조).
+현재는 **본문·강조 모두 Noto Sans KR**(구글 폰트) 하나로 통일되어 있습니다
+(`--font-display: var(--font-sans)`). 강조에만 다른 폰트를 쓰고 싶으면 그 한 줄만 바꾸면 됩니다.
 웹폰트가 필요 없으면 `index.html` 상단 웹폰트 블록을 통째로 지우세요 (시스템 폰트로 대체).
 
 ### 로고 바꾸기
@@ -404,9 +408,10 @@ python tools/translate_news.py drafts/파일명.md --dry-run
 1. `base.css` 의 `-webkit-font-smoothing: antialiased` — macOS 전용 보정값입니다.
    Windows 에서는 이게 ClearType(서브픽셀 렌더링)을 꺼 버려 글자가 얇고 뿌옇게 보입니다.
    **이 속성을 다시 넣지 마세요.**
-2. 본문 폰트 Pretendard 가 `--font-sans` 에 적혀만 있고 불러오지는 않아,
+2. 본문 폰트가 `--font-sans` 에 적혀만 있고 불러오지는 않아,
    대부분의 Windows PC 에서 '맑은 고딕'으로 떨어지고 있었습니다.
-   `index.html` 에서 Pretendard 를 직접 불러오도록 고쳤습니다.
+   `index.html` 에서 웹폰트를 직접 불러오도록 고쳤습니다.
+   (2026-08-12 에 본문 폰트를 Pretendard → **Noto Sans KR** 로 교체했습니다)
 
 함께 손본 것 — 남색 배경 위 흰 글자의 투명도를 올려 대비를 높였습니다
 (예: 히어로 소제목 82% → 93%, 지표 라벨 68% → 85%, 히어로 격자 무늬 16% → 10%).
@@ -458,10 +463,9 @@ CMS 사용법이나 편집 방식은 전혀 바뀌지 않습니다.
 ## 기술 메모
 
 - 빌드 도구·프레임워크 없음. 순수 HTML/CSS/JS (ES5 문법 + IntersectionObserver)
-- 외부 의존성 (모두 CDN, 프로젝트 섹션에서만 필요할 때 불러옴)
-  - Google Fonts — Playfair Display (제목)
-  - jsdelivr — Pretendard (본문 한글)
-  - three.js 0.155 — 실적 지구본. UMD 빌드가 r160부터 제거 예정이라 버전 고정
+- 외부 의존성 (모두 CDN)
+  - Google Fonts — Noto Sans KR (본문·강조 공용, 100~900 가변)
+  - three.js 0.155 — 실적 지구본(프로젝트 섹션에서만 불러옴). UMD 빌드가 r160부터 제거 예정이라 버전 고정
 - 지구본은 화면에 보일 때만 렌더링합니다 (IntersectionObserver + rAF)
 - WebGL을 못 쓰면 지구본만 접히고 실적 숫자·지역 순위는 그대로 남습니다
 - 국내 지도는 외부 지도 라이브러리 없이 순수 SVG + GeoJSON 좌표 변환입니다.
