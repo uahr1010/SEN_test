@@ -113,10 +113,23 @@ def load_glossary():
     return doc.get('terms', [])
 
 
+def squash(s):
+    """띄어쓰기를 모두 없앤 형태. 용어를 찾을 때만 씁니다.
+
+    글쓴이는 "PSRC(Prefabricated SRC)" 라고 쓰는데 용어집에는
+    "PSRC (Prefabricated SRC)" 처럼 괄호 앞이 띄어져 있는 식으로
+    표기가 흔들립니다. 그대로 비교하면 BCA·OSC·HMGICS 같은
+    핵심 고유명사가 통째로 누락되므로, 공백을 지우고 견줍니다.
+    """
+    return re.sub(r'\s+', '', s or '')
+
+
 def used_terms(text, terms):
     """기사에 실제로 나온 용어만 추립니다.
     용어집 전체를 프롬프트에 넣으면 길고 비싸지기만 합니다."""
-    hits = [t for t in terms if (t.get('ko') or '').strip() and t['ko'] in text]
+    flat = squash(text)
+    hits = [t for t in terms
+            if (t.get('ko') or '').strip() and squash(t['ko']) in flat]
     # 긴 표기부터 — "PSRC 기둥" 이 "PSRC" 보다 먼저 걸리도록
     hits.sort(key=lambda t: -len(t['ko']))
     return hits
@@ -140,11 +153,14 @@ def build_prompt(text, hits, lang_label, lang_key):
 
 
 def check_glossary(out, hits, lang_key):
-    """번역 결과에 용어집 표기가 실제로 쓰였는지 확인합니다."""
+    """번역 결과에 용어집 표기가 실제로 쓰였는지 확인합니다.
+    여기서도 띄어쓰기 차이는 눈감아 줍니다 — 괄호 앞 공백 하나 때문에
+    멀쩡한 번역을 틀렸다고 알리면 경고가 무의미해집니다."""
+    flat = squash(out)
     missing = []
     for t in hits:
         target = (t.get(lang_key) or '').strip()
-        if target and target not in out:
+        if target and squash(target) not in flat:
             missing.append(u'%s → %s' % (t['ko'], target))
     return missing
 
