@@ -2,6 +2,7 @@
 title: PSRC 공법 싱가포르 건축설계기준 등재
 category: 언론보도
 date: 2026-08-12
+link:
 ---
 PSRC(Prefabricated SRC)기둥 공법이 싱가포르 건설청(BCA)의 고강도 강-콘크리트 합성기둥 설계가이드인 BC4:2025에 독립 장으로서 등재되었습니다.
 
