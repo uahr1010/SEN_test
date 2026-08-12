@@ -59,6 +59,55 @@ window.SEN = window.SEN || {};
            (cls ? ' class="' + cls + '"' : '') + '>';
   }
 
+  /** +,− 로 여닫는 묶음 하나. CEO 약력과 회사연혁이 같은 모양을 씁니다.
+      g.open 이 true 면 펼친 채로 시작합니다. */
+  function accordion(g, inner) {
+    var head = '<b class="acc__label">' + esc(t(g.label)) + '</b>' +
+               (t(g.headline) ? '<span class="acc__headline">' + esc(t(g.headline)) + '</span>' : '');
+    return '<details class="acc__group"' + (g.open ? ' open' : '') + '>' +
+             '<summary>' + head + '</summary>' + inner +
+           '</details>';
+  }
+
+  /* ---------- 연혁 가로 타임라인(hline) ----------
+     수평선 하나 위에 항목을 왼쪽→오른쪽으로 놓고, 선의 위·아래에 번갈아 답니다.
+
+     ▸ 칸은 항목 수만큼 등분(--n)하고, 카드는 자기 칸의 2배 폭을 씁니다.
+       위·아래가 번갈아 붙으므로 같은 쪽 이웃은 두 칸 떨어져 있고,
+       따라서 카드가 칸을 넘어 옆으로 퍼져도 서로 겹치지 않습니다.
+       (칸 하나 폭 그대로 쓰면 11건짜리 연대에서 제목이 예닐곱 줄로 쪼개집니다)
+
+     ▸ <li> 는 display:contents 라 카드와 점이 격자에 직접 놓입니다.
+       카드는 1행(위) 또는 3행(아래), 점은 2행(선 위)에 들어갑니다. */
+  function hline(items) {
+    var n = items.length;
+    if (!n) return '';
+
+    var cells = items.map(function (it, i) {
+      var side = (i % 2 === 0) ? 'up' : 'down';
+      var when = [t(it.year), t(it.month)].filter(Boolean).join(' · ');
+      var col = ' style="grid-column:' + (i + 1) + '"';
+      /* 양 끝 카드는 2칸 폭이면 격자 밖으로 삐져나갑니다.
+         1.5칸으로 줄여 안쪽에 붙이면 같은 쪽 이웃과도 여전히 안 겹칩니다. */
+      var edge = (n === 1) ? ' hline__item--solo'
+               : (i === 0) ? ' hline__item--first'
+               : (i === n - 1) ? ' hline__item--last' : '';
+      return '' +
+        '<li class="hline__item hline__item--' + side + edge + '">' +
+          '<div class="hline__card"' + col + '>' +
+            '<p class="hline__when">' + esc(when) + '</p>' +
+            '<p class="hline__title">' + esc(t(it.title)) + '</p>' +
+            (t(it.desc) ? '<p class="hline__desc">' + esc(t(it.desc)) + '</p>' : '') +
+          '</div>' +
+          '<span class="hline__dot"' + col + ' aria-hidden="true"></span>' +
+        '</li>';
+    }).join('');
+
+    return '<div class="hline"><ol class="hline__track" style="--n:' + n + '">' +
+             '<span class="hline__axis" aria-hidden="true"></span>' + cells +
+           '</ol></div>';
+  }
+
   /* ---------- 목록 렌더러 ---------- */
   /* key = index.html 의 data-list 값 */
   var RENDERERS = {
@@ -70,22 +119,44 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* CEO 약력 */
-    'about.ceo.career': function (items) {
-      return items.map(function (it) { return '<li>' + esc(t(it)) + '</li>'; }).join('');
+    /* CEO 약력 — 약력 / 자격 / 주요 수상경력 / 저서 를 각각 +,− 로 여닫습니다.
+       처음에는 모두 접혀 있습니다 (JSON 에서 "open": true 로 두면 펼친 채로 시작). */
+    'about.ceo.careerGroups': function (groups) {
+      return groups.map(function (g) {
+        var lis = tList(g.items).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+        return accordion(g, '<ul class="acc__list">' + lis + '</ul>');
+      }).join('');
     },
 
-    /* 회사연혁 타임라인 */
-    'about.history.items': function (items) {
-      return items.map(function (it, i) {
+    /* 회사연혁 — 항상 보이는 창립 한 줄.
+       연대 모듈과 같은 모양을 쓰되 펼칠 내용이 없으므로 +,− 는 달지 않습니다. */
+    'about.history.pinned': function (items) {
+      return items.map(function (it) {
+        var sub = [t(it.month), t(it.title)].filter(Boolean).join(' · ');
+        /* label 을 적어 두면 그대로 씁니다 ("1973년"처럼 언어별 표기가 필요할 때).
+           없으면 year 를 그대로 보여 줍니다. */
         return '' +
-          '<li class="timeline__item reveal" data-delay="' + (i % 4) + '">' +
-            '<div class="timeline__year">' + esc(t(it.year)) + '</div>' +
-            '<div class="timeline__body">' +
-              '<p class="timeline__title">' + esc(t(it.title)) + '</p>' +
-              (t(it.desc) ? '<p class="timeline__desc">' + esc(t(it.desc)) + '</p>' : '') +
+          '<div class="era era--origin">' +
+            '<div class="era__head">' +
+              '<b class="era__label">' + esc(t(it.label) || t(it.year)) + '</b>' +
+              '<span class="era__headline">' + esc(sub) + '</span>' +
             '</div>' +
-          '</li>';
+          '</div>';
+      }).join('');
+    },
+
+    /* 회사연혁 — 연대 하나가 가로 타임라인 하나.
+       연대 이름은 모두 왼쪽에 크게, 열면 그 연대의 수평선이 펼쳐집니다. */
+    'about.history.groups': function (groups) {
+      return groups.map(function (g) {
+        return '' +
+          '<details class="era"' + (g.open ? ' open' : '') + '>' +
+            '<summary class="era__head">' +
+              '<b class="era__label">' + esc(t(g.label)) + '</b>' +
+              (t(g.headline) ? '<span class="era__headline">' + esc(t(g.headline)) + '</span>' : '') +
+            '</summary>' +
+            hline(g.items || []) +
+          '</details>';
       }).join('');
     },
 

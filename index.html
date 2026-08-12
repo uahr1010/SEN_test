@@ -11,9 +11,11 @@
 <meta property="og:image" content="assets/img/intro-poster.jpg">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 
-<!-- 웹폰트: 필요 없으면 아래 블록을 통째로 지우면 됩니다 (시스템 폰트로 자동 대체) -->
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<!-- 웹폰트 Noto Sans KR: 필요 없으면 아래 블록을 통째로 지우면 됩니다 (시스템 폰트로 자동 대체).
+     100~900 가변 폰트라 굵기 하나로 본문(400)부터 로고(900)까지 모두 커버합니다. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
 
 <!-- base/components 는 섹션 안쪽 내용(카드·타임라인·채용 아코디언)용,
      atlas 는 시네마틱 껍데기(고정 무대·장면 전환·상단 네비)용입니다.
@@ -80,31 +82,32 @@
         <p class="scene__lead" data-bind="about.section.lead"></p>
       </header>
 
+      <!-- 제목·인용구는 폭 전체, 그 아래 [사진+서명] / [본문] 2단,
+           맨 아래 약력·자격·수상·저서 4개 아코디언(폭 전체) -->
       <div class="about-block" id="about-ceo">
-        <div class="about-grid">
-          <div class="ceo__media"><img data-src="about.ceo.photo" alt="" loading="lazy"></div>
-          <div>
-            <h3 class="block__title" data-bind="about.ceo.heading"></h3>
-            <blockquote class="ceo__quote" data-bind="about.ceo.quote"></blockquote>
-            <div class="scene__scroll">
-              <div class="prose" data-prose="about.ceo.body"></div>
-              <details class="ceo__career">
-                <summary data-bind="about.ceo.careerLabel"></summary>
-                <ul data-list="about.ceo.career"></ul>
-              </details>
-            </div>
+        <h3 class="block__title" data-bind="about.ceo.heading"></h3>
+        <blockquote class="ceo__quote" data-bind="about.ceo.quote"></blockquote>
+
+        <div class="ceo__intro">
+          <div class="ceo__aside">
+            <div class="ceo__media"><img data-src="about.ceo.photo" alt="" loading="lazy"></div>
             <p class="ceo__sign">
               <span class="ceo__role" data-bind="about.ceo.role"></span>
               <strong class="ceo__name" data-bind="about.ceo.name"></strong>
             </p>
           </div>
+          <div class="prose" data-prose="about.ceo.body"></div>
         </div>
+
+        <div class="ceo__career acc" data-list="about.ceo.careerGroups"></div>
       </div>
 
       <div class="about-block" id="about-history">
         <h3 class="block__title" data-bind="about.history.heading"></h3>
         <p class="scene__lead" data-bind="about.history.lead"></p>
-        <div class="scene__scroll"><div class="timeline" data-list="about.history.items"></div></div>
+        <!-- 회사 창립은 항상 보이도록 고정, 나머지는 연대별로 접습니다 -->
+        <div class="history__pin" data-list="about.history.pinned"></div>
+        <div class="history" data-list="about.history.groups"></div>
       </div>
 
       <div class="about-block" id="about-methods">
@@ -114,7 +117,6 @@
             <p class="scene__lead" data-bind="about.methods.lead"></p>
           </div>
           <div class="brochure">
-            <span class="brochure__label" data-bind="about.methods.brochureLabel"></span>
             <div class="brochure__btns">
               <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-ko.pdf" download>한국어</a>
               <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-en.pdf" download>English</a>

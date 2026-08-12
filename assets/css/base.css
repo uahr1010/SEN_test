@@ -21,12 +21,15 @@
   --c-line-soft: #E2EAF3;
 
   /* ---- 폰트 ---- */
-  /* "Pretendard Variable" 이 앞 — index.html 에서 불러오는 웹폰트 이름입니다.
-     그다음 "Pretendard" 는 PC에 직접 설치된 경우를 위한 것입니다. */
-  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
+  /* "Noto Sans KR" 은 index.html 에서 불러오는 웹폰트 이름입니다.
+     뒤의 목록은 웹폰트를 못 받았을 때 쓸 시스템 폰트입니다. */
+  --font-sans: "Noto Sans KR", -apple-system, BlinkMacSystemFont,
                "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
-               "Noto Sans KR", Roboto, sans-serif;
-  --font-display: "Playfair Display", "Nanum Myeongjo", Georgia, "Batang", serif;
+               Roboto, sans-serif;
+  /* 숫자·연대·인용구 등 강조용. 예전에는 Playfair Display(세리프)였지만
+     사이트 전체를 Noto Sans KR 로 통일하면서 같은 폰트를 씁니다.
+     세리프 강조를 되살리려면 이 줄만 바꾸면 됩니다. */
+  --font-display: var(--font-sans);
 
   /* ---- 타이포 스케일 ---- */
   --fs-hero:    clamp(2.75rem, 8vw, 6.5rem);
