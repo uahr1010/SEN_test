@@ -17,7 +17,7 @@
 
   "ceo": {
     "heading": { "ko": "CEO 인사말", "en": "Message from the CEO", "zh": "总裁致辞", "ja": "CEO ご挨拶" },
-    "video": "",
+    "video": "https://www.youtube.com/watch?v=5-EM4UqqhA8",
     "photo": "/uploads/images/ceo.jpg",
     "quote": {
       "ko": "믿음으로 약속을 지키고, 경제적이며 편리하고 안전하며 아름다운 구조를 추구합니다.",

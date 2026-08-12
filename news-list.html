@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Senkuzo / SEN Engineering Group</title>
+<meta name="description" content="SEN Engineering Group 뉴스 전체 목록">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Senkuzo / SEN Engineering Group">
+<meta property="og:image" content="assets/img/intro-poster.jpg">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+
+<!-- 웹폰트: index.html 과 동일 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/atlas.css">
+</head>
+<body>
+
+<!-- ============ 상단 고정 네비 ============
+     news.html 과 완전히 동일한 마크업입니다. -->
+<header class="topbar is-light">
+  <a class="topbar__logo" href="index.html">
+    <img src="assets/img/logo.png" alt="SEN Engineering Group" width="471" height="110">
+  </a>
+
+  <nav class="topnav" aria-label="주 메뉴">
+    <a href="index.html#scene-about" data-bind="site.nav.about">회사소개</a>
+    <a href="index.html#scene-projects" data-bind="site.nav.projects">프로젝트</a>
+    <a href="index.html#scene-news" data-bind="site.nav.news">뉴스</a>
+    <a href="index.html#scene-careers" data-bind="site.nav.careers">채용</a>
+  </nav>
+
+  <div class="lang" data-langswitch>
+    <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" data-lang-toggle>
+      <svg class="ico" width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.6 10h14.8M10 2.6c4 4.6 4 10.8 0 14.8M10 2.6c-4 4.6-4 10.8 0 14.8" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+      <span data-lang-current>KO</span>
+    </button>
+    <ul class="lang__menu" data-lang-menu role="menu">
+      <li><button type="button" data-lang="ko" role="menuitem">한국어</button></li>
+      <li><button type="button" data-lang="en" role="menuitem">English</button></li>
+      <li><button type="button" data-lang="zh" role="menuitem">中文</button></li>
+      <li><button type="button" data-lang="ja" role="menuitem">日本語</button></li>
+    </ul>
+  </div>
+</header>
+
+<main class="newslist-main">
+  <div class="newslist">
+    <a class="article__back" href="index.html#scene-news" data-bind="site.ui.backToNews">← 뉴스 목록으로</a>
+
+    <header class="newslist__head">
+      <p class="scene__kicker" data-bind="news.section.eyebrow"></p>
+      <h1 class="scene__title" data-bind="news.section.title"></h1>
+    </header>
+
+    <div class="chips" data-news-list-filter></div>
+    <div class="cards cards--news" data-news-list><p class="article__empty">불러오는 중…</p></div>
+    <nav class="pager" data-news-pager aria-label="페이지 번호"></nav>
+  </div>
+</main>
+
+<!-- ============ 공용 푸터 ============ -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="assets/img/logo.png" alt="SEN Engineering Group" width="471" height="110">
+    </div>
+    <div class="site-footer__info">
+      <p data-bind="site.footer.address"></p>
+      <p data-bind="site.footer.tel"></p>
+      <p class="site-footer__copy" data-bind="site.footer.copyright"></p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/atlas.js"></script>
+<script src="assets/js/news-list.js"></script>
+
+</body>
+</html>

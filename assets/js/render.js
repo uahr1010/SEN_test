@@ -382,22 +382,17 @@ window.SEN = window.SEN || {};
     });
 
     // 5) CEO 인사말 위 소개 영상 — video URL이 비어 있으면 안 보이고,
-    //    누르면 그 자리에서 바로 재생됩니다 (이미 재생 중이면 다시 안 건드림).
+    //    있으면 자동재생·무한반복으로 바로 채워 넣습니다 (이미 채워져 있으면
+    //    다시 안 건드려 언어 전환마다 영상이 처음부터 다시 시작되지 않게 함).
+    //    브라우저 자동재생 정책상 소리는 기본 음소거(mute=1)로 시작합니다.
     var videoHost = document.querySelector('[data-ceo-video]');
     if (videoHost && !videoHost.querySelector('iframe')) {
       var vid = youtubeId(t(pick(ctx, 'about.ceo.video')));
       videoHost.hidden = !vid;
       if (vid) {
-        var thumb = videoHost.querySelector('[data-ceo-video-thumb]');
-        if (thumb) thumb.src = 'https://img.youtube.com/vi/' + vid + '/hqdefault.jpg';
-        var playBtn = videoHost.querySelector('[data-ceo-video-play]');
-        if (playBtn && !playBtn._wired) {
-          playBtn._wired = true;
-          playBtn.addEventListener('click', function () {
-            videoHost.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid +
-              '?autoplay=1" title="CEO" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
-          });
-        }
+        videoHost.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid +
+          '?autoplay=1&mute=1&loop=1&playlist=' + vid + '&rel=0" title="CEO" ' +
+          'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
       }
     }
 

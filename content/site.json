@@ -78,7 +78,7 @@
   "ui": {
     "readMore":    { "ko": "자세히 보기",  "en": "Read more",    "zh": "查看详情", "ja": "詳しく見る" },
     "viewDetail":  { "ko": "상세 보기",    "en": "View detail",  "zh": "查看详情", "ja": "詳細を見る" },
-    "loadMore":    { "ko": "더 보기",      "en": "Load more",    "zh": "查看更多", "ja": "もっと見る" },
+    "loadMore":    { "ko": "뉴스 더 보기", "en": "More news",    "zh": "查看更多新闻", "ja": "ニュースをもっと見る" },
     "all":         { "ko": "전체",         "en": "All",          "zh": "全部",     "ja": "すべて" },
     "empty":       { "ko": "등록된 내용이 없습니다.", "en": "Nothing here yet.", "zh": "暂无内容。", "ja": "登録された内容がありません。" },
     "apply":       { "ko": "지원하기",     "en": "Apply now",    "zh": "立即申请", "ja": "応募する" },

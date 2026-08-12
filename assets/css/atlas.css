@@ -10,8 +10,9 @@
    ========================================================================== */
 
 :root {
-  /* 참고 디자인의 팔레트 */
-  --paper:   #f5f5f7;
+  /* 참고 디자인의 팔레트 — 밝은 장면(회사소개/프로젝트/뉴스/채용) 배경을
+     완전 흰색으로 통일. 예전엔 연한 회색(#f5f5f7)이었습니다. */
+  --paper:   #ffffff;
   --paper-2: #e8e8ed;
   --ink:     #1d1d1f;
   --dim:     #6e6e73;
@@ -153,7 +154,8 @@ body {
   text-align: left; padding: 8px 12px; border-radius: 8px;
   font-size: .86rem; color: var(--ink); width: 100%;
 }
-.lang__menu button:hover { background: var(--paper); }
+/* --paper가 흰색이라 메뉴 배경(#fff)과 구분이 안 돼 --line으로 표시 */
+.lang__menu button:hover { background: var(--line); }
 
 /* ---------- 오른쪽 진행 점 ---------- */
 #prog {
@@ -288,3 +290,29 @@ body {
 .article__body p + p { margin-top: 1.3em; }
 .article__link { margin-top: clamp(32px, 5vh, 48px); }
 .article__empty { text-align: center; padding: clamp(40px, 8vh, 80px) 0; color: var(--dim); }
+
+/* ---------- 뉴스 전체 목록 페이지 (news-list.html) ----------
+   상세 페이지(.article, 760px 좁은 폭)와 달리 카드 그리드라
+   .scene__inner 와 같은 넓은 폭(1180px)을 씁니다. */
+.newslist-main {
+  background: var(--paper); color: var(--ink);
+  min-height: 60vh;
+  padding: clamp(72px, 10vh, 128px) 0;
+}
+.newslist { width: min(1180px, 92vw); margin: 0 auto; }
+.newslist__head { margin-bottom: clamp(20px, 3vh, 32px); }
+.newslist__head .scene__title { margin-top: 6px; }
+
+/* ---------- 쪽번호 ---------- */
+.pager {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 6px; margin-top: clamp(32px, 5vh, 48px);
+}
+.pager__page {
+  display: grid; place-items: center; min-width: 38px; height: 38px; padding: 0 6px;
+  border-radius: 999px; border: 1px solid var(--line);
+  font-size: .88rem; font-weight: 700; color: var(--ink);
+  transition: border-color .2s, color .2s, background .2s;
+}
+.pager__page:hover { border-color: var(--blue); color: var(--blue); }
+.pager__page.is-on { background: var(--blue); border-color: var(--blue); color: #fff; }

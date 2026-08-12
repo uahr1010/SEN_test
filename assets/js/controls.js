@@ -132,22 +132,16 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /* "더 보기"는 이제 news-list.html로 이동하는 평범한 링크라 여기서
+     따로 다룰 동작이 없습니다 — 칩 필터만 남았습니다. */
   function initListControls() {
     document.addEventListener('click', function (e) {
       var chip = e.target.closest('[data-chip]');
-      if (chip) {
-        var kind = chip.getAttribute('data-chip');
-        SEN.state.filter[kind] = chip.getAttribute('data-value') || null;
-        SEN.state.limit[kind] = SEN.state.PAGE;
-        SEN.render(SEN.data);
-        return;
-      }
-      var more = e.target.closest('[data-more]');
-      if (more) {
-        var k = more.getAttribute('data-more');
-        SEN.state.limit[k] += SEN.state.PAGE;
-        SEN.render(SEN.data);
-      }
+      if (!chip) return;
+      var kind = chip.getAttribute('data-chip');
+      SEN.state.filter[kind] = chip.getAttribute('data-value') || null;
+      SEN.state.limit[kind] = SEN.state.PAGE;
+      SEN.render(SEN.data);
     });
   }
 
