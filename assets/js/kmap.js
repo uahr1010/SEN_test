@@ -115,6 +115,105 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /* ---------- 확대/축소 (마우스 휠 · 두 손가락 핀치) ----------
+     지도를 다시 그리지 않고, 지도 내용을 감싼 <g>(zoom layer)에
+     translate+scale 만 걸어서 확대합니다. 좌표는 뷰박스 기준(사용자 공간)
+     이라 반응형으로 화면 크기가 달라져도 항상 같은 배율로 보입니다.
+
+     같은 <svg> 에는 한 번만 붙입니다 — 드릴다운 지도는 클릭할 때마다
+     다시 그려지는데, 그때마다 새로 붙이면 리스너가 계속 쌓여 두 번째
+     드릴다운부터 확대 속도가 배로 빨라지는 문제가 생깁니다. */
+  function attachZoom(svg, vbw, vbh) {
+    if (svg._zoomCtl) return svg._zoomCtl;
+
+    var MAX = 6;
+    var k = 1, tx = 0, ty = 0;
+    var layer = null;
+    var pinchDist = null, pinchMid = null;
+
+    function apply() {
+      if (layer) layer.setAttribute('transform', 'translate(' + tx.toFixed(2) + ',' + ty.toFixed(2) + ') scale(' + k.toFixed(4) + ')');
+    }
+
+    function clampPan() {
+      if (k <= 1) { tx = 0; ty = 0; return; }
+      tx = Math.min(0, Math.max(vbw * (1 - k), tx));
+      ty = Math.min(0, Math.max(vbh * (1 - k), ty));
+    }
+
+    /* 화면 좌표 → 이 svg 의 뷰박스 기준 좌표. getScreenCTM 은 svg 자체의
+       (반응형) 크기·뷰박스만 반영하고 zoom layer 의 transform 은 포함하지
+       않으므로, 확대 상태와 무관하게 항상 같은 값을 돌려줍니다. */
+    function toRoot(clientX, clientY) {
+      var pt = svg.createSVGPoint();
+      pt.x = clientX; pt.y = clientY;
+      var m = svg.getScreenCTM();
+      if (!m) return { x: 0, y: 0 };
+      var p = pt.matrixTransform(m.inverse());
+      return { x: p.x, y: p.y };
+    }
+
+    /* oldRoot 아래 있던 지도 위치가 newRoot 아래로 오도록 배율(factor 만큼)과
+       이동을 함께 계산합니다. oldRoot===newRoot 면 그 자리에서 확대만 됩니다
+       (휠 줌). 핀치처럼 두 값이 다르면 확대와 동시에 그만큼 따라 이동합니다
+       (두 손가락을 오므리며 옆으로 움직이면 확대+이동이 한 번에 됨). */
+    function zoomTo(oldRoot, newRoot, factor) {
+      var cx = (oldRoot.x - tx) / k, cy = (oldRoot.y - ty) / k;
+      var newK = Math.max(1, Math.min(MAX, k * factor));
+      tx = newRoot.x - cx * newK;
+      ty = newRoot.y - cy * newK;
+      k = newK;
+      clampPan();
+      apply();
+    }
+
+    svg.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var root = toRoot(e.clientX, e.clientY);
+      var factor = Math.pow(1.0015, -e.deltaY);
+      zoomTo(root, root, factor);
+    }, { passive: false });
+
+    function touchDist(t0, t1) { return Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY); }
+    function touchMid(t0, t1) { return { x: (t0.clientX + t1.clientX) / 2, y: (t0.clientY + t1.clientY) / 2 }; }
+
+    svg.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 2) {
+        pinchDist = touchDist(e.touches[0], e.touches[1]);
+        pinchMid = touchMid(e.touches[0], e.touches[1]);
+      }
+    }, { passive: true });
+    svg.addEventListener('touchmove', function (e) {
+      if (e.touches.length !== 2 || !pinchDist) return;
+      e.preventDefault();   /* 브라우저 자체 페이지 핀치줌 대신 지도 확대로 */
+      var d = touchDist(e.touches[0], e.touches[1]);
+      var mid = touchMid(e.touches[0], e.touches[1]);
+      zoomTo(toRoot(pinchMid.x, pinchMid.y), toRoot(mid.x, mid.y), d / pinchDist);
+      pinchDist = d;
+      pinchMid = mid;
+    }, { passive: false });
+    svg.addEventListener('touchend', function (e) {
+      if (e.touches.length < 2) pinchDist = null;
+    });
+
+    /* 두 번 탭/클릭하면 원래 배율로 */
+    svg.addEventListener('dblclick', function (e) {
+      e.preventDefault();
+      k = 1; tx = 0; ty = 0; apply();
+    });
+
+    /* 세로 스크롤(페이지 넘기기)은 그대로 두고, 브라우저 자체 핀치줌만
+       막아서 위 touchmove 핸들러가 두 손가락 제스처를 받도록 합니다. */
+    svg.style.touchAction = 'pan-y';
+
+    var ctl = {
+      setLayer: function (el) { layer = el; },
+      reset: function () { k = 1; tx = 0; ty = 0; apply(); }
+    };
+    svg._zoomCtl = ctl;
+    return ctl;
+  }
+
   /* ---------- 데이터 로드 ---------- */
   var kgeo = null, kmapData = null, munis = null;
 
@@ -163,8 +262,11 @@ window.SEN = window.SEN || {};
 
     var gPaths = document.createElementNS(SVGNS, 'g');
     var gLabels = document.createElementNS(SVGNS, 'g');
-    svg.appendChild(gPaths);
-    svg.appendChild(gLabels);
+    var zoomLayer = document.createElementNS(SVGNS, 'g');
+    zoomLayer.appendChild(gPaths);
+    zoomLayer.appendChild(gLabels);
+    svg.appendChild(zoomLayer);
+    attachZoom(svg, VBW, VBH).setLayer(zoomLayer);
 
     kgeo.features.forEach(function (f) {
       var full = f.properties.name;
@@ -267,8 +369,13 @@ window.SEN = window.SEN || {};
 
     var gPaths = document.createElementNS(SVGNS, 'g');
     var gLabels = document.createElementNS(SVGNS, 'g');
-    svg.appendChild(gPaths);
-    svg.appendChild(gLabels);
+    var zoomLayer = document.createElementNS(SVGNS, 'g');
+    zoomLayer.appendChild(gPaths);
+    zoomLayer.appendChild(gLabels);
+    svg.appendChild(zoomLayer);
+    var zctl = attachZoom(svg, VW, VH);
+    zctl.setLayer(zoomLayer);
+    zctl.reset();
 
     feats.forEach(function (f) {
       var code = f.properties.code, name = f.properties.name;
