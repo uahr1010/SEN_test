@@ -1,0 +1,139 @@
+{
+  "section": {
+    "eyebrow": { "ko": "04 — CAREERS", "en": "04 — CAREERS", "zh": "04 — 招聘", "ja": "04 — 採用" },
+    "title": { "ko": "함께 구조를 세울 사람", "en": "Build the Frame With Us", "zh": "与我们共同构筑结构", "ja": "ともに構造を築く仲間" },
+    "lead": {
+      "ko": "업계 최고 수준의 교육과 보상으로 직원의 성장을 지원합니다. 관심 있는 공고를 펼쳐 '지원하기'를 누르면 지원 메일 작성 창이 열립니다.",
+      "en": "We invest in our people with industry-leading training and rewards. Open a posting and click Apply — your mail app opens with the application email ready.",
+      "zh": "以业界顶尖的培训与薪酬支持员工成长。展开感兴趣的职位并点击「立即申请」，即可打开申请邮件撰写窗口。",
+      "ja": "業界最高水準の教育と報酬で社員の成長を支援します。気になる募集を開いて「応募する」を押すと、応募メールの作成画面が開きます。"
+    }
+  },
+
+  "applyEmail": "recruit@senkuzo.com",
+  "applyMailSubject": {
+    "ko": "[입사지원] {job} / 지원자 성명",
+    "en": "[Application] {job} / Your name",
+    "zh": "[应聘] {job} / 应聘者姓名",
+    "ja": "[応募] {job} / 応募者氏名"
+  },
+  "applyMailBody": {
+    "ko": "안녕하세요.\n\n센 엔지니어링그룹 채용공고를 보고 지원합니다.\n\n- 성명:\n- 연락처:\n- 최종학력:\n- 경력 요약:\n\n이력서와 포트폴리오를 첨부하였습니다. 검토 부탁드립니다.\n감사합니다.",
+    "en": "Hello,\n\nI would like to apply for the position advertised on your careers page.\n\n- Name:\n- Contact:\n- Education:\n- Experience summary:\n\nMy CV and portfolio are attached. Thank you for your consideration.",
+    "zh": "您好，\n\n本人希望应聘贵集团招聘公告中的职位。\n\n- 姓名：\n- 联系方式：\n- 最高学历：\n- 经历概要：\n\n附上简历与作品集，敬请审阅。谢谢。",
+    "ja": "はじめまして。\n\n採用情報を拝見し応募いたします。\n\n- 氏名：\n- 連絡先：\n- 最終学歴：\n- 経歴概要：\n\n履歴書とポートフォリオを添付いたします。ご査収のほどよろしくお願いいたします。"
+  },
+
+  "requirementsLabel": { "ko": "자격 요건", "en": "Requirements", "zh": "任职要求", "ja": "応募資格" },
+  "preferredLabel":    { "ko": "우대 사항", "en": "Preferred",   "zh": "优先条件", "ja": "歓迎要件" },
+  "deadlineLabel":     { "ko": "마감",      "en": "Due",         "zh": "截止",     "ja": "締切" },
+  "jobsHeading":       { "ko": "채용공고",  "en": "Open Positions", "zh": "招聘公告", "ja": "採用情報" },
+  "processHeading":    { "ko": "전형 절차", "en": "Hiring Process", "zh": "招聘流程", "ja": "選考プロセス" },
+
+  "values": [
+    {
+      "title": { "ko": "새로운 공법에 도전하는 사람", "en": "Willing to try new methods", "zh": "勇于挑战新工法的人", "ja": "新しい工法に挑戦する人" },
+      "desc": { "ko": "고정관념에 얽매이지 않고 더 안전하고 경제적인 방법을 찾습니다.", "en": "Free of received wisdom, always looking for a safer and more economical way.", "zh": "不拘泥于固有观念，持续寻找更安全、更经济的方法。", "ja": "固定観念にとらわれず、より安全で経済的な方法を探します。" }
+    },
+    {
+      "title": { "ko": "끝까지 책임지는 사람", "en": "Sees it through", "zh": "负责到底的人", "ja": "最後まで責任を持つ人" },
+      "desc": { "ko": "설계부터 시공까지 하나의 흐름을 함께 책임집니다.", "en": "Owns the whole flow, from design through erection.", "zh": "从设计到施工，共同承担全流程责任。", "ja": "設計から施工まで一つの流れを共に担います。" }
+    },
+    {
+      "title": { "ko": "배우고 나누는 사람", "en": "Learns and shares", "zh": "乐于学习与分享的人", "ja": "学び、分かち合う人" },
+      "desc": { "ko": "논문·특허·세미나를 통해 지식을 축적하고 공유합니다.", "en": "Builds and shares knowledge through papers, patents and seminars.", "zh": "通过论文、专利与研讨会积累并分享知识。", "ja": "論文・特許・セミナーを通じて知識を蓄積し共有します。" }
+    }
+  ],
+
+  "jobs": [
+    {
+      "id": "job-structural-engineer",
+      "email": "",
+      "title": { "ko": "[더미] 건축구조 설계 엔지니어", "en": "[dummy] Structural Design Engineer", "zh": "[样例] 建筑结构设计工程师", "ja": "[ダミー] 建築構造設計エンジニア" },
+      "team": { "ko": "구조설계본부", "en": "Structural Design Div.", "zh": "结构设计本部", "ja": "構造設計本部" },
+      "type": { "ko": "정규직", "en": "Full-time", "zh": "正式员工", "ja": "正社員" },
+      "location": { "ko": "서울 영등포", "en": "Yeongdeungpo, Seoul", "zh": "首尔永登浦", "ja": "ソウル永登浦" },
+      "deadline": "2026-09-30",
+      "description": {
+        "ko": "고층 건축물·데이터센터·물류시설의 구조 기본설계 및 실시설계를 담당합니다. 자사 공법(PSRC·TSC)을 적용한 최적 설계안을 제안하고 시공 단계까지 기술 지원을 수행합니다.",
+        "en": "Responsible for schematic and detailed structural design of high-rises, data centres and logistics facilities, proposing optimal solutions using our PSRC and TSC systems and supporting the construction stage.",
+        "zh": "负责高层建筑、数据中心与物流设施的结构基本设计与施工图设计，提出应用自有工法（PSRC·TSC）的最优方案，并提供至施工阶段的技术支持。",
+        "ja": "高層建築物・データセンター・物流施設の構造基本設計および実施設計を担当します。自社工法（PSRC・TSC）を適用した最適設計案を提案し、施工段階まで技術支援を行います。"
+      },
+      "requirements": [
+        { "ko": "건축공학·토목공학 학사 이상", "en": "Bachelor's degree or above in architectural or civil engineering", "zh": "建筑工程或土木工程本科以上学历", "ja": "建築工学・土木工学の学士以上" },
+        { "ko": "구조해석 프로그램(MIDAS, ETABS 등) 활용 가능", "en": "Proficient with structural analysis software (MIDAS, ETABS, etc.)", "zh": "能够使用结构分析软件（MIDAS、ETABS等）", "ja": "構造解析ソフト（MIDAS, ETABS など）の使用が可能な方" },
+        { "ko": "경력 3년 이상 (신입 별도 전형)", "en": "3+ years of experience (separate track for graduates)", "zh": "3年以上工作经验（应届生另设通道）", "ja": "実務経験3年以上（新卒は別途選考）" }
+      ],
+      "preferred": [
+        { "ko": "건축구조기술사 자격 보유", "en": "Professional Engineer (Structural) licence", "zh": "持有建筑结构技术士资格", "ja": "建築構造技術士の資格保有" },
+        { "ko": "합성구조·프리캐스트 설계 경험", "en": "Experience with composite or precast structures", "zh": "具备组合结构、预制结构设计经验", "ja": "合成構造・プレキャスト設計の経験" },
+        { "ko": "영어 또는 중국어 업무 가능", "en": "Working proficiency in English or Chinese", "zh": "能以英语或中文开展工作", "ja": "英語または中国語での業務が可能な方" }
+      ]
+    },
+    {
+      "id": "job-bim",
+      "email": "",
+      "title": { "ko": "[더미] BIM / 샵드로잉 담당", "en": "[dummy] BIM & Shop Drawing Specialist", "zh": "[样例] BIM／深化图纸负责人", "ja": "[ダミー] BIM・製作図担当" },
+      "team": { "ko": "센벡스 기술연구소", "en": "SENVEX R&D", "zh": "SENVEX 技术研究所", "ja": "センベックス技術研究所" },
+      "type": { "ko": "정규직", "en": "Full-time", "zh": "正式员工", "ja": "正社員" },
+      "location": { "ko": "서울 영등포", "en": "Yeongdeungpo, Seoul", "zh": "首尔永登浦", "ja": "ソウル永登浦" },
+      "deadline": "2026-10-15",
+      "description": {
+        "ko": "BIM 모델링과 강구조 샵드로잉을 담당하며, 설계–생산–시공 간 데이터 연계를 관리합니다.",
+        "en": "Owns BIM modelling and steel shop drawings, managing the data flow between design, fabrication and erection.",
+        "zh": "负责BIM建模与钢结构深化图纸，管理设计—生产—施工之间的数据衔接。",
+        "ja": "BIMモデリングと鉄骨製作図を担当し、設計・生産・施工間のデータ連携を管理します。"
+      },
+      "requirements": [
+        { "ko": "Revit 또는 Tekla 실무 사용 경험", "en": "Hands-on experience with Revit or Tekla", "zh": "具备Revit或Tekla实操经验", "ja": "Revit または Tekla の実務使用経験" },
+        { "ko": "도면 해독 능력", "en": "Ability to read construction drawings", "zh": "具备图纸识读能力", "ja": "図面の読解能力" }
+      ],
+      "preferred": [
+        { "ko": "강구조 제작·시공 이해", "en": "Understanding of steel fabrication and erection", "zh": "了解钢结构制作与施工", "ja": "鉄骨製作・施工への理解" }
+      ]
+    },
+    {
+      "id": "job-overseas",
+      "email": "",
+      "title": { "ko": "[더미] 해외영업 / 기술영업", "en": "[dummy] Overseas Technical Sales", "zh": "[样例] 海外营销／技术营销", "ja": "[ダミー] 海外営業・技術営業" },
+      "team": { "ko": "글로벌사업팀", "en": "Global Business Team", "zh": "全球事业团队", "ja": "グローバル事業チーム" },
+      "type": { "ko": "정규직", "en": "Full-time", "zh": "正式员工", "ja": "正社員" },
+      "location": { "ko": "서울 / 해외 출장", "en": "Seoul / overseas travel", "zh": "首尔／海外出差", "ja": "ソウル／海外出張" },
+      "deadline": "",
+      "description": {
+        "ko": "싱가포르·말레이시아·베트남 등 해외 법인과 협업하여 자사 공법의 기술영업을 담당합니다.",
+        "en": "Works with our Singapore, Malaysia and Vietnam entities on technical sales of our proprietary systems.",
+        "zh": "与新加坡、马来西亚、越南等海外法人协作，负责自有工法的技术营销。",
+        "ja": "シンガポール・マレーシア・ベトナムなど海外法人と協働し、自社工法の技術営業を担当します。"
+      },
+      "requirements": [
+        { "ko": "영어 비즈니스 회화 가능", "en": "Business-level English", "zh": "具备商务英语沟通能力", "ja": "ビジネスレベルの英語力" },
+        { "ko": "건설·엔지니어링 산업 이해", "en": "Understanding of the construction and engineering industry", "zh": "了解建筑与工程行业", "ja": "建設・エンジニアリング産業への理解" }
+      ],
+      "preferred": [
+        { "ko": "동남아 프로젝트 경험", "en": "Experience on Southeast Asian projects", "zh": "具备东南亚项目经验", "ja": "東南アジアのプロジェクト経験" },
+        { "ko": "중국어 또는 베트남어 가능", "en": "Chinese or Vietnamese language skills", "zh": "掌握中文或越南语", "ja": "中国語またはベトナム語が可能な方" }
+      ]
+    }
+  ],
+
+  "process": [
+    {
+      "title": { "ko": "서류 지원", "en": "Application", "zh": "投递简历", "ja": "書類応募" },
+      "desc": { "ko": "지원하기 버튼으로 이력서·포트폴리오를 메일 제출", "en": "Send your CV and portfolio via the Apply button", "zh": "通过「立即申请」按钮以邮件提交简历与作品集", "ja": "「応募する」ボタンから履歴書・ポートフォリオをメール提出" }
+    },
+    {
+      "title": { "ko": "서류 전형", "en": "Screening", "zh": "简历筛选", "ja": "書類選考" },
+      "desc": { "ko": "접수 후 2주 이내 개별 안내", "en": "Individual response within two weeks", "zh": "收到后两周内单独通知", "ja": "受付後2週間以内に個別ご案内" }
+    },
+    {
+      "title": { "ko": "실무 면접", "en": "Team Interview", "zh": "业务面试", "ja": "実務面接" },
+      "desc": { "ko": "해당 본부 실무진 면접 및 과제 검토", "en": "Interview with the hiring division, plus a work sample review", "zh": "由相关本部业务人员面试并审阅作业", "ja": "該当本部の実務者面接および課題審査" }
+    },
+    {
+      "title": { "ko": "임원 면접 / 입사", "en": "Final Interview & Offer", "zh": "高管面试／入职", "ja": "役員面接・入社" },
+      "desc": { "ko": "처우 협의 후 입사일 확정", "en": "Offer discussion and start date confirmation", "zh": "商定待遇后确定入职日期", "ja": "処遇協議のうえ入社日を確定" }
+    }
+  ]
+}

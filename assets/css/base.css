@@ -1,0 +1,149 @@
+/* ==========================================================================
+   base.css — 리셋 · 디자인 토큰 · 타이포그래피
+   색/폰트/여백을 바꾸고 싶으면 이 파일의 :root 변수만 수정하면 됩니다.
+   ========================================================================== */
+
+:root {
+  /* ---- 브랜드 컬러 (화이트 + 블루) ---- */
+  --c-navy:      #0A2540;   /* 가장 진한 남색 - 다크 섹션 배경 */
+  --c-navy-2:    #0F3358;
+  --c-blue:      #0B5FCE;   /* 메인 블루 - 버튼, 링크, 강조 */
+  --c-blue-dark: #084BA3;
+  --c-blue-mid:  #2E7BE0;
+  --c-blue-soft: #7FB2F0;
+  --c-tint:      #EFF5FD;   /* 아주 연한 블루 배경 */
+  --c-tint-2:    #DCEAFA;
+
+  --c-white:     #FFFFFF;
+  --c-ink:       #0E1E33;   /* 본문 텍스트 */
+  --c-muted:     #47586C;   /* 보조 텍스트 (흰 배경 대비 7.4:1) */
+  --c-line:      #C9D6E6;   /* 구분선 */
+  --c-line-soft: #E2EAF3;
+
+  /* ---- 폰트 ---- */
+  /* "Pretendard Variable" 이 앞 — index.html 에서 불러오는 웹폰트 이름입니다.
+     그다음 "Pretendard" 는 PC에 직접 설치된 경우를 위한 것입니다. */
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
+               "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
+               "Noto Sans KR", Roboto, sans-serif;
+  --font-display: "Playfair Display", "Nanum Myeongjo", Georgia, "Batang", serif;
+
+  /* ---- 타이포 스케일 ---- */
+  --fs-hero:    clamp(2.75rem, 8vw, 6.5rem);
+  --fs-h2:      clamp(1.9rem, 4vw, 3.25rem);
+  --fs-h3:      clamp(1.35rem, 2.4vw, 2rem);
+  --fs-lead:    clamp(1rem, 1.4vw, 1.175rem);
+  --fs-body:    1rem;
+  --fs-small:   0.875rem;
+  --fs-xs:      0.78rem;
+
+  /* ---- 간격 ---- */
+  --sp-1: 0.5rem;  --sp-2: 1rem;   --sp-3: 1.5rem;
+  --sp-4: 2rem;    --sp-5: 3rem;   --sp-6: 4.5rem;
+  --sp-7: 7rem;
+
+  /* ---- 레이아웃 ---- */
+  --shell:      1240px;
+  --shell-pad:  clamp(1.25rem, 5vw, 3rem);
+  --header-h:   76px;
+  --radius:     14px;
+  --radius-lg:  22px;
+
+  --shadow-sm: 0 2px 8px rgba(10, 37, 64, .06);
+  --shadow:    0 12px 32px rgba(10, 37, 64, .10);
+  --shadow-lg: 0 28px 60px rgba(10, 37, 64, .16);
+
+  /* 이미지 자리표시 배경.
+     사진 업로드 전에도 화면에 무게감이 생기도록 진한 남색 + 도면 느낌의
+     사선 해칭을 씁니다. 사진이 올라가면 이 배경은 가려집니다. */
+  --ph:
+    repeating-linear-gradient(135deg,
+      rgba(255,255,255,.055) 0 2px, transparent 2px 11px),
+    linear-gradient(135deg, #0E2E52 0%, #14497F 52%, #1E63B4 100%);
+
+  --ease: cubic-bezier(.22, .8, .28, 1);
+}
+
+/* ---- 리셋 ---- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+/* HTML 의 hidden 속성이 항상 통하게 만듭니다.
+   브라우저 기본값은 `[hidden] { display: none }` 인데, 우리가 같은 요소에
+   display 를 지정하면(예: `.modal { display: grid }`) 그쪽이 이겨 버려
+   hidden 이 무시됩니다. 실제로 프로젝트 모달이 이 문제로 항상 떠 있으면서
+   남색 반투명막 + blur(4px) 로 화면 전체를 뿌옇게 덮고 클릭까지 막고 있었습니다.
+   모달·드로어처럼 hidden 으로 여닫는 요소가 있는 한 이 규칙을 지우지 마세요. */
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  /* 고정 헤더에 앵커 제목이 가려지지 않도록 */
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* ⚠️ 여기에 `-webkit-font-smoothing: antialiased` 를 넣지 마세요.
+   macOS 전용 보정값이라, Windows 에서는 ClearType(서브픽셀 렌더링)이 꺼지면서
+   글자가 얇아지고 뿌옇게 보입니다. 특히 한글에서 심합니다. */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--c-ink);
+  background: var(--c-white);
+  overflow-x: hidden;
+  word-break: keep-all;   /* 한국어 줄바꿈을 어절 단위로 */
+}
+body.is-locked { overflow: hidden; }
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--c-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* 앵커 이동 시 섹션 상단 여백 확보 */
+[id] { scroll-margin-top: calc(var(--header-h) + 8px); }
+
+/* ---- 타이포그래피 ---- */
+h1, h2, h3, h4 { line-height: 1.18; font-weight: 700; letter-spacing: -.02em; }
+
+.eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-blue);
+  margin-bottom: var(--sp-2);
+}
+
+.prose p { margin-bottom: 1.05em; color: var(--c-muted); }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--c-ink); }
+
+/* ---- 유틸 ---- */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--shell-pad);
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* 사진이 아직 업로드되지 않았거나 경로가 틀렸을 때, 깨진 아이콘 대신
+   컨테이너에 깔린 --ph (placeholder) 그라디언트가 보이도록 이미지를 감춥니다. */
+img.is-missing { display: none !important; }

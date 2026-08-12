@@ -1,0 +1,212 @@
+/* ==========================================================================
+   atlas.css — 시네마틱 껍데기
+
+   참고 디자인(SEN_homepage.html)의 색·타이포·구성을 따르되,
+   장면을 겹쳐 교차 전환하는 방식은 쓰지 않습니다.
+   섹션(.scene)이 위에서 아래로 그냥 이어지는 평범한 세로 스크롤입니다.
+
+   섹션 안쪽 내용(카드·타임라인·채용 아코디언)은 기존 components.css 를 그대로 씁니다.
+   여기서는 색만 이 디자인에 맞게 덮어씁니다.
+   ========================================================================== */
+
+:root {
+  /* 참고 디자인의 팔레트 */
+  --paper:   #f5f5f7;
+  --paper-2: #e8e8ed;
+  --ink:     #1d1d1f;
+  --dim:     #6e6e73;
+  --blue:    #0071e3;
+  --line:    #e2e2e7;
+  --night:   #0b0f1a;
+
+  /* 기존 컴포넌트가 쓰는 토큰을 이 팔레트로 재정의 */
+  --c-navy: #0b0f1a;
+  --c-blue: #0071e3;
+  --c-blue-dark: #0066cc;
+  --c-ink: #1d1d1f;
+  --c-muted: #6e6e73;
+  --c-line: #e2e2e7;
+  --c-tint: #eef4fd;
+}
+
+html { scroll-behavior: auto; }   /* 스크롤 위치를 직접 제어하므로 smooth 를 끕니다 */
+
+body {
+  background: var(--night);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* 섹션은 위에서 아래로 그냥 이어집니다.
+   예전에는 #stage 를 고정해 두고 장면을 겹쳐 교차 전환했는데,
+   스크롤할 때마다 창이 통째로 바뀌는 느낌이라 걷어냈습니다.
+   (되살리려면 무대 고정 + 장면 겹침이 필요하지만, 권하지 않습니다) */
+.scene {
+  position: relative;
+  padding: clamp(72px, 10vh, 128px) 0;
+  overflow-x: hidden;
+}
+.scene[hidden] { display: none; }
+.scene + .scene { border-top: 1px solid var(--line); }
+
+.scene__inner {
+  width: min(1180px, 92vw);
+  margin: 0 auto;
+}
+
+/* 밝은 장면 (회사소개·프로젝트·뉴스·채용) */
+.scene--paper { background: var(--paper); }
+.scene--paper .scene__inner { color: var(--ink); }
+
+/* ---------- 장면 1 : 인트로 영상 ---------- */
+#scene-intro {
+  padding: 0; overflow: hidden;
+  min-height: 100vh; display: grid; place-items: stretch;
+}
+#scene-intro .intro__media { position: absolute; inset: 0; }
+#scene-intro .intro__poster {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+.intro__vignette {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 80% at 50% 40%, transparent 30%, rgba(0,0,0,.55) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.42) 0%, transparent 32%, rgba(0,0,0,.62) 100%);
+}
+.intro__hud {
+  position: absolute; inset: 0; display: grid; align-content: center;
+  padding: 0 clamp(24px, 6vw, 90px); color: #fff;
+}
+.intro__title {
+  font-weight: 900; font-size: clamp(52px, 9.5vw, 168px);
+  letter-spacing: -.035em; line-height: .95;
+  text-shadow: 0 6px 44px rgba(0, 0, 0, .5);
+}
+.intro__title .thin { font-weight: 300; }
+.intro__sub {
+  margin-top: 18px; font-size: clamp(11px, 1.15vw, 15px);
+  letter-spacing: .26em; color: rgba(255, 255, 255, .82);
+}
+.intro__cue {
+  position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%);
+  display: grid; justify-items: center; gap: 10px;
+  font-size: 10px; letter-spacing: .3em; color: rgba(255, 255, 255, .7);
+}
+.intro__cue i {
+  display: block; width: 1px; height: 44px;
+  background: linear-gradient(rgba(255,255,255,.75), transparent);
+}
+
+/* ---------- 상단 고정 네비 ---------- */
+.topbar {
+  position: fixed; inset: 0 0 auto 0; z-index: 60;
+  display: flex; align-items: center; gap: clamp(16px, 3vw, 40px);
+  padding: 16px clamp(20px, 4vw, 48px);
+  color: #fff;
+  transition: background .35s ease, color .35s ease, box-shadow .35s ease;
+}
+/* 밝은 장면 위에서는 흰 배경으로 반전 */
+.topbar.is-light {
+  background: rgba(255, 255, 255, .88);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  color: var(--ink);
+  box-shadow: 0 1px 0 var(--line);
+}
+
+.topbar__logo { font-weight: 900; letter-spacing: -.02em; font-size: 1.05rem; }
+.topbar__logo em { font-style: normal; font-weight: 300; opacity: .7; }
+
+.topnav { display: flex; gap: clamp(10px, 2vw, 28px); margin-left: auto; }
+.topnav button {
+  font-size: .9rem; font-weight: 700; letter-spacing: -.01em;
+  color: inherit; opacity: .68; padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: opacity .2s, border-color .2s;
+}
+.topnav button:hover { opacity: 1; }
+.topnav button.is-on { opacity: 1; border-bottom-color: var(--blue); }
+
+/* 언어 토글 */
+.lang { position: relative; }
+.lang__btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .82rem; font-weight: 700; color: inherit;
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid currentColor; opacity: .8;
+}
+.lang__btn:hover { opacity: 1; }
+.lang__menu {
+  position: absolute; right: 0; top: calc(100% + 8px); min-width: 132px;
+  background: #fff; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .18);
+  padding: 6px; display: grid; gap: 2px;
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: all .2s ease;
+}
+.lang.is-open .lang__menu { opacity: 1; visibility: visible; transform: none; }
+.lang__menu button {
+  text-align: left; padding: 8px 12px; border-radius: 8px;
+  font-size: .86rem; color: var(--ink); width: 100%;
+}
+.lang__menu button:hover { background: var(--paper); }
+
+/* ---------- 오른쪽 진행 점 ---------- */
+#prog {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 60;
+  display: grid; gap: 12px;
+}
+#prog button {
+  width: 9px; height: 9px; border-radius: 50%; padding: 0;
+  background: rgba(140, 150, 170, .45);
+  transition: background .25s, transform .25s;
+}
+#prog button.is-on { background: var(--blue); transform: scale(1.45); }
+
+/* ---------- 장면 머리말 ---------- */
+.scene__head { margin-bottom: clamp(24px, 4vh, 44px); }
+.scene__kicker {
+  font-size: 11px; letter-spacing: .28em; color: var(--blue);
+  font-weight: 800; margin-bottom: 12px;
+}
+.scene__title {
+  font-weight: 900; letter-spacing: -.03em; line-height: 1.14;
+  font-size: clamp(28px, 4.4vw, 56px); color: var(--ink);
+}
+.scene__title em { font-style: normal; color: var(--blue); }
+.scene__lead {
+  margin-top: 14px; max-width: 62ch; color: var(--dim);
+  font-size: clamp(.95rem, 1.2vw, 1.08rem); line-height: 1.75;
+}
+
+/* 예전 무대 방식에서 쓰던 안쪽 스크롤 칸.
+   지금은 페이지가 통째로 스크롤되므로 높이를 제한하지 않고 그대로 흐르게 둡니다. */
+.scene__scroll { max-height: none; overflow: visible; }
+
+/* 회사소개는 항목이 많아 2단으로 */
+.about-grid {
+  display: grid; gap: clamp(20px, 3vw, 40px);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: start;
+}
+/* 회사소개 하위 덩어리 (CEO 인사말 / 연혁 / 주요공법 / CONTACT).
+   예전에는 탭으로 접어 뒀지만, 스크롤로 쭉 읽히도록 펼쳐 두었습니다. */
+.about-block + .about-block { margin-top: clamp(48px, 8vh, 88px); }
+.about-block > .block__title {
+  font-size: clamp(20px, 2.4vw, 30px); font-weight: 800;
+  letter-spacing: -.02em; margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .topnav { gap: 12px; }
+  .topnav button { font-size: .8rem; }
+  .topbar__logo em { display: none; }
+  #prog { right: 10px; }
+  .scene__scroll { max-height: 46vh; }
+}
+
+/* 모션을 줄이는 설정이면 장면을 겹치지 않고 그냥 이어 붙입니다 */

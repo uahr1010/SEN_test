@@ -1,0 +1,266 @@
+{
+  "section": {
+    "eyebrow": { "ko": "01 — ABOUT US", "en": "01 — ABOUT US", "zh": "01 — 公司介绍", "ja": "01 — 会社紹介" },
+    "title": {
+      "ko": "설계에서 시공까지,\n하나의 책임으로",
+      "en": "From design to erection,\nunder one responsibility",
+      "zh": "从设计到施工，\n一体化责任",
+      "ja": "設計から施工まで、\nひとつの責任で"
+    },
+    "lead": {
+      "ko": "센 엔지니어링그룹은 구조설계사(센구조연구소), 기술연구소(센벡스), 강구조 전문건설사(센코어테크)가 수직 계열화된 조직입니다. 신공법 개발부터 설계, 자재 생산, 시공까지 하나의 흐름으로 진행합니다.",
+      "en": "SEN Engineering Group is a vertically integrated organisation of a structural design firm (SEN Structural Engineers), an R&D institute (SENVEX) and a steel construction specialist (SENcoretech) — from technology development to design, fabrication and erection in a single flow.",
+      "zh": "SEN 工程集团由结构设计公司（SEN结构研究所）、技术研究所（SENVEX）与钢结构专业施工企业（SENcoretech）垂直整合而成。从新工法研发、设计、材料生产到施工，一气呵成。",
+      "ja": "SEN エンジニアリンググループは、構造設計事務所（セン構造研究所）、技術研究所（センベックス）、鉄骨専門建設会社（センコアテック）が垂直統合された組織です。新工法開発から設計・製作・施工までを一貫して進めます。"
+    }
+  },
+
+  "ceo": {
+    "heading": { "ko": "CEO 인사말", "en": "Message from the CEO", "zh": "总裁致辞", "ja": "CEO ご挨拶" },
+    "photo": "/uploads/images/ceo.jpg",
+    "quote": {
+      "ko": "믿음으로 약속을 지키고, 경제적이며 편리하고 안전하며 아름다운 구조를 추구합니다.",
+      "en": "We keep our promises through trust, pursuing structures that are economical, practical, safe and beautiful.",
+      "zh": "以诚信履行承诺，追求经济、便利、安全而优美的结构。",
+      "ja": "信頼をもって約束を守り、経済的で使いやすく安全かつ美しい構造を追求します。"
+    },
+    "body": {
+      "ko": "저희 센 엔지니어링그룹 홈페이지 방문을 환영합니다.\n\n센 엔지니어링그룹은 1973년부터 현재까지 5,000여 건의 구조설계와 500여 건의 구조안전진단 경험을 축적하였습니다. 또한 다년간의 실무 경험을 기초로 연구개발한 독자 원천기술(특허 110여 건, 신기술 2건 등)을 활용하여 기본설계부터 강구조 시공까지 건축구조 전반을 망라하는 '원스톱' 서비스를 제공하고 있습니다.\n\n앞으로도 지속적인 연구개발로 구조설계, 시공자문, 진단, 특수보강공사, 구조안전 모니터링, 그리고 강구조 시공 업무에 이르는 각각의 Project마다 고객들께 물질·시간·정신적인 이익이 돌아가는 Total Value Engineering을 약속합니다.\n\n감사합니다.",
+      "en": "Welcome to the SEN Engineering Group website.\n\nSince 1973 we have accumulated experience across more than 5,000 structural design projects and 500 structural safety diagnoses. Building on decades of practice, we apply proprietary technologies developed in-house — over 110 patents and two certified new technologies — to provide a true one-stop service spanning the whole of building structures, from schematic design through to steel construction.\n\nWe will continue to invest in research and development so that every project — structural design, construction consulting, diagnosis, special reinforcement work, structural health monitoring and steel erection — returns material, temporal and intellectual value to our clients through Total Value Engineering.\n\nThank you.",
+      "zh": "欢迎访问 SEN 工程集团网站。\n\n自1973年至今，我们积累了5,000余项结构设计与500余项结构安全诊断经验。在多年实务经验基础上，我们运用自主研发的原创技术（专利110余项、新技术2项等），提供涵盖从基本设计到钢结构施工的建筑结构全流程「一站式」服务。\n\n今后我们将持续研发，在结构设计、施工咨询、诊断、特殊加固工程、结构安全监测及钢结构施工等每一个项目中，为客户带来物质、时间与精神层面收益的 Total Value Engineering。\n\n谢谢。",
+      "ja": "SEN エンジニアリンググループのウェブサイトへようこそ。\n\n当グループは1973年から現在までに5,000件を超える構造設計と500件以上の構造安全診断の経験を蓄積してまいりました。長年の実務経験に基づき研究開発した独自技術（特許110件超、新技術2件など）を活用し、基本設計から鉄骨施工まで建築構造全般を網羅する「ワンストップ」サービスを提供しています。\n\n今後も継続的な研究開発により、構造設計・施工コンサルティング・診断・特殊補強工事・構造安全モニタリング・鉄骨施工に至る各プロジェクトで、お客様に物質的・時間的・精神的な利益をもたらす Total Value Engineering をお約束します。\n\nありがとうございます。"
+    },
+    "role": { "ko": "센 엔지니어링그룹 대표이사", "en": "CEO, SEN Engineering Group", "zh": "SEN 工程集团 总裁", "ja": "SEN エンジニアリンググループ 代表取締役" },
+    "name": { "ko": "홍길동", "en": "Gildong Hong", "zh": "洪吉童", "ja": "ホン・ギルドン" },
+    "careerLabel": { "ko": "약력 · 수상", "en": "Career & Awards", "zh": "履历与获奖", "ja": "略歴・受賞" },
+    "career": [
+      { "ko": "[더미] 서울대학교 공과대학 건축학과 졸업", "en": "[dummy] B.Arch., Seoul National University", "zh": "[样例] 首尔大学工科大学建筑学系毕业", "ja": "[ダミー] ソウル大学工科大学建築学科卒業" },
+      { "ko": "[더미] 건축구조기술사 · APEC Engineer", "en": "[dummy] P.E. Structural · APEC Engineer", "zh": "[样例] 建筑结构技术士 · APEC Engineer", "ja": "[ダミー] 建築構造技術士・APEC Engineer" },
+      { "ko": "[더미] 한국강구조학회 작품상 수상", "en": "[dummy] KSSC Structural Design Award", "zh": "[样例] 韩国钢结构学会作品奖", "ja": "[ダミー] 韓国鋼構造学会 作品賞" },
+      { "ko": "[더미] 한국건축문화대상 올해의 건축인상", "en": "[dummy] Korea Architecture Award, Engineer of the Year", "zh": "[样例] 韩国建筑文化大奖 年度建筑人奖", "ja": "[ダミー] 韓国建築文化大賞 今年の建築人賞" }
+    ]
+  },
+
+  "history": {
+    "heading": { "ko": "회사연혁", "en": "Company History", "zh": "公司沿革", "ja": "沿革" },
+    "lead": {
+      "ko": "1973년 센구조연구소 창립 이후 지금까지의 주요 발자취입니다. (※ 아래 항목은 예시 데이터이며 실제 연혁으로 교체해 주세요)",
+      "en": "Milestones since the founding of SEN Structural Engineers in 1973. (Sample data — replace with your actual history.)",
+      "zh": "自1973年SEN结构研究所创立以来的主要历程。（以下为示例数据，请替换为实际沿革）",
+      "ja": "1973年のセン構造研究所創立以来の主な歩みです。（以下はサンプルデータです。実際の沿革に差し替えてください）"
+    },
+    "items": [
+      {
+        "year": "1973",
+        "title": { "ko": "센구조연구소 창립", "en": "SEN Structural Engineers founded", "zh": "SEN结构研究所创立", "ja": "セン構造研究所 創立" },
+        "desc": { "ko": "건축구조설계 전문사무소로 출발", "en": "Established as a specialist structural design practice", "zh": "作为建筑结构设计专业事务所起步", "ja": "建築構造設計専門事務所として出発" }
+      },
+      {
+        "year": "1996",
+        "title": { "ko": "[더미] 대형 프로젝트 구조설계 수행", "en": "[dummy] Major landmark structural design", "zh": "[样例] 大型项目结构设计", "ja": "[ダミー] 大型プロジェクト構造設計" },
+        "desc": { "ko": "고층 오피스 구조설계로 학회 특별상 수상", "en": "High-rise office design recognised by KSSC", "zh": "高层办公楼结构设计获学会特别奖", "ja": "高層オフィスの構造設計で学会特別賞を受賞" }
+      },
+      {
+        "year": "2005",
+        "title": { "ko": "[더미] (주)센벡스 설립", "en": "[dummy] SENVEX established", "zh": "[样例] SENVEX 成立", "ja": "[ダミー] センベックス設立" },
+        "desc": { "ko": "신공법 연구개발 및 지적재산권 전담 법인", "en": "R&D and IP arm for new construction methods", "zh": "专责新工法研发与知识产权的法人", "ja": "新工法研究開発・知的財産権の専門法人" }
+      },
+      {
+        "year": "2011",
+        "title": { "ko": "[더미] PSRC 합성기둥 공법 개발", "en": "[dummy] PSRC composite column developed", "zh": "[样例] PSRC 组合柱工法开发", "ja": "[ダミー] PSRC 合成柱工法を開発" },
+        "desc": { "ko": "선조립 SRC 기둥으로 공기 단축 실현", "en": "Prefabricated SRC column cutting site schedule", "zh": "预制SRC柱大幅缩短工期", "ja": "先組立SRC柱により工期短縮を実現" }
+      },
+      {
+        "year": "2014",
+        "title": { "ko": "[더미] (주)센코어테크 설립", "en": "[dummy] SENcoretech established", "zh": "[样例] SENcoretech 成立", "ja": "[ダミー] センコアテック設立" },
+        "desc": { "ko": "진천 공장 준공, 자체 생산·시공 체계 구축", "en": "Jincheon plant completed; in-house fabrication and erection", "zh": "镇川工厂竣工，建立自主生产施工体系", "ja": "鎮川工場竣工、自社生産・施工体制を構築" }
+      },
+      {
+        "year": "2019",
+        "title": { "ko": "[더미] 싱가포르 법인 설립", "en": "[dummy] SEN SG Pte. Ltd. established", "zh": "[样例] 新加坡法人成立", "ja": "[ダミー] シンガポール法人設立" },
+        "desc": { "ko": "동남아 시장 진출 본격화", "en": "Full-scale entry into the Southeast Asian market", "zh": "正式进军东南亚市场", "ja": "東南アジア市場への本格進出" }
+      },
+      {
+        "year": "2025",
+        "title": { "ko": "PSRC 공법 싱가포르 설계기준(BC4:2025) 등재", "en": "PSRC included in Singapore design code BC4:2025", "zh": "PSRC 工法列入新加坡设计标准 BC4:2025", "ja": "PSRC工法がシンガポール設計基準 BC4:2025 に収載" },
+        "desc": { "ko": "BCA 고강도 합성기둥 설계가이드에 독립 장으로 수록", "en": "Dedicated chapter in the BCA composite column design guide", "zh": "作为独立章节收录于BCA高强度组合柱设计指南", "ja": "BCA高強度合成柱設計ガイドに独立章として収載" }
+      },
+      {
+        "year": "2026",
+        "title": { "ko": "AI 데이터센터 골조 OSC 공법 적용 확대", "en": "OSC adoption expanded to AI data centre frames", "zh": "AI数据中心主体结构OSC工法应用扩大", "ja": "AIデータセンター躯体へのOSC工法適用を拡大" },
+        "desc": { "ko": "PSRC·TSC 조합으로 골조공사 기간 대폭 단축", "en": "PSRC + TSC combination dramatically shortening frame schedules", "zh": "PSRC与TSC组合大幅缩短主体工程工期", "ja": "PSRC・TSCの組合せで躯体工事期間を大幅短縮" }
+      }
+    ]
+  },
+
+  "methods": {
+    "heading": { "ko": "주요공법", "en": "Core Technologies", "zh": "主要工法", "ja": "主要工法" },
+    "lead": {
+      "ko": "각 공법의 기술자료는 PDF로 내려받으실 수 있습니다. (※ PDF 파일은 uploads/docs 폴더에 올린 뒤 연결하세요)",
+      "en": "Technical documents for each system are available as PDF downloads. (Upload the PDFs to uploads/docs and link them.)",
+      "zh": "各工法的技术资料可下载 PDF。（请将PDF上传至 uploads/docs 文件夹后链接）",
+      "ja": "各工法の技術資料はPDFでダウンロードいただけます。（PDFは uploads/docs にアップロードしてリンクしてください）"
+    },
+    "items": [
+      {
+        "code": "PSRC",
+        "name": { "ko": "PSRC 선조립 합성기둥", "en": "PSRC Prefabricated Composite Column", "zh": "PSRC 预组装组合柱", "ja": "PSRC 先組立合成柱" },
+        "summary": {
+          "ko": "철근을 공장에서 선조립하여 현장 작업을 최소화한 SRC 합성기둥 공법입니다.",
+          "en": "An SRC composite column system with factory-prefabricated reinforcement that minimises on-site work.",
+          "zh": "在工厂预先组装钢筋、最大限度减少现场作业的SRC组合柱工法。",
+          "ja": "鉄筋を工場で先組立し、現場作業を最小化したSRC合成柱工法です。"
+        },
+        "points": [
+          { "ko": "현장 철근 배근 공정 제거로 공기 30% 이상 단축", "en": "Over 30% schedule reduction by removing on-site rebar work", "zh": "取消现场配筋工序，工期缩短30%以上", "ja": "現場配筋工程の削減により工期を30%以上短縮" },
+          { "ko": "싱가포르 BCA 설계기준 BC4:2025 등재", "en": "Listed in Singapore BCA design code BC4:2025", "zh": "列入新加坡BCA设计标准 BC4:2025", "ja": "シンガポールBCA設計基準 BC4:2025 に収載" },
+          { "ko": "고층 오피스·데이터센터 적용 실적 다수", "en": "Proven on high-rise offices and data centres", "zh": "在高层办公楼与数据中心多有应用实绩", "ja": "高層オフィス・データセンターへの適用実績多数" }
+        ],
+        "image": "/uploads/images/method-psrc.jpg",
+        "pdf": ""
+      },
+      {
+        "code": "TSC",
+        "name": { "ko": "TSC 합성보", "en": "TSC Composite Beam", "zh": "TSC 组合梁", "ja": "TSC 合成梁" },
+        "summary": {
+          "ko": "U형 강판 거푸집과 콘크리트가 일체화된 박판 강관 합성보로, 거푸집·동바리 공정을 없앱니다.",
+          "en": "A thin-walled U-shaped steel tube acting as both permanent formwork and structure, eliminating shoring.",
+          "zh": "U型钢板模板与混凝土一体化的薄壁钢管组合梁，取消模板与支撑工序。",
+          "ja": "U形鋼板型枠とコンクリートが一体化した薄板鋼管合成梁。型枠・支保工工程を不要にします。"
+        },
+        "points": [
+          { "ko": "거푸집·동바리 불필요 — 현장 인력 절감", "en": "No formwork or shoring — fewer site workers", "zh": "无需模板与支撑，节省现场人力", "ja": "型枠・支保工が不要で現場人員を削減" },
+          { "ko": "층고 절감 및 설비 공간 확보에 유리", "en": "Reduced floor-to-floor height, more MEP space", "zh": "有利于降低层高并确保设备空间", "ja": "階高の低減と設備スペース確保に有利" },
+          { "ko": "PSRC 기둥과 조합 시 OSC 골조 완성", "en": "Combines with PSRC columns for a full OSC frame", "zh": "与PSRC柱组合可实现完整OSC主体结构", "ja": "PSRC柱との組合せでOSC躯体が完成" }
+        ],
+        "image": "/uploads/images/method-tsc.jpg",
+        "pdf": ""
+      },
+      {
+        "code": "CRC",
+        "name": { "ko": "CRC 원심력 고강도 콘크리트 기둥", "en": "CRC Centrifugal High-Strength Concrete Column", "zh": "CRC 离心高强度混凝土柱", "ja": "CRC 遠心力高強度コンクリート柱" },
+        "summary": {
+          "ko": "원심 성형으로 고밀도 콘크리트 단면을 구현한 프리캐스트 기둥 반제품입니다.",
+          "en": "A precast column produced by centrifugal casting for a dense, high-strength section.",
+          "zh": "通过离心成型实现高密实混凝土截面的预制柱半成品。",
+          "ja": "遠心成形により高密度コンクリート断面を実現したプレキャスト柱半製品です。"
+        },
+        "points": [
+          { "ko": "동일 단면 대비 높은 압축 성능", "en": "Higher compressive capacity for the same section", "zh": "同等截面下具备更高抗压性能", "ja": "同一断面比で高い圧縮性能" },
+          { "ko": "공장 생산으로 품질 편차 최소화", "en": "Factory production minimises quality variance", "zh": "工厂生产使质量偏差最小化", "ja": "工場生産により品質のばらつきを最小化" }
+        ],
+        "image": "/uploads/images/method-crc.jpg",
+        "pdf": ""
+      },
+      {
+        "code": "OSC / DfMA",
+        "name": { "ko": "OSC 탈현장 건설 솔루션", "en": "OSC Off-Site Construction Solution", "zh": "OSC 场外建造解决方案", "ja": "OSC オフサイト建設ソリューション" },
+        "summary": {
+          "ko": "설계 단계부터 제작·시공을 고려하는 DfMA 기반의 통합 엔지니어링 서비스입니다.",
+          "en": "Integrated engineering built on DfMA — manufacturing and assembly considered from the design stage.",
+          "zh": "从设计阶段即考虑制造与施工的DfMA一体化工程服务。",
+          "ja": "設計段階から製作・施工を考慮するDfMAベースの統合エンジニアリングサービスです。"
+        },
+        "points": [
+          { "ko": "설계–생산–시공 수직 계열화로 책임 일원화", "en": "Vertically integrated design, fabrication and erection", "zh": "设计—生产—施工垂直整合，责任统一", "ja": "設計・生産・施工の垂直統合で責任を一元化" },
+          { "ko": "현장 인력 고령화·안전 규제 대응", "en": "Addresses an ageing site workforce and tighter safety rules", "zh": "应对现场人力老龄化与安全法规强化", "ja": "現場人員の高齢化・安全規制強化に対応" },
+          { "ko": "BIM 기반 간섭 검토 및 물량 산출", "en": "BIM-based clash detection and quantity take-off", "zh": "基于BIM的碰撞检查与工程量计算", "ja": "BIMベースの干渉検討・数量算出" }
+        ],
+        "image": "/uploads/images/method-osc.jpg",
+        "pdf": ""
+      }
+    ]
+  },
+
+  "contact": {
+    "heading": { "ko": "CONTACT", "en": "Contact Us", "zh": "联系我们", "ja": "お問い合わせ" },
+    "lead": {
+      "ko": "프로젝트 문의, 기술 협의, 자료 요청은 아래 메일로 연락 주십시오. 클릭하면 메일 작성 창이 바로 열립니다.",
+      "en": "For project enquiries, technical discussions or document requests, email us below — one click opens your mail app.",
+      "zh": "项目咨询、技术洽谈与资料索取请通过以下邮箱联系。点击即可直接打开邮件撰写窗口。",
+      "ja": "プロジェクトのご相談、技術協議、資料請求は下記メールまでご連絡ください。クリックでメール作成画面が開きます。"
+    },
+    "generalLabel": { "ko": "대표 문의", "en": "General enquiries", "zh": "综合咨询", "ja": "総合お問い合わせ" },
+    "generalEmail": "info@senkuzo.com",
+    "offices": [
+      {
+        "tag": { "ko": "본사 / HQ", "en": "Headquarters", "zh": "总部", "ja": "本社" },
+        "name": { "ko": "SEN ENGINEERING GROUP", "en": "SEN ENGINEERING GROUP", "zh": "SEN ENGINEERING GROUP", "ja": "SEN ENGINEERING GROUP" },
+        "address": {
+          "ko": "서울시 영등포구 버드나루로19길 6 SENSE빌딩 (07226)",
+          "en": "6 Beodeunaru-ro 19-gil, Yeongdeungpo-gu, Seoul 07226, South Korea",
+          "zh": "首尔特别市永登浦区 Beodeunaru-ro 19-gil 6号 SENSE 大厦 (07226)",
+          "ja": "ソウル市永登浦区バドゥナル路19ギル6 SENSEビル (07226)"
+        },
+        "tel": "+82 2 2629 3119",
+        "fax": "+82 2 2629 3110",
+        "email": ""
+      },
+      {
+        "tag": { "ko": "별관 / Annex", "en": "Annex", "zh": "分部", "ja": "別館" },
+        "name": { "ko": "SEN CORETECH 서울사무소", "en": "SEN CORETECH Seoul Office", "zh": "SEN CORETECH 首尔办事处", "ja": "SEN CORETECH ソウル事務所" },
+        "address": {
+          "ko": "서울시 영등포구 버드나루로14가길 24 대한결핵협회 3층 (07230)",
+          "en": "24 Beodeunaru-ro 14ga-gil, 3rd Floor, Yeongdeungpo-gu, Seoul 07230, South Korea",
+          "zh": "首尔特别市永登浦区 Beodeunaru-ro 14ga-gil 24号 3层 (07230)",
+          "ja": "ソウル市永登浦区バドゥナル路14ガギル24 3階 (07230)"
+        },
+        "tel": "+82 2 2629 3185",
+        "fax": "+82 2 2629 3180",
+        "email": ""
+      },
+      {
+        "tag": { "ko": "생산 / Factory", "en": "Factory", "zh": "工厂", "ja": "工場" },
+        "name": { "ko": "SEN CORETECH 진천공장", "en": "SEN CORETECH Main Factory", "zh": "SEN CORETECH 镇川工厂", "ja": "SEN CORETECH 鎮川工場" },
+        "address": {
+          "ko": "충청북도 진천군 진천읍 생거진천로 1457",
+          "en": "1457 Saenggeojincheon-ro, Jincheon-eup, Jincheon-gun, Chungcheongbuk-do, South Korea",
+          "zh": "忠清北道镇川郡镇川邑 Saenggeojincheon-ro 1457号",
+          "ja": "忠清北道鎮川郡鎮川邑センゴジンチョン路1457"
+        },
+        "tel": "+82 43 532 0631",
+        "fax": "+82 43 532 0633",
+        "email": ""
+      },
+      {
+        "tag": { "ko": "해외 / Singapore", "en": "Singapore", "zh": "新加坡", "ja": "シンガポール" },
+        "name": { "ko": "SEN SG PTE. LTD.", "en": "SEN SG PTE. LTD.", "zh": "SEN SG PTE. LTD.", "ja": "SEN SG PTE. LTD." },
+        "address": {
+          "ko": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361",
+          "en": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361",
+          "zh": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361",
+          "ja": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361"
+        },
+        "tel": "+65 6539 9986",
+        "fax": "",
+        "email": ""
+      },
+      {
+        "tag": { "ko": "해외 / Malaysia", "en": "Malaysia", "zh": "马来西亚", "ja": "マレーシア" },
+        "name": { "ko": "SEN ENGINEERING GROUP MALAYSIA SDN. BHD.", "en": "SEN ENGINEERING GROUP MALAYSIA SDN. BHD.", "zh": "SEN ENGINEERING GROUP MALAYSIA SDN. BHD.", "ja": "SEN ENGINEERING GROUP MALAYSIA SDN. BHD." },
+        "address": {
+          "ko": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia",
+          "en": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia",
+          "zh": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia",
+          "ja": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia"
+        },
+        "tel": "+60 17 995 5647",
+        "fax": "",
+        "email": ""
+      },
+      {
+        "tag": { "ko": "해외 / Vietnam", "en": "Vietnam", "zh": "越南", "ja": "ベトナム" },
+        "name": { "ko": "SENCORETECH VIETNAM", "en": "SENCORETECH VIETNAM", "zh": "SENCORETECH VIETNAM", "ja": "SENCORETECH VIETNAM" },
+        "address": {
+          "ko": "CMC 빌딩 3~4층, Vinh Ngoc, Dong Anh, Hanoi, Vietnam",
+          "en": "3rd–4th Floor, CMC Building, Vinh Ngoc, Dong Anh, Hanoi, Vietnam",
+          "zh": "越南河内东英县永玉社 CMC 大厦 3~4 层",
+          "ja": "CMCビル3～4階, Vinh Ngoc, Dong Anh, ハノイ, ベトナム"
+        },
+        "tel": "+84 974 309 738",
+        "fax": "",
+        "email": ""
+      }
+    ]
+  }
+}

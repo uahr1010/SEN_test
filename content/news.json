@@ -1,0 +1,167 @@
+{
+  "section": {
+    "eyebrow": { "ko": "02 — NEWS", "en": "02 — NEWS", "zh": "02 — 新闻", "ja": "02 — ニュース" },
+    "title": { "ko": "뉴스 & 기술자료", "en": "News & Technical Archive", "zh": "新闻与技术资料", "ja": "ニュース & 技術資料" },
+    "lead": {
+      "ko": "언론 보도, 학회 논문, 기술자료, 행사 소식을 한곳에서 확인하실 수 있습니다.",
+      "en": "Press coverage, academic papers, technical notes and event news in one place.",
+      "zh": "媒体报道、学会论文、技术资料与活动消息，尽在于此。",
+      "ja": "報道、学会論文、技術資料、イベント情報をまとめてご覧いただけます。"
+    }
+  },
+
+  "items": [
+    {
+      "id": "news-2026-08-datacenter",
+      "date": "2026-08-06",
+      "category": { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      "image": "/uploads/images/news-01.jpg",
+      "link": "",
+      "title": {
+        "ko": "AI 데이터센터 건설 '속도전' — 선조립 공법으로 골조공사 대폭 단축",
+        "en": "Racing to build AI data centres — prefabricated systems slash frame schedules",
+        "zh": "AI数据中心建设「速度战」— 预组装工法大幅缩短主体工期",
+        "ja": "AIデータセンター建設のスピード競争 — 先組立工法で躯体工事を大幅短縮"
+      },
+      "excerpt": {
+        "ko": "공기 단축이 관건인 AI 데이터센터 골조 공사에 OSC 공법이 사실상 필수 요소가 되고 있습니다. 시공 중인 주요 AI 데이터센터 상당수에 PSRC·TSC 공법이 채택되었습니다.",
+        "en": "Off-site construction has become effectively mandatory for AI data centre frames, where schedule is everything. PSRC and TSC systems have been adopted on many of the projects now under construction.",
+        "zh": "在工期至上的AI数据中心主体工程中，OSC工法已成为事实上的必备要素。目前在建的多个主要AI数据中心均采用了PSRC与TSC工法。",
+        "ja": "工期短縮が鍵となるAIデータセンターの躯体工事において、OSC工法は事実上必須となりつつあります。施工中の主要案件の多くにPSRC・TSC工法が採用されました。"
+      }
+    },
+    {
+      "id": "news-2026-06-bca",
+      "date": "2026-06-16",
+      "category": { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      "image": "/uploads/images/news-02.jpg",
+      "link": "",
+      "title": {
+        "ko": "PSRC 공법, 싱가포르 건축설계기준 등재",
+        "en": "PSRC listed in Singapore's building design code",
+        "zh": "PSRC 工法列入新加坡建筑设计标准",
+        "ja": "PSRC工法、シンガポール建築設計基準に収載"
+      },
+      "excerpt": {
+        "ko": "PSRC(Prefabricated SRC) 기둥 공법이 싱가포르 건설청(BCA)의 고강도 강-콘크리트 합성기둥 설계가이드 BC4:2025에 독립 장으로 등재되었습니다.",
+        "en": "The PSRC (Prefabricated SRC) column system has been included as a dedicated chapter in BC4:2025, the BCA design guide for high-strength steel-concrete composite columns.",
+        "zh": "PSRC（预制SRC）柱工法作为独立章节列入新加坡建设局（BCA）高强度钢-混凝土组合柱设计指南 BC4:2025。",
+        "ja": "PSRC（Prefabricated SRC）柱工法が、シンガポール建設庁（BCA）の高強度鋼・コンクリート合成柱設計ガイド BC4:2025 に独立章として収載されました。"
+      }
+    },
+    {
+      "id": "news-2026-01-kepco",
+      "date": "2026-01-30",
+      "category": { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      "image": "/uploads/images/news-03.jpg",
+      "link": "",
+      "title": {
+        "ko": "한국전력공사(KEPCO), TSC-PSRC 공법 적용 프로젝트 공식 공개",
+        "en": "KEPCO unveils project applying the TSC-PSRC system",
+        "zh": "韩国电力公社（KEPCO）正式公开采用TSC-PSRC工法的项目",
+        "ja": "韓国電力公社（KEPCO）、TSC-PSRC工法適用プロジェクトを公式公開"
+      },
+      "excerpt": {
+        "ko": "공공 건설의 미래가 우리 기술을 통해 어떻게 현실에서 구현되고 있는지를 보여주는 의미 있는 사례입니다.",
+        "en": "A meaningful case showing how the future of public construction is being realised through our technology.",
+        "zh": "这是展示公共建设未来如何通过我们的技术得以实现的重要案例。",
+        "ja": "公共建設の未来が当社の技術によってどう実現されているかを示す意義深い事例です。"
+      }
+    },
+    {
+      "id": "news-2026-01-vision",
+      "date": "2026-01-29",
+      "category": { "ko": "행사", "en": "Events", "zh": "活动", "ja": "イベント" },
+      "image": "/uploads/images/news-04.jpg",
+      "link": "",
+      "title": {
+        "ko": "센 엔지니어링그룹 2026 신년회 Vision Sharing",
+        "en": "SEN Engineering Group 2026 New Year Vision Sharing",
+        "zh": "SEN 工程集团 2026 新年会 Vision Sharing",
+        "ja": "SEN エンジニアリンググループ 2026 新年会 Vision Sharing"
+      },
+      "excerpt": {
+        "ko": "전 임직원과 파트너사가 한자리에 모여 새해 비전을 공유했습니다.",
+        "en": "All employees and partner companies gathered to share the vision for the new year.",
+        "zh": "全体员工与合作伙伴齐聚一堂，共享新年愿景。",
+        "ja": "全従業員とパートナー企業が一堂に会し、新年のビジョンを共有しました。"
+      }
+    },
+    {
+      "id": "news-2025-12-paper",
+      "date": "2025-12-29",
+      "category": { "ko": "논문", "en": "Papers", "zh": "论文", "ja": "論文" },
+      "image": "/uploads/images/news-05.jpg",
+      "link": "",
+      "title": {
+        "ko": "PSRC Column–TSC Beam Composite System 논문 발표",
+        "en": "Paper: PSRC Column–TSC Beam Composite System",
+        "zh": "论文发表：PSRC柱–TSC梁组合体系",
+        "ja": "論文発表：PSRC柱–TSC梁 合成システム"
+      },
+      "excerpt": {
+        "ko": "해외 대형 프로젝트에 적용된 PSRC 기둥–TSC 보 합성 시스템의 설계·시공 사례를 다룬 논문입니다.",
+        "en": "A paper covering the design and construction of the PSRC column–TSC beam composite system on a major overseas project.",
+        "zh": "论述在海外大型项目中应用的PSRC柱–TSC梁组合体系设计与施工案例的论文。",
+        "ja": "海外大型プロジェクトに適用されたPSRC柱–TSC梁合成システムの設計・施工事例を扱った論文です。"
+      }
+    },
+    {
+      "id": "news-2025-07-osc",
+      "date": "2025-07-23",
+      "category": { "ko": "기술자료", "en": "Technical", "zh": "技术资料", "ja": "技術資料" },
+      "image": "/uploads/images/news-06.jpg",
+      "link": "",
+      "title": {
+        "ko": "건설산업의 게임체인저, OSC",
+        "en": "OSC: the game changer in construction",
+        "zh": "建筑产业的规则改变者 —— OSC",
+        "ja": "建設産業のゲームチェンジャー、OSC"
+      },
+      "excerpt": {
+        "ko": "시공인력 고령화, 환경·안전 규제 강화, 공사원가 상승에 대한 해법으로서 탈현장 건설(OSC)의 의미를 정리했습니다.",
+        "en": "An overview of off-site construction as an answer to an ageing workforce, tighter environmental and safety regulation, and rising costs.",
+        "zh": "梳理场外建造（OSC）作为应对施工人力老龄化、环保与安全法规强化及造价上升的解决方案的意义。",
+        "ja": "施工人材の高齢化、環境・安全規制の強化、工事原価の上昇への解として、オフサイト建設（OSC）の意義を整理しました。"
+      }
+    },
+    {
+      "id": "news-dummy-07",
+      "date": "2025-05-14",
+      "category": { "ko": "기술자료", "en": "Technical", "zh": "技术资料", "ja": "技術資料" },
+      "image": "",
+      "link": "",
+      "title": {
+        "ko": "[더미] 합성보 내화성능 실험 결과 보고",
+        "en": "[dummy] Fire resistance test results for composite beams",
+        "zh": "[样例] 组合梁耐火性能试验结果报告",
+        "ja": "[ダミー] 合成梁の耐火性能実験結果報告"
+      },
+      "excerpt": {
+        "ko": "여기에 뉴스 요약을 적습니다. 이 항목은 Pages CMS 사용 예시를 위한 더미 데이터입니다.",
+        "en": "Write the summary here. This entry is dummy data illustrating the Pages CMS structure.",
+        "zh": "在此填写新闻摘要。此条目为演示 Pages CMS 结构的示例数据。",
+        "ja": "ここにニュースの要約を書きます。この項目は Pages CMS の構造を示すダミーデータです。"
+      }
+    },
+    {
+      "id": "news-dummy-08",
+      "date": "2025-03-02",
+      "category": { "ko": "행사", "en": "Events", "zh": "活动", "ja": "イベント" },
+      "image": "",
+      "link": "",
+      "title": {
+        "ko": "[더미] 고객 초청 진천공장 현장 견학",
+        "en": "[dummy] Client site visit to the Jincheon plant",
+        "zh": "[样例] 邀请客户参观镇川工厂",
+        "ja": "[ダミー] お客様招待による鎮川工場見学会"
+      },
+      "excerpt": {
+        "ko": "여기에 뉴스 요약을 적습니다. 이 항목은 Pages CMS 사용 예시를 위한 더미 데이터입니다.",
+        "en": "Write the summary here. This entry is dummy data illustrating the Pages CMS structure.",
+        "zh": "在此填写新闻摘要。此条目为演示 Pages CMS 结构的示例数据。",
+        "ja": "ここにニュースの要約を書きます。この項目は Pages CMS の構造を示すダミーデータです。"
+      }
+    }
+  ]
+}

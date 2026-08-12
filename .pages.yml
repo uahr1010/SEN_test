@@ -1,0 +1,213 @@
+# ============================================================================
+#  Pages CMS 설정 파일  (https://pagescms.org)
+#  이 파일이 저장소 루트에 있어야 Pages CMS가 편집 화면을 만들어 줍니다.
+#
+#  ── 편집 가능한 것은 딱 세 가지입니다 ──
+#    ① 프로젝트  : 새 프로젝트의 주소만 입력 (지구본에 자동으로 찍힘)
+#    ② 뉴스      : 새 뉴스 추가
+#    ③ 채용      : 새 채용공고 추가
+#
+#  회사 소개·연혁·주요공법·CONTACT·섹션 문구 등 나머지는 전부 고정값입니다.
+#  바꿔야 할 일이 생기면 content/*.json 파일을 직접 수정하세요.
+#  (예전에는 이것들도 CMS에 떠 있었지만, 실수로 건드리기 쉬워 걷어냈습니다)
+#
+#  다국어 필드는 { ko, en, zh, ja } 4칸입니다. 한국어만 채워도 되고,
+#  비워 둔 언어는 자동으로 한국어가 표시됩니다.
+# ============================================================================
+
+media:
+  - name: images
+    label: 이미지
+    input: uploads/images
+    output: /uploads/images
+    extensions: [jpg, jpeg, png, webp, gif, svg]
+
+content:
+
+  # --------------------------------------------------------------------------
+  # ① 프로젝트
+  #
+  #    이 저장소는 public 입니다 — 여기 적은 내용은 누구나 볼 수 있습니다.
+  #    그래서 "공개 위치"만 입력합니다: 시/도 + 시/군/구 수준까지만.
+  #      좋음: 서울특별시 강남구 / 경기도 성남시 / 부산광역시 해운대구
+  #      금지: 정확한 도로명·지번·건물명, 담당자 이름, 계약금액 등 내부 정보
+  #    시군구까지 적으면 정확한 위치에, 시/도만 적으면 그 지역 중심에 찍힙니다.
+  # --------------------------------------------------------------------------
+  - name: projects
+    label: ① 프로젝트
+    type: file
+    path: content/projects.json
+    format: json
+    fields:
+      - name: projects
+        label: 프로젝트 목록
+        type: object
+        list: true
+        description: >
+          정확한 주소가 아니라 "서울특별시 강남구"처럼 시/군/구 수준의
+          공개 위치만 적어 주세요. 이 저장소는 공개(public)입니다.
+        fields:
+          - name: id
+            label: 고유 ID
+            type: string
+            required: true
+            description: 영문·숫자 (예 P4576). 수정·삭제 시 이 ID로 항목을 찾습니다. 중복되면 안 됩니다.
+          - name: address
+            label: 공개 위치
+            type: string
+            required: true
+            description: "예: 서울특별시 강남구"
+          - name: visible
+            label: 홈페이지에 표시
+            type: boolean
+            default: true
+            description: 끄면 삭제하지 않고도 지구본·집계에서 숨길 수 있습니다.
+
+  # --------------------------------------------------------------------------
+  # ② 뉴스
+  # --------------------------------------------------------------------------
+  - name: news
+    label: ② 뉴스
+    type: file
+    path: content/news.json
+    format: json
+    fields:
+      - name: items
+        label: 뉴스 목록
+        type: object
+        list: true
+        description: 날짜 기준 최신순으로 자동 정렬됩니다.
+        fields:
+          - name: id
+            label: 고유 ID
+            type: string
+            required: true
+            description: 영문·숫자·하이픈 (예 news-2026-09-award). 중복만 아니면 됩니다.
+          - name: date
+            label: 날짜
+            type: date
+            required: true
+          - name: category
+            label: 분류
+            type: object
+            description: >
+              기존 분류(언론보도 / 행사 / 논문 / 기술자료)와 똑같이 적어야
+              같은 필터 버튼으로 묶입니다.
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: image
+            label: 썸네일
+            type: image
+            description: 비워 두면 블루 그라디언트가 표시됩니다.
+          - name: link
+            label: 원문 링크
+            type: string
+            description: 입력하면 카드 전체가 새 탭 링크가 됩니다.
+          - name: title
+            label: 제목
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: excerpt
+            label: 요약
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: text }
+              - { name: en, label: English, type: text }
+              - { name: zh, label: 中文,    type: text }
+              - { name: ja, label: 日本語,  type: text }
+
+  # --------------------------------------------------------------------------
+  # ③ 채용공고
+  # --------------------------------------------------------------------------
+  - name: careers
+    label: ③ 채용공고
+    type: file
+    path: content/careers.json
+    format: json
+    fields:
+      - name: applyEmail
+        label: 지원 접수 이메일 (전체 기본값)
+        type: string
+      - name: jobs
+        label: 채용공고
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: 고유 ID
+            type: string
+            required: true
+            description: 영문·숫자·하이픈 (예 job-2026-structure).
+          - name: email
+            label: 이 공고 전용 접수 메일
+            type: string
+            description: 비워 두면 위의 기본 접수 이메일을 씁니다.
+          - name: deadline
+            label: 마감일
+            type: date
+            description: 비워 두면 마감 배지가 표시되지 않습니다 (상시채용).
+          - name: title
+            label: 공고명
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: team
+            label: 소속
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: type
+            label: 고용형태
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: location
+            label: 근무지
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: description
+            label: 담당 업무
+            type: object
+            fields:
+              - { name: ko, label: 한국어, type: text }
+              - { name: en, label: English, type: text }
+              - { name: zh, label: 中文,    type: text }
+              - { name: ja, label: 日本語,  type: text }
+          - name: requirements
+            label: 자격 요건
+            type: object
+            list: true
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: preferred
+            label: 우대 사항
+            type: object
+            list: true
+            fields:
+              - { name: ko, label: 한국어, type: string }
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }

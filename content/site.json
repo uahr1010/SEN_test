@@ -1,0 +1,101 @@
+{
+  "company": {
+    "shortName": "SEN",
+    "name": {
+      "ko": "센 엔지니어링그룹",
+      "en": "SEN Engineering Group",
+      "zh": "SEN 工程集团",
+      "ja": "SEN エンジニアリンググループ"
+    }
+  },
+  "seo": {
+    "title": {
+      "ko": "센 엔지니어링그룹 | 건축구조 원스톱 엔지니어링",
+      "en": "SEN Engineering Group | One-Stop Structural Engineering",
+      "zh": "SEN 工程集团 | 建筑结构一站式工程服务",
+      "ja": "SEN エンジニアリンググループ | 建築構造ワンストップ・エンジニアリング"
+    },
+    "description": {
+      "ko": "1973년 창립 이래 5,000여 건의 구조설계와 독자 원천기술 PSRC·TSC 공법으로 설계부터 시공까지 원스톱 서비스를 제공합니다.",
+      "en": "Since 1973, over 5,000 structural design projects. One-stop service from design to steel construction with our proprietary PSRC and TSC composite systems.",
+      "zh": "自1973年创立以来完成5,000余项结构设计，凭借自主原创技术PSRC·TSC工法提供从设计到施工的一站式服务。",
+      "ja": "1973年の創立以来5,000件超の構造設計。独自技術PSRC・TSC工法により設計から施工までワンストップで提供します。"
+    }
+  },
+
+  "hero": {
+    "eyebrow": {
+      "ko": "SINCE 1973 · STRUCTURAL ENGINEERING",
+      "en": "SINCE 1973 · STRUCTURAL ENGINEERING",
+      "zh": "SINCE 1973 · 结构工程",
+      "ja": "SINCE 1973 · 構造エンジニアリング"
+    },
+    "title": {
+      "ko": "구조를 다시\n설계하다",
+      "en": "Engineering\nthe Frame",
+      "zh": "重新定义\n建筑结构",
+      "ja": "構造を、\n設計しなおす"
+    },
+    "subtitle": {
+      "ko": "믿음으로 약속을 지키고, 경제적이며 편리하고 안전하며 아름다운 구조를 추구합니다. 기본설계부터 강구조 시공까지 하나의 팀이 책임집니다.",
+      "en": "Keeping our promises through trust, pursuing structures that are economical, practical, safe and beautiful — from schematic design to steel erection, delivered by one team.",
+      "zh": "以诚信履约，追求经济、便利、安全且优美的结构。从基本设计到钢结构施工，由一个团队全程负责。",
+      "ja": "信頼をもって約束を守り、経済的で使いやすく安全かつ美しい構造を追求します。基本設計から鉄骨施工まで一つのチームが責任を持ちます。"
+    },
+    "stats": [
+      {
+        "value": "5,000+",
+        "label": { "ko": "구조설계 실적", "en": "Structural design projects", "zh": "结构设计业绩", "ja": "構造設計実績" }
+      },
+      {
+        "value": "500+",
+        "label": { "ko": "구조안전진단", "en": "Safety diagnoses", "zh": "结构安全诊断", "ja": "構造安全診断" }
+      },
+      {
+        "value": "110+",
+        "label": { "ko": "보유 특허", "en": "Registered patents", "zh": "持有专利", "ja": "保有特許" }
+      },
+      {
+        "value": "6",
+        "label": { "ko": "글로벌 거점", "en": "Global offices", "zh": "全球据点", "ja": "グローバル拠点" }
+      }
+    ]
+  },
+
+  "nav": {
+    "about":    { "ko": "회사소개", "en": "About", "zh": "公司介绍", "ja": "会社紹介" },
+    "news":     { "ko": "뉴스",     "en": "News",  "zh": "新闻",     "ja": "ニュース" },
+    "projects": { "ko": "프로젝트", "en": "Projects", "zh": "项目", "ja": "プロジェクト" },
+    "careers":  { "ko": "채용",     "en": "Careers", "zh": "招聘",  "ja": "採用" },
+    "sub": {
+      "ceo":     { "ko": "CEO 인사말", "en": "CEO Message", "zh": "总裁致辞", "ja": "CEO ご挨拶" },
+      "history": { "ko": "회사연혁",   "en": "History",     "zh": "公司沿革", "ja": "沿革" },
+      "methods": { "ko": "주요공법",   "en": "Technologies","zh": "主要工法", "ja": "主要工法" },
+      "contact": { "ko": "CONTACT",    "en": "Contact",     "zh": "联系我们", "ja": "お問い合わせ" }
+    }
+  },
+
+  "ui": {
+    "downloadPdf": { "ko": "PDF 다운로드", "en": "Download PDF", "zh": "下载 PDF", "ja": "PDF ダウンロード" },
+    "pdfSoon":     { "ko": "자료 준비중",  "en": "Coming soon",  "zh": "资料准备中", "ja": "資料準備中" },
+    "readMore":    { "ko": "자세히 보기",  "en": "Read more",    "zh": "查看详情", "ja": "詳しく見る" },
+    "viewDetail":  { "ko": "상세 보기",    "en": "View detail",  "zh": "查看详情", "ja": "詳細を見る" },
+    "loadMore":    { "ko": "더 보기",      "en": "Load more",    "zh": "查看更多", "ja": "もっと見る" },
+    "all":         { "ko": "전체",         "en": "All",          "zh": "全部",     "ja": "すべて" },
+    "empty":       { "ko": "등록된 내용이 없습니다.", "en": "Nothing here yet.", "zh": "暂无内容。", "ja": "登録された内容がありません。" },
+    "apply":       { "ko": "지원하기",     "en": "Apply now",    "zh": "立即申请", "ja": "応募する" },
+    "sendMail":    { "ko": "클릭하면 메일 작성 창이 열립니다", "en": "Click to open your mail app", "zh": "点击即可撰写邮件", "ja": "クリックするとメール作成画面が開きます" },
+    "mailSubject": { "ko": "[문의] 센 엔지니어링그룹 홈페이지", "en": "[Inquiry] SEN Engineering Group", "zh": "[咨询] SEN 工程集团", "ja": "[お問い合わせ] SEN エンジニアリンググループ" }
+  },
+
+  "footer": {
+    "address": {
+      "ko": "서울시 영등포구 버드나루로19길 6 SENSE빌딩 (07226)",
+      "en": "6 Beodeunaru-ro 19-gil, Yeongdeungpo-gu, Seoul 07226, Korea",
+      "zh": "首尔特别市永登浦区 Beodeunaru-ro 19-gil 6号 SENSE 大厦 (07226)",
+      "ja": "ソウル市永登浦区バドゥナル路19ギル6 SENSEビル (07226)"
+    },
+    "tel": { "ko": "TEL +82 2 2629 3119 · FAX +82 2 2629 3110", "en": "TEL +82 2 2629 3119 · FAX +82 2 2629 3110", "zh": "TEL +82 2 2629 3119 · FAX +82 2 2629 3110", "ja": "TEL +82 2 2629 3119 · FAX +82 2 2629 3110" },
+    "copyright": { "ko": "© SEN Engineering Group. All rights reserved.", "en": "© SEN Engineering Group. All rights reserved.", "zh": "© SEN Engineering Group. All rights reserved.", "ja": "© SEN Engineering Group. All rights reserved." }
+  }
+}

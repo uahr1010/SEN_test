@@ -1,0 +1,5 @@
+# 영상·이미지는 텍스트 변환 대상이 아닙니다 (줄바꿈 변환으로 깨지는 것을 막음)
+*.mp4 binary
+*.jpg binary
+*.png binary
+*.xlsx binary
