@@ -19,18 +19,6 @@ window.SEN = window.SEN || {};
   var TEX_URL = 'assets/img/world-map.jpg';
   var D2R = Math.PI / 180;
 
-  /* 라벨을 띄울 시도 (좌표는 시도 중심) */
-  var ANCHORS = [
-    { name: '서울', lat: 37.55, lng: 126.99 },
-    { name: '경기', lat: 37.29, lng: 127.25 },
-    { name: '인천', lat: 37.45, lng: 126.62 },
-    { name: '충남', lat: 36.52, lng: 126.80 },
-    { name: '경남', lat: 35.46, lng: 128.21 },
-    { name: '부산', lat: 35.17, lng: 129.06 },
-    { name: '제주', lat: 33.38, lng: 126.53 },
-    { name: '필리핀', lat: 14.60, lng: 121.00 }
-  ];
-
   var api = { init: init };
   SEN.globe = api;
 
@@ -114,16 +102,17 @@ window.SEN = window.SEN || {};
       min = t[0];
     });
 
-    /* ---- 시도 라벨 ---- */
-    var pills = ANCHORS.map(function (a) {
-      var n = data.byProv[a.name] || 0;
-      if (!n) return null;
+    /* ---- 국가/도시 라벨 ----
+       이 지구본은 국외 실적만 받으므로(main.js 가 res.overseas.regions 만
+       넘겨줍니다), 국내 시/도를 걸러낼 필요 없이 받은 지역을 그대로
+       라벨로 띄웁니다. */
+    var pills = data.regions.map(function (r) {
       var el = document.createElement('div');
       el.className = 'gpill';
-      el.innerHTML = a.name + ' <small>' + n + '건</small>';
+      el.innerHTML = esc(r.name) + ' <small>' + r.n + '건</small>';
       pillWrap.appendChild(el);
-      return { el: el, v: llToV3(a.lat, a.lng, R * 1.01), tmp: new THREE.Vector3() };
-    }).filter(Boolean);
+      return { el: el, v: llToV3(r.lat, r.lng, R * 1.01), tmp: new THREE.Vector3() };
+    });
 
     /* ---- 드래그 회전 ---- */
     var yaw = 0, pitch = 0, dragging = false, lastX = 0, lastY = 0;

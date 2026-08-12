@@ -286,7 +286,7 @@
 .globe { margin-bottom: var(--sp-5); }
 .globe__stage {
   position: relative; width: 100%; aspect-ratio: 1 / 1;
-  max-width: 660px; margin: 0 auto;
+  max-width: 900px; margin: 0 auto;
   cursor: grab; touch-action: pan-y;
 }
 .globe__stage.is-dragging { cursor: grabbing; }
@@ -459,7 +459,7 @@
 /* ---------- 한국 지도 ---------- */
 .kmap-stage {
   position: relative; width: 100%; aspect-ratio: 1 / 1;
-  max-width: 660px; margin: 0 auto;
+  max-width: 900px; margin: 0 auto;
 }
 .kmap-stage.is-unavailable { display: none; }
 .kmap-stage.is-unavailable ~ .globe__hint { display: none; }

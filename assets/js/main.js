@@ -190,7 +190,11 @@ window.SEN = window.SEN || {};
         });
       }
       if (globeStage && SEN.globe) {
-        SEN.globe.init(res, {
+        /* 지구본은 국외 실적만 보여줍니다. res.regions 를 그대로 넘기면
+           국내 지역까지 점으로 찍히므로, res.overseas 만 골라 넘깁니다
+           (byProv 는 globe.js 가 더 이상 쓰지 않습니다 — 라벨을
+           regions 에서 직접 만듭니다). */
+        SEN.globe.init({ regions: res.overseas.regions }, {
           wrap: globeStage,
           pills: globeStage.querySelector('[data-globe-pills]'),
           tip: globeStage.querySelector('[data-globe-tip]')

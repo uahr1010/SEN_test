@@ -193,6 +193,12 @@ body {
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: start;
 }
+/* 프로젝트 섹션(지도/지구본)은 CEO 섹션보다 오른쪽 칸을 더 넓게 씁니다.
+   .about-grid 는 두 섹션이 같이 쓰는 클래스라, 여기서만 비율을 덮어씁니다. */
+.about-grid--map { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
+@media (max-width: 900px) {
+  .about-grid--map { grid-template-columns: 1fr; }
+}
 /* 회사소개 하위 덩어리 (CEO 인사말 / 연혁 / 주요공법 / CONTACT).
    예전에는 탭으로 접어 뒀지만, 스크롤로 쭉 읽히도록 펼쳐 두었습니다. */
 .about-block + .about-block { margin-top: clamp(48px, 8vh, 88px); }
