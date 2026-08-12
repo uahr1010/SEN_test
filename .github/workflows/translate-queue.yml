@@ -1,0 +1,84 @@
+# ============================================================================
+#  [⑤ 번역 요청] 항목의 "번역 시작" 버튼 → 그 기사만 번역 → [⑥ 번역]에 반영
+#
+#  글 자체는 [② 뉴스]에 한국어로 먼저 올립니다. 번역이 필요하면
+#  [⑤ 번역 요청]에 그 글의 "고유 ID"를 적은 항목을 하나 만들고, 그 항목에
+#  붙은 "번역 시작" 버튼을 누르세요. Pages CMS가 이 워크플로를 실행시켜
+#  content/news-i18n.json 에 번역을 기록하고, 처리한 요청 항목은 지웁니다
+#  (그래서 번역이 끝나면 [⑤ 번역 요청] 목록에서 사라지고 [⑥ 번역]에 나타남).
+#
+#  Actions 탭에서 "Run workflow" 로 손수 돌릴 수도 있습니다 (news_id 입력).
+#
+#  API 키는 저장소 Settings → Secrets and variables → Actions →
+#  Repository secrets 의 OPENAI_API_KEY 에서 가져옵니다.
+#  이 값은 GitHub 서버 안에서만 풀리며, 공개 저장소라도 외부에 노출되지 않습니다.
+#  로그에도 자동으로 가려집니다(***).
+# ============================================================================
+name: 기사 번역
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: 'Pages CMS가 자동으로 채웁니다 (entry action payload, JSON)'
+        required: false
+        type: string
+      news_id:
+        description: 'Actions 탭에서 손으로 돌릴 때만 — 번역할 기사의 고유 ID'
+        required: false
+        type: string
+
+# content/news.json 을 고쳐 커밋해야 하므로 쓰기 권한이 필요합니다
+permissions:
+  contents: write
+
+# 여러 요청이 겹쳐 들어와도 커밋이 꼬이지 않도록 한 번에 하나씩
+concurrency:
+  group: translate-queue
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 의존성 설치
+        run: pip install --quiet openai
+
+      - name: 번역
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SEN_TRANSLATE_MODEL: ${{ vars.SEN_TRANSLATE_MODEL }}
+          SEN_TRANSLATE_BASE_URL: ${{ vars.SEN_TRANSLATE_BASE_URL }}
+          PAYLOAD: ${{ inputs.payload }}
+          NEWS_ID: ${{ inputs.news_id }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY 시크릿이 없습니다. Settings → Secrets and variables → Actions 에 등록하세요."
+            exit 1
+          fi
+          if [ -n "$NEWS_ID" ]; then
+            python tools/translate_by_id.py --news-id "$NEWS_ID"
+          elif [ -n "$PAYLOAD" ]; then
+            python tools/translate_by_id.py --payload "$PAYLOAD"
+          else
+            echo "::error::payload 도 news_id 도 없습니다."
+            exit 1
+          fi
+
+      - name: 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/news-i18n.json translate-queue
+          if git diff --cached --quiet; then
+            echo "바뀐 내용이 없습니다."
+          else
+            git commit -m "chore: 기사 번역 자동 반영 [skip ci]"
+            git push
+          fi
