@@ -44,14 +44,62 @@ window.SEN = window.SEN || {};
       document.body.classList.remove('is-locked');
     }
 
+    /* mailto: 는 PC에 기본 메일 앱이 아예 설정돼 있지 않으면
+       (Windows 에 흔한 상황) 클릭해도 아무 일도 일어나지 않습니다.
+       그런 경우를 위한 대안으로 주소를 클립보드에 복사해 줍니다. */
+    function copyEmail(btn) {
+      var email = modal.querySelector('[data-apply-to]').textContent.trim();
+      if (!email) return;
+      var original = btn.textContent;
+      var copiedLabel = SEN.i18n.t(SEN.util.pick(SEN.data || {}, 'site.ui.applyCopied')) || '복사됨';
+
+      function done() {
+        btn.textContent = copiedLabel;
+        btn.classList.add('is-copied');
+        setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove('is-copied');
+        }, 1600);
+      }
+      function legacyCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = email;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { /* 조용히 무시 */ }
+        document.body.removeChild(ta);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done, legacyCopy);
+      } else {
+        legacyCopy();
+      }
+    }
+
     document.addEventListener('click', function (e) {
       var applyBtn = e.target.closest('[data-apply]');
       if (applyBtn) { open(applyBtn); return; }
 
       if (e.target.closest('[data-apply-close]')) { close(); return; }
 
-      // 메일 앱으로 넘어간 뒤에는 팝업을 닫아 둡니다
-      if (e.target.closest('[data-apply-send]')) { close(); }
+      if (e.target.closest('[data-apply-send]')) {
+        /* ⚠️ 여기서 close() 를 바로 부르지 마세요.
+           mailto: 링크는 브라우저가 클릭을 처리하면서 외부 메일 앱으로
+           넘기는 과정을 거치는데, 그 처리가 끝나기도 전에 팝업을
+           display:none 으로 감춰 버리면 일부 브라우저(특히 Chrome 계열)가
+           그 넘기는 동작 자체를 취소해 버립니다 — 메일 앱이 안 열리던
+           원인이 바로 이것이었습니다. 다음 이벤트 루프로 미뤄서
+           브라우저가 mailto: 처리를 먼저 끝내게 합니다. */
+        setTimeout(close, 300);
+        return;
+      }
+
+      if (e.target.closest('[data-apply-copy]')) {
+        copyEmail(e.target.closest('[data-apply-copy]'));
+      }
     });
 
     document.addEventListener('keydown', function (e) {

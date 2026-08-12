@@ -430,10 +430,24 @@
 }
 .apply-modal__title { font-size: 1.2rem; margin-bottom: var(--sp-2); }
 .apply-modal__to {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px;
   font-size: var(--fs-small); color: var(--c-muted);
   padding: 10px 14px; background: var(--c-tint); border-radius: var(--radius);
   margin-bottom: var(--sp-2);
 }
-.apply-modal__to strong { color: var(--c-ink); }
+.apply-modal__to strong { color: var(--c-ink); word-break: break-all; }
+.apply-modal__copy {
+  margin-left: auto; flex-shrink: 0;
+  font-size: var(--fs-xs); font-weight: 700; color: var(--c-blue);
+  padding: 3px 10px; border: 1px solid var(--c-blue-soft); border-radius: 999px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.apply-modal__copy:hover { background: var(--c-blue); color: var(--c-white); }
+.apply-modal__copy.is-copied {
+  background: var(--c-blue); color: var(--c-white); border-color: var(--c-blue);
+}
 .apply-modal__hint { font-size: var(--fs-xs); color: var(--c-muted); margin-bottom: var(--sp-3); }
 .apply-modal__send { width: 100%; justify-content: center; }
+.apply-modal__fallback {
+  margin-top: var(--sp-2); font-size: var(--fs-xs); color: var(--c-muted); line-height: 1.5;
+}
