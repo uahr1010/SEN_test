@@ -89,19 +89,11 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 주요공법 — 공법별 PDF 다운로드 버튼 포함 */
-    'about.methods.items': function (items, ctx) {
-      var label = t(pick(ctx, 'site.ui.downloadPdf')) || 'PDF 다운로드';
-      var noPdf = t(pick(ctx, 'site.ui.pdfSoon')) || '자료 준비중';
-
+    /* 주요공법 — 개별 공법 PDF는 없고, 전체를 아우르는 브로슈어는
+       섹션 제목 옆의 언어 선택 박스(index.html에 고정 마크업)로 받습니다. */
+    'about.methods.items': function (items) {
       return items.map(function (it, i) {
         var points = tList(it.points).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
-        var pdf = asset(it.pdf);
-        var btn = pdf
-          ? '<a class="btn btn--primary btn--sm" href="' + esc(pdf) + '" download>' +
-              '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 15.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-              esc(label) + '</a>'
-          : '<span class="btn btn--ghost btn--sm" aria-disabled="true">' + esc(noPdf) + '</span>';
 
         return '' +
           '<article class="method reveal" data-delay="' + (i % 4) + '">' +
@@ -111,7 +103,6 @@ window.SEN = window.SEN || {};
               '<h4 class="method__name">' + esc(t(it.name)) + '</h4>' +
               (t(it.summary) ? '<p class="method__summary">' + esc(t(it.summary)) + '</p>' : '') +
               (points ? '<ul class="method__points">' + points + '</ul>' : '') +
-              '<div class="method__foot">' + btn + '</div>' +
             '</div>' +
           '</article>';
       }).join('');

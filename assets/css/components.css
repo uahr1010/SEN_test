@@ -106,7 +106,28 @@
   .timeline__body::before { left: calc(-1 * var(--sp-3) - 5px); }
 }
 
-/* ---------- 주요공법 카드 (PDF 다운로드) ---------- */
+/* ---------- 주요공법 ---------- */
+.methods__head {
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between;
+  gap: var(--sp-4); margin-bottom: var(--sp-4);
+}
+.methods__head > div:first-child { flex: 1 1 320px; }
+.methods__head .scene__lead { margin-top: 8px; }
+
+/* 회사소개서 PDF — 공법별 개별 자료가 아니라 전체를 아우르는 브로슈어 하나를
+   언어별로 올려 두고, 언어 이름 자체는 사이트 언어와 무관하게 항상 그
+   언어로 표기합니다(위 헤더의 언어 선택 메뉴와 같은 방식). */
+.brochure { flex: 0 0 auto; }
+.brochure__label { display: block; font-size: var(--fs-small); font-weight: 700; color: var(--c-muted); margin-bottom: 8px; }
+.brochure__btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.brochure__btn {
+  font-size: var(--fs-small); font-weight: 700; color: var(--c-ink);
+  border: 1px solid var(--c-line); border-radius: 999px;
+  padding: 8px 16px; background: var(--c-white);
+  transition: border-color .2s, color .2s, background .2s;
+}
+.brochure__btn:hover { border-color: var(--c-blue); color: var(--c-blue); background: var(--c-tint); }
+
 .methods { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 .method {
   display: flex; flex-direction: column;
@@ -135,8 +156,6 @@
   content: ""; position: absolute; left: 0; top: .62em;
   width: 6px; height: 6px; border-radius: 1px; background: var(--c-blue-soft); rotate: 45deg;
 }
-.method__foot { margin-top: auto; }
-
 /* ---------- CONTACT ----------
    ⚠️ 흰색 글씨(rgba(255,255,255,…))로 되어 있던 옛 스타일입니다.
    예전 디자인에서는 CONTACT가 짙은 남색 블록 위에 있어서 흰 글씨가 맞았지만,

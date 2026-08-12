@@ -76,8 +76,6 @@
   },
 
   "ui": {
-    "downloadPdf": { "ko": "PDF 다운로드", "en": "Download PDF", "zh": "下载 PDF", "ja": "PDF ダウンロード" },
-    "pdfSoon":     { "ko": "자료 준비중",  "en": "Coming soon",  "zh": "资料准备中", "ja": "資料準備中" },
     "readMore":    { "ko": "자세히 보기",  "en": "Read more",    "zh": "查看详情", "ja": "詳しく見る" },
     "viewDetail":  { "ko": "상세 보기",    "en": "View detail",  "zh": "查看详情", "ja": "詳細を見る" },
     "loadMore":    { "ko": "더 보기",      "en": "Load more",    "zh": "查看更多", "ja": "もっと見る" },

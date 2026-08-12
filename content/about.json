@@ -96,11 +96,12 @@
   "methods": {
     "heading": { "ko": "주요공법", "en": "Core Technologies", "zh": "主要工法", "ja": "主要工法" },
     "lead": {
-      "ko": "각 공법의 기술자료는 PDF로 내려받으실 수 있습니다. (※ PDF 파일은 uploads/docs 폴더에 올린 뒤 연결하세요)",
-      "en": "Technical documents for each system are available as PDF downloads. (Upload the PDFs to uploads/docs and link them.)",
-      "zh": "各工法的技术资料可下载 PDF。（请将PDF上传至 uploads/docs 文件夹后链接）",
-      "ja": "各工法の技術資料はPDFでダウンロードいただけます。（PDFは uploads/docs にアップロードしてリンクしてください）"
+      "ko": "센 엔지니어링그룹이 보유한 자체 공법을 소개합니다.",
+      "en": "An overview of SEN Engineering Group's proprietary construction systems.",
+      "zh": "介绍SEN工程集团自有的核心工法。",
+      "ja": "SENエンジニアリンググループ独自の工法をご紹介します。"
     },
+    "brochureLabel": { "ko": "회사소개서 다운로드", "en": "Download Brochure", "zh": "下载公司简介", "ja": "会社案内をダウンロード" },
     "items": [
       {
         "code": "PSRC",
@@ -116,8 +117,7 @@
           { "ko": "싱가포르 BCA 설계기준 BC4:2025 등재", "en": "Listed in Singapore BCA design code BC4:2025", "zh": "列入新加坡BCA设计标准 BC4:2025", "ja": "シンガポールBCA設計基準 BC4:2025 に収載" },
           { "ko": "고층 오피스·데이터센터 적용 실적 다수", "en": "Proven on high-rise offices and data centres", "zh": "在高层办公楼与数据中心多有应用实绩", "ja": "高層オフィス・データセンターへの適用実績多数" }
         ],
-        "image": "/uploads/images/method-psrc.jpg",
-        "pdf": ""
+        "image": "/uploads/images/method-psrc.jpg"
       },
       {
         "code": "TSC",
@@ -133,8 +133,7 @@
           { "ko": "층고 절감 및 설비 공간 확보에 유리", "en": "Reduced floor-to-floor height, more MEP space", "zh": "有利于降低层高并确保设备空间", "ja": "階高の低減と設備スペース確保に有利" },
           { "ko": "PSRC 기둥과 조합 시 OSC 골조 완성", "en": "Combines with PSRC columns for a full OSC frame", "zh": "与PSRC柱组合可实现完整OSC主体结构", "ja": "PSRC柱との組合せでOSC躯体が完成" }
         ],
-        "image": "/uploads/images/method-tsc.jpg",
-        "pdf": ""
+        "image": "/uploads/images/method-tsc.jpg"
       },
       {
         "code": "CRC",
@@ -149,8 +148,7 @@
           { "ko": "동일 단면 대비 높은 압축 성능", "en": "Higher compressive capacity for the same section", "zh": "同等截面下具备更高抗压性能", "ja": "同一断面比で高い圧縮性能" },
           { "ko": "공장 생산으로 품질 편차 최소화", "en": "Factory production minimises quality variance", "zh": "工厂生产使质量偏差最小化", "ja": "工場生産により品質のばらつきを最小化" }
         ],
-        "image": "/uploads/images/method-crc.jpg",
-        "pdf": ""
+        "image": "/uploads/images/method-crc.jpg"
       },
       {
         "code": "OSC / DfMA",
@@ -166,8 +164,7 @@
           { "ko": "현장 인력 고령화·안전 규제 대응", "en": "Addresses an ageing site workforce and tighter safety rules", "zh": "应对现场人力老龄化与安全法规强化", "ja": "現場人員の高齢化・安全規制強化に対応" },
           { "ko": "BIM 기반 간섭 검토 및 물량 산출", "en": "BIM-based clash detection and quantity take-off", "zh": "基于BIM的碰撞检查与工程量计算", "ja": "BIMベースの干渉検討・数量算出" }
         ],
-        "image": "/uploads/images/method-osc.jpg",
-        "pdf": ""
+        "image": "/uploads/images/method-osc.jpg"
       }
     ]
   },

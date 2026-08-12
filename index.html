@@ -108,8 +108,20 @@
       </div>
 
       <div class="about-block" id="about-methods">
-        <h3 class="block__title" data-bind="about.methods.heading"></h3>
-        <p class="scene__lead" data-bind="about.methods.lead"></p>
+        <div class="methods__head">
+          <div>
+            <h3 class="block__title" data-bind="about.methods.heading"></h3>
+            <p class="scene__lead" data-bind="about.methods.lead"></p>
+          </div>
+          <div class="brochure">
+            <span class="brochure__label" data-bind="about.methods.brochureLabel"></span>
+            <div class="brochure__btns">
+              <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-ko.pdf" download>한국어</a>
+              <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-en.pdf" download>English</a>
+              <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-zh.pdf" download>中文</a>
+            </div>
+          </div>
+        </div>
         <div class="scene__scroll"><div class="methods" data-list="about.methods.items"></div></div>
       </div>
 
