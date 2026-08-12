@@ -110,6 +110,12 @@ button { background: none; border: 0; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; padding: 0; }
 
+/* <details> 가 닫혔을 때 summary 이외의 내용을 감추는 건 원래 브라우저
+   기본 스타일(UA stylesheet)만으로도 되지만, 명시적으로 한 번 더 박아
+   둡니다 — 여닫이(.acc__group·.era·.office--overseas)가 어떤 환경에서도
+   확실히 접히도록. */
+details:not([open]) > :not(summary) { display: none; }
+
 :focus-visible {
   outline: 2px solid var(--c-blue);
   outline-offset: 3px;

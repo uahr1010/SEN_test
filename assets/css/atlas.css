@@ -261,6 +261,19 @@ body {
   font-size: var(--fs-xs); color: var(--dim); margin-bottom: 14px;
 }
 .article__cat { color: var(--blue); font-weight: 700; }
+.article__share-wrap { position: relative; margin-left: auto; display: flex; align-items: center; }
+.article__share {
+  display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 50%; border: 1px solid var(--line); background: var(--paper);
+  color: var(--dim); cursor: pointer; transition: color .2s, border-color .2s;
+}
+.article__share svg { width: 16px; height: 16px; }
+.article__share:hover, .article__share.is-copied { color: var(--blue); border-color: var(--blue); }
+.article__share-toast {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 5;
+  background: var(--ink); color: var(--paper); white-space: nowrap;
+  font-size: var(--fs-xs); font-weight: 700; padding: 6px 10px; border-radius: 6px;
+}
 .article__title {
   font-weight: 900; letter-spacing: -.03em; line-height: 1.3;
   font-size: clamp(26px, 3.6vw, 42px); color: var(--ink);

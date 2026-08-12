@@ -75,15 +75,74 @@ window.SEN = window.SEN || {};
         '</a>'
       : '';
 
+    var shareLabel = esc(t(pick(data, 'site.ui.share')) || '공유하기');
+    var shareCopiedLabel = esc(t(pick(data, 'site.ui.shareCopied')) || '링크가 복사되었습니다');
+    var share =
+      '<div class="article__share-wrap">' +
+        '<button type="button" class="article__share" data-share aria-label="' + shareLabel + '">' +
+          '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true">' +
+            '<circle cx="15" cy="5" r="2.2" stroke="currentColor" stroke-width="1.4"/>' +
+            '<circle cx="15" cy="15" r="2.2" stroke="currentColor" stroke-width="1.4"/>' +
+            '<circle cx="5" cy="10" r="2.2" stroke="currentColor" stroke-width="1.4"/>' +
+            '<path d="M7 8.8 13 5.8M7 11.2 13 14.2" stroke="currentColor" stroke-width="1.4"/>' +
+          '</svg>' +
+        '</button>' +
+        '<span class="article__share-toast" data-share-toast hidden>' + shareCopiedLabel + '</span>' +
+      '</div>';
+
     host.innerHTML =
       '<div class="article__meta">' +
         (t(item.category) ? '<span class="article__cat">' + esc(t(item.category)) + '</span><span>·</span>' : '') +
         '<time datetime="' + esc(item.date || '') + '">' + esc(fmtDate(item.date)) + '</time>' +
+        share +
       '</div>' +
       '<h1 class="article__title">' + esc(title) + '</h1>' +
       hero +
       '<div class="article__body">' + (body || '') + '</div>' +
       original;
+  }
+
+  /* 공유 버튼 — 모바일처럼 navigator.share 를 지원하는 브라우저는
+     OS 공유시트(카톡·메시지 등 앱으로 바로 전달)를 띄우고, 그렇지 않은
+     대부분의 데스크톱 브라우저는 링크를 클립보드에 복사합니다.
+     .article__meta 가 언어 전환마다 통째로 다시 그려지므로(innerHTML 교체),
+     버튼에 직접 붙이지 않고 document 에 위임해 재바인딩이 필요 없게 합니다. */
+  function initShare() {
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-share]');
+      if (!btn) return;
+
+      var url = location.href;
+
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: url }).catch(function () {});
+        return;
+      }
+
+      var toast = btn.parentElement.querySelector('[data-share-toast]');
+      function done() {
+        if (!toast) return;
+        toast.hidden = false;
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(function () { toast.hidden = true; }, 1800);
+      }
+      function legacyCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { /* 조용히 무시 */ }
+        document.body.removeChild(ta);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, legacyCopy);
+      } else {
+        legacyCopy();
+      }
+    });
   }
 
   /* 사진이 아직 업로드되지 않았거나 경로가 잘못됐을 때, 깨진 이미지 아이콘 대신
@@ -100,6 +159,7 @@ window.SEN = window.SEN || {};
   function boot() {
     SEN.i18n.init();
     initImageFallback();
+    initShare();
 
     loadContent().then(function (data) {
       SEN.util.mergeNewsI18n(data.news, data['news-i18n']);

@@ -85,6 +85,13 @@
       <!-- 제목·인용구는 폭 전체, 그 아래 [사진+서명] / [본문] 2단,
            맨 아래 약력·자격·수상·저서 4개 아코디언(폭 전체) -->
       <div class="about-block" id="about-ceo">
+        <!-- 영상 URL(about.ceo.video)이 비어 있으면 render.js가 이 자리를 통째로 숨깁니다 -->
+        <div class="ceo__video" data-ceo-video hidden>
+          <button type="button" class="ceo__video-play" data-ceo-video-play>
+            <img data-ceo-video-thumb alt="" loading="lazy">
+            <span class="method__play" aria-hidden="true"></span>
+          </button>
+        </div>
         <h3 class="block__title" data-bind="about.ceo.heading"></h3>
         <blockquote class="ceo__quote" data-bind="about.ceo.quote"></blockquote>
 

@@ -59,6 +59,13 @@ window.SEN = window.SEN || {};
            (cls ? ' class="' + cls + '"' : '') + '>';
   }
 
+  /** youtu.be/ID, watch?v=ID, /embed/ID 링크에서 11자리 영상 ID만 뽑아냅니다 */
+  function youtubeId(url) {
+    if (!url) return '';
+    var m = String(url).match(/(?:youtu\.be\/|[?&]v=|\/embed\/)([\w-]{11})/);
+    return m ? m[1] : '';
+  }
+
   /* 뉴스는 한국어(content/news.json, 평문 문자열)와 번역
      (content/news-i18n.json, id로 연결된 {en,zh,ja})이 서로 다른 파일에
      나뉘어 있습니다 — Pages CMS는 폼에 없는 필드는 저장할 때 통째로
@@ -219,27 +226,43 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 국내외 사업장 */
+    /* 국내외 사업장 — 해외 지사는 수가 많아 국가명만 보이고,
+       누르면 이름·주소·연락처가 펼쳐집니다(국내 3곳은 그대로 항상 펼쳐진 카드). */
     'about.contact.offices': function (items) {
       return items.map(function (it, i) {
         var meta = [];
         if (it.tel)   meta.push('<span>TEL <a href="tel:' + esc(String(it.tel).replace(/[^\d+]/g, '')) + '">' + esc(it.tel) + '</a></span>');
         if (it.fax)   meta.push('<span>FAX ' + esc(it.fax) + '</span>');
         if (it.email) meta.push('<span><a href="' + esc(mailto(it.email)) + '">' + esc(it.email) + '</a></span>');
+        var metaHtml = meta.length ? '<div class="office__meta">' + meta.join('') + '</div>' : '';
+
+        if (it.overseas) {
+          return '' +
+            '<details class="office office--overseas reveal" data-delay="' + (i % 4) + '">' +
+              '<summary class="office__country">' + esc(t(it.tag) || t(it.name)) + '</summary>' +
+              '<div class="office__panel">' +
+                '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
+                '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
+                metaHtml +
+              '</div>' +
+            '</details>';
+        }
 
         return '' +
           '<div class="office reveal" data-delay="' + (i % 4) + '">' +
             (t(it.tag) ? '<p class="office__tag">' + esc(t(it.tag)) + '</p>' : '') +
             '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
             '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
-            (meta.length ? '<div class="office__meta">' + meta.join('') + '</div>' : '') +
+            metaHtml +
           '</div>';
       }).join('');
     },
 
     /* 뉴스 카드 — 클릭하면 news.html?id=... 상세 페이지로 이동합니다.
        (외부 원문 링크가 있어도 카드 자체는 내부 상세 페이지를 열고,
-       원문은 상세 페이지 안의 "원문 보기" 버튼으로 뺍니다) */
+       원문은 상세 페이지 안의 "원문 보기" 버튼으로 뺍니다)
+       목록 카드에는 이미지를 넣지 않습니다 — 상세 페이지(article__hero)에는
+       그대로 나옵니다. 폼(썸네일 자리) 자체는 그대로 두고 사진만 뺐습니다. */
     'news.items': function (items, ctx) {
       var readMore = t(pick(ctx, 'site.ui.readMore')) || '자세히 보기';
       if (!items.length) return '<p class="state">' + esc(t(pick(ctx, 'site.ui.empty')) || '등록된 글이 없습니다.') + '</p>';
@@ -248,7 +271,7 @@ window.SEN = window.SEN || {};
         var href = 'news.html?id=' + encodeURIComponent(it.id || '');
         return '' +
           '<a class="card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
-            '<div class="card__thumb">' + imgTag(it.image, t(it.title)) + '</div>' +
+            '<div class="card__thumb"></div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
                 (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +
@@ -358,7 +381,27 @@ window.SEN = window.SEN || {};
       el.textContent = t(pick(ctx, el.getAttribute('data-mailtext')));
     });
 
-    // 5) 목록 렌더링
+    // 5) CEO 인사말 위 소개 영상 — video URL이 비어 있으면 안 보이고,
+    //    누르면 그 자리에서 바로 재생됩니다 (이미 재생 중이면 다시 안 건드림).
+    var videoHost = document.querySelector('[data-ceo-video]');
+    if (videoHost && !videoHost.querySelector('iframe')) {
+      var vid = youtubeId(t(pick(ctx, 'about.ceo.video')));
+      videoHost.hidden = !vid;
+      if (vid) {
+        var thumb = videoHost.querySelector('[data-ceo-video-thumb]');
+        if (thumb) thumb.src = 'https://img.youtube.com/vi/' + vid + '/hqdefault.jpg';
+        var playBtn = videoHost.querySelector('[data-ceo-video-play]');
+        if (playBtn && !playBtn._wired) {
+          playBtn._wired = true;
+          playBtn.addEventListener('click', function () {
+            videoHost.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid +
+              '?autoplay=1" title="CEO" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+          });
+        }
+      }
+    }
+
+    // 6) 목록 렌더링
     Object.keys(RENDERERS).forEach(function (key) {
       var host = document.querySelector('[data-list="' + key + '"]');
       if (!host) return;
@@ -371,10 +414,10 @@ window.SEN = window.SEN || {};
       host.innerHTML = RENDERERS[key](items, ctx);
     });
 
-    // 6) 뉴스/프로젝트 필터 칩
+    // 7) 뉴스/프로젝트 필터 칩
     buildChips(ctx, 'news', '[data-newsfilter]', function (it) { return t(it.category); });
 
-    // 7) 더보기 버튼 표시 여부
+    // 8) 더보기 버튼 표시 여부
     ['news'].forEach(function (kind) {
       var btn = document.querySelector('[data-more="' + kind + '"]');
       if (!btn) return;

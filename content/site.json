@@ -90,6 +90,8 @@
     "backToNews":  { "ko": "뉴스 목록으로", "en": "Back to news", "zh": "返回新闻列表", "ja": "ニュース一覧へ" },
     "viewOriginal":{ "ko": "원문 보기",    "en": "View original source", "zh": "查看原文", "ja": "原文を見る" },
     "notFound":    { "ko": "요청하신 뉴스를 찾을 수 없습니다.", "en": "This article could not be found.", "zh": "未找到该新闻。", "ja": "該当の記事が見つかりません。" },
+    "share":       { "ko": "공유하기", "en": "Share", "zh": "分享", "ja": "共有" },
+    "shareCopied": { "ko": "링크가 복사되었습니다", "en": "Link copied", "zh": "链接已复制", "ja": "リンクをコピーしました" },
     "sendMail":    { "ko": "클릭하면 메일 작성 창이 열립니다", "en": "Click to open your mail app", "zh": "点击即可撰写邮件", "ja": "クリックするとメール作成画面が開きます" },
     "mailSubject": { "ko": "[문의] 센 엔지니어링그룹 홈페이지", "en": "[Inquiry] SEN Engineering Group", "zh": "[咨询] SEN 工程集团", "ja": "[お問い合わせ] SEN エンジニアリンググループ" }
   },

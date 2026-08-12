@@ -17,6 +17,7 @@
 
   "ceo": {
     "heading": { "ko": "CEO 인사말", "en": "Message from the CEO", "zh": "总裁致辞", "ja": "CEO ご挨拶" },
+    "video": "",
     "photo": "/uploads/images/ceo.jpg",
     "quote": {
       "ko": "믿음으로 약속을 지키고, 경제적이며 편리하고 안전하며 아름다운 구조를 추구합니다.",
@@ -283,6 +284,7 @@
         "email": ""
       },
       {
+        "overseas": true,
         "tag": { "ko": "해외 / Singapore", "en": "Singapore", "zh": "新加坡", "ja": "シンガポール" },
         "name": { "ko": "SEN SG PTE. LTD.", "en": "SEN SG PTE. LTD.", "zh": "SEN SG PTE. LTD.", "ja": "SEN SG PTE. LTD." },
         "address": {
@@ -296,6 +298,7 @@
         "email": ""
       },
       {
+        "overseas": true,
         "tag": { "ko": "해외 / Malaysia", "en": "Malaysia", "zh": "马来西亚", "ja": "マレーシア" },
         "name": { "ko": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "en": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "zh": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "ja": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD." },
         "address": {
@@ -309,6 +312,7 @@
         "email": ""
       },
       {
+        "overseas": true,
         "tag": { "ko": "해외 / Indonesia", "en": "Indonesia", "zh": "印度尼西亚", "ja": "インドネシア" },
         "name": { "ko": "PT SEN ENGINEERING GROUP INDONESIA", "en": "PT SEN ENGINEERING GROUP INDONESIA", "zh": "PT SEN ENGINEERING GROUP INDONESIA", "ja": "PT SEN ENGINEERING GROUP INDONESIA" },
         "address": {
@@ -322,6 +326,7 @@
         "email": ""
       },
       {
+        "overseas": true,
         "tag": { "ko": "해외 / Vietnam", "en": "Vietnam", "zh": "越南", "ja": "ベトナム" },
         "name": { "ko": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "en": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "zh": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "ja": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH" },
         "address": {
