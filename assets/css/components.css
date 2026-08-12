@@ -496,16 +496,16 @@
   background: rgba(10, 37, 64, .55); backdrop-filter: blur(4px);
 }
 .kmap-drill__panel {
-  position: relative; width: min(760px, 100%); max-height: 86vh; overflow-y: auto;
+  position: relative; width: min(1180px, 100%); max-height: 92vh; overflow-y: auto;
   background: var(--c-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
-  padding: var(--sp-4);
+  padding: var(--sp-5);
   animation: applyModalIn .25s var(--ease);
 }
-.kmap-drill__title { font-size: 1.4rem; padding-right: var(--sp-4); }
+.kmap-drill__title { font-size: 1.6rem; padding-right: var(--sp-4); }
 .kmap-drill__meta { font-size: var(--fs-small); color: var(--c-muted); margin-bottom: var(--sp-3); }
 .kmap-drill__body {
-  display: grid; gap: var(--sp-4);
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  display: grid; gap: var(--sp-5);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   align-items: start;
 }
 .kmap-drill__svg { width: 100%; height: auto; aspect-ratio: 640 / 620; overflow: visible; }
