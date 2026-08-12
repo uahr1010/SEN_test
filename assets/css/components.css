@@ -239,8 +239,23 @@
   transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
 }
 .method:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--c-blue-soft); }
-.method__thumb { aspect-ratio: 16 / 10; background: var(--ph); overflow: hidden; }
+.method__thumb { position: relative; aspect-ratio: 16 / 10; background: var(--ph); overflow: hidden; }
 .method__thumb img { width: 100%; height: 100%; object-fit: cover; }
+/* 유튜브 썸네일 위 재생 버튼 — ::before/::after 로 삼각형을 그려서
+   따로 아이콘 파일 없이 만듭니다. */
+.method__play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(10, 37, 64, .68);
+  display: grid; place-items: center;
+  transition: background .2s var(--ease), transform .2s var(--ease);
+}
+.method__play::before {
+  content: ""; width: 0; height: 0; margin-left: 4px;
+  border-style: solid; border-width: 9px 0 9px 15px;
+  border-color: transparent transparent transparent var(--c-white);
+}
+.method:hover .method__play { background: var(--c-blue); transform: translate(-50%, -50%) scale(1.08); }
 .method__body { padding: var(--sp-3); display: flex; flex-direction: column; flex: 1; }
 .method__code {
   align-self: flex-start; font-size: var(--fs-xs); font-weight: 800; letter-spacing: .1em;
@@ -570,7 +585,10 @@
 }
 .kmap-stage.is-unavailable { display: none; }
 .kmap-stage.is-unavailable ~ .globe__hint { display: none; }
-.kmap-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+/* overflow: hidden 필수 — 최상위 <svg> 는 (중첩 svg와 달리) 기본값이
+   overflow:visible 이라, 명시하지 않으면 확대(zoom)했을 때 지도 내용이
+   이 상자 밖 옆 영역까지 그대로 삐져나갑니다. */
+.kmap-svg { width: 100%; height: 100%; display: block; overflow: hidden; }
 
 .kmap__prov {
   stroke: var(--c-white); stroke-width: 1.5; cursor: pointer;
@@ -615,7 +633,8 @@
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   align-items: start;
 }
-.kmap-drill__svg { width: 100%; height: auto; aspect-ratio: 640 / 620; overflow: visible; }
+/* overflow: hidden 필수 — 위 .kmap-svg 와 같은 이유 (확대 시 옆 영역 침범 방지) */
+.kmap-drill__svg { width: 100%; height: auto; aspect-ratio: 640 / 620; overflow: hidden; }
 .kmap__dist { stroke: var(--c-white); stroke-width: 1; }
 .kmap__dist.has { cursor: default; }
 .kmap__dist-label {

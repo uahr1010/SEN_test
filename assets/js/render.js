@@ -193,22 +193,29 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 주요공법 — 개별 공법 PDF는 없고, 전체를 아우르는 브로슈어는
-       섹션 제목 옆의 언어 선택 박스(index.html에 고정 마크업)로 받습니다. */
+    /* 주요공법 — 사진 자리에 소개 영상의 유튜브 썸네일을 넣고, 카드
+       전체를 눌러 그 영상으로 이동합니다. 개별 공법 PDF는 없고,
+       전체를 아우르는 브로슈어는 섹션 제목 옆의 언어 선택 박스
+       (index.html에 고정 마크업)로 받습니다. */
     'about.methods.items': function (items) {
       return items.map(function (it, i) {
         var points = tList(it.points).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+        var video = it.video || '';
+        var tag = video ? 'a' : 'div';
+        var attrs = video ? ' href="' + esc(video) + '" target="_blank" rel="noopener"' : '';
 
         return '' +
-          '<article class="method reveal" data-delay="' + (i % 4) + '">' +
-            '<div class="method__thumb">' + imgTag(it.image, t(it.name)) + '</div>' +
+          '<' + tag + ' class="method reveal" data-delay="' + (i % 4) + '"' + attrs + '>' +
+            '<div class="method__thumb">' + imgTag(it.image, t(it.name)) +
+              (video ? '<span class="method__play" aria-hidden="true"></span>' : '') +
+            '</div>' +
             '<div class="method__body">' +
               (it.code ? '<span class="method__code">' + esc(it.code) + '</span>' : '') +
               '<h4 class="method__name">' + esc(t(it.name)) + '</h4>' +
               (t(it.summary) ? '<p class="method__summary">' + esc(t(it.summary)) + '</p>' : '') +
               (points ? '<ul class="method__points">' + points + '</ul>' : '') +
             '</div>' +
-          '</article>';
+          '</' + tag + '>';
       }).join('');
     },
 

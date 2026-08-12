@@ -192,7 +192,8 @@
           { "ko": "층고 절감 및 설비 공간 확보에 유리", "en": "Reduced floor-to-floor height, more MEP space", "zh": "有利于降低层高并确保设备空间", "ja": "階高の低減と設備スペース確保に有利" },
           { "ko": "PSRC 기둥과 조합 시 OSC 골조 완성", "en": "Combines with PSRC columns for a full OSC frame", "zh": "与PSRC柱组合可实现完整OSC主体结构", "ja": "PSRC柱との組合せでOSC躯体が完成" }
         ],
-        "image": "/uploads/images/method-tsc.jpg"
+        "image": "https://img.youtube.com/vi/jgq7mU9fKKg/hqdefault.jpg",
+        "video": "https://youtu.be/jgq7mU9fKKg"
       },
       {
         "code": "PSRC",
@@ -208,7 +209,8 @@
           { "ko": "싱가포르 BCA 설계기준 BC4:2025 등재", "en": "Listed in Singapore BCA design code BC4:2025", "zh": "列入新加坡BCA设计标准 BC4:2025", "ja": "シンガポールBCA設計基準 BC4:2025 に収載" },
           { "ko": "고층 오피스·데이터센터 적용 실적 다수", "en": "Proven on high-rise offices and data centres", "zh": "在高层办公楼与数据中心多有应用实绩", "ja": "高層オフィス・データセンターへの適用実績多数" }
         ],
-        "image": "/uploads/images/method-psrc.jpg"
+        "image": "https://img.youtube.com/vi/FLhl4Q43oWM/hqdefault.jpg",
+        "video": "https://youtu.be/FLhl4Q43oWM"
       },
       {
         "code": "OSC / DfMA",
@@ -224,7 +226,8 @@
           { "ko": "설계–생산–시공 수직 계열화로 책임 일원화", "en": "Vertically integrated design, fabrication and erection", "zh": "设计—生产—施工垂直整合，责任统一", "ja": "設計・生産・施工の垂直統合で責任を一元化" },
           { "ko": "BIM 기반 간섭 검토 및 물량 산출", "en": "BIM-based clash detection and quantity take-off", "zh": "基于BIM的碰撞检查与工程量计算", "ja": "BIMベースの干渉検討・数量算出" }
         ],
-        "image": "/uploads/images/method-osc.jpg"
+        "image": "https://img.youtube.com/vi/lL4TqGROH5M/hqdefault.jpg",
+        "video": "https://youtu.be/lL4TqGROH5M"
       }
     ]
   },
