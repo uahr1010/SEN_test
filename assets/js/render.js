@@ -226,36 +226,59 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 국내외 사업장 — 해외 지사는 수가 많아 국가명만 보이고,
-       누르면 이름·주소·연락처가 펼쳐집니다(국내 3곳은 그대로 항상 펼쳐진 카드). */
+    /* 국내외 사업장 — 국내 3곳은 그대로 항상 펼쳐진 카드.
+       해외 지사는 수가 많아 왼쪽에 국가명 세로 목록만 두고, "+"를 누르면
+       그 지사의 이름·주소·연락처가 오른쪽 패널에 나타납니다(좁은 화면에서는
+       목록 위, 패널이 그 아래로 — office-overseas 의 반응형 CSS 참고). */
     'about.contact.offices': function (items) {
-      return items.map(function (it, i) {
+      function officeMeta(it) {
         var meta = [];
         if (it.tel)   meta.push('<span>TEL <a href="tel:' + esc(String(it.tel).replace(/[^\d+]/g, '')) + '">' + esc(it.tel) + '</a></span>');
         if (it.fax)   meta.push('<span>FAX ' + esc(it.fax) + '</span>');
         if (it.email) meta.push('<span><a href="' + esc(mailto(it.email)) + '">' + esc(it.email) + '</a></span>');
-        var metaHtml = meta.length ? '<div class="office__meta">' + meta.join('') + '</div>' : '';
+        return meta.length ? '<div class="office__meta">' + meta.join('') + '</div>' : '';
+      }
 
-        if (it.overseas) {
-          return '' +
-            '<details class="office office--overseas reveal" data-delay="' + (i % 4) + '">' +
-              '<summary class="office__country">' + esc(t(it.tag) || t(it.name)) + '</summary>' +
-              '<div class="office__panel">' +
-                '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
-                '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
-                metaHtml +
-              '</div>' +
-            '</details>';
-        }
+      var domestic = items.filter(function (it) { return !it.overseas; });
+      var overseas = items.filter(function (it) { return it.overseas; });
 
+      var domesticHtml = domestic.map(function (it, i) {
         return '' +
           '<div class="office reveal" data-delay="' + (i % 4) + '">' +
             (t(it.tag) ? '<p class="office__tag">' + esc(t(it.tag)) + '</p>' : '') +
             '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
             '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
-            metaHtml +
+            officeMeta(it) +
           '</div>';
       }).join('');
+
+      var overseasHtml = '';
+      if (overseas.length) {
+        var list = overseas.map(function (it, i) {
+          return '' +
+            '<button type="button" class="office-overseas__item' + (i === 0 ? ' is-on' : '') + '"' +
+              ' data-office-tab="' + i + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '">' +
+              esc(t(it.tag) || t(it.name)) +
+            '</button>';
+        }).join('');
+
+        var panels = overseas.map(function (it, i) {
+          return '' +
+            '<div class="office-overseas__panel' + (i === 0 ? ' is-on' : '') + '" data-office-panel="' + i + '">' +
+              '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
+              '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
+              officeMeta(it) +
+            '</div>';
+        }).join('');
+
+        overseasHtml = '' +
+          '<div class="office-overseas reveal" data-office-overseas>' +
+            '<div class="office-overseas__list" role="tablist">' + list + '</div>' +
+            '<div class="office-overseas__detail">' + panels + '</div>' +
+          '</div>';
+      }
+
+      return domesticHtml + overseasHtml;
     },
 
     /* 뉴스 카드 — 클릭하면 news.html?id=... 상세 페이지로 이동합니다.

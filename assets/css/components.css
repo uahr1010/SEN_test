@@ -60,8 +60,9 @@
 
 .ceo__media {
   /* 사진을 자르지 않고 원본 그대로(직사각형) 다 보이도록 고정 비율/
-     object-fit:cover 를 안 씁니다 — 세로 길이는 사진 자체 비율을 따라갑니다. */
-  border-radius: 8px; overflow: hidden; background: var(--ph);
+     object-fit:cover 를 안 씁니다 — 세로 길이는 사진 자체 비율을 따라갑니다.
+     라운딩도 없앴습니다(둥근 모서리가 사진 꼭짓점을 살짝 잘라 선처럼 보였음). */
+  overflow: hidden; background: var(--ph);
 }
 .ceo__media img { width: 100%; height: auto; display: block; }
 .ceo__quote {
@@ -309,23 +310,47 @@
 .office__meta a { border-bottom: 1px solid var(--c-line); }
 .office__meta a:hover { color: var(--c-blue); border-color: var(--c-blue); }
 
-/* 해외 지사 카드(<details>) — 평소엔 국가명만, 누르면 이름/주소/연락처가 펼쳐짐.
+/* 해외 지사 — 왼쪽 국가명 세로 목록 + 오른쪽 상세 패널.
+   목록 폭 전체(.offices 그리드 칸 하나가 아니라 전체 줄)를 차지합니다.
    +,− 표시는 위 .acc__group 과 같은 패턴. */
-.office--overseas > summary {
-  cursor: pointer; list-style: none;
-  display: flex; align-items: center; gap: 8px;
-  font-size: 1rem; font-weight: 600; color: var(--c-ink);
-  transition: color .2s;
+.office-overseas {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: var(--sp-3); align-items: start;
 }
-.office--overseas > summary::-webkit-details-marker { display: none; }
-.office--overseas > summary::after {
-  content: "+"; margin-left: auto; flex-shrink: 0;
+.office-overseas__list {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--c-line); border-radius: var(--radius); overflow: hidden;
+  background: var(--c-white); box-shadow: var(--shadow-sm);
+}
+.office-overseas__item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; padding: 14px 18px; text-align: left;
+  font-size: .95rem; font-weight: 600; color: var(--c-ink);
+  border-bottom: 1px solid var(--c-line);
+  transition: background .2s, color .2s;
+}
+.office-overseas__item:last-child { border-bottom: 0; }
+.office-overseas__item:hover { color: var(--c-blue); }
+.office-overseas__item.is-on { background: var(--c-tint); color: var(--c-blue); }
+.office-overseas__item::after {
+  content: "+"; flex-shrink: 0;
   font-size: 1.3rem; font-weight: 400; line-height: 1; color: var(--c-blue);
 }
-.office--overseas[open] > summary::after { content: "−"; }
-.office--overseas > summary:hover { color: var(--c-blue); }
-.office--overseas .office__panel { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--c-line); }
-.office--overseas .office__name { font-size: .95rem; }
+.office-overseas__item.is-on::after { content: "−"; }
+.office-overseas__detail {
+  padding: var(--sp-3); border-radius: var(--radius);
+  background: var(--c-white); border: 1px solid var(--c-line); box-shadow: var(--shadow-sm);
+}
+.office-overseas__panel { display: none; }
+.office-overseas__panel.is-on { display: block; }
+.office-overseas__panel .office__name { font-size: .95rem; }
+
+/* 좁은 화면에서는 나란히 놓을 공간이 없어 목록 위/패널 아래로 쌓습니다
+   (.ceo 두 단짜리 레이아웃과 같은 기준폭 860px) */
+@media (max-width: 860px) {
+  .office-overseas { grid-template-columns: 1fr; }
+}
 
 /* ---------- 카드 그리드 (뉴스 / 프로젝트) ---------- */
 .cards { display: grid; gap: var(--sp-3); }

@@ -132,6 +132,29 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /* ---------- CONTACT 해외 지사 목록/상세 ----------
+     왼쪽 국가 목록에서 하나를 누르면 오른쪽 패널의 내용만 바뀝니다
+     (다시 렌더링하지 않고 클래스만 토글 — 언어 전환 등으로 다시 그려지면
+     render.js 가 항상 0번째를 기본 선택으로 새로 만듭니다). */
+  function initOfficeOverseas() {
+    document.addEventListener('click', function (e) {
+      var tab = e.target.closest('[data-office-tab]');
+      if (!tab) return;
+      var group = tab.closest('[data-office-overseas]');
+      if (!group) return;
+      var idx = tab.getAttribute('data-office-tab');
+
+      group.querySelectorAll('[data-office-tab]').forEach(function (b) {
+        var on = b === tab;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-selected', String(on));
+      });
+      group.querySelectorAll('[data-office-panel]').forEach(function (p) {
+        p.classList.toggle('is-on', p.getAttribute('data-office-panel') === idx);
+      });
+    });
+  }
+
   /* "더 보기"는 이제 news-list.html로 이동하는 평범한 링크라 여기서
      따로 다룰 동작이 없습니다 — 칩 필터만 남았습니다. */
   function initListControls() {
@@ -148,7 +171,7 @@ window.SEN = window.SEN || {};
   SEN.controls = {
     init: function () {
       initJobs(); initApplyModal(); initListControls();
-      initProjTabs(); initKmapDrill();
+      initProjTabs(); initKmapDrill(); initOfficeOverseas();
     }
   };
 })(window.SEN);
