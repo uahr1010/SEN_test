@@ -266,22 +266,6 @@
   width: 5px; height: 5px; border-radius: 50%; background: var(--c-blue-soft);
 }
 
-/* ---------- 채용: 전형 절차 ---------- */
-.process { border-top: 1px solid var(--c-line); padding-top: var(--sp-5); }
-.process__list {
-  display: grid; gap: var(--sp-3); counter-reset: step;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-}
-.process__item { position: relative; padding-top: var(--sp-3); border-top: 2px solid var(--c-tint-2); }
-.process__item::before {
-  counter-increment: step; content: "0" counter(step);
-  position: absolute; top: -.9em; left: 0;
-  font-family: var(--font-display); font-size: .95rem; font-weight: 700;
-  color: var(--c-blue); background: var(--c-white); padding-right: 10px;
-}
-.process__title { font-size: .98rem; margin-bottom: 4px; }
-.process__desc { font-size: var(--fs-small); color: var(--c-muted); }
-
 /* ---------- 실적 지구본 ---------- */
 .globe { margin-bottom: var(--sp-5); }
 .globe__stage {

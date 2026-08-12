@@ -219,17 +219,6 @@ window.SEN = window.SEN || {};
             '</div></div></div>' +
           '</article>';
       }).join('');
-    },
-
-    /* 채용 - 전형 절차 */
-    'careers.process': function (items) {
-      return items.map(function (it, i) {
-        return '' +
-          '<li class="process__item reveal" data-delay="' + (i % 4) + '">' +
-            '<p class="process__title">' + esc(t(it.title)) + '</p>' +
-            '<p class="process__desc">' + esc(t(it.desc)) + '</p>' +
-          '</li>';
-      }).join('');
     }
   };
 
