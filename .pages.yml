@@ -2,10 +2,11 @@
 #  Pages CMS 설정 파일  (https://pagescms.org)
 #  이 파일이 저장소 루트에 있어야 Pages CMS가 편집 화면을 만들어 줍니다.
 #
-#  ── 편집 가능한 것은 딱 세 가지입니다 ──
-#    ① 프로젝트  : 새 프로젝트의 주소만 입력 (지구본에 자동으로 찍힘)
+#  ── 편집 가능한 것 ──
+#    ① 프로젝트  : 새 프로젝트의 공개 위치 입력 (지구본에 자동으로 찍힘)
 #    ② 뉴스      : 새 뉴스 추가
 #    ③ 채용      : 새 채용공고 추가
+#    ④ 용어집    : 고유명사 표기 통일 (기사 번역에 사용)
 #
 #  회사 소개·연혁·주요공법·CONTACT·섹션 문구 등 나머지는 전부 고정값입니다.
 #  바꿔야 할 일이 생기면 content/*.json 파일을 직접 수정하세요.
@@ -211,3 +212,44 @@ content:
               - { name: en, label: English, type: string }
               - { name: zh, label: 中文,    type: string }
               - { name: ja, label: 日本語,  type: string }
+
+  # --------------------------------------------------------------------------
+  # ④ 용어집 — 고유명사 표기 통일
+  #
+  #    기사를 4개 국어로 번역할 때 회사명·공법명·기관명 같은 고유명사가
+  #    번역기마다 다르게 나오는 것을 막기 위한 표입니다.
+  #    번역 도구는 이 표에 있는 말을 반드시 여기 적힌 표기 그대로 씁니다.
+  #
+  #    ※ 원본은 이 JSON 입니다. 엑셀은 여기서 뽑아 쓰는 사본일 뿐이니,
+  #      엑셀만 고치면 사이트에 반영되지 않습니다.
+  # --------------------------------------------------------------------------
+  - name: glossary
+    label: ④ 용어집
+    type: file
+    path: content/glossary.json
+    format: json
+    fields:
+      - name: terms
+        label: 고유명사 목록
+        type: object
+        list: true
+        description: >
+          한국어 표기를 기준으로 각 언어의 정해진 표기를 적습니다.
+          네 칸을 모두 채워 주세요 — 비우면 번역기가 임의로 옮깁니다.
+        fields:
+          - name: ko
+            label: 한국어
+            type: string
+            required: true
+          - name: en
+            label: English
+            type: string
+            required: true
+          - name: ja
+            label: 日本語
+            type: string
+            required: true
+          - name: zh
+            label: 中文
+            type: string
+            required: true

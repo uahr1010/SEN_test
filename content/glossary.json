@@ -1,0 +1,363 @@
+{
+  "_설명": [
+    "고유명사 용어집. 기사를 번역할 때 이 표에 있는 말은 반드시 이 표기를 쓴다.",
+    "Pages CMS 의 [④ 용어집] 에서 추가·수정한다.",
+    "엑셀로 보고 싶으면 README 의 안내대로 내려받아 쓴다 (이 JSON 이 원본)."
+  ],
+  "terms": [
+    {
+      "ko": "PSRC (Prefabricated SRC)",
+      "en": "PSRC (Prefabricated SRC)",
+      "ja": "PSRC（Prefabricated SRC）",
+      "zh": "PSRC（Prefabricated SRC）"
+    },
+    {
+      "ko": "PSRC 공법",
+      "en": "PSRC method",
+      "ja": "PSRC工法",
+      "zh": "PSRC工法"
+    },
+    {
+      "ko": "PSRC 기둥",
+      "en": "PSRC column",
+      "ja": "PSRC柱",
+      "zh": "PSRC柱"
+    },
+    {
+      "ko": "싱가포르",
+      "en": "Singapore",
+      "ja": "シンガポール",
+      "zh": "新加坡"
+    },
+    {
+      "ko": "싱가포르 건설청 (BCA)",
+      "en": "Building and Construction Authority (BCA)",
+      "ja": "シンガポール建設庁（BCA）",
+      "zh": "新加坡建设局（BCA）"
+    },
+    {
+      "ko": "BC4:2025",
+      "en": "BC4:2025",
+      "ja": "BC4:2025",
+      "zh": "BC4:2025"
+    },
+    {
+      "ko": "유로코드4",
+      "en": "Eurocode 4",
+      "ja": "Eurocode 4",
+      "zh": "Eurocode 4"
+    },
+    {
+      "ko": "Example Calculations to the Requirement of BC4:2025",
+      "en": "Example Calculations to the Requirement of BC4:2025",
+      "ja": "Example Calculations to the Requirement of BC4:2025",
+      "zh": "Example Calculations to the Requirement of BC4:2025"
+    },
+    {
+      "ko": "Chapter 6 (제6장)",
+      "en": "Chapter 6",
+      "ja": "第6章（Chapter 6）",
+      "zh": "第6章（Chapter 6）"
+    },
+    {
+      "ko": "OSC (탈현장건설)",
+      "en": "OSC (Off-Site Construction)",
+      "ja": "OSC (Off-Site Construction)",
+      "zh": "OSC (Off-Site Construction)"
+    },
+    {
+      "ko": "AI (인공지능)",
+      "en": "AI (artificial intelligence)",
+      "ja": "AI（人工知能）",
+      "zh": "AI（人工智能）"
+    },
+    {
+      "ko": "현대차그룹",
+      "en": "Hyundai Motor Group",
+      "ja": "現代自動車グループ",
+      "zh": "现代汽车集团"
+    },
+    {
+      "ko": "현대차그룹 글로벌 혁신센터 (HMGICS)",
+      "en": "Hyundai Motor Group Innovation Center Singapore (HMGICS)",
+      "ja": "Hyundai Motor Group Innovation Center Singapore (HMGICS)",
+      "zh": "Hyundai Motor Group Innovation Center Singapore (HMGICS)"
+    },
+    {
+      "ko": "JTC (주롱도시공사)",
+      "en": "JTC Corporation (formerly Jurong Town Corporation)",
+      "ja": "JTC Corporation (formerly Jurong Town Corporation)",
+      "zh": "JTC Corporation (formerly Jurong Town Corporation)"
+    },
+    {
+      "ko": "JTC 물류허브",
+      "en": "JTC Logistics Hub",
+      "ja": "JTC Logistics Hub",
+      "zh": "JTC Logistics Hub"
+    },
+    {
+      "ko": "BCA 올해의 프로젝트 (산업부문)",
+      "en": "BCA Project of the Year 2024 (Industrial Buildings category)",
+      "ja": "BCA「Project of the Year 2024」（産業用建築部門）",
+      "zh": "BCA「Project of the Year 2024」（工业建筑组）"
+    },
+    {
+      "ko": "동남아시아",
+      "en": "Southeast Asia",
+      "ja": "東南アジア",
+      "zh": "东南亚"
+    },
+    {
+      "ko": "말레이시아",
+      "en": "Malaysia",
+      "ja": "マレーシア",
+      "zh": "马来西亚"
+    },
+    {
+      "ko": "태국",
+      "en": "Thailand",
+      "ja": "タイ",
+      "zh": "泰国"
+    },
+    {
+      "ko": "베트남",
+      "en": "Vietnam",
+      "ja": "ベトナム",
+      "zh": "越南"
+    },
+    {
+      "ko": "센엔지니어링그룹",
+      "en": "SEN Engineering Group",
+      "ja": "SEN Engineering Group",
+      "zh": "SEN Engineering Group"
+    },
+    {
+      "ko": "센코어테크",
+      "en": "SENCORETECH",
+      "ja": "SENCORETECH",
+      "zh": "SENCORETECH"
+    },
+    {
+      "ko": "한국전력공사 (KEPCO)",
+      "en": "Korea Electric Power Corporation (KEPCO)",
+      "ja": "韓国電力公社（KEPCO）",
+      "zh": "韩国电力公社（KEPCO）"
+    },
+    {
+      "ko": "TSC-PSRC 공법",
+      "en": "TSC-PSRC method",
+      "ja": "TSC-PSRC工法",
+      "zh": "TSC-PSRC工法"
+    },
+    {
+      "ko": "SP Group",
+      "en": "SP Group",
+      "ja": "SP Group",
+      "zh": "SP Group"
+    },
+    {
+      "ko": "산업통상자원부 (MOTIE)",
+      "en": "Ministry of Trade, Industry and Energy (MOTIE)",
+      "ja": "産業通商資源部",
+      "zh": "产业通商资源部"
+    },
+    {
+      "ko": "한국경제신문",
+      "en": "The Korea Economic Daily",
+      "ja": "韓国経済新聞（ハンギョン）",
+      "zh": "韩国经济新闻（韩经）"
+    },
+    {
+      "ko": "DfMA",
+      "en": "DfMA (Design for Manufacture and Assembly)",
+      "ja": "DfMA（製造・組立を考慮した設計）",
+      "zh": "DfMA（面向制造与装配的设计）"
+    },
+    {
+      "ko": "서울대학교 (SNU)",
+      "en": "Seoul National University (SNU)",
+      "ja": "ソウル大学校",
+      "zh": "首尔大学校"
+    },
+    {
+      "ko": "관악 캠퍼스",
+      "en": "Gwanak Campus",
+      "ja": "冠岳キャンパス",
+      "zh": "冠岳校区"
+    },
+    {
+      "ko": "당산 그랜드컨벤션센터",
+      "en": "Dangsan Grand Convention Center",
+      "ja": "堂山グランドコンベンションセンター",
+      "zh": "堂山大会展中心"
+    },
+    {
+      "ko": "이승환 (센코어테크 대표)",
+      "en": "Lee Seung-hwan",
+      "ja": "Lee Seung-hwan",
+      "zh": "Lee Seung-hwan"
+    },
+    {
+      "ko": "이창남 (센엔지니어링그룹 회장)",
+      "en": "Lee Chang-nam",
+      "ja": "Lee Chang-nam",
+      "zh": "Lee Chang-nam"
+    },
+    {
+      "ko": "송병주 (구조5본부 상무이사)",
+      "en": "Song Byung-ju",
+      "ja": "Song Byung-ju",
+      "zh": "Song Byung-ju"
+    },
+    {
+      "ko": "박종철 (구조1본부 소장)",
+      "en": "Park Jong-cheol",
+      "ja": "Park Jong-cheol",
+      "zh": "Park Jong-cheol"
+    },
+    {
+      "ko": "조광원 (연구개발부 차장)",
+      "en": "Cho Kwang-won",
+      "ja": "Cho Kwang-won",
+      "zh": "Cho Kwang-won"
+    },
+    {
+      "ko": "희림종합건축사사무소",
+      "en": "Heerim Architects & Planners",
+      "ja": "Heerim Architects & Planners",
+      "zh": "Heerim Architects & Planners"
+    },
+    {
+      "ko": "정영균 (희림 회장)",
+      "en": "Jeong Yeong-gyun",
+      "ja": "Jeong Yeong-gyun",
+      "zh": "Jeong Yeong-gyun"
+    },
+    {
+      "ko": "삼성물산 건설부문",
+      "en": "Samsung C&T Corporation, Engineering & Construction Group",
+      "ja": "サムスンC&T建設部門",
+      "zh": "三星物产建设部门"
+    },
+    {
+      "ko": "오세철 (삼성물산 건설부문 대표)",
+      "en": "Oh Se-chul",
+      "ja": "Oh Se-chul",
+      "zh": "Oh Se-chul"
+    },
+    {
+      "ko": "김영오 (서울대 공대 학장)",
+      "en": "Kim Young-oh",
+      "ja": "Kim Young-oh",
+      "zh": "Kim Young-oh"
+    },
+    {
+      "ko": "리처드 리우 (NUS 교수)",
+      "en": "Prof. J.Y. Richard Liew (Liew Jat Yuen)",
+      "ja": "Prof. J.Y. Richard Liew (Liew Jat Yuen)",
+      "zh": "Prof. J.Y. Richard Liew (Liew Jat Yuen)"
+    },
+    {
+      "ko": "싱가포르국립대 (NUS)",
+      "en": "National University of Singapore (NUS)",
+      "ja": "シンガポール国立大学（NUS）",
+      "zh": "新加坡国立大学（NUS）"
+    },
+    {
+      "ko": "영국 구조기술사회 (ISE)",
+      "en": "Institution of Structural Engineers (ISE), UK",
+      "ja": "英国構造技術者協会（ISE）",
+      "zh": "英国结构工程师学会（ISE）"
+    },
+    {
+      "ko": "ISE 싱가포르지부",
+      "en": "Institution of Structural Engineers (ISE), Singapore Branch",
+      "ja": "ISEシンガポール支部",
+      "zh": "ISE新加坡分会"
+    },
+    {
+      "ko": "제11회 구조엔지니어 아시아 퍼시픽 포럼",
+      "en": "11th Structural Engineers Asia Pacific Forum",
+      "ja": "第11回 構造エンジニア・アジア太平洋フォーラム",
+      "zh": "第11届结构工程师亚太论坛"
+    },
+    {
+      "ko": "아루프 (ARUP)",
+      "en": "Arup",
+      "ja": "Arup",
+      "zh": "Arup"
+    },
+    {
+      "ko": "베카 (BECA)",
+      "en": "Beca",
+      "ja": "Beca",
+      "zh": "Beca"
+    },
+    {
+      "ko": "KS철강",
+      "en": "KS-grade steel (Korean Industrial Standards)",
+      "ja": "韓国産業規格（KS）鋼材",
+      "zh": "韩国工业标准（KS）钢材"
+    },
+    {
+      "ko": "싱가포르 M반도체 (MICRON)",
+      "en": "Micron Semiconductor Singapore (Micron)",
+      "ja": "Micron Semiconductor Singapore (Micron)",
+      "zh": "Micron Semiconductor Singapore (Micron)"
+    },
+    {
+      "ko": "BC1 설계코드집",
+      "en": "BC1 design code",
+      "ja": "BC1 design code",
+      "zh": "BC1 design code"
+    },
+    {
+      "ko": "Kimly (건설사)",
+      "en": "Kimly Construction",
+      "ja": "キムリー・コンストラクション（Kimly Construction）",
+      "zh": "Kimly Construction（新加坡建筑公司）"
+    },
+    {
+      "ko": "Project of The Year (POTY)",
+      "en": "BCA Awards – Project of the Year (POTY)",
+      "ja": "BCAアワード「Project of the Year」（POTY）",
+      "zh": "BCA奖项“Project of the Year”（POTY）"
+    },
+    {
+      "ko": "한국강구조학회 (KSSC)",
+      "en": "Korean Society of Steel Construction (KSSC)",
+      "ja": "韓国鋼構造学会（KSSC）",
+      "zh": "韩国钢结构学会（KSSC）"
+    },
+    {
+      "ko": "이철호 (강구조학회장, 서울대 교수)",
+      "en": "Lee Cheol-ho",
+      "ja": "Lee Cheol-ho",
+      "zh": "Lee Cheol-ho"
+    },
+    {
+      "ko": "인스파이어 엔터테인먼트 리조트",
+      "en": "Inspire Entertainment Resort",
+      "ja": "インスパイア・エンターテインメント・リゾート",
+      "zh": "INSPIRE娱乐度假村"
+    },
+    {
+      "ko": "고덕대교",
+      "en": "Godeok Bridge",
+      "ja": "高徳大橋（Godeok Bridge）",
+      "zh": "高德大桥（Godeok Bridge）"
+    },
+    {
+      "ko": "올해의 강구조물",
+      "en": "Steel Structure of the Year",
+      "ja": "「今年の鋼構造物」賞",
+      "zh": "“年度钢结构”奖"
+    },
+    {
+      "ko": "올해의 강구조인",
+      "en": "Steel Structure Person of the Year",
+      "ja": "「今年の鋼構造人」賞",
+      "zh": "“年度钢结构人物”奖"
+    }
+  ]
+}
