@@ -111,11 +111,12 @@ content:
             label: 분류
             type: select
             options:
-              - 언론보도
-              - 행사
-              - 홍보자료
-              - 논문
-              - 기술자료
+              values:
+                - 언론보도
+                - 행사
+                - 홍보자료
+                - 논문
+                - 기술자료
             description: >
               번역하지 않고 이 한국어 표기가 모든 언어에 그대로 쓰입니다.
           - name: image
