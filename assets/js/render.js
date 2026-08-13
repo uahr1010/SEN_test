@@ -324,17 +324,38 @@ window.SEN = window.SEN || {};
     });
 
     // 5) CEO 인사말 위 소개 영상 — video URL이 비어 있으면 안 보이고,
-    //    있으면 자동재생·무한반복으로 바로 채워 넣습니다 (이미 채워져 있으면
-    //    다시 안 건드려 언어 전환마다 영상이 처음부터 다시 시작되지 않게 함).
-    //    브라우저 자동재생 정책상 소리는 기본 음소거(mute=1)로 시작합니다.
+    //    있으면 이 영상 자리가 실제로 화면에 들어오는 순간 iframe을
+    //    만들어 자동재생·무한반복으로 채웁니다. 페이지를 열자마자 화면
+    //    밖(스크롤 훨씬 아래)에 미리 만들어 두면 브라우저·유튜브가
+    //    자동재생을 안 시켜 주는 경우가 있어서, 보일 때 비로소 만드는
+    //    방식으로 바꿨습니다 — "그 구간에 도달하면 재생"이 보장됩니다.
+    //    이미 만들어졌으면 다시 안 건드려 언어 전환마다 처음부터 다시
+    //    시작되지 않게 함. 자동재생 정책상 소리는 기본 음소거(mute=1)로
+    //    시작하고, 자막도 기본은 꺼진 채로 시작합니다(cc_load_policy=0
+    //    — 시청자가 원하면 CC 버튼으로 직접 켤 수는 있습니다).
     var videoHost = document.querySelector('[data-ceo-video]');
-    if (videoHost && !videoHost.querySelector('iframe')) {
+    if (videoHost && !videoHost.querySelector('iframe') && !videoHost._videoWatching) {
       var vid = youtubeId(t(pick(ctx, 'about.ceo.video')));
       videoHost.hidden = !vid;
       if (vid) {
-        videoHost.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid +
-          '?autoplay=1&mute=1&loop=1&playlist=' + vid + '&rel=0" title="CEO" ' +
-          'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        var loadCeoVideo = function () {
+          videoHost.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid +
+            '?autoplay=1&mute=1&loop=1&playlist=' + vid + '&rel=0&cc_load_policy=0" title="CEO" ' +
+            'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        };
+        if ('IntersectionObserver' in window) {
+          videoHost._videoWatching = true;
+          var videoIo = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              videoIo.disconnect();
+              loadCeoVideo();
+            });
+          }, { threshold: 0.25 });
+          videoIo.observe(videoHost);
+        } else {
+          loadCeoVideo();
+        }
       }
     }
 

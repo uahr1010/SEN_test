@@ -68,7 +68,13 @@ window.SEN = window.SEN || {};
     var WORDS = (data.site && data.site.hero && data.site.hero.flipWords) || ['SEN ENGINEERING'];
     var INTERVAL = 2000;
     var current = null;
-    var index = 0;
+    /* 첫 화면은 항상 "SEN ENGINEERING"으로 띄웁니다 — site.json 에서
+       flipWords 순서가 나중에 바뀌어도(관리 실수 등) 이 값이 배열 어디에
+       있든 첫 표시만큼은 이걸로 고정되도록, 인덱스를 찾아서 거기서
+       시작합니다(없으면 그냥 0번째). */
+    var FIRST_WORD = 'SEN ENGINEERING';
+    var firstIdx = WORDS.indexOf(FIRST_WORD);
+    var index = firstIdx > -1 ? firstIdx : 0;
 
     function fitBox(word) {
       if (word != null) sizer.textContent = word;
@@ -98,7 +104,7 @@ window.SEN = window.SEN || {};
       fitBox(word);
     }
 
-    show(WORDS[0], false);
+    show(WORDS[index], false);
 
     if (WORDS.length > 1 && !reduce) {
       setInterval(function () {
