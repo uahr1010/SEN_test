@@ -406,8 +406,8 @@ python tools/translate_by_id.py --news-id news-2026-...-예시 --dry-run
 
 | 위치 | 파일 |
 |---|---|
-| 헤더 로고 | `index.html`, `news.html` 의 `.topbar__logo` 안 `<img>` |
-| 푸터 로고 | `index.html`, `news.html` 의 `.site-footer__brand` 안 `<img>` |
+| 헤더 로고 | `index.html`, `news.html`, `news-list.html` 의 `.topbar__logo` 안 `<img>` |
+| 푸터 로고 | `index.html`, `news.html`, `news-list.html` 의 `.site-footer__brand` 안 `<img>` |
 
 표시 크기를 바꾸려면 `assets/css/atlas.css` 의 `.topbar__logo img`(헤더) ·
 `.site-footer__brand img`(푸터) 의 `height` 값을 고치세요.
@@ -419,9 +419,9 @@ python tools/translate_by_id.py --news-id news-2026-...-예시 --dry-run
 ### 섹션 순서 바꾸기 / 추가
 
 `index.html` 의 `<section class="scene" id="scene-...">` 블록 순서를 바꾸면 됩니다.
-다만 상단 메뉴 버튼의 `data-scene="0"`, `"1"`, `"2"`... 숫자가 **몇 번째 섹션인지를
-가리키는 순번**이라, 섹션 순서를 바꾸면 이 숫자도 같이 맞춰야 메뉴가 어긋나지 않습니다
-(0번이 맨 위 인트로 영상 장면입니다).
+오른쪽 진행 점(`#prog`)은 `atlas.js`가 `.scene` 개수를 보고 그때그때 자동으로
+만드므로, 번호를 따로 맞춰 줄 필요는 없습니다. 맨 위의 표지(`.cover`)는
+`.scene`이 아니라서 이 점 목록에 포함되지 않습니다.
 
 ---
 
