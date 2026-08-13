@@ -451,7 +451,21 @@
   line-clamp: 2; overflow: hidden;
 }
 @media (max-width: 640px) {
-  .cards--news[data-news-track] .card { flex-basis: 260px; height: 280px; }
+  /* 좁은 화면에서는 계속 흐르는 캐러셀 대신 고정된 2×2 격자로 4개만
+     보여줍니다(controls.js가 자동 스크롤·복제도 모바일에서는 건너뜁니다).
+     화살표는 더 이상 움직일 게 없으니 감춥니다. PC는 기존 가로 캐러셀 그대로. */
+  .news-carousel__arrow { display: none; }
+  .cards--news[data-news-track] {
+    /* CSS grid(1fr 두 칸)로 해보니 카드 안의 긴 요약문(-webkit-box
+       말줄임 기법)이 트랙 폭을 무시하고 원래 글자 폭(수천 px)만큼
+       늘어나 버리는 문제가 있었습니다. PC 캐러셀에서 이미 문제없이
+       쓰던 것과 같은 flex + calc() 고정폭 방식(아래)으로 바꾸니
+       해결됐습니다 — 폭이 처음부터 확정된 값이라 안 그런 듯합니다. */
+    display: flex; flex-wrap: wrap; gap: var(--sp-3);
+    overflow-x: visible; padding: 4px 2px 12px;
+  }
+  .cards--news[data-news-track] .card { flex: 0 0 calc(50% - var(--sp-3) / 2); height: 240px; }
+  .cards--news[data-news-track] .card:nth-child(n+5) { display: none; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }

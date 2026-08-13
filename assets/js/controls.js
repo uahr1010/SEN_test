@@ -117,12 +117,18 @@ window.SEN = window.SEN || {};
   var newsAutoPaused = false;
   var newsResumeTimer = null;
 
+  /* 좁은 화면(모바일)에서는 뉴스가 고정된 2×2 격자로 바뀌어(components.css)
+     흐를 필요가 없습니다 — 복제도 자동 스크롤도 여기서 건너뜁니다. */
+  function isNewsMobile() { return matchMedia('(max-width: 640px)').matches; }
+
   function refreshNewsLoop() {
     var track = document.querySelector('[data-news-track]');
     if (!track) return;
 
     Array.prototype.slice.call(track.querySelectorAll('[data-news-clone]')).forEach(function (el) { el.remove(); });
     track.scrollLeft = 0;
+
+    if (isNewsMobile()) return;
 
     /* 세부 분류(전체가 아닌 칩)를 골랐을 때는 복제도, 자동 스크롤도 하지
        않습니다 — 항목이 몇 개 안 남는데 복제까지 붙이면 같은 자료가
@@ -161,7 +167,7 @@ window.SEN = window.SEN || {};
       if (t && t.isConnected) {
         var dt = lastTs ? Math.min(0.05, (now - lastTs) / 1000) : 0;
         lastTs = now;
-        if (!newsAutoPaused && !SEN.state.filter.news) {
+        if (!newsAutoPaused && !SEN.state.filter.news && !isNewsMobile()) {
           t.scrollLeft += newsSpeed * dt;
           var half = t.scrollWidth / 2;
           if (half > 0 && t.scrollLeft >= half) t.scrollLeft -= half;
