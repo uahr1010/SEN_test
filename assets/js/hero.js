@@ -106,11 +106,30 @@ window.SEN = window.SEN || {};
 
     show(WORDS[index], false);
 
-    if (WORDS.length > 1 && !reduce) {
+    /* 첫 단어를 고정해도, 화면 밖(표지를 보는 동안)에서부터 타이머가
+       미리 돌고 있으면 사용자가 스크롤해서 실제로 도착했을 땐 이미
+       몇 번 바뀐 뒤일 수 있습니다. CEO 영상과 같은 방식으로, 이 구간이
+       실제로 화면에 들어온 뒤에야 단어 전환을 시작합니다. */
+    function startCycle() {
+      if (WORDS.length <= 1 || reduce) return;
       setInterval(function () {
         index = (index + 1) % WORDS.length;
         show(WORDS[index], true);
       }, INTERVAL);
+    }
+
+    var scene = box.closest('.scene') || box;
+    if ('IntersectionObserver' in window) {
+      var flipIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          flipIo.disconnect();
+          startCycle();
+        });
+      }, { threshold: 0.25 });
+      flipIo.observe(scene);
+    } else {
+      startCycle();
     }
 
     if (window.ResizeObserver) {
