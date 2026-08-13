@@ -227,9 +227,9 @@ window.SEN = window.SEN || {};
     },
 
     /* 국내외 사업장 — 국내 3곳은 그대로 항상 펼쳐진 카드.
-       해외 지사는 수가 많아 왼쪽에 국가명 세로 목록만 두고, "+"를 누르면
-       그 지사의 이름·주소·연락처가 오른쪽 패널에 나타납니다(좁은 화면에서는
-       목록 위, 패널이 그 아래로 — office-overseas 의 반응형 CSS 참고). */
+       해외 지사는 국내 카드 3개를 합친 폭 그대로(grid-column:1/-1) 세로로
+       길게 쌓은 줄들이고, 하나씩 눌러서 폅니다(<details>, 네이티브 접힘 —
+       base.css 의 details:not([open]) 규칙이 보강해 둠). */
     'about.contact.offices': function (items) {
       function officeMeta(it) {
         var meta = [];
@@ -254,28 +254,19 @@ window.SEN = window.SEN || {};
 
       var overseasHtml = '';
       if (overseas.length) {
-        var list = overseas.map(function (it, i) {
+        var rows = overseas.map(function (it) {
           return '' +
-            '<button type="button" class="office-overseas__item' + (i === 0 ? ' is-on' : '') + '"' +
-              ' data-office-tab="' + i + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '">' +
-              esc(t(it.tag) || t(it.name)) +
-            '</button>';
+            '<details class="office-overseas__row">' +
+              '<summary class="office-overseas__row-head">' + esc(t(it.tag) || t(it.name)) + '</summary>' +
+              '<div class="office-overseas__row-body">' +
+                '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
+                '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
+                officeMeta(it) +
+              '</div>' +
+            '</details>';
         }).join('');
 
-        var panels = overseas.map(function (it, i) {
-          return '' +
-            '<div class="office-overseas__panel' + (i === 0 ? ' is-on' : '') + '" data-office-panel="' + i + '">' +
-              '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
-              '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
-              officeMeta(it) +
-            '</div>';
-        }).join('');
-
-        overseasHtml = '' +
-          '<div class="office-overseas reveal" data-office-overseas>' +
-            '<div class="office-overseas__list" role="tablist">' + list + '</div>' +
-            '<div class="office-overseas__detail">' + panels + '</div>' +
-          '</div>';
+        overseasHtml = '<div class="office-overseas reveal" data-office-overseas>' + rows + '</div>';
       }
 
       return domesticHtml + overseasHtml;

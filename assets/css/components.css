@@ -310,47 +310,33 @@
 .office__meta a { border-bottom: 1px solid var(--c-line); }
 .office__meta a:hover { color: var(--c-blue); border-color: var(--c-blue); }
 
-/* 해외 지사 — 왼쪽 국가명 세로 목록 + 오른쪽 상세 패널.
-   목록 폭 전체(.offices 그리드 칸 하나가 아니라 전체 줄)를 차지합니다.
+/* 해외 지사 — 국내 카드 3개를 합친 폭 그대로(.offices 그리드 전체 줄)
+   세로로 길게 쌓은 줄들이고, 하나씩 눌러서 폅니다.
    +,− 표시는 위 .acc__group 과 같은 패턴. */
 .office-overseas {
   grid-column: 1 / -1;
-  display: grid; grid-template-columns: minmax(180px, 260px) 1fr;
-  gap: var(--sp-3); align-items: start;
-}
-.office-overseas__list {
   display: flex; flex-direction: column;
   border: 1px solid var(--c-line); border-radius: var(--radius); overflow: hidden;
   background: var(--c-white); box-shadow: var(--shadow-sm);
 }
-.office-overseas__item {
+.office-overseas__row { border-bottom: 1px solid var(--c-line); }
+.office-overseas__row:last-child { border-bottom: 0; }
+.office-overseas__row-head {
+  cursor: pointer; list-style: none;
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  width: 100%; padding: 14px 18px; text-align: left;
+  padding: 16px 20px;
   font-size: .95rem; font-weight: 600; color: var(--c-ink);
-  border-bottom: 1px solid var(--c-line);
-  transition: background .2s, color .2s;
+  transition: color .2s;
 }
-.office-overseas__item:last-child { border-bottom: 0; }
-.office-overseas__item:hover { color: var(--c-blue); }
-.office-overseas__item.is-on { background: var(--c-tint); color: var(--c-blue); }
-.office-overseas__item::after {
+.office-overseas__row-head::-webkit-details-marker { display: none; }
+.office-overseas__row-head::after {
   content: "+"; flex-shrink: 0;
   font-size: 1.3rem; font-weight: 400; line-height: 1; color: var(--c-blue);
 }
-.office-overseas__item.is-on::after { content: "−"; }
-.office-overseas__detail {
-  padding: var(--sp-3); border-radius: var(--radius);
-  background: var(--c-white); border: 1px solid var(--c-line); box-shadow: var(--shadow-sm);
-}
-.office-overseas__panel { display: none; }
-.office-overseas__panel.is-on { display: block; }
-.office-overseas__panel .office__name { font-size: .95rem; }
-
-/* 좁은 화면에서는 나란히 놓을 공간이 없어 목록 위/패널 아래로 쌓습니다
-   (.ceo 두 단짜리 레이아웃과 같은 기준폭 860px) */
-@media (max-width: 860px) {
-  .office-overseas { grid-template-columns: 1fr; }
-}
+.office-overseas__row[open] .office-overseas__row-head::after { content: "−"; }
+.office-overseas__row-head:hover { color: var(--c-blue); }
+.office-overseas__row-body { padding: 0 20px 20px; }
+.office-overseas__row-body .office__name { font-size: .95rem; }
 
 /* ---------- 카드 그리드 (뉴스 / 프로젝트) ---------- */
 .cards { display: grid; gap: var(--sp-3); }
