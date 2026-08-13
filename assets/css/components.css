@@ -590,9 +590,13 @@
 
 @media (max-width: 860px) {
   .ceo { grid-template-columns: 1fr; }
-  /* 좁은 화면에서는 사진을 위로 올리고 본문이 그 아래로 흐르게 둡니다 */
+  /* 좁은 화면에서는 사진을 위로 올리고 본문이 그 아래로 흐르게 둡니다.
+     사진이 폭 전체(.ceo__aside)보다 좁아서(max-width:220px) 그냥 두면
+     왼쪽에 붙어 보이므로 가운데로 옮기고, 그 아래 이름/직함도 사진과
+     같이 가운데 맞춥니다(PC는 이 미디어쿼리 밖이라 그대로 유지됩니다). */
   .ceo__intro { grid-template-columns: 1fr; }
-  .ceo__media { max-width: 220px; }
+  .ceo__media { max-width: 220px; margin: 0 auto; }
+  .ceo__sign { justify-content: center; text-align: center; }
   .job__head { flex-wrap: wrap; }
 }
 
