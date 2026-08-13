@@ -269,7 +269,11 @@ window.SEN = window.SEN || {};
         overseasHtml = '<div class="office-overseas reveal" data-office-overseas>' + rows + '</div>';
       }
 
-      return domesticHtml + overseasHtml;
+      /* 국내 3곳은 별도 칸(.offices__domestic)에 묶어서, 모바일에서만
+         그 칸을 가로 드래그 캐러셀로 바꿀 수 있게 합니다(atlas.css 참고).
+         해외지사(office-overseas)는 그 바깥에 그대로 둬 항상 아래 한 줄
+         전체 폭으로 나옵니다. */
+      return '<div class="offices__domestic">' + domesticHtml + '</div>' + overseasHtml;
     },
 
     /* 뉴스 카드 — 클릭하면 news.html?id=... 상세 페이지로 이동합니다.
