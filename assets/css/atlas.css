@@ -203,7 +203,10 @@ body {
 
 .ltf__lead {
   margin: 1.5rem auto 0; max-width: 46ch;
-  text-align: center; font-size: calc(1rem + 5pt); line-height: 1.7; color: var(--dim);
+  text-align: center; color: var(--dim);
+  /* .scene__lead(회사소개 등 섹션 리드문)과 글자 크기를 맞췄습니다.
+     PC·모바일 구분 없이 같은 clamp() 값이라 화면 폭이 같으면 항상 같게 보입니다. */
+  font-size: clamp(.95rem, 1.2vw, 1.08rem); line-height: 1.75;
 }
 
 /* ---------- 상태 배지 (채용중 / 새 소식) ---------- */
