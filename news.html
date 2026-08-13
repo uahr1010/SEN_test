@@ -26,17 +26,10 @@
        · 메뉴가 <button data-scene> 대신 index.html#섹션id 로 가는 <a> 입니다
          (이 페이지에는 스크롤로 넘어갈 .scene 이 없어서 다른 페이지로 이동해야 합니다)
        · 인트로 위에 뜰 일이 없으므로 처음부터 class="is-light" 를 붙여 둡니다 -->
-<header class="topbar is-light">
+<header class="topbar">
   <a class="topbar__logo" href="index.html">
     <img src="assets/img/logo.png" alt="SEN Engineering Group" width="471" height="110">
   </a>
-
-  <nav class="topnav" aria-label="주 메뉴">
-    <a href="index.html#scene-about" data-bind="site.nav.about">회사소개</a>
-    <a href="index.html#scene-projects" data-bind="site.nav.projects">프로젝트</a>
-    <a href="index.html#scene-news" data-bind="site.nav.news">뉴스</a>
-    <a href="index.html#scene-careers" data-bind="site.nav.careers">채용</a>
-  </nav>
 
   <div class="lang" data-langswitch>
     <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" data-lang-toggle>

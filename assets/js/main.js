@@ -214,6 +214,7 @@ window.SEN = window.SEN || {};
       SEN.controls.init();
       SEN.atlas.init();
       initProjects(data);
+      if (SEN.hero) SEN.hero.init(data);
 
       // 언어 변경 시 전체 다시 렌더
       SEN.i18n.onChange(function () {

@@ -63,80 +63,115 @@ body {
 .scene--paper { background: var(--paper); }
 .scene--paper .scene__inner { color: var(--ink); }
 
-/* ---------- 장면 1 : 인트로 영상 ---------- */
+/* ---------- 장면 0 : 인트로(텍스트 플립) ----------
+   카카오톡으로 받은 LayoutTextFlip 미리보기를 그대로 이식했습니다.
+   흰 배경 전체화면 히어로라, 더는 어두운 장면이 없습니다
+   (그래서 아래 .topbar 도 밝은/어두운 구분 없이 항상 같은 스타일). */
 #scene-intro {
-  padding: 0; overflow: hidden;
-  min-height: 100vh; display: grid; place-items: stretch;
+  padding: 0; min-height: 100vh; display: grid; place-items: center;
+  background: var(--paper);
 }
-#scene-intro .intro__media { position: absolute; inset: 0; }
-#scene-intro .intro__poster {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; display: block;
+.hero { width: min(760px, 92vw); margin: 0 auto; text-align: center; padding: 90px 0 64px; }
+
+.ltf {
+  position: relative; margin: 1rem auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; text-align: center;
+}
+@media (min-width: 640px) {
+  .ltf { flex-direction: row; }
+}
+.ltf__text {
+  font-size: calc(1.5rem + 10pt); font-weight: 700; letter-spacing: -.025em;
+  color: var(--ink);
+  filter: drop-shadow(0 4px 3px rgba(0,0,0,.07));
+}
+.ltf__box {
+  position: relative; overflow: hidden;
+  display: inline-block; vertical-align: middle; flex-shrink: 0;
+  border-radius: 6px;
+  background: #fff; color: var(--blue);
+  padding: .5rem 1rem;
+  font-size: calc(1.5rem + 10pt); font-weight: 700; letter-spacing: -.025em;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 0 0 1px var(--line);
+  transition: width .5s cubic-bezier(.22,1,.36,1);
+}
+@media (min-width: 768px) {
+  .ltf__text, .ltf__box { font-size: calc(2.25rem + 10pt); }
+}
+.ltf__word { display: inline-block; white-space: nowrap; will-change: transform, filter, opacity; }
+.ltf__word--out { position: absolute; left: 1rem; top: .5rem; }
+.ltf__word--in  { animation: ltf-in  .5s cubic-bezier(.22,1,.36,1) both; }
+.ltf__word--out { animation: ltf-out .5s cubic-bezier(.22,1,.36,1) both; }
+@keyframes ltf-in {
+  from { transform: translateY(-40px); filter: blur(10px); }
+  to   { transform: none;              filter: blur(0); }
+}
+@keyframes ltf-out {
+  from { transform: none;             filter: blur(0);     opacity: 1; }
+  to   { transform: translateY(50px); filter: blur(10px);  opacity: 0; }
+}
+.ltf__sizer { position: absolute; visibility: hidden; pointer-events: none; white-space: nowrap; left: -9999px; top: 0; }
+
+.ltf__lead {
+  margin: 1.5rem auto 0; max-width: 46ch;
+  text-align: center; font-size: calc(1rem + 5pt); line-height: 1.7; color: var(--dim);
 }
 
-.intro__vignette {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(120% 80% at 50% 40%, transparent 30%, rgba(0,0,0,.55) 100%),
-    linear-gradient(180deg, rgba(0,0,0,.42) 0%, transparent 32%, rgba(0,0,0,.62) 100%);
+/* ---------- 상태 배지 (채용중 / 새 소식) ---------- */
+.flags { margin-top: 1.75rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+.flag {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .55rem 1.1rem; border-radius: 999px;
+  border: 1px solid var(--line); background: #fff;
+  font-size: 1rem; font-weight: 600; color: var(--ink);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
 }
-.intro__hud {
-  position: absolute; inset: 0; display: grid; align-content: center;
-  padding: 0 clamp(24px, 6vw, 90px); color: #fff;
+.flag:hover { border-color: var(--blue); box-shadow: 0 4px 14px rgba(0,113,227,.14); transform: translateY(-1px); }
+.flag--off { color: #8e8e93; }
+
+.flag__switch { position: relative; flex-shrink: 0; width: 38px; height: 22px; border-radius: 999px; background: #d1d1d6; transition: background .25s; }
+.flag__switch i {
+  position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform .25s cubic-bezier(.22,1,.36,1);
 }
-.intro__title {
-  font-weight: 900; font-size: clamp(52px, 9.5vw, 168px);
-  letter-spacing: -.035em; line-height: .95;
-  text-shadow: 0 6px 44px rgba(0, 0, 0, .5);
-}
-.intro__title .thin { font-weight: 300; }
-.intro__sub {
-  margin-top: 18px; font-size: clamp(11px, 1.15vw, 15px);
-  letter-spacing: .26em; color: rgba(255, 255, 255, .82);
-}
-.intro__cue {
-  position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%);
-  display: grid; justify-items: center; gap: 10px;
-  font-size: 10px; letter-spacing: .3em; color: rgba(255, 255, 255, .7);
-}
-.intro__cue i {
-  display: block; width: 1px; height: 44px;
-  background: linear-gradient(rgba(255,255,255,.75), transparent);
+.flag--on .flag__switch { background: #34c759; }
+.flag--on .flag__switch i { transform: translateX(16px); }
+
+.flag__emoji { font-size: 1.15em; line-height: 1; }
+.flag__icon { flex-shrink: 0; display: block; height: 1.5em; width: auto; border-radius: 5px; object-fit: cover; }
+
+.flag--news .flag__emoji, .flag--news .flag__icon { animation: flag-pop 2.4s ease-in-out infinite; }
+@keyframes flag-pop {
+  0%, 82%, 100% { transform: none; }
+  88%           { transform: translateY(-3px) rotate(-8deg); }
+  94%           { transform: translateY(-1px) rotate(5deg); }
 }
 
-/* ---------- 상단 고정 네비 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ltf__word--in, .ltf__word--out { animation: none; }
+  .ltf__word--out { display: none; }
+  .ltf__box { transition: none; }
+  .flag--news .flag__emoji, .flag--news .flag__icon { animation: none; }
+}
+
+/* ---------- 상단 고정 네비 ----------
+   로고·언어만 남아서 항상 투명 배경 + 어두운 글자로 고정했습니다
+   (예전엔 어두운 인트로 위에서 흰 글자 ↔ 밝은 장면에서 흰 배경으로 바뀌었지만,
+   이제 사이트 전체가 밝은 배경이라 그 구분이 필요 없습니다). */
 .topbar {
   position: fixed; inset: 0 0 auto 0; z-index: 60;
   display: flex; align-items: center; gap: clamp(16px, 3vw, 40px);
   padding: 16px clamp(20px, 4vw, 48px);
-  color: #fff;
-  transition: background .35s ease, color .35s ease, box-shadow .35s ease;
-}
-/* 밝은 장면 위에서는 흰 배경으로 반전 */
-.topbar.is-light {
-  background: rgba(255, 255, 255, .88);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
   color: var(--ink);
-  box-shadow: 0 1px 0 var(--line);
 }
 
 .topbar__logo { display: inline-flex; align-items: center; }
 .topbar__logo img { display: block; height: clamp(26px, 3.2vw, 36px); width: auto; }
 
-.topnav { display: flex; gap: clamp(10px, 2vw, 28px); margin-left: auto; }
-/* button = index.html (장면 이동), a = news.html 같은 서브 페이지 (index.html#섹션 으로 이동) */
-.topnav button, .topnav a {
-  font-size: .9rem; font-weight: 700; letter-spacing: -.01em;
-  color: inherit; opacity: .68; padding: 6px 2px;
-  border-bottom: 2px solid transparent;
-  transition: opacity .2s, border-color .2s;
-}
-.topnav button:hover, .topnav a:hover { opacity: 1; }
-.topnav button.is-on { opacity: 1; border-bottom-color: var(--blue); }
-
-/* 언어 토글 */
-.lang { position: relative; }
+/* 언어 토글 — 상단 메뉴가 없어져서 .lang 에 margin-left:auto 로 오른쪽 정렬 */
+.lang { position: relative; margin-left: auto; }
 .lang__btn {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: .82rem; font-weight: 700; color: inherit;
@@ -224,8 +259,6 @@ body {
 
 @media (max-width: 900px) {
   .about-grid { grid-template-columns: 1fr; }
-  .topnav { gap: 12px; }
-  .topnav button { font-size: .8rem; }
   #prog { right: 10px; }
   /* 예전 무대 고정형 디자인에서 쓰던 안쪽 스크롤 칸 높이 제한입니다.
      지금은 페이지가 통째로 스크롤되고 .scene__scroll 기본값이

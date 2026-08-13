@@ -27,18 +27,13 @@
 </head>
 <body>
 
-<!-- ============ 상단 고정 네비 ============ -->
+<!-- ============ 상단 고정 네비 ============
+     로고·언어만 남기고 4개 메뉴는 없앴습니다. 배경은 항상 투명 유지
+     (atlas.css .topbar — 더는 .is-light 로 흰 배경으로 안 바뀝니다). -->
 <header class="topbar">
   <a class="topbar__logo" href="#top">
     <img src="assets/img/logo.png" alt="SEN Engineering Group" width="471" height="110">
   </a>
-
-  <nav class="topnav" aria-label="주 메뉴">
-    <button type="button" data-scene="1" data-bind="site.nav.about">회사소개</button>
-    <button type="button" data-scene="2" data-bind="site.nav.projects">프로젝트</button>
-    <button type="button" data-scene="3" data-bind="site.nav.news">뉴스</button>
-    <button type="button" data-scene="4" data-bind="site.nav.careers">채용</button>
-  </nav>
 
   <div class="lang" data-langswitch>
     <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" data-lang-toggle>
@@ -58,19 +53,18 @@
 
 <main id="top">
 
-  <!-- ---------- 장면 0 : 인트로 영상 ---------- -->
-  <section class="scene scene--dark" id="scene-intro" data-label="인트로">
-    <div class="intro__media">
-      <img class="intro__poster" src="assets/img/intro-poster.jpg" alt="" fetchpriority="high">
-      <div class="intro__vignette"></div>
-    </div>
-    <div class="intro__hud">
-      <div>
-        <h1 class="intro__title">SEN<br><span class="thin">ENGINEERING</span></h1>
-        <p class="intro__sub" data-bind="site.hero.eyebrow"></p>
+  <!-- ---------- 장면 0 : 인트로 (텍스트 플립) ----------
+       assets/js/hero.js 가 단어 교체 애니메이션과 채용/뉴스 배지를 그립니다.
+       배지 상태는 실제 데이터 기준(careers.jobs 개수, news.items 개수)입니다. -->
+  <section class="scene scene--hero" id="scene-intro" data-label="인트로">
+    <div class="hero">
+      <div class="ltf">
+        <span class="ltf__text">Welcome to</span>
+        <span class="ltf__box" data-ltf-box><span class="ltf__sizer" data-ltf-sizer></span></span>
       </div>
+      <p class="ltf__lead" data-bind="site.hero.subtitle"></p>
+      <div class="flags" data-flags></div>
     </div>
-    <div class="intro__cue"><span>SCROLL</span><i></i></div>
   </section>
 
   <!-- ---------- 장면 1 : 회사소개 ---------- -->
@@ -285,6 +279,7 @@
 <script src="assets/js/kmap.js"></script>
 <script src="assets/js/controls.js"></script>
 <script src="assets/js/atlas.js"></script>
+<script src="assets/js/hero.js"></script>
 <script src="assets/js/main.js"></script>
 
 </body>
