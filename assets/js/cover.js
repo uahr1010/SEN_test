@@ -18,7 +18,7 @@ window.SEN = window.SEN || {};
   'use strict';
 
   var MAIN_DIR   = 'uploads/main/';
-  var MAX_INDEX  = 10;                              // main_1 ~ main_10 까지 찾아봅니다
+  var MAX_INDEX  = 4;                               // main_1 ~ main_4 까지만 찾아봅니다
   var EXTS       = ['png', 'jpg', 'jpeg', 'webp'];  // 확장자는 이 중 아무거나 됩니다
   var FALLBACK   = [1, 2, 3, 4].map(function (i) { return 'assets/img/hero/hero-' + i + '.jpg'; });
   var CYCLE      = 24;  // 전체 한 바퀴(초). 사진 한 장당 CYCLE / 장수 초씩 보입니다
@@ -39,7 +39,7 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /** main_1 ~ main_10 을 병렬로 찔러 보고, 실제로 있는 것만 번호순으로 돌려줍니다 */
+  /** main_1 ~ main_4 를 병렬로 찔러 보고, 실제로 있는 것만 번호순으로 돌려줍니다 */
   function discoverPhotos() {
     var indices = [];
     for (var n = 1; n <= MAX_INDEX; n++) indices.push(n);
