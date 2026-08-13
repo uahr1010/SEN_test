@@ -664,11 +664,13 @@
 .proj-tab.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 
 /* ---------- 한국 지도 ----------
-   예전엔 정사각형(1:1)이라 왼쪽 프로젝트 목록보다 세로로 훨씬 길었습니다.
-   더 납작한 비율로 줄여 목록 높이에 가깝게 맞췄습니다. */
+   kmap.js의 viewBox(760×803)와 같은 비율로 맞췄습니다 — 비율이 다르면
+   SVG가 안에서 letterbox(레터박스)되면서 위아래나 좌우에 쓸모없는
+   흰 여백이 생깁니다. 실제 지도 내용 기준으로 꽉 차게 잘라낸 비율이라
+   정사각형은 아니지만, 그만큼 더 크게 키울 수 있습니다. */
 .kmap-stage {
-  position: relative; width: 100%; aspect-ratio: 4 / 3;
-  max-width: 640px; margin: 0 auto;
+  position: relative; width: 100%; aspect-ratio: 760 / 803;
+  max-width: 800px; margin: 0 auto;
 }
 .kmap-stage.is-unavailable { display: none; }
 .kmap-stage.is-unavailable ~ .globe__hint { display: none; }

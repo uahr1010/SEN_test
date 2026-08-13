@@ -253,7 +253,11 @@ window.SEN = window.SEN || {};
     var maxN = 0;
     Object.keys(byProv).forEach(function (k) { if (byProv[k] > maxN) maxN = byProv[k]; });
 
-    var VBW = 760, VBH = 940;
+    /* VBH 를 940→803으로 줄였습니다 — 지도가 실제로 차지하는 세로 범위는
+       114.5px 여백 + 711px 내용 + 114.5px 여백(측정값)이라, 위아래로
+       쓸모없는 흰 여백이 컸습니다. 가로 여백(46px, pad 값과 일치)과
+       맞춰 세로도 같은 46px 여백만 남도록 줄였습니다. */
+    var VBW = 760, VBH = 803;
     svg.setAttribute('viewBox', '0 0 ' + VBW + ' ' + VBH);
     while (svg.firstChild) svg.removeChild(svg.firstChild);
 
