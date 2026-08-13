@@ -235,12 +235,6 @@
 
   "contact": {
     "heading": { "ko": "CONTACT", "en": "Contact Us", "zh": "联系我们", "ja": "お問い合わせ" },
-    "lead": {
-      "ko": "프로젝트 문의, 기술 협의, 자료 요청은 아래 메일로 연락 주십시오. 클릭하면 메일 작성 창이 바로 열립니다.",
-      "en": "For project enquiries, technical discussions or document requests, email us below — one click opens your mail app.",
-      "zh": "项目咨询、技术洽谈与资料索取请通过以下邮箱联系。点击即可直接打开邮件撰写窗口。",
-      "ja": "プロジェクトのご相談、技術協議、資料請求は下記メールまでご連絡ください。クリックでメール作成画面が開きます。"
-    },
     "generalLabel": { "ko": "대표 문의", "en": "General enquiries", "zh": "综合咨询", "ja": "総合お問い合わせ" },
     "generalEmail": "info@senkuzo.com",
     "offices": [
