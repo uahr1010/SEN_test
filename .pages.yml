@@ -113,6 +113,7 @@ content:
             options:
               - 언론보도
               - 행사
+              - 홍보자료
               - 논문
               - 기술자료
             description: >

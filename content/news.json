@@ -13,10 +13,10 @@
       "ja": "ニュース & 技術資料"
     },
     "lead": {
-      "ko": "언론 보도, 학회 논문, 기술자료, 행사 소식을 한곳에서 확인하실 수 있습니다.",
-      "en": "Press coverage, academic papers, technical notes and event news in one place.",
-      "zh": "媒体报道、学会论文、技术资料与活动消息，尽在于此。",
-      "ja": "報道、学会論文、技術資料、イベント情報をまとめてご覧いただけます。"
+      "ko": "언론 보도, 행사, 홍보자료, 학회 논문, 기술자료를 한곳에서 확인하실 수 있습니다.",
+      "en": "Press coverage, events, PR materials, academic papers and technical notes in one place.",
+      "zh": "媒体报道、活动、宣传资料、学会论文与技术资料，尽在于此。",
+      "ja": "報道、イベント、広報資料、学会論文、技術資料をまとめてご覧いただけます。"
     }
   },
   "items": [
