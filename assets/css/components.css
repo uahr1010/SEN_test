@@ -240,6 +240,18 @@
 .brochure__btn:hover { border-color: var(--c-blue); color: var(--c-blue); background: var(--c-tint); }
 
 .methods { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+/* 좁은 화면에서는 카드를 세로로 쌓지 않고 옆으로 드래그해서 보는
+   가로 캐러셀로 바꿉니다(PC는 위 grid 그대로 유지). 카드 폭을 82%로
+   둬서 다음 카드가 살짝 보여야 옆으로 더 있다는 걸 알 수 있습니다. */
+@media (max-width: 640px) {
+  .methods {
+    display: flex; grid-template-columns: none;
+    overflow-x: auto; scroll-snap-type: x proximity;
+    gap: var(--sp-3); padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .method { flex: 0 0 82%; scroll-snap-align: start; }
+}
 .method {
   display: flex; flex-direction: column;
   background: var(--c-white); border: 1px solid var(--c-line);
