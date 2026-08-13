@@ -469,6 +469,9 @@
   /* 카드 폭이 좁아져서(153px 안팎) 글자도 그만큼 줄입니다 */
   .cards--news[data-news-track] .card__title { font-size: 0.92rem; }
   .cards--news[data-news-track] .card__excerpt { font-size: 0.78rem; }
+  /* 기본 패딩(24px)이 좁은 카드에서 너무 커서 글자 들어갈 자리가
+     모자라 잘려 보였습니다 — 줄여서 글자 공간을 늘립니다. */
+  .cards--news[data-news-track] .card__body { padding: 12px; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
