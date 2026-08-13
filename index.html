@@ -89,25 +89,27 @@
     </div>
   </section>
 
-  <!-- ---------- 장면 1 : 회사소개 ---------- -->
-  <section class="scene scene--paper" id="scene-about" data-label="회사소개">
+  <!-- ---------- 장면 1 : 회사소개 (CEO 인사말) ----------
+       예전에는 CEO·연혁·공법·CONTACT 가 이 섹션 하나에 다 들어 있어
+       회사소개 혼자 화면 4.7개 분량이었습니다. 넷을 독립 섹션으로 나눠
+       각각 자기 리듬(배경·여백·제목 크기)을 갖게 했습니다. -->
+  <section class="scene scene--paper scene--opening" id="scene-about" data-label="회사소개">
     <div class="scene__inner">
-      <header class="scene__head">
-        <p class="scene__kicker" data-bind="about.section.eyebrow"></p>
+      <header class="scene__head" data-reveal>
         <h2 class="scene__title" data-bind="about.section.title"></h2>
         <p class="scene__lead" data-bind="about.section.lead"></p>
       </header>
 
-      <!-- 제목·인용구는 폭 전체, 그 아래 [사진+서명] / [본문] 2단,
+      <!-- 인용구는 폭 전체, 그 아래 [사진+서명] / [본문] 2단,
            맨 아래 약력·자격·수상·저서 4개 아코디언(폭 전체) -->
       <div class="about-block" id="about-ceo">
         <!-- 영상 URL(about.ceo.video)이 비어 있으면 render.js가 이 자리를 통째로 숨기고,
              있으면 자동재생·반복 iframe을 여기에 채워 넣습니다 -->
-        <div class="ceo__video" data-ceo-video hidden></div>
-        <h3 class="block__title" data-bind="about.ceo.heading"></h3>
-        <blockquote class="ceo__quote" data-bind="about.ceo.quote"></blockquote>
+        <div class="ceo__video" data-ceo-video hidden data-reveal></div>
+        <h3 class="block__title" data-bind="about.ceo.heading" data-reveal></h3>
+        <blockquote class="ceo__quote" data-bind="about.ceo.quote" data-reveal></blockquote>
 
-        <div class="ceo__intro">
+        <div class="ceo__intro" data-reveal>
           <div class="ceo__aside">
             <div class="ceo__media"><img data-src="about.ceo.photo" alt="" loading="lazy"></div>
             <p class="ceo__sign">
@@ -118,53 +120,80 @@
           <div class="prose" data-prose="about.ceo.body"></div>
         </div>
 
-        <div class="ceo__career acc" data-list="about.ceo.careerGroups"></div>
-      </div>
-
-      <div class="about-block" id="about-history">
-        <h3 class="block__title" data-bind="about.history.heading"></h3>
-        <p class="scene__lead" data-bind="about.history.lead"></p>
-        <!-- 회사 창립은 항상 보이도록 고정, 나머지는 연대별로 접습니다 -->
-        <div class="history__pin" data-list="about.history.pinned"></div>
-        <div class="history" data-list="about.history.groups"></div>
-      </div>
-
-      <div class="about-block" id="about-methods">
-        <div class="methods__head">
-          <div>
-            <h3 class="block__title" data-bind="about.methods.heading"></h3>
-            <p class="scene__lead" data-bind="about.methods.lead"></p>
-          </div>
-          <div class="brochure">
-            <div class="brochure__btns">
-              <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-ko.pdf" download>한국어</a>
-              <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-en.pdf" download>English</a>
-              <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-zh.pdf" download>中文</a>
-            </div>
-          </div>
-        </div>
-        <div class="scene__scroll"><div class="methods" data-list="about.methods.items"></div></div>
-      </div>
-
-      <div class="about-block" id="about-contact">
-        <h3 class="block__title" data-bind="about.contact.heading"></h3>
-        <p class="scene__lead" data-bind="about.contact.lead"></p>
-        <div class="scene__scroll"><div class="offices" data-list="about.contact.offices"></div></div>
+        <div class="ceo__career acc" data-list="about.ceo.careerGroups" data-reveal></div>
       </div>
     </div>
   </section>
 
-  <!-- ---------- 장면 2 : 프로젝트 (실적 지구본) ---------- -->
-  <section class="scene scene--paper" id="scene-projects" data-label="프로젝트" data-section="projects">
+  <!-- ---------- 장면 2 : 회사연혁 ---------- -->
+  <section class="scene scene--tint" id="scene-history" data-label="회사연혁">
     <div class="scene__inner">
-      <header class="scene__head">
-        <p class="scene__kicker" data-bind="projects.section.eyebrow"></p>
+      <header class="scene__head" data-reveal>
+        <h2 class="scene__title" data-bind="about.history.heading"></h2>
+        <p class="scene__lead" data-bind="about.history.lead"></p>
+      </header>
+      <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고 연대는 버튼으로 여닫습니다.
+           내용은 assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
+      <div class="tml" data-timeline data-reveal>
+        <div class="tml__eras" data-tml-eras></div>
+        <p class="tml__hint" data-bind="site.ui.timelineHint">연대를 눌러 펼치고, 선을 좌우로 끌어 보세요</p>
+      </div>
+    </div>
+
+    <!-- 스크롤 칸은 .scene__inner 밖에 둡니다 — 폭 제한을 받지 않고
+         화면 양 끝까지 써야 선이 길게 뻗어 보입니다. -->
+    <div class="tml-stage">
+      <div class="tml__scroll" data-tml-scroll>
+        <div class="tml__track" data-tml-track>
+          <div class="tml__axis" data-tml-axis></div>
+          <div class="tml__arrow" data-tml-arrow></div>
+          <div class="tml__walker" data-tml-walker><img src="assets/img/run.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 장면 3 : 주요공법 ---------- -->
+  <section class="scene scene--paper" id="scene-methods" data-label="주요공법">
+    <div class="scene__inner">
+      <div class="methods__head" data-reveal>
+        <div>
+          <h2 class="scene__title" data-bind="about.methods.heading"></h2>
+          <p class="scene__lead" data-bind="about.methods.lead"></p>
+        </div>
+        <div class="brochure">
+          <div class="brochure__btns">
+            <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-ko.pdf" download>한국어</a>
+            <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-en.pdf" download>English</a>
+            <a class="brochure__btn" href="assets/pdf/senkuzo-brochure-zh.pdf" download>中文</a>
+          </div>
+        </div>
+      </div>
+      <div class="scene__scroll"><div class="methods" data-list="about.methods.items" data-reveal></div></div>
+    </div>
+  </section>
+
+  <!-- ---------- 장면 4 : CONTACT ---------- -->
+  <section class="scene scene--tint scene--tight" id="scene-contact" data-label="CONTACT">
+    <div class="scene__inner">
+      <header class="scene__head" data-reveal>
+        <h2 class="scene__title" data-bind="about.contact.heading"></h2>
+        <p class="scene__lead" data-bind="about.contact.lead"></p>
+      </header>
+      <div class="scene__scroll"><div class="offices" data-list="about.contact.offices" data-reveal></div></div>
+    </div>
+  </section>
+
+  <!-- ---------- 장면 2 : 프로젝트 (실적 지구본) ---------- -->
+  <section class="scene scene--paper scene--wide" id="scene-projects" data-label="프로젝트" data-section="projects">
+    <div class="scene__inner">
+      <header class="scene__head" data-reveal>
         <h2 class="scene__title" data-bind="projects.section.title"></h2>
         <p class="scene__lead" data-bind="projects.section.lead"></p>
       </header>
 
       <!-- 국내 / 국외 탭. 오른쪽 시각화가 탭에 따라 지도 ↔ 지구본으로 바뀝니다. -->
-      <div class="proj-tabs" role="tablist" data-proj-tabs>
+      <div class="proj-tabs" role="tablist" data-proj-tabs data-reveal>
         <button type="button" class="proj-tab is-on" role="tab" aria-selected="true"
                 data-proj-tab="domestic" data-bind="projects.tabs.domestic">국내</button>
         <button type="button" class="proj-tab" role="tab" aria-selected="false"
@@ -215,17 +244,16 @@
        자동으로 계속 흐릅니다(마우스를 올리면 멈춤, 화살표로 수동 이동도 가능).
        제목/칩은 .scene__inner 안에서 폭을 맞추지만, 카드 줄(.news-carousel)은
        .scene__inner 밖(=.scene 의 직계 자식)에 두어 양쪽 끝까지 꽉 채웁니다. -->
-  <section class="scene scene--paper" id="scene-news" data-label="뉴스" data-section="news">
+  <section class="scene scene--tint" id="scene-news" data-label="뉴스" data-section="news">
     <div class="scene__inner">
-      <div class="news__head">
+      <div class="news__head" data-reveal>
         <header class="scene__head">
-          <p class="scene__kicker" data-bind="site.news.eyebrow"></p>
           <h2 class="scene__title" data-bind="site.news.title"></h2>
           <p class="scene__lead" data-bind="site.news.lead"></p>
         </header>
         <a class="news__seeall" href="news-list.html" data-bind="site.ui.loadMore"></a>
       </div>
-      <div class="chips" data-newsfilter></div>
+      <div class="chips" data-newsfilter data-reveal></div>
     </div>
     <div class="news-carousel">
       <button type="button" class="news-carousel__arrow" data-news-arrow="prev" aria-label="이전 기사">
@@ -239,16 +267,15 @@
   </section>
 
   <!-- ---------- 장면 4 : 채용 ---------- -->
-  <section class="scene scene--paper" id="scene-careers" data-label="채용" data-section="careers">
+  <section class="scene scene--paper scene--closing" id="scene-careers" data-label="채용" data-section="careers">
     <div class="scene__inner">
-      <header class="scene__head">
-        <p class="scene__kicker" data-bind="site.careers.section.eyebrow"></p>
+      <header class="scene__head" data-reveal>
         <h2 class="scene__title" data-bind="site.careers.section.title"></h2>
         <p class="scene__lead" data-bind="site.careers.section.lead"></p>
       </header>
-      <h3 class="block__title" data-bind="site.careers.jobsHeading"></h3>
+      <h3 class="block__title" data-bind="site.careers.jobsHeading" data-reveal></h3>
       <div class="scene__scroll">
-        <div class="jobs" data-list="careers.jobs"></div>
+        <div class="jobs" data-list="careers.jobs" data-reveal></div>
       </div>
     </div>
   </section>
@@ -302,6 +329,8 @@
 <script src="assets/js/atlas.js"></script>
 <script src="assets/js/hero.js"></script>
 <script src="assets/js/cover.js"></script>
+<script src="assets/js/timeline.js"></script>
+<script src="assets/js/reveal.js"></script>
 <script src="assets/js/main.js"></script>
 
 </body>

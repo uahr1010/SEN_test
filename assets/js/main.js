@@ -224,12 +224,16 @@ window.SEN = window.SEN || {};
       SEN.atlas.init();
       initProjects(data);
       if (SEN.hero) SEN.hero.init(data);
+      if (SEN.timeline) SEN.timeline.init(data);   // 회사연혁 가로 타임라인
+      // 등장 효과는 내용이 다 채워진 뒤에 켜야 높이 계산이 맞습니다
+      if (SEN.reveal) SEN.reveal.init();
 
       // 언어 변경 시 전체 다시 렌더
       SEN.i18n.onChange(function () {
         SEN.render(SEN.data);
         applyMeta(SEN.data);
         renderProjectPanel(SEN.projectPanel.tab);   // 통계·지역 목록 라벨은 render() 대상이 아님
+        if (SEN.timeline) SEN.timeline.refresh(SEN.data);   // 연혁도 render() 대상이 아님
       });
 
       scrollToHash();
@@ -238,6 +242,7 @@ window.SEN = window.SEN || {};
       SEN.data = {};
       SEN.controls.init();
       SEN.atlas.init();
+      if (SEN.reveal) SEN.reveal.init();   // 실패해도 숨겨진 채로 남지 않도록
       showError(err);
     });
   }
