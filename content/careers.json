@@ -1,3 +1,60 @@
 {
-  "applyEmail": "recruit@senkuzo.com"
+  "applyEmail": "recruit@senkuzo.com",
+  "jobs": [
+    {
+      "id": "job-structural-engineer",
+      "email": "",
+      "title": "[더미] 건축구조 설계 엔지니어",
+      "team": "구조설계본부",
+      "type": "정규직",
+      "location": "서울 영등포",
+      "deadline": "2026-09-30",
+      "description": "고층 건축물·데이터센터·물류시설의 구조 기본설계 및 실시설계를 담당합니다. 자사 공법(PSRC·TSC)을 적용한 최적 설계안을 제안하고 시공 단계까지 기술 지원을 수행합니다.",
+      "requirements": [
+        "건축공학·토목공학 학사 이상",
+        "구조해석 프로그램(MIDAS, ETABS 등) 활용 가능",
+        "경력 3년 이상 (신입 별도 전형)"
+      ],
+      "preferred": [
+        "건축구조기술사 자격 보유",
+        "합성구조·프리캐스트 설계 경험",
+        "영어 또는 중국어 업무 가능"
+      ]
+    },
+    {
+      "id": "job-bim",
+      "email": "",
+      "title": "[더미] BIM / 샵드로잉 담당",
+      "team": "센벡스 기술연구소",
+      "type": "정규직",
+      "location": "서울 영등포",
+      "deadline": "2026-10-15",
+      "description": "BIM 모델링과 강구조 샵드로잉을 담당하며, 설계–생산–시공 간 데이터 연계를 관리합니다.",
+      "requirements": [
+        "Revit 또는 Tekla 실무 사용 경험",
+        "도면 해독 능력"
+      ],
+      "preferred": [
+        "강구조 제작·시공 이해"
+      ]
+    },
+    {
+      "id": "job-overseas",
+      "email": "",
+      "title": "[더미] 해외영업 / 기술영업",
+      "team": "글로벌사업팀",
+      "type": "정규직",
+      "location": "서울 / 해외 출장",
+      "deadline": "",
+      "description": "싱가포르·말레이시아·베트남 등 해외 법인과 협업하여 자사 공법의 기술영업을 담당합니다.",
+      "requirements": [
+        "영어 비즈니스 회화 가능",
+        "건설·엔지니어링 산업 이해"
+      ],
+      "preferred": [
+        "동남아 프로젝트 경험",
+        "중국어 또는 베트남어 가능"
+      ]
+    }
+  ]
 }
