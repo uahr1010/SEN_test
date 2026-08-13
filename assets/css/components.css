@@ -653,6 +653,14 @@
   .ceo__intro { grid-template-columns: 1fr; }
   .ceo__media { max-width: 220px; margin: 0 auto; }
   .ceo__sign { justify-content: center; text-align: center; }
+  /* 해시태그처럼 붙는 배지(팀/형태/근무지/마감)가 좁은 화면에서 제목과
+     한 줄을 다투다 잘려 보이는 일이 없도록, 배지 칸을 아예 새 줄
+     전체(100%)로 떼어냅니다 — 그 줄 안에서는 배지끼리 알아서
+     줄바꿈됩니다(.job__badges 는 이미 flex-wrap). 배지 하나가 유난히
+     길 때를 대비해 그 안 글자도 한 줄 고정을 풀어 둡니다. */
+  .job__title { min-width: 0; }
+  .job__badges { flex-basis: 100%; min-width: 0; }
+  .job__badge { white-space: normal; }
   .job__head { flex-wrap: wrap; }
 }
 
