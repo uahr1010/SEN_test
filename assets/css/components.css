@@ -669,8 +669,9 @@
    흰 여백이 생깁니다. 실제 지도 내용 기준으로 꽉 차게 잘라낸 비율이라
    정사각형은 아니지만, 그만큼 더 크게 키울 수 있습니다. */
 .kmap-stage {
+  /* 세로 700px 기준, 가로는 같은 비율(760:803)로 자동 계산 → 약 663px */
   position: relative; width: 100%; aspect-ratio: 760 / 803;
-  max-width: 800px; margin: 0 auto;
+  max-width: 663px; margin: 0 auto;
 }
 .kmap-stage.is-unavailable { display: none; }
 .kmap-stage.is-unavailable ~ .globe__hint { display: none; }
