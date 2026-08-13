@@ -135,7 +135,12 @@ body {
   .cover__vision { max-width: none; margin-top: clamp(48px, 12vh, 88px); }
   .cover__row { justify-content: flex-start; }
   .cover__brand {
-    position: absolute;
+    /* width:100%(위 기본 규칙)가 그대로 남아있으면 left·width·right가
+       한꺼번에 지정된 꼴이 되어 브라우저가 right를 무시하고 width를
+       우선시킵니다 — 그 결과 fitBrand()가 계산한 폭(.cover__foot 기준,
+       좌우 여백만큼 좁음)과 실제 박스 폭(전체 폭)이 어긋나 글자가
+       의도보다 작게 보였습니다. width:auto로 그 충돌을 없앱니다. */
+    position: absolute; width: auto;
     top: 50%; left: clamp(20px, 3.4vw, 46px); right: clamp(20px, 3.4vw, 46px);
     transform: translateY(-50%);
     text-align: center;
