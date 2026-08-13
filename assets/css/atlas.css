@@ -352,7 +352,7 @@ body {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: clamp(16px, 3vw, 32px);
 }
-.site-footer__brand img { height: 30px; width: auto; display: block; }
+.site-footer__brand img { height: clamp(44px, 6vw, 68px); width: auto; display: block; }
 .site-footer__info { text-align: right; font-size: var(--fs-small); line-height: 1.7; }
 .site-footer__copy { margin-top: 4px; font-size: var(--fs-xs); color: rgba(255, 255, 255, .5); }
 
