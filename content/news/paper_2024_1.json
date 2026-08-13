@@ -1,7 +1,0 @@
-{
-  "id": "paper_2024_1",
-  "date": "2024-01-10",
-  "category": "논문",
-  "title": "Cyclic Lateral Load Test for RC Column–Steel Beam Joints with Simplified Connection Details [Journal of Structural Engineering] (2019.05)",
-  "excerpt": "저자: 이호준, 박홍근, 황현종, 김창수\nAbstract: Existing experimental results show that carefully designed RC column-to-steel beam (RCS) joints have high seismic resistance comparable to those of traditional steel or RC frames with seismic details. However, such high seismic performance requires complicated and expensive strengthening details, which causes difficulties in fabrication and construction. This study investigated simpler strengthening methods, targeting moderate seismic capacity. Four interior RCS joint specimens were tested under cyclic lateral loading. The major test parameters were the strengthening details of the beam–column joint such as face bearing plates, transverse beams, and headed studs. The test specimens with the proposed methods exhibited good deformation capacity exceeding 4.0% story drift ratio after yielding of the beams and beam–column connection. However, the peak load did not reach the nominal strength based on the beam plastic moment due to early joint damage. The failure modes and test strengths were compared with the predictions of ASCE design guidelines. On the basis of the results, design recommendations for the simplified connection details were proposed."
-}

@@ -16,6 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+<!-- 표지(첫 화면) 전용 폰트 — 비전 문구(Newsreader)·그룹명(Anton) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap">
 
 <!-- base/components 는 섹션 안쪽 내용(카드·타임라인·채용 아코디언)용,
      atlas 는 시네마틱 껍데기(고정 무대·장면 전환·상단 네비)용입니다.
@@ -50,6 +52,29 @@
 </header>
 
 <nav id="prog" aria-label="장면 이동"></nav>
+
+<!-- ============ 표지 (첫 화면) ============
+     본문(main) 앞에 배경처럼 고정되어 있다가, 스크롤하면 아래(main)가
+     이 위로 슬라이드해 올라와 덮습니다. 사진 4장이 서서히 교차 전환됩니다
+     (assets/js/cover.js가 타이밍을 계산해 넣습니다). -->
+<section class="cover" data-cover>
+  <div class="cover__bg" data-cover-bg></div>
+  <div class="cover__veil"></div>
+
+  <p class="cover__vision">
+    Korea's only engineering team delivering advanced structural design,
+    fabrication, and construction as one seamless service.
+  </p>
+
+  <div></div>
+
+  <div class="cover__foot">
+    <div class="cover__row">
+      <span class="cover__cue"><i></i>SCROLL</span>
+    </div>
+    <span class="cover__brand" data-cover-brand>SEN ENGINEERING</span>
+  </div>
+</section>
 
 <main id="top">
 
@@ -280,6 +305,7 @@
 <script src="assets/js/controls.js"></script>
 <script src="assets/js/atlas.js"></script>
 <script src="assets/js/hero.js"></script>
+<script src="assets/js/cover.js"></script>
 <script src="assets/js/main.js"></script>
 
 </body>

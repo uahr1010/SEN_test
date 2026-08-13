@@ -63,6 +63,80 @@ body {
 .scene--paper { background: var(--paper); }
 .scene--paper .scene__inner { color: var(--ink); }
 
+/* ---------- 표지 (첫 화면, 사진 크로스페이드) ----------
+   본문(main) 앞에 화면 전체를 채운 채 고정되어(position:fixed) 배경처럼
+   깔려 있습니다. 아래 ".cover + main" 규칙이 본문을 표지 높이(100vh)만큼
+   내려서 시작시키므로, 처음엔 표지만 보이다가 스크롤하면 본문(불투명
+   배경)이 위로 슬라이드해 올라오며 표지를 덮습니다 — "아래 창이 위 창을
+   덮는" 느낌. z-index가 음수라 일반 흐름의 본문(z-index 지정 없음)보다
+   항상 뒤에 그려지므로, main 쪽에 별도 position/z-index를 줄 필요가
+   없고 atlas.js의 offsetTop 기준 스크롤 계산도 그대로 맞습니다. */
+.cover {
+  position: fixed; inset: 0; z-index: -1;
+  isolation: isolate;
+  display: grid; grid-template-rows: auto 1fr auto;
+  padding: clamp(20px, 3.4vw, 46px);
+  overflow: hidden;
+  background: var(--night);
+  color: #fff;
+  font-family: "Noto Sans KR", -apple-system, "Malgun Gothic", sans-serif;
+}
+.cover__bg { position: absolute; inset: 0; z-index: -2; }
+.cover__bg img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0;
+}
+.cover__veil {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(6,10,18,.72) 0%, rgba(6,10,18,.28) 30%,
+                            rgba(6,10,18,.42) 62%, rgba(6,10,18,.86) 100%),
+    radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(6,10,18,.5) 100%);
+}
+.cover__vision {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 300; font-style: normal;
+  font-size: clamp(1.05rem, 1.95vw, 1.85rem);
+  line-height: 1.42; letter-spacing: -.005em;
+  max-width: 42ch; margin: 0 auto;
+  text-align: center;
+  color: rgba(255,255,255,.96);
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0,0,0,.45);
+}
+.cover__foot { display: grid; gap: clamp(14px, 2vw, 22px); }
+.cover__brand {
+  font-family: "Anton", Impact, sans-serif; font-weight: 400;
+  display: block; width: 100%;
+  line-height: 1.06; letter-spacing: -.015em;
+  white-space: nowrap;
+  font-size: 12vw;                       /* cover.js가 폭에 맞춰 덮어씁니다 */
+  color: #fff;
+  text-shadow: 0 6px 40px rgba(0,0,0,.42);
+}
+.cover__row { display: flex; justify-content: flex-end; }
+.cover__cue {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: .68rem; letter-spacing: .3em; color: rgba(255,255,255,.72);
+}
+.cover__cue i {
+  display: block; width: 42px; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,.75), transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cover__bg img { animation: none; opacity: 0; transform: none; }
+  .cover__bg img:first-child { opacity: 1; }
+}
+@media (max-width: 640px) {
+  .cover__vision { max-width: none; }
+  .cover__row { justify-content: flex-start; }
+}
+
+/* 표지 바로 다음(본문 전체)을 표지 높이만큼 내려서 시작시킵니다 —
+   그래야 스크롤해야 본문이 표지를 덮으며 올라옵니다. */
+.cover + main { margin-top: 100vh; margin-top: 100dvh; }
+
 /* ---------- 장면 0 : 인트로(텍스트 플립) ----------
    카카오톡으로 받은 LayoutTextFlip 미리보기를 그대로 이식했습니다.
    흰 배경 전체화면 히어로라, 더는 어두운 장면이 없습니다
