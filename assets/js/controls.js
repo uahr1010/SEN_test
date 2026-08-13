@@ -141,15 +141,26 @@ window.SEN = window.SEN || {};
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) return;   // 모션 최소화 설정이면 자동 스크롤은 아예 시작하지 않음
 
-    (function tick() {
+    /* 초당 24px — 참고 디자인(SEN_homepage.html)의 뉴스 마퀴 속도(v:-24)와 동일.
+       프레임 간 시간차(dt)로 계산해 화면 주사율이 달라도 같은 속도로 보입니다
+       (참고 파일의 nloop 도 같은 방식: r.x += r.v * dt). */
+    var newsSpeed = 24;
+    var lastTs = null;
+    (function tick(now) {
       var t = document.querySelector('[data-news-track]');
-      if (t && t.isConnected && !newsAutoPaused) {
-        t.scrollLeft += 0.5;   /* 초당 약 30px */
-        var half = t.scrollWidth / 2;
-        if (half > 0 && t.scrollLeft >= half) t.scrollLeft -= half;
+      if (t && t.isConnected) {
+        var dt = lastTs ? Math.min(0.05, (now - lastTs) / 1000) : 0;
+        lastTs = now;
+        if (!newsAutoPaused) {
+          t.scrollLeft += newsSpeed * dt;
+          var half = t.scrollWidth / 2;
+          if (half > 0 && t.scrollLeft >= half) t.scrollLeft -= half;
+        }
+      } else {
+        lastTs = null;
       }
       requestAnimationFrame(tick);
-    })();
+    })(performance.now());
   }
 
   function initNewsCarousel() {
