@@ -402,9 +402,15 @@
   display: flex; gap: var(--sp-3); overflow-x: hidden;
   flex: 1 1 auto; min-width: 0; padding: 4px 2px 12px;
 }
-.cards--news[data-news-track] .card { flex: 0 0 300px; }
+/* 제목 줄 수가 카드마다 달라 높이가 들쭉날쭉해지지 않도록,
+   flex 신축(stretch)에 기대지 않고 카드 높이를 고정하고 제목도 2줄로 자릅니다. */
+.cards--news[data-news-track] .card { flex: 0 0 300px; height: 300px; }
+.cards--news[data-news-track] .card__title {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  line-clamp: 2; overflow: hidden;
+}
 @media (max-width: 640px) {
-  .cards--news[data-news-track] .card { flex-basis: 260px; }
+  .cards--news[data-news-track] .card { flex-basis: 260px; height: 280px; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
