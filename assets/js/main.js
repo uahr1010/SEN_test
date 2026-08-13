@@ -30,17 +30,6 @@ window.SEN = window.SEN || {};
         out.sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
       }
       return out.slice(0, this.limit[kind]);
-    },
-
-    hasMore: function (kind, items) {
-      var f = this.filter[kind];
-      var total = f
-        ? items.filter(function (it) {
-            if (kind === 'news') return SEN.i18n.t(it.category) === f;
-            return (it.methods || []).indexOf(f) > -1;
-          }).length
-        : items.length;
-      return total > this.limit[kind];
     }
   };
 

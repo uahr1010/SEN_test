@@ -107,6 +107,21 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /* ---------- 홈 뉴스 캐러셀 화살표 ----------
+     카드 하나 폭 + gap만큼 옆으로 부드럽게 스크롤합니다. */
+  function initNewsCarousel() {
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-news-arrow]');
+      if (!btn) return;
+      var track = document.querySelector('[data-news-track]');
+      if (!track) return;
+      var card = track.querySelector('.card');
+      var step = (card ? card.getBoundingClientRect().width : 300) + 32;
+      var dir = btn.getAttribute('data-news-arrow') === 'prev' ? -1 : 1;
+      track.scrollBy({ left: dir * step, behavior: 'smooth' });
+    });
+  }
+
   /* ---------- 프로젝트 국내/국외 탭 ---------- */
   function initProjTabs() {
     document.addEventListener('click', function (e) {
@@ -148,7 +163,7 @@ window.SEN = window.SEN || {};
   SEN.controls = {
     init: function () {
       initJobs(); initApplyModal(); initListControls();
-      initProjTabs(); initKmapDrill();
+      initProjTabs(); initKmapDrill(); initNewsCarousel();
     }
   };
 })(window.SEN);

@@ -424,13 +424,6 @@ window.SEN = window.SEN || {};
 
     // 7) 뉴스/프로젝트 필터 칩
     buildChips(ctx, 'news', '[data-newsfilter]', function (it) { return t(it.category); });
-
-    // 8) 더보기 버튼 표시 여부
-    ['news'].forEach(function (kind) {
-      var btn = document.querySelector('[data-more="' + kind + '"]');
-      if (!btn) return;
-      btn.parentElement.hidden = !SEN.state.hasMore(kind, pick(ctx, kind + '.items') || []);
-    });
   }
 
   function buildChips(ctx, kind, selector, getLabel) {

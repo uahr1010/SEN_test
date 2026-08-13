@@ -194,20 +194,28 @@
     </div>
   </div>
 
-  <!-- ---------- 장면 3 : 뉴스 ---------- -->
+  <!-- ---------- 장면 3 : 뉴스 ----------
+       이미지 없이 큰 제목 위주로 보여주고, 그리드 대신 가로로 넘기는
+       캐러셀입니다("전체 보기"는 news-list.html 로, 화살표는 좌우로 스크롤). -->
   <section class="scene scene--paper" id="scene-news" data-label="뉴스" data-section="news">
     <div class="scene__inner">
-      <header class="scene__head">
-        <p class="scene__kicker" data-bind="news.section.eyebrow"></p>
-        <h2 class="scene__title" data-bind="news.section.title"></h2>
-        <p class="scene__lead" data-bind="news.section.lead"></p>
-      </header>
+      <div class="news__head">
+        <header class="scene__head">
+          <p class="scene__kicker" data-bind="news.section.eyebrow"></p>
+          <h2 class="scene__title" data-bind="news.section.title"></h2>
+          <p class="scene__lead" data-bind="news.section.lead"></p>
+        </header>
+        <a class="news__seeall" href="news-list.html" data-bind="site.ui.loadMore"></a>
+      </div>
       <div class="chips" data-newsfilter></div>
-      <div class="scene__scroll">
-        <div class="cards cards--news" data-list="news.items"></div>
-        <div class="more">
-          <a class="btn btn--ghost" href="news-list.html" data-more="news" data-bind="site.ui.loadMore"></a>
-        </div>
+      <div class="news-carousel">
+        <button type="button" class="news-carousel__arrow" data-news-arrow="prev" aria-label="이전 기사">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4.5 6 10l6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="cards cards--news" data-list="news.items" data-news-track></div>
+        <button type="button" class="news-carousel__arrow" data-news-arrow="next" aria-label="다음 기사">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 14 10l-6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </section>
