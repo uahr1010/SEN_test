@@ -1,3 +1,10 @@
 {
-  "applyEmail": "recruit@senkuzo.com"
+  "applyEmail": "recruit@senkuzo.com",
+  "jobs": [
+    {
+      "id": "1",
+      "deadline": "2026-08-13",
+      "title": "임시"
+    }
+  ]
 }
