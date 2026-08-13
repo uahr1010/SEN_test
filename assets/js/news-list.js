@@ -64,12 +64,17 @@ window.SEN = window.SEN || {};
     var all = ((data.news && data.news.items) || []).slice()
       .sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
 
-    // 분류 칩 — 홈페이지 칩과 달리 클릭이 아니라 링크입니다 (?cat=...)
-    var labels = [];
-    all.forEach(function (it) {
-      var l = t(it.category);
-      if (l && labels.indexOf(l) === -1) labels.push(l);
-    });
+    // 분류 칩 — 홈페이지 칩과 달리 클릭이 아니라 링크입니다 (?cat=...).
+    // site.news.categories 의 고정 목록을 그대로 써서, 해당 분류 글이
+    // 아직 없어도 칩은 보이도록 합니다(홈 화면 캐러셀과 동일한 방식).
+    var fixedLabels = (data.site && data.site.news && data.site.news.categories) || [];
+    var labels = fixedLabels.length ? fixedLabels.slice() : [];
+    if (!labels.length) {
+      all.forEach(function (it) {
+        var l = t(it.category);
+        if (l && labels.indexOf(l) === -1) labels.push(l);
+      });
+    }
     var cat = currentCat();
     var chipsHost = document.querySelector('[data-news-list-filter]');
     if (chipsHost) {

@@ -428,19 +428,28 @@ window.SEN = window.SEN || {};
       }
     });
 
-    // 7) 뉴스/프로젝트 필터 칩
-    buildChips(ctx, 'news', '[data-newsfilter]', function (it) { return t(it.category); });
+    // 7) 뉴스/프로젝트 필터 칩 — 분류는 site.news.categories 에 고정 목록으로
+    // 적어 둔 걸 그대로 씁니다(해당 분류 글이 아직 하나도 없어도 칩은 보이도록).
+    // news.json 이 아니라 site.json 에 둔 이유: news.json 은 Pages CMS
+    // "② 뉴스" 탭이 저장할 때 폼에 없는 필드를 통째로 지워버려서(section 이
+    // 그렇게 날아간 적이 있음), 그 탭이 절대 건드리지 않는 site.json 에 둡니다.
+    buildChips(ctx, 'news', '[data-newsfilter]', function (it) { return t(it.category); }, pick(ctx, 'site.news.categories'));
   }
 
-  function buildChips(ctx, kind, selector, getLabel) {
+  function buildChips(ctx, kind, selector, getLabel, fixedLabels) {
     var host = document.querySelector(selector);
     if (!host) return;
-    var all = pick(ctx, kind + '.items') || [];
-    var labels = [];
-    all.forEach(function (it) {
-      var l = getLabel(it);
-      if (l && labels.indexOf(l) === -1) labels.push(l);
-    });
+    var labels;
+    if (Array.isArray(fixedLabels) && fixedLabels.length) {
+      labels = fixedLabels.slice();
+    } else {
+      var all = pick(ctx, kind + '.items') || [];
+      labels = [];
+      all.forEach(function (it) {
+        var l = getLabel(it);
+        if (l && labels.indexOf(l) === -1) labels.push(l);
+      });
+    }
     if (labels.length < 2) { host.innerHTML = ''; return; }
 
     var allLabel = t(pick(ctx, 'site.ui.all')) || '전체';

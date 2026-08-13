@@ -123,7 +123,9 @@ window.SEN = window.SEN || {};
 
     Array.prototype.slice.call(track.querySelectorAll('[data-news-clone]')).forEach(function (el) { el.remove(); });
     var originals = Array.prototype.slice.call(track.children);
-    if (!originals.length) return;
+    /* 카드가 없을 때(분류 필터 결과가 0건이라 "등록된 내용이 없습니다"만
+       있을 때)는 그 안내문을 복제하면 안 되므로 건너뜁니다. */
+    if (!originals.length || !track.querySelector('.card')) return;
     originals.forEach(function (el) {
       var clone = el.cloneNode(true);
       clone.setAttribute('data-news-clone', '1');
