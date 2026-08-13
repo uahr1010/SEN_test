@@ -122,6 +122,13 @@ window.SEN = window.SEN || {};
     if (!track) return;
 
     Array.prototype.slice.call(track.querySelectorAll('[data-news-clone]')).forEach(function (el) { el.remove(); });
+    track.scrollLeft = 0;
+
+    /* 세부 분류(전체가 아닌 칩)를 골랐을 때는 복제도, 자동 스크롤도 하지
+       않습니다 — 항목이 몇 개 안 남는데 복제까지 붙이면 같은 자료가
+       두 개씩 보였습니다. "전체"일 때만(필터 없음) 계속 흐릅니다. */
+    if (SEN.state.filter.news) return;
+
     var originals = Array.prototype.slice.call(track.children);
     /* 카드가 없을 때(분류 필터 결과가 0건이라 "등록된 내용이 없습니다"만
        있을 때)는 그 안내문을 복제하면 안 되므로 건너뜁니다. */
@@ -132,7 +139,6 @@ window.SEN = window.SEN || {};
       clone.setAttribute('tabindex', '-1');   // 복제본은 탭 이동에서 건너뜀
       track.appendChild(clone);
     });
-    track.scrollLeft = 0;
 
     if (newsLoopStarted) return;
     newsLoopStarted = true;
@@ -155,7 +161,7 @@ window.SEN = window.SEN || {};
       if (t && t.isConnected) {
         var dt = lastTs ? Math.min(0.05, (now - lastTs) / 1000) : 0;
         lastTs = now;
-        if (!newsAutoPaused) {
+        if (!newsAutoPaused && !SEN.state.filter.news) {
           t.scrollLeft += newsSpeed * dt;
           var half = t.scrollWidth / 2;
           if (half > 0 && t.scrollLeft >= half) t.scrollLeft -= half;
