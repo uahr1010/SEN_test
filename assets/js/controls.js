@@ -141,10 +141,12 @@ window.SEN = window.SEN || {};
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) return;   // 모션 최소화 설정이면 자동 스크롤은 아예 시작하지 않음
 
-    /* 초당 24px — 참고 디자인(SEN_homepage.html)의 뉴스 마퀴 속도(v:-24)와 동일.
-       프레임 간 시간차(dt)로 계산해 화면 주사율이 달라도 같은 속도로 보입니다
-       (참고 파일의 nloop 도 같은 방식: r.x += r.v * dt). */
-    var newsSpeed = 24;
+    /* 참고 디자인(SEN_homepage.html)의 초당 24px는 카드 한 장(300px)이
+       지나가는 데 12초 넘게 걸릴 만큼 원래 느립니다(그 파일은 두 줄이
+       반대 방향으로 같이 움직여서 그나마 눈에 띄었던 것) — 한 줄만 쓰는
+       여기서는 그 속도로는 거의 안 보여서 더 뚜렷하게 보이도록 올렸습니다.
+       프레임 간 시간차(dt)로 계산해 화면 주사율이 달라도 같은 속도로 보입니다. */
+    var newsSpeed = 60;   /* 카드 한 장이 지나가는 데 약 5초 */
     var lastTs = null;
     (function tick(now) {
       var t = document.querySelector('[data-news-track]');
