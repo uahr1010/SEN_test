@@ -21,7 +21,7 @@ window.SEN = window.SEN || {};
   var MAX_INDEX  = 4;                               // main_1 ~ main_4 까지만 찾아봅니다
   var EXTS       = ['png', 'jpg', 'jpeg', 'webp'];  // 확장자는 이 중 아무거나 됩니다
   var FALLBACK   = [1, 2, 3, 4].map(function (i) { return 'assets/img/hero/hero-' + i + '.jpg'; });
-  var PHOTO_SEC  = 0.5;  // 사진 한 장이 보이는 시간(초). 장수가 몇 장이든 이 값은 고정입니다
+  var PHOTO_SEC  = 1;  // 사진 한 장이 보이는 시간(초). 장수가 몇 장이든 이 값은 고정입니다
 
   /** main_N.<확장자> 가 실제로 존재하는지 순서대로 시도해 URL을 돌려줍니다 (없으면 null) */
   function probeOne(n) {

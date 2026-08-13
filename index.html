@@ -132,11 +132,12 @@
         <h2 class="scene__title" data-bind="about.history.heading"></h2>
         <p class="scene__lead" data-bind="about.history.lead"></p>
       </header>
-      <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고 연대는 버튼으로 여닫습니다.
+      <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고, 연대는 선 위의
+           이름(.tml__band, timeline.js가 그려 넣음)을 눌러 아코디언처럼
+           여닫습니다 — 별도 선택 버튼 줄은 없습니다.
            내용은 assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
       <div class="tml" data-timeline data-reveal>
-        <div class="tml__eras" data-tml-eras></div>
-        <p class="tml__hint" data-bind="site.ui.timelineHint">연대를 눌러 그 시점으로 이동하고, 선을 좌우로 끌어 보세요</p>
+        <p class="tml__hint" data-bind="site.ui.timelineHint">연대 이름을 눌러 펼치고, 선을 좌우로 끌어 보세요</p>
       </div>
     </div>
 

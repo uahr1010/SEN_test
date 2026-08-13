@@ -1,20 +1,21 @@
 /* ==========================================================================
-   timeline.js — 회사연혁 가로 타임라인
+   timeline.js — 회사연혁 가로 타임라인 (아코디언)
 
    하나의 수평선 위에 연혁을 왼쪽에서 오른쪽으로 늘어놓습니다.
 
-     · 창립(1973)부터 2020년대까지 전체 선이 항상 다 그려져 있습니다
-       (예전처럼 연대를 접었다 폈다 하며 선 길이가 바뀌지 않습니다).
-     · 1990 / 2000 / 2010 / 2020년대 버튼을 누르면 그 연대가 시작하는
-       지점으로 선을 부드럽게 이동시킵니다(누르면 "펼치기"가 아니라
-       "이동하기"). 처음에는 2020년대가 기본으로 선택돼 있습니다.
-     · 선을 좌우로 끌어(드래그) 볼 수도 있습니다.
+     · 창립(1973)은 맨 왼쪽에 고정. 접히지 않습니다.
+     · 1990 / 2000 / 2010 / 2020년대는 선 위의 연대 이름(.tml__band)을
+       눌러 여닫는 아코디언입니다 — 별도 선택 버튼 줄은 없습니다.
+       펼치면 그 연대의 항목들이 오른쪽으로 이어붙어 선이 실제로
+       길어지고, 접으면 다시 줄어듭니다. 기본으로 2020년대만 펼쳐져
+       있습니다.
+     · 선을 좌우로 끌어(드래그) 볼 수 있습니다.
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
 
-   ▸ 처음 화면에 들어왔을 때
-     1973 에서 잠깐 멈췄다가, 기본 선택 연대(2020년대)가 시작하는
-     지점까지 미끄러진 뒤 멈춥니다 — 버튼을 눌렀을 때와 같은 지점입니다.
+   ▸ 자동 훑기
+     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 지금 펼쳐진
+     범위의 끝까지 미끄러진 뒤 멈춥니다.
 
    ▸ 데이터
      content/about.json 의 history 는 main.js 가 이미 받아 왔습니다.
@@ -26,18 +27,17 @@ window.SEN = window.SEN || {};
   'use strict';
 
   /* ====== 조정값 ==================================================== */
-  var PAD_LEFT    = 90;      // 왼쪽 여백 (창립 항목이 놓이는 지점)
-  var HOLD        = 1100;    // 1973 에서 멈춰 있는 시간(ms)
-  var SWEEP_MIN   = 900;     // 훑는 데 걸리는 최소 시간(ms)
-  var SWEEP_MAX   = 2200;    // 최대 시간
-  var DEFAULT_ERA = '2020년대';   // 처음에 선택돼 있을 연대
+  var PAD_LEFT  = 90;      // 왼쪽 여백 (창립 항목이 놓이는 지점)
+  var HOLD      = 1100;    // 1973 에서 멈춰 있는 시간(ms)
+  var SWEEP_MIN = 900;     // 훑는 데 걸리는 최소 시간(ms)
+  var SWEEP_MAX = 2200;    // 최대 시간. 전부 펼쳐도 이 안에 도착합니다
+  var OPEN_BY_DEFAULT = ['2020년대'];   // 처음부터 펼쳐 둘 연대
   /* ================================================================== */
 
   var t, esc;
-  var elRoot, elTl, elTrack, elAxis, elArrow, elWalker, elEras;
+  var elRoot, elTl, elTrack, elAxis, elArrow, elWalker;
   var history = null;
-  var eraX = {};          // 연대 이름 → 그 연대가 시작하는 x좌표(px)
-  var selected = null;    // 지금 선택된 연대 이름
+  var open = {};
   var pan = { raf: 0, taken: false };
   var started = false;
 
@@ -51,11 +51,7 @@ window.SEN = window.SEN || {};
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  /* ---------- 그리기 ----------
-     창립 + 모든 연대의 모든 항목을 항상 한 번에 그립니다(선이 항상
-     끝까지 존재). 연대 버튼은 이제 이 중 어디로 스크롤해 이동할지만
-     고릅니다 — 그리는 내용 자체는 바뀌지 않으므로 버튼을 눌러도
-     다시 그릴 필요가 없습니다. */
+  /* ---------- 그리기 ---------- */
   function draw() {
     if (!history) return;
 
@@ -68,7 +64,6 @@ window.SEN = window.SEN || {};
 
     var x = PAD_LEFT, i = 0;
     var frag = document.createDocumentFragment();
-    eraX = {};
 
     function addNode(it, extra) {
       var side = (i % 2 === 0) ? 'up' : 'down';
@@ -90,17 +85,23 @@ window.SEN = window.SEN || {};
 
     (history.groups || []).forEach(function (g) {
       var label = t(g.label);
+      var count = (g.items || []).length;
 
       x += ERA;
-      var bandLeft = x - GAP * 0.5;
-      eraX[label] = bandLeft;
-      var band = document.createElement('div');
+      var band = document.createElement('button');
+      band.type = 'button';
       band.className = 'tml__band';
-      band.style.left = bandLeft + 'px';
-      band.textContent = label;
+      band.style.left = (x - GAP * 0.5) + 'px';
+      band.setAttribute('aria-expanded', open[label] ? 'true' : 'false');
+      band.innerHTML =
+        '<span class="tml__band-mark">' + (open[label] ? '−' : '+') + '</span>' +
+        esc(label) + ' <span class="tml__band-n">' + count + '</span>';
+      band.addEventListener('click', function () { toggleEra(label); });
       frag.appendChild(band);
 
-      (g.items || []).forEach(function (it) { addNode(it, null); });
+      if (open[label]) {
+        (g.items || []).forEach(function (it) { addNode(it, null); });
+      }
     });
 
     elTrack.appendChild(frag);
@@ -127,54 +128,25 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /* ---------- 연대 버튼 ----------
-     이제 여닫는 버튼이 아니라 "그 연대로 이동" 버튼입니다.
-     선택된 연대만 강조 표시됩니다(파란 배경, .tml-era[aria-pressed]). */
-  function buildButtons() {
-    elEras.innerHTML = '';
-    (history.groups || []).forEach(function (g) {
-      var label = t(g.label);
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'tml-era';
-      b.setAttribute('aria-pressed', selected === label ? 'true' : 'false');
-      b.innerHTML = '<span>' + esc(label) + '</span>' +
-                    '<span class="tml-era__n">' + (g.items || []).length + '</span>';
-      b.addEventListener('click', function () { selectEra(label); });
-      elEras.appendChild(b);
-    });
-  }
-
-  /** 연대를 선택 상태로 표시하고 그 지점으로 스크롤해 이동합니다 */
-  function selectEra(label) {
-    if (eraX[label] == null) return;
-    selected = label;
-    buildButtons();
-    goToEra(label, true);
-  }
-
-  /** elTl 을 label 연대가 시작하는 지점으로 스크롤합니다.
-      animate=false 면 즉시 이동(초기 자동 훑기 도착점 계산용으로도 씀). */
-  function goToEra(label, animate) {
-    if (!elTl) return;
-    var max = elTl.scrollWidth - elTl.clientWidth;
-    if (max <= 0) return;
-    var target = Math.max(0, Math.min(eraX[label] - 60, max));
-
-    pan.taken = true;                 // 진행 중이던 자동 훑기가 있으면 중단
-    cancelAnimationFrame(pan.raf);
-
-    if (animate && !reduceMotion()) {
-      elTl.scrollTo({ left: target, behavior: 'smooth' });
-    } else {
-      elTl.scrollLeft = target;
+  /** 연대를 여닫습니다. 펼칠 때는 새로 드러난 구간까지 부드럽게 스크롤합니다. */
+  function toggleEra(label) {
+    var wasOpen = !!open[label];
+    open[label] = !wasOpen;
+    draw();
+    if (!wasOpen) {
+      pan.taken = true;
+      cancelAnimationFrame(pan.raf);
+      requestAnimationFrame(function () {
+        var max = elTl.scrollWidth - elTl.clientWidth;
+        if (max <= 0) return;
+        if (reduceMotion()) { elTl.scrollLeft = max; return; }
+        elTl.scrollTo({ left: max, behavior: 'smooth' });
+      });
     }
   }
 
   /* ---------- 자동 훑기 ----------
-     1973 에서 멈췄다가 가속 → 감속하며 기본 선택 연대(DEFAULT_ERA)가
-     시작하는 지점까지 미끄러집니다 — 버튼을 눌렀을 때와 같은 도착점이라
-     처음 진입 결과와 "2020년대 버튼을 누른 결과"가 항상 일치합니다.
+     1973 에서 멈췄다가 가속 → 감속하며 지금 펼쳐진 범위의 끝까지 미끄러집니다.
      scroll 이벤트로 위치를 재지 않고 우리가 쓰기만 하므로 스크롤이 끊기지 않습니다. */
   function ease(p) {
     return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
@@ -184,12 +156,8 @@ window.SEN = window.SEN || {};
     cancelAnimationFrame(pan.raf);
     pan.taken = false;
 
-    var dest = eraX[selected] != null
-      ? Math.max(0, eraX[selected] - 60)
-      : null;
-
     if (reduceMotion()) {
-      if (dest != null) elTl.scrollLeft = Math.min(dest, elTl.scrollWidth - elTl.clientWidth);
+      elTl.scrollLeft = 0;
       return;
     }
 
@@ -197,19 +165,17 @@ window.SEN = window.SEN || {};
       elTl.scrollLeft = 0;
       var max = elTl.scrollWidth - elTl.clientWidth;
       if (max <= 4) return;
-      var end = dest != null ? Math.min(dest, max) : max;
-      if (end <= 4) return;
 
-      var dur = Math.max(SWEEP_MIN, Math.min(SWEEP_MAX, end * 0.35));
+      var dur = Math.max(SWEEP_MIN, Math.min(SWEEP_MAX, max * 0.35));
       var t0 = null;
 
       function step(ts) {
-        if (pan.taken) return;                  // 사용자가 잡거나 버튼을 누르면 손을 뗍니다
+        if (pan.taken) return;                  // 사용자가 잡거나 연대를 펼치면 손을 뗍니다
         if (t0 === null) t0 = ts;
         var e = ts - t0;
         if (e < HOLD) { pan.raf = requestAnimationFrame(step); return; }
         var p = Math.min(1, (e - HOLD) / dur);
-        elTl.scrollLeft = end * ease(p);
+        elTl.scrollLeft = max * ease(p);
         if (p < 1) pan.raf = requestAnimationFrame(step);
       }
       pan.raf = requestAnimationFrame(step);
@@ -277,9 +243,9 @@ window.SEN = window.SEN || {};
     var host = document.querySelector('[data-timeline]');
     if (!host) return;
 
-    /* 버튼(.tml)은 .scene__inner 안에, 스크롤 칸(.tml-stage)은 그 밖에 있습니다.
-       (선이 화면 양 끝까지 뻗어야 해서 폭 제한을 안 받게 뺐습니다)
-       그래서 조회 기준은 둘을 모두 품는 섹션이어야 합니다. */
+    /* 축 등(.tml-stage)은 .scene__inner 밖에 있습니다(선이 화면 양 끝까지
+       뻗어야 해서 폭 제한을 안 받게 뺐습니다). 그래서 조회 기준은 둘을
+       모두 품는 섹션이어야 합니다. */
     elRoot = host.closest('.scene') || document.body;
 
     t = SEN.i18n.t;
@@ -293,14 +259,13 @@ window.SEN = window.SEN || {};
     elAxis   = elRoot.querySelector('[data-tml-axis]');
     elArrow  = elRoot.querySelector('[data-tml-arrow]');
     elWalker = elRoot.querySelector('[data-tml-walker]');
-    elEras   = host.querySelector('[data-tml-eras]');
-    if (!elTl || !elTrack || !elEras) return;
+    if (!elTl || !elTrack) return;
 
-    var labels = (history.groups || []).map(function (g) { return t(g.label); });
-    selected = labels.indexOf(DEFAULT_ERA) > -1 ? DEFAULT_ERA : labels[labels.length - 1];
+    (history.groups || []).forEach(function (g) {
+      open[t(g.label)] = OPEN_BY_DEFAULT.indexOf(t(g.label)) > -1;
+    });
 
     draw();
-    buildButtons();
     initDrag();
     watchSection();
     addEventListener('resize', draw);
@@ -311,7 +276,6 @@ window.SEN = window.SEN || {};
     if (!elRoot || !data) return;
     history = SEN.util.pick(data, 'about.history');
     draw();
-    buildButtons();
   }
 
   SEN.timeline = { init: init, refresh: refresh };
