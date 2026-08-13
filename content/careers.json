@@ -4,7 +4,11 @@
     {
       "id": "1",
       "deadline": "2026-08-13",
-      "title": "임시"
+      "title": "임시",
+      "team": "ㅁ",
+      "type": "ㅁ",
+      "location": "ㅁ",
+      "description": "ㅁ"
     }
   ]
 }
