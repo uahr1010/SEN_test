@@ -107,8 +107,51 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /* ---------- 홈 뉴스 캐러셀 화살표 ----------
-     카드 하나 폭 + gap만큼 옆으로 부드럽게 스크롤합니다. */
+  /* ---------- 홈 뉴스 캐러셀 — 자동 스크롤 + 화살표 ----------
+     카드 목록 뒤에 통째로 한 번 더 복제해 붙여 두고, 원본 폭만큼
+     지나가면 그만큼 되돌리는 방식(마퀴 트릭)으로 끊김 없이 계속
+     오른쪽으로 흐르게 합니다. 언어 전환/필터로 카드가 다시 그려질
+     때마다 render.js 가 refreshNewsLoop() 를 불러 복제본을 새로
+     만듭니다 — 애니메이션 루프 자체는 한 번만 시작해 계속 돕니다. */
+  var newsLoopStarted = false;
+  var newsAutoPaused = false;
+  var newsResumeTimer = null;
+
+  function refreshNewsLoop() {
+    var track = document.querySelector('[data-news-track]');
+    if (!track) return;
+
+    Array.prototype.slice.call(track.querySelectorAll('[data-news-clone]')).forEach(function (el) { el.remove(); });
+    var originals = Array.prototype.slice.call(track.children);
+    if (!originals.length) return;
+    originals.forEach(function (el) {
+      var clone = el.cloneNode(true);
+      clone.setAttribute('data-news-clone', '1');
+      clone.setAttribute('tabindex', '-1');   // 복제본은 탭 이동에서 건너뜀
+      track.appendChild(clone);
+    });
+    track.scrollLeft = 0;
+
+    if (newsLoopStarted) return;
+    newsLoopStarted = true;
+
+    track.addEventListener('mouseenter', function () { newsAutoPaused = true; });
+    track.addEventListener('mouseleave', function () { newsAutoPaused = false; });
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;   // 모션 최소화 설정이면 자동 스크롤은 아예 시작하지 않음
+
+    (function tick() {
+      var t = document.querySelector('[data-news-track]');
+      if (t && t.isConnected && !newsAutoPaused) {
+        t.scrollLeft += 0.6;
+        var half = t.scrollWidth / 2;
+        if (half > 0 && t.scrollLeft >= half) t.scrollLeft -= half;
+      }
+      requestAnimationFrame(tick);
+    })();
+  }
+
   function initNewsCarousel() {
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-news-arrow]');
@@ -116,9 +159,14 @@ window.SEN = window.SEN || {};
       var track = document.querySelector('[data-news-track]');
       if (!track) return;
       var card = track.querySelector('.card');
-      var step = (card ? card.getBoundingClientRect().width : 300) + 32;
+      var step = (card ? card.getBoundingClientRect().width : 300) + 24;
       var dir = btn.getAttribute('data-news-arrow') === 'prev' ? -1 : 1;
       track.scrollBy({ left: dir * step, behavior: 'smooth' });
+
+      /* 화살표를 누른 직후엔 자동 스크롤이 곧바로 되돌리지 않도록 잠깐 멈춤 */
+      newsAutoPaused = true;
+      clearTimeout(newsResumeTimer);
+      newsResumeTimer = setTimeout(function () { newsAutoPaused = false; }, 2000);
     });
   }
 
@@ -164,6 +212,7 @@ window.SEN = window.SEN || {};
     init: function () {
       initJobs(); initApplyModal(); initListControls();
       initProjTabs(); initKmapDrill(); initNewsCarousel();
-    }
+    },
+    refreshNewsLoop: refreshNewsLoop
   };
 })(window.SEN);

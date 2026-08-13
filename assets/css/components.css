@@ -369,9 +369,11 @@
 .card:hover .card__foot::after { transform: translateX(4px); }
 
 /* ---------- 홈 뉴스 섹션 — 가로 캐러셀 ----------
-   news-list.html(전체 목록)은 그대로 그리드+테두리 카드를 씁니다.
-   여기 [data-news-track] 로 스코프한 규칙만 홈 화면 미리보기에 적용됩니다:
-   박스(테두리·그림자·배경)를 없애고 큰 제목 위주로, 좌우 화살표로 넘깁니다. */
+   카드 자체는 기존 디자인(테두리·그림자·둥근 모서리) 그대로 씁니다.
+   .news-carousel 은 .scene__inner 밖(.scene 의 직계 자식)에 있어서
+   1180px 제한 없이 양쪽 끝까지 꽉 채웁니다(위 index.html 구조 참고).
+   카드 줄은 자동으로 계속 오른쪽으로 흐르고(controls.js), 화살표로도
+   수동 이동이 됩니다. */
 .news__head {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
   gap: var(--sp-3); margin-bottom: var(--sp-3);
@@ -383,7 +385,11 @@
 .news__seeall::after { content: "→"; transition: transform .2s var(--ease); }
 .news__seeall:hover::after { transform: translateX(4px); }
 
-.news-carousel { position: relative; display: flex; align-items: center; gap: var(--sp-3); }
+.news-carousel {
+  position: relative; width: 100%; box-sizing: border-box;
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: 0 clamp(20px, 4vw, 64px);
+}
 .news-carousel__arrow {
   flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
   border: 1px solid var(--c-line); background: var(--c-white); color: var(--c-ink);
@@ -393,25 +399,12 @@
 .news-carousel__arrow svg { width: 18px; height: 18px; }
 
 .cards--news[data-news-track] {
-  display: flex; gap: var(--sp-5); overflow-x: auto; scroll-snap-type: x proximity;
-  scroll-behavior: smooth; padding: 4px 2px 12px;
-  scrollbar-width: none;
+  display: flex; gap: var(--sp-3); overflow-x: hidden;
+  flex: 1 1 auto; min-width: 0; padding: 4px 2px 12px;
 }
-.cards--news[data-news-track]::-webkit-scrollbar { display: none; }
-.cards--news[data-news-track] .card {
-  flex: 0 0 300px; scroll-snap-align: start; height: auto;
-  background: none; border: 0; box-shadow: none; border-radius: 0;
-  transition: none;
-}
-.cards--news[data-news-track] .card:hover { transform: none; box-shadow: none; }
-.cards--news[data-news-track] .card__body { padding: 0; }
-.cards--news[data-news-track] .card__title {
-  font-size: 1.5rem; font-weight: 300; line-height: 1.3; letter-spacing: -.01em;
-  margin-bottom: 12px;
-}
+.cards--news[data-news-track] .card { flex: 0 0 300px; }
 @media (max-width: 640px) {
   .cards--news[data-news-track] .card { flex-basis: 260px; }
-  .cards--news[data-news-track] .card__title { font-size: 1.25rem; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }

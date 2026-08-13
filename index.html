@@ -195,8 +195,10 @@
   </div>
 
   <!-- ---------- 장면 3 : 뉴스 ----------
-       이미지 없이 큰 제목 위주로 보여주고, 그리드 대신 가로로 넘기는
-       캐러셀입니다("전체 보기"는 news-list.html 로, 화살표는 좌우로 스크롤). -->
+       카드는 기존 디자인(테두리·그림자) 그대로, 한 행으로 가로 스크롤되며
+       자동으로 계속 흐릅니다(마우스를 올리면 멈춤, 화살표로 수동 이동도 가능).
+       제목/칩은 .scene__inner 안에서 폭을 맞추지만, 카드 줄(.news-carousel)은
+       .scene__inner 밖(=.scene 의 직계 자식)에 두어 양쪽 끝까지 꽉 채웁니다. -->
   <section class="scene scene--paper" id="scene-news" data-label="뉴스" data-section="news">
     <div class="scene__inner">
       <div class="news__head">
@@ -208,15 +210,15 @@
         <a class="news__seeall" href="news-list.html" data-bind="site.ui.loadMore"></a>
       </div>
       <div class="chips" data-newsfilter></div>
-      <div class="news-carousel">
-        <button type="button" class="news-carousel__arrow" data-news-arrow="prev" aria-label="이전 기사">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4.5 6 10l6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="cards cards--news" data-list="news.items" data-news-track></div>
-        <button type="button" class="news-carousel__arrow" data-news-arrow="next" aria-label="다음 기사">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 14 10l-6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
+    </div>
+    <div class="news-carousel">
+      <button type="button" class="news-carousel__arrow" data-news-arrow="prev" aria-label="이전 기사">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4.5 6 10l6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="cards cards--news" data-list="news.items" data-news-track></div>
+      <button type="button" class="news-carousel__arrow" data-news-arrow="next" aria-label="다음 기사">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 14 10l-6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </section>
 

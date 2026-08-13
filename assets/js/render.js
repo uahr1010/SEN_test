@@ -420,6 +420,12 @@ window.SEN = window.SEN || {};
       if (key === 'news.items')     items = SEN.state.applyList('news', items);
 
       host.innerHTML = RENDERERS[key](items, ctx);
+
+      // 홈 뉴스 캐러셀 — 카드가 다시 그려질 때마다 자동 스크롤용 복제본을 새로 만듦
+      // (news.html/news-list.html 에는 이 캐러셀이 없고 controls.js 도 안 실어서 가드함)
+      if (key === 'news.items' && SEN.controls && SEN.controls.refreshNewsLoop) {
+        SEN.controls.refreshNewsLoop();
+      }
     });
 
     // 7) 뉴스/프로젝트 필터 칩
