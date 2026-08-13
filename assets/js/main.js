@@ -33,10 +33,19 @@ window.SEN = window.SEN || {};
     }
   };
 
-  /* ---------- 콘텐츠 로딩 ---------- */
+  /* ---------- 콘텐츠 로딩 ----------
+     projects 만 content/downloads/projects.json 에 따로 둡니다 — 4,575건이라
+     Pages CMS의 구조화된 목록 폼으로 편집하기엔 너무 많아서, 관리자 화면에서는
+     "다운로드해서 통째로 교체" 방식(미디어 라이브러리)으로 다루기로 했습니다.
+     content/*.json 폴더 안의 다른 파일과 섞이지 않도록 별도 폴더에 둬서,
+     그 미디어 항목에서 실수로 다른(구조화 폼으로 관리하는) 파일을 건드릴
+     위험도 없앴습니다. */
+  var FILE_PATHS = { projects: 'content/downloads/projects.json' };
+
   function loadContent() {
     return Promise.all(FILES.map(function (name) {
-      return fetch('content/' + name + '.json', { cache: 'no-cache' })
+      var path = FILE_PATHS[name] || ('content/' + name + '.json');
+      return fetch(path, { cache: 'no-cache' })
         .then(function (res) {
           if (!res.ok) throw new Error(name + '.json (' + res.status + ')');
           return res.json();
