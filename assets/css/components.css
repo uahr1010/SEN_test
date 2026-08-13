@@ -241,16 +241,19 @@
 
 .methods { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 /* 좁은 화면에서는 카드를 세로로 쌓지 않고 옆으로 드래그해서 보는
-   가로 캐러셀로 바꿉니다(PC는 위 grid 그대로 유지). 카드 폭을 82%로
-   둬서 다음 카드가 살짝 보여야 옆으로 더 있다는 걸 알 수 있습니다. */
+   가로 캐러셀로 바꿉니다(PC는 위 grid 그대로 유지). 카드 폭을 82%로 두고
+   양옆에 9%씩 여백(=패딩)을 줘서, 화면에 걸리는 카드는 항상 정중앙에
+   오고 앞·뒤 카드가 양쪽에 살짝 걸쳐 보입니다. scroll-padding-inline이
+   그 여백만큼을 "화면 안쪽"으로 쳐서 스냅 위치도 정확히 중앙에 맞춥니다. */
 @media (max-width: 640px) {
   .methods {
     display: flex; grid-template-columns: none;
-    overflow-x: auto; scroll-snap-type: x proximity;
-    gap: var(--sp-3); padding-bottom: 4px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    gap: var(--sp-3); padding: 4px 9%;
+    scroll-padding-inline: 9%;
     -webkit-overflow-scrolling: touch;
   }
-  .method { flex: 0 0 82%; scroll-snap-align: start; }
+  .method { flex: 0 0 82%; scroll-snap-align: center; }
 }
 .method {
   display: flex; flex-direction: column;
