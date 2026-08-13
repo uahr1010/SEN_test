@@ -144,7 +144,7 @@ window.SEN = window.SEN || {};
     (function tick() {
       var t = document.querySelector('[data-news-track]');
       if (t && t.isConnected && !newsAutoPaused) {
-        t.scrollLeft += 0.25;   /* 초당 약 15px — 예전(0.6)보다 느리게 */
+        t.scrollLeft += 0.5;   /* 초당 약 30px */
         var half = t.scrollWidth / 2;
         if (half > 0 && t.scrollLeft >= half) t.scrollLeft -= half;
       }

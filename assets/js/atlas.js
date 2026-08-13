@@ -95,10 +95,24 @@ window.SEN = window.SEN || {};
   }
 
   /* ---------- 언어 토글 ---------- */
+  /* 버튼에 보이는 짧은 표기 — 드롭다운 안의 "한국어/English/中文/日本語"와는
+     별개로, 지금 선택된 언어를 KO/EN/ZH/JP 로 압축해 보여줍니다. */
+  var LANG_SHORT = { ko: 'KO', en: 'EN', zh: 'ZH', ja: 'JP' };
+
   function initLang() {
     var wrap = document.querySelector('[data-langswitch]');
     if (!wrap) return;
     var btn = wrap.querySelector('[data-lang-toggle]');
+    var currentEl = wrap.querySelector('[data-lang-current]');
+
+    function syncCurrent() {
+      if (!currentEl) return;
+      var lang = SEN.i18n.get();
+      currentEl.textContent = LANG_SHORT[lang] || lang.toUpperCase();
+    }
+    syncCurrent();
+    SEN.i18n.onChange(syncCurrent);
+
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
       wrap.classList.toggle('is-open');
