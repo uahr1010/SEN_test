@@ -86,6 +86,35 @@
     "categories": ["언론보도", "행사", "홍보자료", "논문", "기술자료"]
   },
 
+  "careers": {
+    "section": {
+      "eyebrow": { "ko": "04 — CAREERS", "en": "04 — CAREERS", "zh": "04 — 招聘", "ja": "04 — 採用" },
+      "title": { "ko": "함께 구조를 세울 사람", "en": "Build the Frame With Us", "zh": "与我们共同构筑结构", "ja": "ともに構造を築く仲間" },
+      "lead": {
+        "ko": "업계 최고 수준의 교육과 보상으로 직원의 성장을 지원합니다. 관심 있는 공고를 펼쳐 '지원하기'를 누르면 지원 메일 작성 창이 열립니다.",
+        "en": "We invest in our people with industry-leading training and rewards. Open a posting and click Apply — your mail app opens with the application email ready.",
+        "zh": "以业界顶尖的培训与薪酬支持员工成长。展开感兴趣的职位并点击「立即申请」，即可打开申请邮件撰写窗口。",
+        "ja": "業界最高水準の教育と報酬で社員の成長を支援します。気になる募集を開いて「応募する」を押すと、応募メールの作成画面が開きます。"
+      }
+    },
+    "jobsHeading": { "ko": "채용공고", "en": "Open Positions", "zh": "招聘公告", "ja": "採用情報" },
+    "requirementsLabel": { "ko": "자격 요건", "en": "Requirements", "zh": "任职要求", "ja": "応募資格" },
+    "preferredLabel":    { "ko": "우대 사항", "en": "Preferred",   "zh": "优先条件", "ja": "歓迎要件" },
+    "deadlineLabel":     { "ko": "마감",      "en": "Due",         "zh": "截止",     "ja": "締切" },
+    "applyMailSubject": {
+      "ko": "[입사지원] {job} / 지원자 성명",
+      "en": "[Application] {job} / Your name",
+      "zh": "[应聘] {job} / 应聘者姓名",
+      "ja": "[応募] {job} / 応募者氏名"
+    },
+    "applyMailBody": {
+      "ko": "안녕하세요.\n\n센 엔지니어링그룹 채용공고를 보고 지원합니다.\n\n- 성명:\n- 연락처:\n- 최종학력:\n- 경력 요약:\n\n이력서와 포트폴리오를 첨부하였습니다. 검토 부탁드립니다.\n감사합니다.",
+      "en": "Hello,\n\nI would like to apply for the position advertised on your careers page.\n\n- Name:\n- Contact:\n- Education:\n- Experience summary:\n\nMy CV and portfolio are attached. Thank you for your consideration.",
+      "zh": "您好，\n\n本人希望应聘贵集团招聘公告中的职位。\n\n- 姓名：\n- 联系方式：\n- 最高学历：\n- 经历概要：\n\n附上简历与作品集，敬请审阅。谢谢。",
+      "ja": "はじめまして。\n\n採用情報を拝見し応募いたします。\n\n- 氏名：\n- 連絡先：\n- 最終学歴：\n- 経歴概要：\n\n履歴書とポートフォリオを添付いたします。ご査収のほどよろしくお願いいたします。"
+    }
+  },
+
   "nav": {
     "about":    { "ko": "회사소개", "en": "About", "zh": "公司介绍", "ja": "会社紹介" },
     "news":     { "ko": "뉴스",     "en": "News",  "zh": "新闻",     "ja": "ニュース" },

@@ -298,33 +298,27 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 채용 - 인재상 */
-    'careers.values': function (items) {
-      return items.map(function (it, i) {
-        return '' +
-          '<div class="value reveal" data-delay="' + (i % 4) + '">' +
-            '<span class="value__num">0' + (i + 1) + '</span>' +
-            '<h4 class="value__title">' + esc(t(it.title)) + '</h4>' +
-            '<p class="value__desc">' + esc(t(it.desc)) + '</p>' +
-          '</div>';
-      }).join('');
-    },
-
     /* 채용 - 공고 아코디언 (지원하기 → mailto) */
     'careers.jobs': function (items, ctx) {
       var careers = ctx.careers || {};
+      /* section/라벨류는 site.json 의 site.careers 에 있습니다(관리자
+         "③ 채용공고" 폼에는 없는 값이라, careers.json 에 뒀다간 그 폼을
+         저장할 때마다 통째로 사라집니다 — 뉴스에서 겪은 것과 같은 문제라
+         아예 CMS가 손대지 않는 파일로 옮겼습니다). applyEmail·jobs 만
+         실제로 관리자에서 입력하는 값이라 careers.json 에 남습니다. */
+      var siteCareers = (ctx.site && ctx.site.careers) || {};
       var ui = (ctx.site && ctx.site.ui) || {};
       var applyLabel = t(ui.apply) || '지원하기';
-      var reqLabel = t(careers.requirementsLabel) || '자격 요건';
-      var prefLabel = t(careers.preferredLabel) || '우대 사항';
-      var dueLabel = t(careers.deadlineLabel) || '마감';
-      var mailBody = t(careers.applyMailBody) || '';
+      var reqLabel = t(siteCareers.requirementsLabel) || '자격 요건';
+      var prefLabel = t(siteCareers.preferredLabel) || '우대 사항';
+      var dueLabel = t(siteCareers.deadlineLabel) || '마감';
+      var mailBody = t(siteCareers.applyMailBody) || '';
 
       if (!items.length) return '<p class="state">' + esc(t(ui.empty) || '진행 중인 채용이 없습니다.') + '</p>';
 
       return items.map(function (it, i) {
         var email = it.email || careers.applyEmail;
-        var subject = (t(careers.applyMailSubject) || '[입사지원] {job}').replace('{job}', t(it.title));
+        var subject = (t(siteCareers.applyMailSubject) || '[입사지원] {job}').replace('{job}', t(it.title));
 
         var badges = [];
         if (t(it.team))     badges.push('<span class="job__badge">' + esc(t(it.team)) + '</span>');

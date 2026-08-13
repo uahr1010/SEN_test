@@ -403,8 +403,11 @@
   flex: 1 1 auto; min-width: 0; padding: 4px 2px 12px;
 }
 /* 제목 줄 수가 카드마다 달라 높이가 들쭉날쭉해지지 않도록,
-   flex 신축(stretch)에 기대지 않고 카드 높이를 고정하고 제목도 2줄로 자릅니다. */
-.cards--news[data-news-track] .card { flex: 0 0 300px; height: 300px; }
+   flex 신축(stretch)에 기대지 않고 카드 높이를 고정하고 제목도 2줄로 자릅니다.
+   폭은 고정 px가 아니라 트랙 폭의 1/3로 잡아서, 화면 크기와 무관하게
+   한 번에 3장씩 보이도록 합니다(예전엔 300px 고정이라 넓은 화면에서
+   4장 이상 보여 한눈에 안 들어온다는 피드백이 있었습니다). */
+.cards--news[data-news-track] .card { flex: 0 0 calc((100% - 2 * var(--sp-3)) / 3); height: 300px; }
 .cards--news[data-news-track] .card__title {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
   line-clamp: 2; overflow: hidden;
@@ -419,19 +422,6 @@
   padding: 3px 9px; border-radius: 999px;
   background: var(--c-tint); color: var(--c-blue-dark);
 }
-
-/* ---------- 채용: 인재상 ---------- */
-.values {
-  display: grid; gap: var(--sp-3); margin-bottom: var(--sp-6);
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-}
-.value { padding: var(--sp-3); border-radius: var(--radius); background: var(--c-tint); }
-.value__num {
-  font-family: var(--font-display); font-size: 1.6rem; color: var(--c-blue); line-height: 1;
-  margin-bottom: 10px; display: block;
-}
-.value__title { font-size: 1.02rem; margin-bottom: 6px; }
-.value__desc { font-size: var(--fs-small); color: var(--c-muted); }
 
 /* ---------- 채용: 공고 아코디언 ---------- */
 .jobs { display: grid; gap: 12px; margin-bottom: var(--sp-6); }
@@ -562,10 +552,14 @@
   .gpill { font-size: 10px; padding: 3px 8px; }
 }
 
-/* ---------- 로딩 / 빈 상태 ---------- */
+/* ---------- 로딩 / 빈 상태 ----------
+   목록이 비었을 때 그냥 글자 한 줄만 있으면 그 영역 자체가 없는 것처럼
+   보여서, 카드와 같은 둥근 모서리의 점선 테두리 박스로 "틀"을 줍니다. */
 .state {
-  grid-column: 1 / -1; padding: var(--sp-5); text-align: center;
+  grid-column: 1 / -1; padding: var(--sp-6) var(--sp-5); text-align: center;
   color: var(--c-muted); font-size: var(--fs-small);
+  border: 1px dashed var(--c-line); border-radius: var(--radius);
+  background: var(--c-tint, transparent);
 }
 .site-error {
   position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 200;
