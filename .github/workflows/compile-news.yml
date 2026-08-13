@@ -1,0 +1,54 @@
+# ============================================================================
+#  content/news/*.json (기사 한 건당 파일 하나) → content/news.json 자동 합치기
+#
+#  Pages CMS의 [② 뉴스] 탭은 content/news/ 를 컬렉션(파일 하나=기사 한 건)으로
+#  관리합니다. 사이트는 여전히 content/news.json 하나만 읽으므로, 그 폴더가
+#  바뀔 때마다(기사 추가·수정·삭제) 이 워크플로가 자동으로 다시 합쳐 줍니다.
+#
+#  파일을 나눈 이유: 예전처럼 기사들이 배열 하나(news.json)에 다 들어 있으면,
+#  기사 한 건만 추가해도 Pages CMS가 폼에 없던 기존 기사까지 통째로 지워버리는
+#  사고가 있었습니다(2026-08-13). 파일을 나누면 기사 한 건을 고칠 때 다른
+#  기사 파일은 아예 건드리지 않아 이 문제가 구조적으로 없어집니다.
+# ============================================================================
+name: 뉴스 합치기
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/news/**'
+  workflow_dispatch: {}
+
+# content/news.json 을 고쳐 커밋해야 하므로 쓰기 권한이 필요합니다
+permissions:
+  contents: write
+
+# 연속으로 여러 번 저장해도 커밋이 꼬이지 않도록 한 번에 하나씩
+concurrency:
+  group: compile-news
+  cancel-in-progress: false
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 합치기
+        run: python tools/compile_news.py
+
+      - name: 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/news.json
+          if git diff --cached --quiet; then
+            echo "바뀐 내용이 없습니다."
+          else
+            git commit -m "chore: news.json 자동 재생성 [skip ci]"
+            git push
+          fi
