@@ -130,10 +130,12 @@
 .era__label {
   display: block;
   font-family: var(--font-display); font-weight: 800; letter-spacing: -.02em;
-  font-size: clamp(1.55rem, 3.4vw, 2.35rem); line-height: 1.1;
+  /* 회사소개 리드문(.scene__lead)과 같은 크기로 맞췄습니다 — 예전엔
+     훨씬 크게(최대 2.35rem) 잡혀 있었습니다. */
+  font-size: clamp(.95rem, 1.2vw, 1.08rem); line-height: 1.4;
   color: var(--c-blue);
 }
-.era__headline { font-size: .95rem; font-weight: 600; color: var(--c-ink); }
+.era__headline { font-size: .85rem; font-weight: 600; color: var(--c-ink); }
 
 /* 여닫이 표시 — 제목 줄 오른쪽 끝에 붙습니다 */
 .era__head::after {
