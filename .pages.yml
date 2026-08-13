@@ -2,18 +2,20 @@
 #  Pages CMS 설정 파일  (https://pagescms.org)
 #  이 파일이 저장소 루트에 있어야 Pages CMS가 편집 화면을 만들어 줍니다.
 #
-#  ── 편집 가능한 것 ──
-#    ② 뉴스      : 새 뉴스 추가 (한국어만)
-#    ③ 채용      : 새 채용공고 추가 (한국어만)
+#  ── 콘텐츠(목록 폼) ──
+#    ① 뉴스      : 새 뉴스 추가 (한국어만)
+#    ② 뉴스 번역 : ①의 영어·중국어·일본어 번역. 어색하면 여기서 직접 고침
+#                  (새 번역을 자동으로 만들려면 저장소 Actions 탭 →
+#                  "기사 번역" → Run workflow 에서 손으로 돌리세요.
+#                  news_id 칸에 ①의 "고유 ID"를 적으면 됩니다.)
+#    ③ 채용공고  : 새 채용공고 추가 (한국어만)
 #    ④ 용어집    : 고유명사 표기 통일 (기사 번역에 사용)
-#    ⑤ 번역 요청 : ② 뉴스에 올린 글의 ID를 적고 "번역 시작"을 누르면
-#                  그 기사만 번역됨 (미번역 기사는 사이트 언어를 바꿔도
-#                  한국어 그대로 나옴 — 번역을 안 걸었을 뿐, 오류 아님)
-#    ⑥ 번역      : ⑤ 에서 번역된 결과 목록. 문구가 어색하면 여기서 직접 고침
 #
-#  프로젝트(실적) 데이터는 목록 폼이 아니라 아래 "미디어" 쪽 [프로젝트
-#  데이터] 에 있습니다 — 4,575건이라 폼으로 하나씩 펴서 보기엔 너무 많아서,
-#  파일을 통째로 내려받아 고친 뒤 다시 올려 덮어쓰는 방식으로 바꿨습니다.
+#  ── 미디어(파일 업로드) ──
+#    ① 프로젝트 데이터 : 실적 4,575건 — 파일을 통째로 내려받아 고친 뒤
+#                        다시 올려 덮어쓰는 방식입니다.
+#    ② 이미지          : 뉴스 썸네일 등 일반 이미지
+#    ③ 표지 사진        : 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들
 #
 #  회사 소개·연혁·주요공법·CONTACT·섹션 문구 등 나머지는 전부 고정값입니다.
 #  바꿔야 할 일이 생기면 content/*.json 파일을 직접 수정하세요.
@@ -21,19 +23,13 @@
 #
 #  다국어 필드는 { ko, en, zh, ja } 4칸입니다. 한국어만 채워도 되고,
 #  비워 둔 언어는 자동으로 한국어가 표시됩니다.
-#  (단, ② 뉴스 · ③ 채용공고는 번역을 손으로 같이 입력하지 않습니다 —
-#   ② 뉴스의 번역은 [⑤ 번역 요청]으로 요청해야 생기고 [⑥ 번역]에 저장되며,
-#   ③ 채용공고는 아예 번역하지 않기로 해서 한국어 한 칸만 있습니다.)
+#  (단, ① 뉴스 · ③ 채용공고는 번역을 손으로 같이 입력하지 않습니다 —
+#   ① 뉴스의 번역은 ② 뉴스 번역에 따로 있고, ③ 채용공고는 아예
+#   번역하지 않기로 해서 한국어 한 칸만 있습니다.)
 # ============================================================================
 
 media:
-  - name: images
-    label: 이미지
-    input: uploads/images
-    output: /uploads/images
-    extensions: [jpg, jpeg, png, webp, gif, svg]
-
-  # 프로젝트(실적) 원본 데이터 — 4,575건이라 목록 폼 대신 파일을 통째로
+  # ① 프로젝트(실적) 원본 데이터 — 4,575건이라 목록 폼 대신 파일을 통째로
   # 내려받아 고치는 방식입니다. content/downloads/ 에는 이 파일만 있어서,
   # 실수로 다른(구조화 폼으로 관리하는) 파일을 여기서 건드릴 위험이 없습니다.
   #   1. 이 파일을 눌러 다운로드
@@ -44,12 +40,18 @@ media:
   #   ⚠️ 이 저장소는 public 입니다 — 정확한 도로명·지번·건물명, 담당자
   #      이름, 계약금액 같은 내부 정보는 절대 넣지 마세요.
   - name: projects-data
-    label: 프로젝트 데이터
+    label: ① 프로젝트 데이터
     input: content/downloads
     output: /content/downloads
     extensions: [json]
 
-  # 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들입니다.
+  - name: images
+    label: ② 이미지
+    input: uploads/images
+    output: /uploads/images
+    extensions: [jpg, jpeg, png, webp, gif, svg]
+
+  # ③ 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들입니다.
   #   1. 여기서 사진을 올립니다 — 파일 이름을 main_1.png, main_2.png,
   #      main_3.png … 순서대로 붙이세요(숫자 사이 끊기면 그 뒤는 안
   #      보입니다). 최대 10장(main_10)까지 됩니다.
@@ -58,7 +60,7 @@ media:
   #      그 번호는 빠지고 나머지 번호 사진들로 이어집니다.
   #   4. 한 장도 없으면 기본 사진 4장이 대신 나옵니다.
   - name: main-photos
-    label: 표지 사진
+    label: ③ 표지 사진
     input: uploads/main
     output: /uploads/main
     extensions: [jpg, jpeg, png, webp]
@@ -66,13 +68,14 @@ media:
 content:
 
   # --------------------------------------------------------------------------
-  # ② 뉴스
+  # ① 뉴스
   #
   #    한국어만 입력합니다. 번역(en/中文/日本語)은 여기서 손대지 않습니다 —
-  #    새 기사는 우선 여기 한국어로만 올리고, 번역이 필요하면 [⑤ 번역 요청]에서
-  #    이 기사의 ID를 적고 "번역 시작"을 누르세요. 결과는 content/news-i18n.json 에
-  #    쌓여 여기 title/excerpt 와 화면에서 자동으로 합쳐집니다. 번역을 손으로
-  #    고치고 싶으면 [⑥ 번역] 탭에서 하세요.
+  #    새 기사는 우선 여기 한국어로만 올리고, 번역이 필요하면 저장소 Actions
+  #    탭 → "기사 번역" → Run workflow 에서 이 기사의 고유 ID를 적어 손으로
+  #    돌리세요. 결과는 content/news-i18n.json 에 쌓여 여기 title/excerpt 와
+  #    화면에서 자동으로 합쳐집니다. 번역을 손으로 고치고 싶으면
+  #    [② 뉴스 번역] 탭에서 하세요.
   #
   #    ⚠️ 이 목록은 저장할 때마다 화면에 있는 항목 전체로 통째로 바뀝니다
   #    (부분 추가/병합이 아닙니다). 새 기사를 올릴 때는 반드시 목록 맨 아래
@@ -80,7 +83,7 @@ content:
   #    직접 다시 입력하지 마세요. 지웠다면 git 기록에서 복구할 수 있습니다.
   # --------------------------------------------------------------------------
   - name: news
-    label: ② 뉴스
+    label: ① 뉴스
     type: file
     path: content/news.json
     format: json
@@ -99,7 +102,7 @@ content:
             required: true
             description: >
               영문·숫자·하이픈 (예 news-2026-09-award). 중복만 아니면 됩니다.
-              [⑥ 번역] 탭에서 번역을 연결할 때도 이 ID를 씁니다.
+              [② 뉴스 번역] 탭에서 번역을 연결할 때도 이 ID를 씁니다.
           - name: date
             label: 날짜
             type: date
@@ -135,6 +138,48 @@ content:
             label: 요약 (한국어)
             type: text
             required: true
+
+  # --------------------------------------------------------------------------
+  # ② 뉴스 번역 — 뉴스 en/中文/日本語 손보기
+  #
+  #    새 번역은 저장소 Actions 탭 → "기사 번역" → Run workflow 에서
+  #    ① 뉴스 항목의 "고유 ID"를 넣고 손으로 돌리면 자동으로 채워집니다.
+  #    번역이 어색하면 여기서 직접 고치세요. ID는 [① 뉴스]의 "고유 ID"와
+  #    똑같아야 그 글에 연결됩니다 (다르면 화면에 반영되지 않습니다).
+  # --------------------------------------------------------------------------
+  - name: news-i18n
+    label: ② 뉴스 번역
+    type: file
+    path: content/news-i18n.json
+    format: json
+    fields:
+      - name: items
+        label: 뉴스 번역 목록
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{id}"
+        fields:
+          - name: id
+            label: 연결할 뉴스 ID
+            type: string
+            required: true
+            description: "[① 뉴스] 항목의 \"고유 ID\"와 정확히 같아야 합니다."
+          - name: title
+            label: 제목 번역
+            type: object
+            fields:
+              - { name: en, label: English, type: string }
+              - { name: zh, label: 中文,    type: string }
+              - { name: ja, label: 日本語,  type: string }
+          - name: excerpt
+            label: 요약 번역
+            type: object
+            fields:
+              - { name: en, label: English, type: text }
+              - { name: zh, label: 中文,    type: text }
+              - { name: ja, label: 日本語,  type: text }
 
   # --------------------------------------------------------------------------
   # ③ 채용공고
@@ -247,80 +292,3 @@ content:
             type: string
             required: true
 
-  # --------------------------------------------------------------------------
-  # ⑤ 번역 요청 — [② 뉴스]에 올린 글의 ID를 적고 "번역 시작"을 누르세요
-  #
-  #    글 자체는 여기서 쓰지 않습니다 (한국어 본문은 이미 [② 뉴스]에 있음).
-  #    요청 항목을 저장한 뒤 열어서 "번역 시작" 버튼을 누르면 GitHub Actions가
-  #    용어집을 참고해 그 기사만 영어·일본어·중국어로 번역합니다. 끝나면
-  #    이 목록에서 그 항목은 사라지고 [⑥ 번역]에 결과가 나타납니다.
-  #    번역까지 1~2분 걸립니다.
-  # --------------------------------------------------------------------------
-  - name: translate-queue
-    label: ⑤ 번역 요청
-    type: collection
-    path: translate-queue
-    exclude: [README.md]
-    view:
-      fields: [newsId]
-    fields:
-      - name: newsId
-        label: 번역할 기사 ID
-        type: string
-        required: true
-        description: >
-          [② 뉴스] 항목의 "고유 ID"를 그대로 복사해서 붙여넣으세요.
-          철자가 다르면 번역이 실패합니다.
-    actions:
-      - name: translate
-        label: 번역 시작
-        scope: entry
-        workflow: translate-queue.yml
-        confirm:
-          title: 이 기사를 번역할까요?
-          message: >
-            용어집을 참고해 영어·일본어·중국어로 번역한 뒤 [⑥ 번역]에 넣고,
-            이 요청 항목은 사라집니다. 1~2분 걸립니다.
-          button: 번역 시작
-
-  # --------------------------------------------------------------------------
-  # ⑥ 번역 — 뉴스 en/中文/日本語 손보기
-  #
-  #    [⑤ 번역 요청]에서 "번역 시작"을 누르면 자동 번역돼 여기 채워집니다.
-  #    번역이 어색하면 여기서 직접 고치세요. ID는 [② 뉴스]의 "고유 ID"와
-  #    똑같아야 그 글에 연결됩니다 (다르면 화면에 반영되지 않습니다).
-  #    항목을 새로 만들 필요는 거의 없습니다 — [⑤ 번역 요청]이 이미 다 채워 줍니다.
-  # --------------------------------------------------------------------------
-  - name: news-i18n
-    label: ⑥ 번역
-    type: file
-    path: content/news-i18n.json
-    format: json
-    fields:
-      - name: items
-        label: 뉴스 번역 목록
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{id}"
-        fields:
-          - name: id
-            label: 연결할 뉴스 ID
-            type: string
-            required: true
-            description: "[② 뉴스] 항목의 \"고유 ID\"와 정확히 같아야 합니다."
-          - name: title
-            label: 제목 번역
-            type: object
-            fields:
-              - { name: en, label: English, type: string }
-              - { name: zh, label: 中文,    type: string }
-              - { name: ja, label: 日本語,  type: string }
-          - name: excerpt
-            label: 요약 번역
-            type: object
-            fields:
-              - { name: en, label: English, type: text }
-              - { name: zh, label: 中文,    type: text }
-              - { name: ja, label: 日本語,  type: text }
