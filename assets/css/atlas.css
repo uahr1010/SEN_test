@@ -129,8 +129,17 @@ body {
   .cover__bg img:first-child { opacity: 1; }
 }
 @media (max-width: 640px) {
-  .cover__vision { max-width: none; }
+  /* 좁은 화면에서는 비전 문구가 고정 헤더(.topbar)와 겹칠 만큼 위쪽에
+     붙어 있어서 살짝 내려주고, 그룹명은 화면 아래 대신 정중앙으로
+     옮깁니다(PC 레이아웃은 이 미디어쿼리 밖이라 그대로 유지됩니다). */
+  .cover__vision { max-width: none; margin-top: clamp(48px, 12vh, 88px); }
   .cover__row { justify-content: flex-start; }
+  .cover__brand {
+    position: absolute;
+    top: 50%; left: clamp(20px, 3.4vw, 46px); right: clamp(20px, 3.4vw, 46px);
+    transform: translateY(-50%);
+    text-align: center;
+  }
 }
 
 /* 표지 바로 다음(본문 전체)을 표지 높이만큼 내려서 시작시킵니다 —
