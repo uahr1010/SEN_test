@@ -1,75 +1,6 @@
 {
   "items": [
     {
-      "id": "news-2026-08-12-psrc-method-included-in-singapore-buildi",
-      "date": "2026-08-12",
-      "category": "언론보도",
-      "title": "PSRC 공법 싱가포르 건축설계기준 등재",
-      "excerpt": "PSRC(Prefabricated SRC)기둥 공법이 싱가포르 건설청(BCA)의 고강도 강-콘크리트 합성기둥 설계가이드인 BC4:2025에 독립 장으로서 등재되었습니다.\n\nBC4:2025는 싱가포르에서 건설되는 모든 건물의 기본 설계 가이드이며 유로코드4를 기반으로 고강도 강재ㆍ콘크리트를 적용한 합성기둥의 설계 방법을 다루고 있습니다.\n\n싱가포르 건설청은 그동안 싱가포르에서 PSRC를 적용하여 건설된 여러 프로젝트들을 통해 본 공법의 안전성, 경제성, 혁신성에 주목하여 특정 공법을 위해 아예 새로운 장(Chapter 6)를 신설하고, 실무 예제 계산서(Example Calculations to the Requirement of BC4:2025)에도 다양한 PSRC 적용 예제를 수록하였습니다.\n\n건설업계의 차세대 화두로 각광받는 OSC(탈현장건설)의 선두주자중 하나인 PSRC는 AI(인공지능) 시대를 맞아 수요가 커진 반도체 공장, 데이터센터, 첨단 제조시설 등에 대거 적용되고 있습니다. 싱가포르에서는 현대차그룹 글로벌 혁신센터(HMGICS), JTC(주롱도시공사) 물류허브에 적용되었으며, 특히 JTC 물류허브는 2024년 BCA 올해의 프로젝트(산업부문)로 선정되기도 하였습니다.\n\n싱가포르는 건설 및 구조 안전 기준이 세계적으로 가장 엄격하면서도 기술 혁신에 적극적인 자세를 견지하고 있어 주변 동남아시아 건설 시장에 큰 영향력을 갖습니다. 이번 성과는 말레이시아ㆍ태국ㆍ베트남 등 동남아시아는 물론, 여타 해외 시장에서 PSRC공법의 신뢰성을 높이는 데 큰 도움이 될 것을 기대합니다."
-    },
-    {
-      "id": "news-2026-08-datacenter",
-      "date": "2026-08-06",
-      "category": "언론보도",
-      "image": "/uploads/images/news-01.jpg",
-      "title": "AI 데이터센터 건설 '속도전' — 선조립 공법으로 골조공사 대폭 단축",
-      "excerpt": "공기 단축이 관건인 AI 데이터센터 골조 공사에 OSC 공법이 사실상 필수 요소가 되고 있습니다. 시공 중인 주요 AI 데이터센터 상당수에 PSRC·TSC 공법이 채택되었습니다."
-    },
-    {
-      "id": "news-2026-06-bca",
-      "date": "2026-06-16",
-      "category": "언론보도",
-      "image": "/uploads/images/news-02.jpg",
-      "title": "PSRC 공법, 싱가포르 건축설계기준 등재",
-      "excerpt": "PSRC(Prefabricated SRC) 기둥 공법이 싱가포르 건설청(BCA)의 고강도 강-콘크리트 합성기둥 설계가이드 BC4:2025에 독립 장으로 등재되었습니다."
-    },
-    {
-      "id": "news-2026-01-kepco",
-      "date": "2026-01-30",
-      "category": "언론보도",
-      "image": "/uploads/images/news-03.jpg",
-      "title": "한국전력공사(KEPCO), TSC-PSRC 공법 적용 프로젝트 공식 공개",
-      "excerpt": "공공 건설의 미래가 우리 기술을 통해 어떻게 현실에서 구현되고 있는지를 보여주는 의미 있는 사례입니다."
-    },
-    {
-      "id": "news-2026-01-vision",
-      "date": "2026-01-29",
-      "category": "행사",
-      "image": "/uploads/images/news-04.jpg",
-      "title": "센 엔지니어링그룹 2026 신년회 Vision Sharing",
-      "excerpt": "전 임직원과 파트너사가 한자리에 모여 새해 비전을 공유했습니다."
-    },
-    {
-      "id": "news-2025-12-paper",
-      "date": "2025-12-29",
-      "category": "논문",
-      "image": "/uploads/images/news-05.jpg",
-      "title": "PSRC Column–TSC Beam Composite System 논문 발표",
-      "excerpt": "해외 대형 프로젝트에 적용된 PSRC 기둥–TSC 보 합성 시스템의 설계·시공 사례를 다룬 논문입니다."
-    },
-    {
-      "id": "news-2025-07-osc",
-      "date": "2025-07-23",
-      "category": "기술자료",
-      "image": "/uploads/images/news-06.jpg",
-      "title": "건설산업의 게임체인저, OSC",
-      "excerpt": "시공인력 고령화, 환경·안전 규제 강화, 공사원가 상승에 대한 해법으로서 탈현장 건설(OSC)의 의미를 정리했습니다."
-    },
-    {
-      "id": "news-dummy-07",
-      "date": "2025-05-14",
-      "category": "기술자료",
-      "title": "[더미] 합성보 내화성능 실험 결과 보고",
-      "excerpt": "여기에 뉴스 요약을 적습니다. 이 항목은 Pages CMS 사용 예시를 위한 더미 데이터입니다."
-    },
-    {
-      "id": "news-dummy-08",
-      "date": "2025-03-02",
-      "category": "행사",
-      "title": "[더미] 고객 초청 진천공장 현장 견학",
-      "excerpt": "여기에 뉴스 요약을 적습니다. 이 항목은 Pages CMS 사용 예시를 위한 더미 데이터입니다."
-    },
-    {
       "id": "paper_2024_1",
       "date": "2024-01-10",
       "category": "논문",
@@ -118,6 +49,36 @@
       "category": "논문",
       "title": "Cyclic loading test for joints between concrete-filled U-shaped steel beams and bolt-connected steel angle composite columns [Journal of Building Engineering] (2024.08)",
       "excerpt": "저자: 김현진, 황현종, 박홍근, 이승환\nAbstract : Concrete-filled U-shaped steel beams (or T-type steel concrete (TSC) beams) and bolt-connected steel angle composite columns (or Prefabricated steel-reinforced concrete (PSRC) columns) enable rapid and efficient construction of large industrial buildings. In existing details for TSC beam–PSRC column joints using cut-off beam flange plates, early fracture of the beam web plate at the weld-connection limited the deformation capacity. For better seismic performance and constructability, this study proposed an enhanced beam-column joint method for TSC beams and PSRC columns, using the beam flange plates extended inside the joint and the bolt-connections for joint fabrication. The seismic performance of the proposed joint method was evaluated in interior beam-column joint specimens that included two current specimens and two existing specimens. All specimens showed ductile behavior through plastic hinges at the beam ends without premature joint shear failure. The proposed beam-column joint specimens showed the enhanced deformation and energy dissipation capacities by restraining local buckling, fracture, and anchorage slip of the beam U-section, thus satisfying the code-specified requirements for special moment frames. Further, the strength efficiency improved by 22 %, and the predictions of the beam flexural strength and joint shear strength agreed with the test results.\n요약 : PSRC 기둥과 TSC 거더의 접합 상세를 기둥 내부에서의 볼팅을 통한 접합으로 개선한 결과 특수모멘트골조 이상의 성능이 확보됨을 확인함."
+    },
+    {
+      "id": "paper_2024_6",
+      "date": "2024-09-05",
+      "category": "논문",
+      "title": "Experimental and analytical investigation of bracket moment connection for precast concrete beam-to-composite column joints [Journal of Building Engineering] (2024.08)",
+      "excerpt": "저자: 엄태성, 이승재, 조광원, 김민재, 이승환, 황현종\nAbstract : In large industrial buildings, precast prestressed concrete beams and composite columns are appealing to achieve longer span and higher story height, with temporary supporting and scaffolding minimized. To facilitate field erection of moment connection between precast beams and composite columns, a bracket connection transferring beam loads to the column by connecting the beam to a composite bracket attached to the column has been developed. Since precast beams are lap-spliced and integrated with the bracket by concrete engagement at the interfaces, the connection performance depends on beam lap length and load transfer details (i.e., concrete shear keys). In this study, the seismic performance of precast prestressed concrete beam-to-composite column joints with the bracket connection was experimentally and analytically investigated. Cyclic loading tests were conducted on four full-scale specimens with different beam lap lengths and load transfer details. For the specimens with a longer beam lap length, the bracket connection successfully transferred the beam flexural strength to the column with the connection barely damaged. The governing failure mode was beam flexural yield occurring at the bracket end. However, for the specimen with a shorter beam lap length, relative slips at the interfaces of the beam and bracket occurred and thus the strength was governed by the bracket connection. Excellent ductility satisfying the acceptance limit of special moment frame in AISC 341 was achieved in all specimens. The load transfer at the bracket connection through concrete shear keys and other details were further investigated through finite element analysis. Design models to predict the connection strength were proposed and the validity of the models was verified through comparisons with the tests and analyses.\n요약 : PC보 단부에서 지압판, 확대머리 철근 등 보강 상세를 적용한 HMB 접합부 반복가력시험을 통해 HMB 접합부의 내진성능 확보를 확인함."
+    },
+    {
+      "id": "tech_2024_3",
+      "date": "2024-09-30",
+      "category": "기술자료",
+      "link": "https://www.klnews.co.kr/news/articleView.html?idxno=314003",
+      "title": "“센엔지니어링의 최상의 가치는 밸류 엔지니어링” [물류신문] (2024.09.30)",
+      "excerpt": "저자: 이승환 대표"
+    },
+    {
+      "id": "tech_2024_4",
+      "date": "2024-11-27",
+      "category": "기술자료",
+      "title": "선조립 합성공법의 싱가포르 건설시장 적용과 설계사례 – BCA 올해의 프로젝트 2024 수상 [한국강구조학회지] (2024.10)",
+      "excerpt": "선조립 합성공법의 싱가포르 건설시장 적용과 설계사례 – BCA 올해의 프로젝트 2024 수상\n저자: 김민재 차장, 이승환 대표"
+    },
+    {
+      "id": "public_2025_1",
+      "date": "2025-05-28",
+      "category": "기술자료",
+      "link": "https://m.dnews.co.kr/m_home/view.jsp?idxno=202504161738076840718",
+      "title": "센 엔지니어링그룹의 ‘PSRC’기둥, 싱가포르 설계기준에 등재",
+      "excerpt": "싱가포르 BC4 최신 디자인가이드에 센 엔지니어링그룹의 선조립 합성공법 ‘ PSRC’가 등재되었습니다.\n\n국내 기술로 개발된 선조립 합성공법이 싱가포르 건축설계기준에 정식 등재된다. 국내 설계기준에 앞서 등재되는 것으로, 까다롭기 소문난 싱가포르에서 인정받았다는 점에서 남다른 의미를 지닌다.\n\n16일 센엔지니어링그룹(대표이사 회장 이창남)에 따르면 ㈜센코어테크(대표 이승환)가 개발ㆍ제작ㆍ시공 중인 PSRC(Prefabricated SRC)기둥은 곧 발간될 싱가포르 BC4 디자인가이드 최신 개정판에 등재될 예정이다.\n\nBC4 디자인가이드는 BCA(싱가포르 건설청)에서 발간하는 싱가포르 건축설계기준으로, 자국의 설계기준에 다른 나라의 공법을 넣은 셈이다. PSRC의 우수성을 인정한 결과다.\n\nPSRC는 기존 SRC(Steel Reinforced Concrete, 철골+철근콘크리트)조를 공장에서 거푸집까지 선조립한 뒤, 현장에서는 단순 설치 후 콘크리트 타설만 해 합성시키는 공법이다. 기존 SRC조에서 수반되는 비계ㆍ거푸집 작업이 필요 없는 데다, 볼팅 연결로 용접도 최소화했다. 그만큼 공기를 단축할 뿐 아니라 인력 투입이 적어 안전 측면에서도 뛰어나다. 특히, SRC조에서 핵심 구조재 역할을 하는 H형강 대신 4개의 모서리에 ‘ㄱ’ 자의 수직 앵글을 넣어, 하중 분산을 통한 자립성과 시공안정성을 더욱 높였다.\n\n센코어테크의 PSRC는 이미 싱가포르 구조공학계에서 그 기술력을 인정받았다. 지난해 BCA가 주최한 ‘올해의 프로젝트(Project of The Year 2024)’ 중 산업용 건물 부문 후보로 현대차 글로벌 혁신센터와 JTC 물류 허브(최종 수상)가 올랐는데, 두 프로젝트 모두 센코어테크의 PSRC가 적용됐다.\n\n이번 BC4 등재도 싱가포르 구조공학계가 주선했다는 후문이다. 리처드 리우 싱가포르국립대(NUS) 건설환경공학부 교수 겸 학부장이 PSRC의 BC4 등재를 강력히 주장했고, BCA가 이를 받아들였다는 전언이다. 리우 교수는 싱가포르 구조공학계에 영향력이 큰 인물로, 현대차 글로벌 혁신센터 및 JTC 물류 허브에 센코어테크의 PSRC를 적용하는 것에 대한 제3자 검증(피어리뷰)을 수행했다. 매번 피어리뷰를 하는 것보다 아예 설계기준에 넣은 게 국가적 이익이라고 판단한 것이다.\n\n이에 더해 이승환 센코어테크 대표는 오는 22일 싱가포르 구조기술사회(ISE 싱가포르지부)와 NUS가 공동 주최하는 ‘제11회 구조엔지니어 아시아 퍼시픽 포럼’에 연사로 나서 PSRC를 소개할 예정이다. 영국 구조기술사회(ISE), 영국 아루프(ARUP) 그룹, 뉴질랜드 베카(BECA) 그룹 등에서 참여하는 12명의 연사 중 유일한 한국인이다."
     }
   ]
 }
