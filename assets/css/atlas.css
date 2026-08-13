@@ -256,6 +256,17 @@ body {
   display: flex; align-items: center; gap: clamp(16px, 3vw, 40px);
   padding: 16px clamp(20px, 4vw, 48px);
   color: var(--ink);
+  transition: opacity .3s ease, transform .3s ease;
+}
+/* 표지(.cover)가 있는 페이지(index.html)에서는 atlas.js가 부팅 시
+   .is-gated를 붙여, 표지를 지나 본문이 화면을 덮기 전까지는 헤더를
+   숨겨 둡니다(로고·언어 둘 다). .cover가 없는 서브 페이지(news.html
+   등)는 이 클래스가 안 붙어서 항상 그대로 보입니다. PC·모바일 구분
+   없이 동일하게 적용됩니다. */
+.topbar.is-gated { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+.topbar.is-gated.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .topbar { transition: none; }
 }
 
 .topbar__logo { display: inline-flex; align-items: center; }

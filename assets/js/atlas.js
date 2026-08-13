@@ -22,6 +22,8 @@ window.SEN = window.SEN || {};
   var cur = -1, ticking = false;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  var mainEl;
+
   function init() {
     topbar = document.querySelector('.topbar');
     sections = [].slice.call(document.querySelectorAll('.scene'));
@@ -31,6 +33,15 @@ window.SEN = window.SEN || {};
     initNav();
     initLang();
     initLogo();
+
+    /* 표지(.cover)가 있는 페이지(index.html)에서만 헤더를 표지 뒤에
+       숨겨 뒀다가, 본문(main)이 화면을 덮기 시작하는 지점부터 보여줍니다.
+       news.html 등은 여기 init() 자체를 안 불러서(initLang만 씀)
+       이 로직을 안 타 항상 그대로 보입니다. */
+    mainEl = document.querySelector('main#top');
+    if (topbar && document.querySelector('.cover') && mainEl) {
+      topbar.classList.add('is-gated');
+    }
 
     onScroll();
     addEventListener('scroll', onScroll, { passive: true });
@@ -78,6 +89,12 @@ window.SEN = window.SEN || {};
         if (sections[i].offsetTop <= line) idx = i;
       }
       setActive(idx);
+
+      /* 표지가 있는 페이지: main이 화면 위쪽을 덮기 시작하면(= 표지를
+         다 지나면) 헤더를 보여줍니다. */
+      if (topbar && mainEl && topbar.classList.contains('is-gated')) {
+        topbar.classList.toggle('is-visible', scrollY >= mainEl.offsetTop - 2);
+      }
     });
   }
 
