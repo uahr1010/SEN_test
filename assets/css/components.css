@@ -156,7 +156,6 @@
 .tml-era:hover { border-color: var(--c-blue); color: var(--c-blue); }
 .tml-era[aria-pressed="true"] { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 .tml-era__n { font-size: var(--fs-xs); opacity: .7; font-variant-numeric: tabular-nums; }
-.tml-era__mark { font-size: 1.05rem; line-height: 1; font-weight: 400; }
 
 .tml__hint { font-size: var(--fs-xs); color: var(--c-muted); margin-top: 2px; }
 
