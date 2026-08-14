@@ -97,29 +97,40 @@
 .ceo__role { font-size: var(--fs-small); color: var(--c-muted); }
 .ceo__name { font-size: 1.15rem; }
 
-/* 좁은 화면에서 CEO 인사말 본문을 접어 둡니다(인용구·사진·서명은 그대로
-   보임). "더 보기"를 눌러야 전체 글이 펼쳐집니다 — PC는 이 규칙 밖이라
-   항상 전체가 보입니다. */
-.ceo__more { display: none; }
-@media (max-width: 760px) {
-  .ceo__body { position: relative; max-height: 220px; overflow: hidden; }
-  .ceo__body::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 64px;
-    background: linear-gradient(180deg, transparent, var(--c-white) 82%);
-    pointer-events: none;
-  }
-  .ceo__body.is-open { max-height: none; }
-  .ceo__body.is-open::after { display: none; }
+/* 좁은 화면에서 CEO 인사말 본문을 <details>로 접어 둡니다(인용구·사진·
+   서명은 그대로 보임) — 약력·자격 아코디언(.acc__group)과 같은 모양의
+   summary를 눌러야 펼쳐집니다. PC는 summary를 숨기고 :not([open])이어도
+   본문(.prose)을 강제로 펼쳐 보여, 항상 전체 글이 그대로 보입니다. */
+.ceo__body-summary {
+  display: none;
+  cursor: pointer; list-style: none;
+  align-items: baseline; gap: 6px 16px;
+  font-weight: 700; font-size: .98rem; color: var(--c-ink);
+  transition: color .2s;
+}
+.ceo__body-summary::-webkit-details-marker { display: none; }
+.ceo__body-summary::after {
+  content: "+"; margin-left: 10px;
+  font-size: 1.2rem; font-weight: 400; line-height: 1; color: var(--c-blue);
+}
+.ceo__body[open] .ceo__body-summary::after { content: "−"; }
 
-  .ceo__more {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    width: 100%; margin-top: 14px; padding: 12px 16px;
-    border: 1px solid var(--c-line); border-radius: 12px; background: var(--c-white);
-    font: inherit; font-size: var(--fs-small); font-weight: 700; color: var(--c-ink);
-    cursor: pointer; position: relative; z-index: 1;
+@media (max-width: 760px) {
+  .ceo__body {
+    border: 1px solid var(--c-line); border-radius: 12px;
+    padding: 0 16px;
   }
-  .ceo__more-arrow { transition: transform .25s ease; }
-  .ceo__more[aria-expanded="true"] .ceo__more-arrow { transform: rotate(180deg); }
+  .ceo__body-summary {
+    display: flex; align-items: center;
+    padding: 14px 0;
+  }
+  .ceo__body-summary:hover { color: var(--c-blue); }
+  .ceo__body .prose { padding-bottom: 16px; }
+}
+@media (min-width: 761px) {
+  /* PC는 항상 펼침 — <details>가 닫혀 있어도 본문은 그대로 보이도록
+     브라우저 기본(닫힘 시 summary 밖 내용을 display:none)을 덮어씁니다. */
+  .ceo__body:not([open]) > .prose { display: block; }
 }
 
 /* ---------- 접이식 묶음 (.acc) ----------

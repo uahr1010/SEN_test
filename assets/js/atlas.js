@@ -50,13 +50,26 @@ window.SEN = window.SEN || {};
   /** 고정 헤더에 제목이 가리지 않도록 그 높이만큼 빼고 이동합니다 */
   function headerH() { return topbar ? topbar.offsetHeight - 1 : 0; }
 
+  /* id로 이동 — hero.js의 "채용중"/"새 소식" 배지처럼 #scene-careers 같은
+     해시 링크를 그냥 두면 브라우저 기본 앵커 점프가 일어나 오른쪽 점을
+     눌렀을 때와 도착 위치가 살짝 어긋납니다(고정 헤더 높이를 안 뺌).
+     같은 goTo() 보정을 타도록 섹션 id로 인덱스를 찾아 넘겨줍니다. */
+  function goToId(id) {
+    var i = sections.findIndex(function (s) { return s.id === id; });
+    if (i > -1) goTo(i);
+  }
+
   function goTo(i) {
     var el = sections[i];
     if (!el) return;
-    scrollTo({
-      top: el.getBoundingClientRect().top + scrollY - headerH(),
-      behavior: reduce ? 'auto' : 'smooth'
-    });
+    var top = el.getBoundingClientRect().top + scrollY - headerH();
+    /* 맨 위 점(첫 섹션)을 누르면 예전엔 헤더가 나타나기(표지를 다 지나기)
+       "직전" 지점에 멈춰서, 이동은 됐는데 헤더는 아직 안 보였습니다.
+       표지가 있는 페이지에서는 헤더가 확실히 보이는 지점 이후로 보정합니다. */
+    if (topbar && mainEl && topbar.classList.contains('is-gated')) {
+      top = Math.max(top, mainEl.offsetTop + 4);
+    }
+    scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
   }
 
   /* ---------- 지금 보고 있는 섹션 ----------
@@ -71,6 +84,13 @@ window.SEN = window.SEN || {};
       var idx = 0;
       for (var i = 0; i < sections.length; i++) {
         if (sections[i].offsetTop <= line) idx = i;
+      }
+      /* 마지막 섹션이 화면보다 짧으면 "offsetTop + 헤더높이 + 8" 지점까지
+         스크롤이 물리적으로 안 내려가서, 맨 아래로 가도 마지막 점이
+         안 켜지는 문제가 있었습니다(PC에서 특히 잘 보임). 스크롤이 사실상
+         끝까지 내려갔으면 위 계산과 상관없이 무조건 마지막 섹션으로 봅니다. */
+      if (scrollY + innerHeight >= document.documentElement.scrollHeight - 2) {
+        idx = sections.length - 1;
       }
       setActive(idx);
 
@@ -150,5 +170,5 @@ window.SEN = window.SEN || {};
 
   /* initLang 은 news.html 처럼 .scene 이 없는 서브 페이지에서도
      헤더의 언어 토글만 따로 살리기 위해 별도로 내보냅니다. */
-  SEN.atlas = { init: init, goTo: goTo, initLang: initLang };
+  SEN.atlas = { init: init, goTo: goTo, goToId: goToId, initLang: initLang };
 })(window.SEN);

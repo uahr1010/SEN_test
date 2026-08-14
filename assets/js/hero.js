@@ -45,6 +45,18 @@ window.SEN = window.SEN || {};
 
     host.innerHTML = html;
 
+    /* 이 배지들의 href="#scene-..."를 그냥 두면 브라우저 기본 앵커 점프가
+       일어나서, 오른쪽 진행 점(atlas.goTo)이 고정 헤더 높이를 빼고
+       이동하는 것과 도착 위치가 살짝 어긋납니다. 같은 보정을 타도록
+       클릭을 가로채 atlas.goToId()로 이동합니다. */
+    host.querySelectorAll('a.flag').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (!SEN.atlas || !SEN.atlas.goToId) return;
+        e.preventDefault();
+        SEN.atlas.goToId(a.getAttribute('href').slice(1));
+      });
+    });
+
     /* 아이콘 그림이 없거나 깨졌으면 이모지로 대체 */
     var icon = host.querySelector('[data-news-icon]');
     if (icon) {

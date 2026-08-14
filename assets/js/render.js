@@ -362,19 +362,6 @@ window.SEN = window.SEN || {};
       }
     }
 
-    // 5.5) CEO 인사말 본문 "더 보기" — 좁은 화면 전용. 버튼은 CSS가
-    //      PC에서 숨기므로 여기서는 클릭 리스너만 한 번 붙여 둡니다
-    //      (언어 전환 등으로 render()가 다시 불려도 중복으로 안 붙게 가드).
-    var ceoMoreBtn = document.querySelector('[data-ceo-more]');
-    if (ceoMoreBtn && !ceoMoreBtn._wired) {
-      ceoMoreBtn._wired = true;
-      ceoMoreBtn.addEventListener('click', function () {
-        var body = document.querySelector('[data-ceo-body]');
-        if (!body) return;
-        var open = body.classList.toggle('is-open');
-        ceoMoreBtn.setAttribute('aria-expanded', String(open));
-      });
-    }
 
     // 6) 목록 렌더링
     Object.keys(RENDERERS).forEach(function (key) {
