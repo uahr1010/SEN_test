@@ -52,6 +52,12 @@ window.SEN = window.SEN || {};
   var map = null, kgeo, kmapData, munis, popup = null;
   var elBack, elLegendMax;
   var started = false;
+  var pointCount = null;   // project_points.json 의 count. 탭을 오가도 다시 안 지워지도록 캐시해 둡니다.
+
+  function applyPointCount() {
+    var el = document.querySelector('[data-pmap-count]');
+    if (el && pointCount != null) el.textContent = pointCount.toLocaleString() + '건';
+  }
 
   /* ---------- 시/군/구 중심점 ---------- */
   var _cCache = {}, _byCode = null;
@@ -406,6 +412,8 @@ window.SEN = window.SEN || {};
     ]).then(function (res) {
       kgeo = res[0]; kmapData = res[1]; munis = res[3];
       var raw = res[2];
+      pointCount = raw.count;
+      applyPointCount();
 
       var cnt = {}, exactFeats = [], bucket = {}, areaBucket = {};
       raw.points.forEach(function (p) {
@@ -453,6 +461,7 @@ window.SEN = window.SEN || {};
      캔버스 크기를 다시 맞춥니다(globe.js의 refresh()와 같은 이유). */
   function refresh() {
     if (map) map.resize();
+    applyPointCount();   // 탭을 오갈 때마다 renderProjectPanel()이 통계 칸을 다시 쓰므로, 알고 있으면 바로 채워 넣습니다
   }
 
   SEN.projectMap = { init: init, refresh: refresh };

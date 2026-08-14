@@ -649,24 +649,31 @@
   .globe__hint { text-align: center; }
 }
 
-/* ---------- 실적 요약 숫자 ---------- */
+/* ---------- 실적 요약 숫자 ----------
+   참고 자료(_전달_프로젝트지도)의 통계 줄과 같은 모양 — 항목 폭에 맞춰
+   왼쪽부터 나란히, 전체 폭으로 늘려 펼치지 않습니다. */
 .globe__stats {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: var(--sp-3); margin-bottom: var(--sp-5);
-  border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line);
-  padding: var(--sp-3) 0;
+  display: flex; flex-wrap: wrap; gap: clamp(28px, 5vw, 64px);
+  margin: var(--sp-4) 0 var(--sp-5);
 }
+.globe__stats > div { display: grid; gap: 2px; }
 .globe__stats dt {
-  font-size: var(--fs-xs); letter-spacing: .1em; text-transform: uppercase;
-  color: var(--c-muted); margin-bottom: 4px;
+  /* 예전엔 "TOTAL PROJECTS"류 짧은 영문 라벨이라 대문자·자간을 줬는데,
+     지금은 "1973년부터 수행된 프로젝트"처럼 긴 한글 문장이라 그 처리를
+     빼야 읽기 편합니다(한글은 대문자 개념이 없고, 넓은 자간은 긴 문장에서
+     오히려 잘 안 읽힙니다). */
+  font-size: var(--fs-small); font-weight: 600; color: var(--c-muted); margin-bottom: 2px;
 }
 .globe__stats dd {
-  font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 600; line-height: 1; color: var(--c-navy);
+  font-family: var(--font-display); font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  font-weight: 900; letter-spacing: -.03em; line-height: 1; color: var(--c-navy);
+  font-variant-numeric: tabular-nums;
 }
 
-/* ---------- 지역별 실적 순위 ---------- */
-.regions { display: grid; gap: 10px; }
+/* ---------- 지역별 실적 순위 ----------
+   프로젝트 섹션이 2단(왼쪽 목록)에서 전체 폭 1단으로 바뀌면서, 막대가
+   가로로 너무 길게 늘어나 보이지 않도록 읽기 좋은 폭으로 묶어 둡니다. */
+.regions { display: grid; gap: 10px; max-width: 640px; }
 .regions li {
   display: grid; grid-template-columns: 8.5rem 1fr 3rem; gap: var(--sp-2);
   align-items: center; font-size: var(--fs-small);

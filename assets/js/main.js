@@ -145,12 +145,24 @@ window.SEN = window.SEN || {};
       elHint.textContent = tab === 'overseas' ? (t(ui.dragHint) || '') : (t(ui.mapHint) || '');
     }
     if (elStats) {
-      elStats.innerHTML = [
-        [t(ui.totalLabel) || '누적 실적', group.total.toLocaleString() + (t(ui.unit) || '건')],
-        [t(ui.regionLabel) || '수행 지역', group.regions.length + (t(ui.regionUnit) || '곳')]
-      ].map(function (r) {
-        return '<div><dt>' + SEN.util.esc(r[0]) + '</dt><dd>' + SEN.util.esc(r[1]) + '</dd></div>';
-      }).join('');
+      if (tab === 'domestic') {
+        /* 국내 탭은 _전달_프로젝트지도 참고본과 같은 문구를 씁니다 —
+           "1973년부터"는 회사 연혁상의 고정된 소개 문구이고, 뒤의 건수는
+           projectmap.js가 project_points.json을 다 읽은 뒤 채워 넣습니다
+           (data-pmap-count). 탭을 오갈 때마다 이 innerHTML을 다시 쓰므로,
+           최초 채워지기 전이거나 이미 알고 있으면 SEN.projectMap.refresh()
+           가 곧바로 다시 채웁니다. */
+        elStats.innerHTML =
+          '<div><dt>1973년부터 수행된 프로젝트</dt><dd>약 1만 1천건</dd></div>' +
+          '<div><dt>2016년~2026년간 수행된 프로젝트</dt><dd data-pmap-count>—</dd></div>';
+      } else {
+        elStats.innerHTML = [
+          [t(ui.totalLabel) || '누적 실적', group.total.toLocaleString() + (t(ui.unit) || '건')],
+          [t(ui.regionLabel) || '수행 지역', group.regions.length + (t(ui.regionUnit) || '곳')]
+        ].map(function (r) {
+          return '<div><dt>' + SEN.util.esc(r[0]) + '</dt><dd>' + SEN.util.esc(r[1]) + '</dd></div>';
+        }).join('');
+      }
     }
     if (elList) {
       elList.innerHTML = !group.regions.length ? '' : group.regions.slice(0, 12).map(function (r) {

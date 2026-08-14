@@ -219,7 +219,11 @@
         <p class="scene__lead" data-bind="projects.section.lead"></p>
       </header>
 
-      <!-- 국내 / 국외 탭. 오른쪽 시각화가 탭에 따라 지도 ↔ 지구본으로 바뀝니다. -->
+      <!-- 국내 / 국외 탭. 아래 시각화 전체가 탭에 따라 지도 ↔ 지구본으로
+           바뀝니다. 예전에는 통계·순위를 왼쪽 좁은 칸에 두고 지도/지구본을
+           오른쪽에 두는 2단 구성이었는데, 참고 자료(_전달_프로젝트지도/
+           프로젝트지도.html)의 "시각화 전체 폭 + 통계 한 줄" 구성을 그대로
+           가져와 한 단으로 바꿨습니다(지도/지구본이 먼저, 통계는 그 아래). -->
       <div class="proj-tabs" role="tablist" data-proj-tabs data-reveal>
         <button type="button" class="proj-tab is-on" role="tab" aria-selected="true"
                 data-proj-tab="domestic" data-bind="projects.tabs.domestic">국내</button>
@@ -227,34 +231,32 @@
                 data-proj-tab="overseas" data-bind="projects.tabs.overseas">국외</button>
       </div>
 
-      <div class="about-grid about-grid--map">
-        <div>
-          <dl class="globe__stats" data-globe-stats></dl>
-          <div class="scene__scroll"><ol class="regions" data-region-list></ol></div>
-        </div>
-        <div class="globe">
-          <!-- 국내 탭: 실제 지도(MapLibre). 4,576개 현장을 점으로 올려 두고
-               확대할수록 뭉친 덩어리가 저절로 갈라집니다 — 팝업으로 한 번
-               더 들어갈 필요가 없어져 예전의 시/군/구 드릴다운 팝업은
-               없앴습니다. 내용은 assets/js/projectmap.js 가 그립니다. -->
-          <div class="pmap" data-kmap-tab="domestic" data-pmap>
-            <button class="pmap__back" type="button" data-pmap-back hidden>← 전국으로</button>
-            <div class="pmap__canvas" data-pmap-canvas></div>
-          </div>
-          <div class="pmap__legend" data-kmap-tab="domestic">
-            <span class="pmap__legend-title">실적 건수</span>
-            <span class="pmap__legend-cap">적음</span>
-            <span class="pmap__legend-bar"></span>
-            <span class="pmap__legend-cap" data-pmap-legend-max>—</span>
-          </div>
-          <!-- 국외 탭: 지구본. 가만히 두면 한국이 정면에서 멈춰 있고, 드래그만 됩니다. -->
-          <div class="globe__stage" data-globe data-kmap-tab="overseas" hidden>
-            <div class="globe__pills" data-globe-pills aria-hidden="true"></div>
-            <div class="globe__tip" data-globe-tip hidden></div>
-          </div>
-          <p class="globe__hint" data-globe-hint></p>
-        </div>
+      <!-- 국내 탭: 실제 지도(MapLibre). 4,576개 현장을 점으로 올려 두고
+           확대할수록 뭉친 덩어리가 저절로 갈라집니다 — 팝업으로 한 번
+           더 들어갈 필요가 없어져 예전의 시/군/구 드릴다운 팝업은
+           없앴습니다. 내용은 assets/js/projectmap.js 가 그립니다. -->
+      <div class="pmap" data-kmap-tab="domestic" data-pmap>
+        <button class="pmap__back" type="button" data-pmap-back hidden>← 전국으로</button>
+        <div class="pmap__canvas" data-pmap-canvas></div>
       </div>
+      <div class="pmap__legend" data-kmap-tab="domestic">
+        <span class="pmap__legend-title">시/도별 실적 건수</span>
+        <span class="pmap__legend-cap">적음</span>
+        <span class="pmap__legend-bar"></span>
+        <span class="pmap__legend-cap" data-pmap-legend-max>—</span>
+      </div>
+
+      <!-- 국외 탭: 지구본만 뜹니다(지도는 없음). 가만히 두면 한국이
+           정면에서 멈춰 있고, 드래그만 됩니다. -->
+      <div class="globe__stage" data-globe data-kmap-tab="overseas" hidden>
+        <div class="globe__pills" data-globe-pills aria-hidden="true"></div>
+        <div class="globe__tip" data-globe-tip hidden></div>
+      </div>
+      <p class="globe__hint" data-globe-hint></p>
+
+      <dl class="globe__stats" data-globe-stats></dl>
+
+      <ol class="regions" data-region-list></ol>
     </div>
   </section>
 
