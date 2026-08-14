@@ -183,8 +183,9 @@ window.SEN = window.SEN || {};
         });
         if (isNarrowViewport()) {
           /* 좁은 화면은 목록이 길면 스크롤이 늘어져 불편해서, 실적이
-             몰려 있는 경기·서울 두 곳만 따로 보여주고 나머지는 전부
-             "기타"로 묶어 딱 3줄만 나오게 합니다. */
+             몰려 있는 서울·경기 두 곳만 따로 보여주고 나머지는 전부
+             "기타"로 묶어 딱 3줄만 나오게 합니다. 순서는 건수와 무관하게
+             항상 서울 → 경기 → 기타 고정입니다. */
           var seoul = byProv['서울'] ? byProv['서울'].n : 0;
           var gyeonggi = byProv['경기'] ? byProv['경기'].n : 0;
           var etc = 0;
@@ -192,10 +193,10 @@ window.SEN = window.SEN || {};
             if (k !== '서울' && k !== '경기') etc += byProv[k].n;
           });
           listRegions = [
+            { name: '서울', n: seoul },
             { name: '경기', n: gyeonggi },
-            { name: '서울', n: seoul }
-          ].sort(function (a, b) { return b.n - a.n; });
-          listRegions.push({ name: '기타', n: etc });
+            { name: '기타', n: etc }
+          ];
         } else {
           listRegions = order.map(function (k) { return byProv[k]; })
             .sort(function (a, b) { return b.n - a.n; });
