@@ -471,6 +471,16 @@ window.SEN = window.SEN || {};
       });
       map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.on('load', function () { build(cnt, exactFC, areaFC, regionFC); });
+
+      /* MapLibre는 창(window) 크기 변화만 자동으로 따라갑니다. 이 칸의
+         높이(.pmap)는 위쪽 제목·리드문 줄바꿈, 웹폰트 로딩, 언어 전환
+         등으로 창 크기와 상관없이 나중에 바뀔 수 있는데, 그럴 때 캔버스가
+         못 따라가면 지도가 칸을 다 못 채우고 남는 자리에 "이미지 준비중"
+         자리표시(진한 남색)가 그대로 비쳐 보였습니다. 칸 자체를 감시해서
+         크기가 바뀔 때마다 확실히 다시 맞춥니다. */
+      if (window.ResizeObserver && els.wrap) {
+        new ResizeObserver(function () { map.resize(); }).observe(els.wrap);
+      }
     }).catch(function (err) {
       console.warn('[SEN] 프로젝트 지도를 불러오지 못했습니다:', err && err.message);
       if (els.wrap) els.wrap.classList.add('is-unavailable');
