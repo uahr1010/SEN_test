@@ -52,7 +52,20 @@ jobs:
           git add assets/img/og-cover.jpg index.html
           if git diff --cached --quiet; then
             echo "바뀐 내용이 없습니다."
-          else
-            git commit -m "chore: 공유 썸네일 자동 갱신 [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "chore: 공유 썸네일 자동 갱신 [skip ci]"
+
+          # index.html은 다른 작업(코드 수정 등)으로도 자주 바뀌어서, push가
+          # 그 사이 밀린 커밋 때문에 거절될 수 있습니다. 실패하면 새로 받아
+          # rebase 하고 다시 시도합니다.
+          for i in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "push 실패 — 새 커밋을 받아 다시 시도합니다 ($i/5)"
+            git fetch origin main
+            git rebase origin/main
+          done
+          echo "::error::여러 번 재시도했지만 push에 계속 실패했습니다."
+          exit 1
