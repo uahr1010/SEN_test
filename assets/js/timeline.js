@@ -12,9 +12,15 @@
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
 
-   ▸ 자동 훑기
+   ▸ 자동 훑기 (PC)
      섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 맨 끝까지
      미끄러진 뒤 멈춥니다.
+
+   ▸ 좁은 화면(760px 이하)
+     기본으로 접혀 있고, 버튼(.tml__toggle)을 눌러야 펼쳐집니다.
+     펼치는 순간 자동 훑기 대신 곧바로 가장 최근(오른쪽 끝)으로
+     스크롤을 옮깁니다 — PC처럼 1973부터 훑어 보여줄 필요 없이,
+     펼치자마자 최신 소식이 먼저 보이게 하기 위해서입니다.
 
    ▸ 데이터
      content/about.json 의 history 는 main.js 가 이미 받아 왔습니다.
@@ -33,7 +39,7 @@ window.SEN = window.SEN || {};
   /* ================================================================== */
 
   var t, esc;
-  var elRoot, elTl, elTrack, elAxis, elArrow, elWalker;
+  var elRoot, elTl, elTrack, elAxis, elArrow, elWalker, elToggle, elStage;
   var history = null;
   var pan = { raf: 0, taken: false };
   var started = false;
@@ -46,6 +52,9 @@ window.SEN = window.SEN || {};
   }
   function reduceMotion() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function isNarrow() {
+    return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
   }
 
   /* ---------- 그리기 ---------- */
@@ -155,6 +164,23 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /* ---------- 좁은 화면 접기/펼치기 ---------- */
+  function initToggle() {
+    if (!elToggle || !elStage) return;
+    elToggle.addEventListener('click', function () {
+      var open = elStage.classList.toggle('is-open');
+      elToggle.setAttribute('aria-expanded', String(open));
+      if (!open) return;
+
+      pan.taken = true;   // 펼칠 때 자동 훑기가 끼어들지 않도록
+      requestAnimationFrame(function () {
+        var max = elTl.scrollWidth - elTl.clientWidth;
+        if (max <= 0) return;
+        elTl.scrollLeft = max;   // 펼치자마자 가장 최근(오른쪽 끝)부터 보이게
+      });
+    });
+  }
+
   /* 섹션이 화면에 들어왔을 때 한 번만 훑습니다 */
   function watchSection() {
     if (!('IntersectionObserver' in window)) { startPan(); return; }
@@ -197,17 +223,12 @@ window.SEN = window.SEN || {};
     elTl.addEventListener('pointerup', end);
     elTl.addEventListener('pointercancel', end);
 
-    /* 세로 휠을 가로 이동으로. 단 끝에 닿으면 페이지가 계속 세로로
-       스크롤되도록 놓아 줍니다 — 안 그러면 이 구간에서 페이지가 잠깁니다. */
+    /* 휠(스크롤)로는 움직이지 않습니다 — 마우스 드래그로만 좌우로
+       조절합니다. 세로 휠은 그대로 페이지를 내리도록 놓아 두되(막지
+       않음), 트랙패드 가로 스와이프처럼 가로 방향 휠 입력만 막아서
+       타임라인이 스크롤로 밀리지 않게 합니다. */
     elTl.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-      var max = elTl.scrollWidth - elTl.clientWidth;
-      if (max <= 0) return;
-      var next = elTl.scrollLeft + e.deltaY;
-      if ((next <= 0 && e.deltaY < 0) || (next >= max && e.deltaY > 0)) return;
-      e.preventDefault();
-      pan.taken = true;
-      elTl.scrollLeft = next;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) e.preventDefault();
     }, { passive: false });
   }
 
@@ -232,11 +253,16 @@ window.SEN = window.SEN || {};
     elAxis   = elRoot.querySelector('[data-tml-axis]');
     elArrow  = elRoot.querySelector('[data-tml-arrow]');
     elWalker = elRoot.querySelector('[data-tml-walker]');
+    elToggle = elRoot.querySelector('[data-tml-toggle]');
+    elStage  = elRoot.querySelector('[data-tml-stage]');
     if (!elTl || !elTrack) return;
 
     draw();
     initDrag();
-    watchSection();
+    initToggle();
+    /* 좁은 화면은 기본으로 접혀 있어 훑을 내용이 안 보이므로, 펼칠 때
+       initToggle() 이 대신 곧바로 오른쪽 끝으로 스크롤을 옮깁니다. */
+    if (!isNarrow()) watchSection();
     addEventListener('resize', draw);
   }
 
