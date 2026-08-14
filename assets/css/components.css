@@ -234,24 +234,6 @@
 .tml__walker.is-on { opacity: 1; }
 .tml__walker img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-/* 좁은 화면에서는 기본으로 접어 두고, 버튼을 눌러야 펼쳐집니다.
-   펼친 내용은 PC와 같은 가로 타임라인(드래그/스와이프)이고,
-   펼치자마자 가장 최근(오른쪽 끝)이 보이도록 timeline.js 가 스크롤을 옮깁니다. */
-.tml__toggle { display: none; }
-@media (max-width: 760px) {
-  .tml__toggle {
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    width: 100%; margin-top: 14px; padding: 14px 16px;
-    border: 1px solid var(--c-line); border-radius: 12px; background: var(--c-white);
-    font: inherit; font-size: var(--fs-small); font-weight: 700; color: var(--c-ink);
-    cursor: pointer;
-  }
-  .tml__toggle-arrow { flex: none; transition: transform .25s ease; }
-  .tml__toggle[aria-expanded="true"] .tml__toggle-arrow { transform: rotate(180deg); }
-
-  .tml-stage { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-  .tml-stage.is-open { max-height: 480px; }
-}
 
 /* ---------- 주요공법 ---------- */
 .methods__head {

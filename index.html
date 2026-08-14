@@ -147,20 +147,13 @@
            (글자·개수 없음). 모든 항목이 처음부터 다 표시됩니다.
            내용은 assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
       <div class="tml" data-timeline data-reveal>
-        <!-- 좁은 화면 전용 접기/펼치기 버튼 — CSS가 PC에서는 숨깁니다.
-             펼치면 아래 가로 타임라인이 바로 가장 최근(오른쪽 끝)부터 보입니다. -->
-        <button type="button" class="tml__toggle" data-tml-toggle aria-expanded="false">
-          <span data-bind="site.ui.timelineToggleLabel">연혁 펼쳐보기</span>
-          <svg class="tml__toggle-arrow" viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
         <p class="tml__hint" data-bind="site.ui.timelineHint">선을 좌우로 끌어 보세요</p>
       </div>
     </div>
 
     <!-- 스크롤 칸은 .scene__inner 밖에 둡니다 — 폭 제한을 받지 않고
-         화면 양 끝까지 써야 선이 길게 뻗어 보입니다. -->
+         화면 양 끝까지 써야 선이 길게 뻗어 보입니다. PC·모바일 모두
+         항상 펼쳐져 있습니다(접기/펼치기 없음). -->
     <div class="tml-stage" data-tml-stage>
       <div class="tml__scroll" data-tml-scroll>
         <div class="tml__track" data-tml-track>
