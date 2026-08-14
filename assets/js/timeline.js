@@ -1,21 +1,20 @@
 /* ==========================================================================
-   timeline.js — 회사연혁 가로 타임라인 (아코디언)
+   timeline.js — 회사연혁 가로 타임라인
 
-   하나의 수평선 위에 연혁을 왼쪽에서 오른쪽으로 늘어놓습니다.
+   하나의 수평선 위에 연혁을 왼쪽에서 오른쪽으로 늘어놓습니다. 연도를
+   고르거나 접고 펼치는 버튼은 없고, 모든 항목이 처음부터 다 보입니다.
 
-     · 창립(1973)은 맨 왼쪽에 고정. 접히지 않습니다.
-     · 1990 / 2000 / 2010 / 2020년대는 선 위의 연대 이름(.tml__band)을
-       눌러 여닫는 아코디언입니다 — 별도 선택 버튼 줄은 없습니다.
-       펼치면 그 연대의 항목들이 오른쪽으로 이어붙어 선이 실제로
-       길어지고, 접으면 다시 줄어듭니다. 기본으로 2020년대만 펼쳐져
-       있습니다.
+     · 창립(1973)은 맨 왼쪽에 고정.
+     · 1990 / 2000 / 2010 / 2020년대는 선 위에 연대 이름(.tml__band)이
+       구간을 나누는 라벨로만 붙어 있습니다 — 누를 수 없는 장식용
+       표시입니다. 그 뒤로 그 연대의 항목들이 전부 이어붙습니다.
      · 선을 좌우로 끌어(드래그) 볼 수 있습니다.
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
 
    ▸ 자동 훑기
-     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 지금 펼쳐진
-     범위의 끝까지 미끄러진 뒤 멈춥니다.
+     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 맨 끝까지
+     미끄러진 뒤 멈춥니다.
 
    ▸ 데이터
      content/about.json 의 history 는 main.js 가 이미 받아 왔습니다.
@@ -31,13 +30,11 @@ window.SEN = window.SEN || {};
   var HOLD      = 1100;    // 1973 에서 멈춰 있는 시간(ms)
   var SWEEP_MIN = 900;     // 훑는 데 걸리는 최소 시간(ms)
   var SWEEP_MAX = 2200;    // 최대 시간. 전부 펼쳐도 이 안에 도착합니다
-  var OPEN_BY_DEFAULT = ['2020년대'];   // 처음부터 펼쳐 둘 연대
   /* ================================================================== */
 
   var t, esc;
   var elRoot, elTl, elTrack, elAxis, elArrow, elWalker;
   var history = null;
-  var open = {};
   var pan = { raf: 0, taken: false };
   var started = false;
 
@@ -88,20 +85,13 @@ window.SEN = window.SEN || {};
       var count = (g.items || []).length;
 
       x += ERA;
-      var band = document.createElement('button');
-      band.type = 'button';
+      var band = document.createElement('span');
       band.className = 'tml__band';
       band.style.left = (x - GAP * 0.5) + 'px';
-      band.setAttribute('aria-expanded', open[label] ? 'true' : 'false');
-      band.innerHTML =
-        '<span class="tml__band-mark">' + (open[label] ? '−' : '+') + '</span>' +
-        esc(label) + ' <span class="tml__band-n">' + count + '</span>';
-      band.addEventListener('click', function () { toggleEra(label); });
+      band.innerHTML = esc(label) + ' <span class="tml__band-n">' + count + '</span>';
       frag.appendChild(band);
 
-      if (open[label]) {
-        (g.items || []).forEach(function (it) { addNode(it, null); });
-      }
+      (g.items || []).forEach(function (it) { addNode(it, null); });
     });
 
     elTrack.appendChild(frag);
@@ -126,23 +116,6 @@ window.SEN = window.SEN || {};
       });
       elWalker.classList.add('is-on');
     });
-  }
-
-  /** 연대를 여닫습니다. 펼칠 때는 새로 드러난 구간까지 부드럽게 스크롤합니다. */
-  function toggleEra(label) {
-    var wasOpen = !!open[label];
-    open[label] = !wasOpen;
-    draw();
-    if (!wasOpen) {
-      pan.taken = true;
-      cancelAnimationFrame(pan.raf);
-      requestAnimationFrame(function () {
-        var max = elTl.scrollWidth - elTl.clientWidth;
-        if (max <= 0) return;
-        if (reduceMotion()) { elTl.scrollLeft = max; return; }
-        elTl.scrollTo({ left: max, behavior: 'smooth' });
-      });
-    }
   }
 
   /* ---------- 자동 훑기 ----------
@@ -170,7 +143,7 @@ window.SEN = window.SEN || {};
       var t0 = null;
 
       function step(ts) {
-        if (pan.taken) return;                  // 사용자가 잡거나 연대를 펼치면 손을 뗍니다
+        if (pan.taken) return;                  // 사용자가 잡으면 손을 뗍니다
         if (t0 === null) t0 = ts;
         var e = ts - t0;
         if (e < HOLD) { pan.raf = requestAnimationFrame(step); return; }
@@ -260,10 +233,6 @@ window.SEN = window.SEN || {};
     elArrow  = elRoot.querySelector('[data-tml-arrow]');
     elWalker = elRoot.querySelector('[data-tml-walker]');
     if (!elTl || !elTrack) return;
-
-    (history.groups || []).forEach(function (g) {
-      open[t(g.label)] = OPEN_BY_DEFAULT.indexOf(t(g.label)) > -1;
-    });
 
     draw();
     initDrag();
