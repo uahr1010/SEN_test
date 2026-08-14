@@ -1,0 +1,55 @@
+# ============================================================================
+#  공유 썸네일 자동 생성 — 표지 사진(uploads/main/main_1.*)이나 비전 문구
+#  (content/site.json 의 hero.coverVision)가 바뀔 때마다 assets/img/og-cover.jpg
+#  를 다시 합성해 커밋합니다.
+#
+#  Pages CMS에서 [미디어 → 표지 사진]에 새 사진을 올리면 이 워크플로가
+#  자동으로 돌아갑니다 — 따로 손댈 필요 없습니다.
+# ============================================================================
+name: 공유 썸네일 생성
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'uploads/main/**'
+      - 'content/site.json'
+      - 'tools/make_og_cover.py'
+  workflow_dispatch: {}
+
+# assets/img/og-cover.jpg 를 고쳐 커밋해야 하므로 쓰기 권한이 필요합니다
+permissions:
+  contents: write
+
+# 사진이 연달아 올라와도 커밋이 꼬이지 않도록 한 번에 하나씩
+concurrency:
+  group: og-cover
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 의존성 설치
+        run: pip install --quiet pillow
+
+      - name: 썸네일 합성
+        run: python tools/make_og_cover.py
+
+      - name: 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/img/og-cover.jpg
+          if git diff --cached --quiet; then
+            echo "바뀐 내용이 없습니다."
+          else
+            git commit -m "chore: 공유 썸네일 자동 갱신 [skip ci]"
+            git push
+          fi
