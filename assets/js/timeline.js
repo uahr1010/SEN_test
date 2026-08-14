@@ -16,7 +16,9 @@
      동그라미를 누르면 딱 그 연대의 항목만 접히거나 펼쳐집니다. 다른
      연대(동그라미 포함)에는 전혀 영향이 없습니다 — 동그라미 자체는
      접히든 펼치든 항상 그 자리에 그대로 있고, 접으면 그 연대 항목이
-     차지하던 만큼만 선이 짧아집니다.
+     차지하던 만큼만 선이 짧아집니다. 단, 가장 마지막(최근) 연대는
+     접혀 있어도 그 연대의 마지막(=가장 최신) 항목 하나는 계속 보여
+     줍니다 — 접자마자 최신 소식까지 안 보이면 허전해서입니다.
 
    ▸ 기본 펼침 상태
      PC는 모든 연대가 펼쳐진 채로 시작합니다. 좁은 화면(760px 이하)은
@@ -111,8 +113,9 @@ window.SEN = window.SEN || {};
 
     (history.pinned || []).forEach(function (it) { addNode(it, 'tml__node--origin'); });
 
-    groups.forEach(function (g) {
+    groups.forEach(function (g, gi) {
       var label = t(g.label);
+      var isLastGroup = gi === groups.length - 1;
 
       x += ERA;
       if (narrow && !open[label]) x += eraExtra;   // 접힌 연대끼리는 화면 폭만큼 떨어뜨립니다
@@ -130,6 +133,10 @@ window.SEN = window.SEN || {};
 
       if (open[label]) {
         (g.items || []).forEach(function (it) { addNode(it, null); });
+      } else if (isLastGroup && g.items && g.items.length) {
+        /* 가장 마지막 연대는 접혀 있어도 최신 소식 하나(마지막 항목)는
+           계속 보여 줍니다 — 접자마자 최신 소식까지 안 보이면 허전합니다. */
+        addNode(g.items[g.items.length - 1], null);
       }
     });
 

@@ -151,6 +151,8 @@
   position: relative; margin-top: clamp(18px, 3vh, 34px);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
           mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  /* 마우스로 끌어서 볼 때 글자가 드래그-선택되면 거슬려서 막습니다. */
+  -webkit-user-select: none; user-select: none;
 }
 .tml__scroll {
   overflow-x: auto; overflow-y: hidden;
