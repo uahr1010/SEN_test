@@ -165,10 +165,26 @@ window.SEN = window.SEN || {};
       }
     }
     if (elList) {
-      elList.innerHTML = !group.regions.length ? '' : group.regions.slice(0, 12).map(function (r) {
+      /* 국내는 "서울특별시 강남구"·"서울특별시 용산구"처럼 구/군까지
+         나뉜 목록 대신, 시/도 단위로 다 합쳐서 보여줍니다(예: "서울특별시"
+         하나에 그 안의 모든 구 실적을 더함). 원본 group.regions(구/군
+         단위)는 그대로 두고 표시할 때만 묶습니다 — 지도 등 다른 곳에서
+         구/군 단위 데이터가 그대로 필요할 수 있어서입니다. */
+      var listRegions = group.regions;
+      if (tab === 'domestic') {
+        var byProv = {}, order = [];
+        group.regions.forEach(function (r) {
+          var head = r.name.split(' ')[0];
+          if (!byProv[head]) { byProv[head] = { name: head, n: 0 }; order.push(head); }
+          byProv[head].n += r.n;
+        });
+        listRegions = order.map(function (k) { return byProv[k]; })
+          .sort(function (a, b) { return b.n - a.n; });
+      }
+      elList.innerHTML = !listRegions.length ? '' : listRegions.slice(0, 12).map(function (r) {
         return '<li><span class="regions__name">' + SEN.util.esc(SEN.util.regionName(r.name)) + '</span>' +
                '<span class="regions__bar"><i style="width:' +
-               Math.max(4, Math.round(r.n / group.regions[0].n * 100)) + '%"></i></span>' +
+               Math.max(4, Math.round(r.n / listRegions[0].n * 100)) + '%"></i></span>' +
                '<span class="regions__n">' + r.n + '</span></li>';
       }).join('');
     }
