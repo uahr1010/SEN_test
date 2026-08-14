@@ -22,13 +22,13 @@
 
    ▸ 기본 펼침 상태
      PC는 모든 연대가 펼쳐진 채로 시작합니다. 좁은 화면(760px 이하)은
-     전부 접힌 채로 시작합니다 — 접힌 연대끼리는 화면 폭만큼씩 떨어뜨려
-     둬서, 오른쪽 끝으로 스크롤하면 가장 최근 연대의 동그라미 하나만
-     화면에 보입니다(다른 동그라미는 존재하지만 스크롤해야 나옵니다).
+     전부 접힌 채로 시작하고, 처음부터(애니메이션 없이) 가장 최근
+     연대의 동그라미가 화면 정중앙에 오도록 스크롤 위치를 맞춰 둡니다.
 
-   ▸ 자동 훑기
+   ▸ 자동 훑기 — PC만
      섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 지금 펼쳐진 범위의
-     끝까지 미끄러진 뒤 멈춥니다.
+     끝까지 미끄러진 뒤 멈춥니다. 좁은 화면은 이미 정해진 위치(맨 오른쪽
+     연대가 정중앙)에서 시작하므로 이 자동 이동을 켜지 않습니다.
 
    ▸ 데이터
      content/about.json 의 history 는 main.js 가 이미 받아 왔습니다.
@@ -47,8 +47,6 @@ window.SEN = window.SEN || {};
   var DECADE_TOP    = 6;   // 연대 글자가 시작하는 위치 (트랙 맨 위 쪽 — 위로 뻗는 항목 글과 안 겹치도록)
   var DECADE_LABEL_H = 20; // 연대 글자 한 줄이 차지하는 대략의 높이
   var DECADE_GAP     = 8;  // 글자와 세로선 사이 간격 (CSS .tml__decade-line 의 margin-top 과 같은 값)
-  var NARROW_LEAD = 1.2;   // 좁은 화면에서 접힌 채 시작할 때, 맨 앞에 화면 너비의 이만큼을 여백으로 둬서 오른쪽 끝만 보이게 함
-  var NARROW_ERA_EXTRA = 0.8; // 좁은 화면에서 접힌 연대끼리 화면 너비의 이만큼씩 떨어뜨려, 한 화면엔 하나만 보이게 함
   /* ================================================================== */
 
   var t, esc;
@@ -57,6 +55,7 @@ window.SEN = window.SEN || {};
   var open = {};
   var pan = { raf: 0, taken: false };
   var started = false;
+  var lastDecadeCenterX = 0;   // draw() 가 채웁니다 — 가장 마지막 연대 동그라미의 중심 x
 
   function cssPx(name) {
     return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
@@ -88,11 +87,8 @@ window.SEN = window.SEN || {};
     var DECADE_LINE_H = Math.max(0, AXISY - DECADE_TOP - DECADE_LABEL_H - DECADE_GAP);
 
     var groups = history.groups || [];
-    var narrow = isNarrow();
-    var lead = narrow ? Math.round(elTl.clientWidth * NARROW_LEAD) : 0;
-    var eraExtra = narrow ? Math.round(elTl.clientWidth * NARROW_ERA_EXTRA) : 0;
 
-    var x = PAD_LEFT + lead, i = 0;
+    var x = PAD_LEFT, i = 0;
     var frag = document.createDocumentFragment();
 
     function addNode(it, extra) {
@@ -118,11 +114,12 @@ window.SEN = window.SEN || {};
       var isLastGroup = gi === groups.length - 1;
 
       x += ERA;
-      if (narrow && !open[label]) x += eraExtra;   // 접힌 연대끼리는 화면 폭만큼 떨어뜨립니다
+      var decadeX = x - GAP * 0.5;
+      if (isLastGroup) lastDecadeCenterX = decadeX;
       var decade = document.createElement('button');
       decade.type = 'button';
       decade.className = 'tml__decade';
-      decade.style.left = (x - GAP * 0.5) + 'px';
+      decade.style.left = decadeX + 'px';
       decade.setAttribute('aria-expanded', open[label] ? 'true' : 'false');
       decade.innerHTML =
         '<span class="tml__decade-label">' + esc(label) + '</span>' +
@@ -293,19 +290,25 @@ window.SEN = window.SEN || {};
     elWalker = elRoot.querySelector('[data-tml-walker]');
     if (!elTl || !elTrack) return;
 
-    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다
-       (동그라미는 접혀도 항상 존재 — draw()가 접힌 연대끼리 화면 폭만큼
-       떨어뜨려서, 오른쪽 끝으로 스크롤하면 결과적으로 맨 오른쪽 하나만
-       보이게 됩니다). */
-    var startOpen = !isNarrow();
+    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다. */
+    var narrow = isNarrow();
+    var startOpen = !narrow;
     (history.groups || []).forEach(function (g) {
       open[t(g.label)] = startOpen;
     });
 
     draw();
     initDrag();
-    watchSection();
     addEventListener('resize', draw);
+
+    if (narrow) {
+      /* 좁은 화면은 자동으로 훑지 않고, 처음부터 가장 최근 연대의
+         동그라미가 화면 정중앙에 오도록 위치만 바로 잡아 둡니다. */
+      var max = elTl.scrollWidth - elTl.clientWidth;
+      elTl.scrollLeft = Math.max(0, Math.min(max, lastDecadeCenterX - elTl.clientWidth / 2));
+    } else {
+      watchSection();
+    }
   }
 
   /** 언어를 바꾸면 라벨·제목이 달라지므로 다시 그립니다 */
