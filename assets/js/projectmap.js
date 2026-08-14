@@ -458,16 +458,18 @@ window.SEN = window.SEN || {};
 
       /* 처음 보여지는 범위(HOME_BOUNDS, 전국)에서는 드래그 이동을 막고
          확대(휠/핀치/더블탭)만 되게 하되, 실제로 확대하면(build()에서
-         줌 이벤트로 감시) 그때부터는 이동을 풀어 줍니다. 확대해도
-         maxBounds로 그 전국 범위 밖으로는 못 나가게 묶어 둡니다.
-         PC·모바일 공통입니다 — 마우스 드래그도 페이지 스크롤과는
-         상관없지만, 처음부터 굳이 끌 수 있게 둘 이유가 없어 똑같이 막습니다. */
+         줌 이벤트로 감시) 그때부터는 이동을 풀어 줍니다. PC·모바일 공통.
+         ⚠️ maxBounds는 일부러 안 씁니다 — fitBounds()의 padding 계산과
+         충돌해 지도가 칸을 다 못 채우고 남는 자리에 배경(진한 남색)이
+         비쳐 보이는 문제가 있었습니다(MapLibre/Mapbox GL에 흔히 보고되는
+         종류의 버그). 대신 확대해도 이동 가능 범위 자체는 딱히 막지
+         않습니다 — 원래도 데이터가 한국 바깥까지는 없어서 실질적인
+         문제는 없습니다. */
       map = new window.maplibregl.Map({
         container: els.canvas, style: styleSpec(),
         center: [129.5, 37.5], zoom: 5.2,
         minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true,
-        dragPan: false,
-        maxBounds: HOME_BOUNDS
+        dragPan: false
       });
       map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.on('load', function () { build(cnt, exactFC, areaFC, regionFC); });
