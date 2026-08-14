@@ -104,28 +104,21 @@
 .ceo__body-summary {
   display: none;
   cursor: pointer; list-style: none;
-  align-items: baseline; gap: 6px 16px;
-  font-weight: 700; font-size: .98rem; color: var(--c-ink);
+  align-items: center; gap: 6px;
+  font-weight: 500; font-size: var(--fs-small); color: var(--c-muted);
   transition: color .2s;
 }
 .ceo__body-summary::-webkit-details-marker { display: none; }
-.ceo__body-summary::after {
-  content: "+"; margin-left: 10px;
-  font-size: 1.2rem; font-weight: 400; line-height: 1; color: var(--c-blue);
-}
-.ceo__body[open] .ceo__body-summary::after { content: "−"; }
+.ceo__body-arrow { flex-shrink: 0; width: 16px; height: 16px; transition: transform .25s ease; }
+.ceo__body[open] .ceo__body-arrow { transform: rotate(180deg); }
 
 @media (max-width: 760px) {
-  .ceo__body {
-    border: 1px solid var(--c-line); border-radius: 12px;
-    padding: 0 16px;
-  }
   .ceo__body-summary {
-    display: flex; align-items: center;
-    padding: 14px 0;
+    display: flex;
+    padding: 4px 0 14px;
   }
   .ceo__body-summary:hover { color: var(--c-blue); }
-  .ceo__body .prose { padding-bottom: 16px; }
+  .ceo__body[open] .ceo__body-summary { padding-bottom: 10px; }
 }
 @media (min-width: 761px) {
   /* PC는 항상 펼침 — <details>가 닫혀 있어도 본문은 그대로 보이도록
@@ -416,7 +409,11 @@
   color: var(--c-blue); font-weight: 700; margin-bottom: 6px;
 }
 .office__name { font-size: 1rem; margin-bottom: 8px; color: var(--c-ink); }
-.office__addr { font-size: var(--fs-small); color: var(--c-muted); margin-bottom: 8px; }
+.office__addr {
+  display: block; font-size: var(--fs-small); color: var(--c-muted); margin-bottom: 8px;
+  text-decoration: none; border-bottom: 1px solid transparent; width: fit-content;
+}
+.office__addr:hover { color: var(--c-blue); border-color: var(--c-blue); }
 .office__meta { font-size: var(--fs-small); color: var(--c-ink); display: grid; gap: 3px; }
 .office__meta a { border-bottom: 1px solid var(--c-line); }
 .office__meta a:hover { color: var(--c-blue); border-color: var(--c-blue); }
