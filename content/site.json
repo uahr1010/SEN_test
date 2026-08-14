@@ -91,10 +91,10 @@
       "eyebrow": { "ko": "04 — CAREERS", "en": "04 — CAREERS", "zh": "04 — 招聘", "ja": "04 — 採用" },
       "title": { "ko": "50년의 역사, 앞으로 함께 걸어갈 엔지니어를 찾습니다.", "en": "", "zh": "", "ja": "" },
       "lead": {
-        "ko": "업계 최고 수준의 교육과 보상으로 직원의 성장을 지원합니다. 관심 있는 공고를 펼쳐 '지원하기'를 누르면 지원 메일 작성 창이 열립니다.",
-        "en": "We invest in our people with industry-leading training and rewards. Open a posting and click Apply — your mail app opens with the application email ready.",
-        "zh": "以业界顶尖的培训与薪酬支持员工成长。展开感兴趣的职位并点击「立即申请」，即可打开申请邮件撰写窗口。",
-        "ja": "業界最高水準の教育と報酬で社員の成長を支援します。気になる募集を開いて「応募する」を押すと、応募メールの作成画面が開きます。"
+        "ko": "업계 최고 수준의 교육과 보상으로 직원의 성장을 지원합니다.\n관심 있는 공고를 펼쳐 '지원하기'를 누르면 지원 메일 작성 창이 열립니다.",
+        "en": "We invest in our people with industry-leading training and rewards.\nOpen a posting and click Apply — your mail app opens with the application email ready.",
+        "zh": "以业界顶尖的培训与薪酬支持员工成长。\n展开感兴趣的职位并点击「立即申请」，即可打开申请邮件撰写窗口。",
+        "ja": "業界最高水準の教育と報酬で社員の成長を支援します。\n気になる募集を開いて「応募する」を押すと、応募メールの作成画面が開きます。"
       }
     },
     "jobsHeading": { "ko": "채용공고", "en": "Open Positions", "zh": "招聘公告", "ja": "採用情報" },
