@@ -9,38 +9,11 @@
       "excerpt": "PSRC(Prefabricated SRC)기둥 공법이 싱가포르 건설청(BCA)의 고강도 강-콘크리트 합성기둥 설계가이드인 BC4:2025에 독립 장으로서 등재되었습니다.\n\nBC4:2025는 싱가포르에서 건설되는 모든 건물의 기본 설계 가이드이며 유로코드4를 기반으로 고강도 강재ㆍ콘크리트를 적용한 합성기둥의 설계 방법을 다루고 있습니다.\n\n싱가포르 건설청은 그동안 싱가포르에서 PSRC를 적용하여 건설된 여러 프로젝트들을 통해 본 공법의 안전성, 경제성, 혁신성에 주목하여 특정 공법을 위해 아예 새로운 장(Chapter 6)를 신설하고, 실무 예제 계산서(Example Calculations to the Requirement of BC4:2025)에도 다양한 PSRC 적용 예제를 수록하였습니다.\n\n건설업계의 차세대 화두로 각광받는 OSC(탈현장건설)의 선두주자중 하나인 PSRC는 AI(인공지능) 시대를 맞아 수요가 커진 반도체 공장, 데이터센터, 첨단 제조시설 등에 대거 적용되고 있습니다. 싱가포르에서는 현대차그룹 글로벌 혁신센터(HMGICS), JTC(주롱도시공사) 물류허브에 적용되었으며, 특히 JTC 물류허브는 2024년 BCA 올해의 프로젝트(산업부문)로 선정되기도 하였습니다.\n\n싱가포르는 건설 및 구조 안전 기준이 세계적으로 가장 엄격하면서도 기술 혁신에 적극적인 자세를 견지하고 있어 주변 동남아시아 건설 시장에 큰 영향력을 갖습니다. 이번 성과는 말레이시아ㆍ태국ㆍ베트남 등 동남아시아는 물론, 여타 해외 시장에서 PSRC공법의 신뢰성을 높이는 데 큰 도움이 될 것을 기대합니다."
     },
     {
-      "id": "news-2026-08-datacenter",
-      "date": "2026-08-06",
-      "category": "언론보도",
-      "image": "/uploads/images/news-01.jpg",
-      "link": "",
-      "title": "AI 데이터센터 건설 '속도전' — 선조립 공법으로 골조공사 대폭 단축",
-      "excerpt": "공기 단축이 관건인 AI 데이터센터 골조 공사에 OSC 공법이 사실상 필수 요소가 되고 있습니다. 시공 중인 주요 AI 데이터센터 상당수에 PSRC·TSC 공법이 채택되었습니다."
-    },
-    {
-      "id": "news-2026-01-kepco",
-      "date": "2026-01-30",
-      "category": "언론보도",
-      "image": "/uploads/images/news-03.jpg",
-      "link": "",
-      "title": "한국전력공사(KEPCO), TSC-PSRC 공법 적용 프로젝트 공식 공개",
-      "excerpt": "공공 건설의 미래가 우리 기술을 통해 어떻게 현실에서 구현되고 있는지를 보여주는 의미 있는 사례입니다."
-    },
-    {
       "id": "tech_2025_2",
       "date": "2025-12-29",
       "category": "기술자료",
       "title": "PSRC Column–TSC Beam Composite System for the Hyundai Motor Group Innovation Center Singapore [Structural Engineering International] <2025.12>",
       "excerpt": "저자: 이승환, 조광원, 노경민, 박재혁\nAbstract : The Hyundai Motor Group Innovation Center Singapore (HMGICS) is a seven-storey, 86,900 m² smart-factory integrating EV manufacturing, R&D, and customer experience functions. To meet high structural demands within a compressed schedule, a composite system of Prefabricated Steel-Reinforced Concrete (PSRC) columns and Thin-Steel Composite (TSC) beams was adopted. The PSRC system—characterized by steel angles, bolt-only connections, permanent steel formwork—eliminated field welding and temporary shoring, reducing on-site labour by approximately 40% and shortening construction by five months. Design followed Eurocodes with the Singapore National Annex. The PSRC–TSC frame satisfied Class 3 robustness criteria through key-element design. Despite pandemic-related logistics challenges, the prefabricated PSRC-TSC system proved effective and is formally recognized in Singapore’s forthcoming BC4:2025 Design Guide. The project affirms the PSRC–TSC system’s potential for high-performance, prefabricated industrial structures."
-    },
-    {
-      "id": "news-2025-12-paper",
-      "date": "2025-12-29",
-      "category": "논문",
-      "image": "/uploads/images/news-05.jpg",
-      "link": "",
-      "title": "PSRC Column–TSC Beam Composite System 논문 발표",
-      "excerpt": "해외 대형 프로젝트에 적용된 PSRC 기둥–TSC 보 합성 시스템의 설계·시공 사례를 다룬 논문입니다."
     },
     {
       "id": "public_2025_2",
