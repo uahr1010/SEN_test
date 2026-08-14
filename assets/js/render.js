@@ -162,13 +162,6 @@ window.SEN = window.SEN || {};
        길게 쌓은 줄들이고, 하나씩 눌러서 폅니다(<details>, 네이티브 접힘 —
        base.css 의 details:not([open]) 규칙이 보강해 둠). */
     'about.contact.offices': function (items) {
-      /* 주소를 누르면 새 탭에서 지도 검색이 열리도록 감쌉니다.
-         해외 지사 주소도 있어서, 국가/언어에 상관없이 다 동작하는
-         구글 지도 검색 링크(주소 텍스트 그대로 쿼리)를 씁니다. */
-      function addrLink(addr) {
-        var url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(addr);
-        return '<a class="office__addr" href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(addr) + '</a>';
-      }
       function officeMeta(it) {
         var meta = [];
         if (it.tel)   meta.push('<span>TEL <a href="tel:' + esc(String(it.tel).replace(/[^\d+]/g, '')) + '">' + esc(it.tel) + '</a></span>');
@@ -185,7 +178,7 @@ window.SEN = window.SEN || {};
           '<div class="office reveal" data-delay="' + (i % 4) + '">' +
             (t(it.tag) ? '<p class="office__tag">' + esc(t(it.tag)) + '</p>' : '') +
             '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
-            addrLink(t(it.address)) +
+            '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
             officeMeta(it) +
           '</div>';
       }).join('');
@@ -198,7 +191,7 @@ window.SEN = window.SEN || {};
               '<summary class="office-overseas__row-head">' + esc(t(it.tag) || t(it.name)) + '</summary>' +
               '<div class="office-overseas__row-body">' +
                 '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
-                addrLink(t(it.address)) +
+                '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
                 officeMeta(it) +
               '</div>' +
             '</details>';
