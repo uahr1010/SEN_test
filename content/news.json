@@ -46,6 +46,13 @@
       "excerpt": "전 임직원과 파트너사가 한자리에 모여 새해 비전을 공유했습니다."
     },
     {
+      "id": "tech_2025_2",
+      "date": "2025-12-29",
+      "category": "기술자료",
+      "title": "PSRC Column–TSC Beam Composite System for the Hyundai Motor Group Innovation Center Singapore [Structural Engineering International] <2025.12>",
+      "excerpt": "저자: 이승환, 조광원, 노경민, 박재혁\nAbstract : The Hyundai Motor Group Innovation Center Singapore (HMGICS) is a seven-storey, 86,900 m² smart-factory integrating EV manufacturing, R&D, and customer experience functions. To meet high structural demands within a compressed schedule, a composite system of Prefabricated Steel-Reinforced Concrete (PSRC) columns and Thin-Steel Composite (TSC) beams was adopted. The PSRC system—characterized by steel angles, bolt-only connections, permanent steel formwork—eliminated field welding and temporary shoring, reducing on-site labour by approximately 40% and shortening construction by five months. Design followed Eurocodes with the Singapore National Annex. The PSRC–TSC frame satisfied Class 3 robustness criteria through key-element design. Despite pandemic-related logistics challenges, the prefabricated PSRC-TSC system proved effective and is formally recognized in Singapore’s forthcoming BC4:2025 Design Guide. The project affirms the PSRC–TSC system’s potential for high-performance, prefabricated industrial structures."
+    },
+    {
       "id": "news-2025-12-paper",
       "date": "2025-12-29",
       "category": "논문",
@@ -55,18 +62,18 @@
       "excerpt": "해외 대형 프로젝트에 적용된 PSRC 기둥–TSC 보 합성 시스템의 설계·시공 사례를 다룬 논문입니다."
     },
     {
-      "id": "tech_2025_2",
-      "date": "2025-12-29",
-      "category": "기술자료",
-      "title": "PSRC Column–TSC Beam Composite System for the Hyundai Motor Group Innovation Center Singapore [Structural Engineering International] <2025.12>",
-      "excerpt": "저자: 이승환, 조광원, 노경민, 박재혁\nAbstract : The Hyundai Motor Group Innovation Center Singapore (HMGICS) is a seven-storey, 86,900 m² smart-factory integrating EV manufacturing, R&D, and customer experience functions. To meet high structural demands within a compressed schedule, a composite system of Prefabricated Steel-Reinforced Concrete (PSRC) columns and Thin-Steel Composite (TSC) beams was adopted. The PSRC system—characterized by steel angles, bolt-only connections, permanent steel formwork—eliminated field welding and temporary shoring, reducing on-site labour by approximately 40% and shortening construction by five months. Design followed Eurocodes with the Singapore National Annex. The PSRC–TSC frame satisfied Class 3 robustness criteria through key-element design. Despite pandemic-related logistics challenges, the prefabricated PSRC-TSC system proved effective and is formally recognized in Singapore’s forthcoming BC4:2025 Design Guide. The project affirms the PSRC–TSC system’s potential for high-performance, prefabricated industrial structures."
-    },
-    {
       "id": "public_2025_2",
       "date": "2025-12-03",
       "category": "홍보자료",
       "title": "건설산업의 게임체인저, OSC",
       "excerpt": "OSC (Off-site Construction)는 시공인력 고령화, 환경 및 안전 관련 규제 강화, 공사원가 상승을 극복하여\n건설산업을 첨단제조업으로 탈바꿈하는 게임체인저입니다.\n우리 센 엔지니어링그룹은 PSRC, TSC를 필두로 하는 혁신적 OSC솔루션으로 국내외 유수 고객사들께\n맞춤형 기술개발, 설계, 제작, 조달, 시공, 사후관리까지 책임지는\n원스톱 토탈 엔지니어링서비스를 제공합니다."
+    },
+    {
+      "id": "tech_2025_1",
+      "date": "2025-07-23",
+      "category": "기술자료",
+      "title": "PSRC 합성기둥 시스템의 싱가포르 구조설계 기준(BC4:2025) 반영과 기술적 함의 [한국강구조학회지] (2025.07)",
+      "excerpt": "저자: 조광원 과장, 구자훈 대리, 이승환 대표이사"
     },
     {
       "id": "news-2025-07-osc",
@@ -76,13 +83,6 @@
       "link": "",
       "title": "건설산업의 게임체인저, OSC",
       "excerpt": "시공인력 고령화, 환경·안전 규제 강화, 공사원가 상승에 대한 해법으로서 탈현장 건설(OSC)의 의미를 정리했습니다."
-    },
-    {
-      "id": "tech_2025_1",
-      "date": "2025-07-23",
-      "category": "기술자료",
-      "title": "PSRC 합성기둥 시스템의 싱가포르 구조설계 기준(BC4:2025) 반영과 기술적 함의 [한국강구조학회지] (2025.07)",
-      "excerpt": "저자: 조광원 과장, 구자훈 대리, 이승환 대표이사"
     },
     {
       "id": "public_2025_1",
@@ -122,25 +122,12 @@
       "excerpt": "저자: 김현진, 황현종, 박홍근, 이승환\nAbstract : Concrete-filled U-shaped steel beams (or T-type steel concrete (TSC) beams) and bolt-connected steel angle composite columns (or Prefabricated steel-reinforced concrete (PSRC) columns) enable rapid and efficient construction of large industrial buildings. In existing details for TSC beam–PSRC column joints using cut-off beam flange plates, early fracture of the beam web plate at the weld-connection limited the deformation capacity. For better seismic performance and constructability, this study proposed an enhanced beam-column joint method for TSC beams and PSRC columns, using the beam flange plates extended inside the joint and the bolt-connections for joint fabrication. The seismic performance of the proposed joint method was evaluated in interior beam-column joint specimens that included two current specimens and two existing specimens. All specimens showed ductile behavior through plastic hinges at the beam ends without premature joint shear failure. The proposed beam-column joint specimens showed the enhanced deformation and energy dissipation capacities by restraining local buckling, fracture, and anchorage slip of the beam U-section, thus satisfying the code-specified requirements for special moment frames. Further, the strength efficiency improved by 22 %, and the predictions of the beam flexural strength and joint shear strength agreed with the test results.\n요약 : PSRC 기둥과 TSC 거더의 접합 상세를 기둥 내부에서의 볼팅을 통한 접합으로 개선한 결과 특수모멘트골조 이상의 성능이 확보됨을 확인함."
     },
     {
-      "id": "paper_2024_3",
+      "id": "tech_2024_2",
       "date": "2024-08-05",
-      "category": "논문",
-      "title": "Cyclic Loading Test for Beam–Column Joints of Precast Concrete Beam and Concrete-Encased Steel Angle Column [Journal of Structural Engineering] (2023.02.25)",
-      "excerpt": "저자: 임종진, 엄태성, 황현종, 이승재, 이승환\nAbstract : Precast concrete (PC) and composite structures have been widely used in large industrial buildings for constructability and cost efficiency. The PC beams and composite columns are preferrable for use as long-span beams and large-sized columns, respectively, to realize efficient steel-concrete composite construction. The present study developed seismic details of the PC beam-to-composite column joint. A cyclic loading test was performed on the beam-column joints to investigate the seismic performance. For the test parameters, the connection details and the plastic hinge relocation were considered. The test results showed that the load-carrying capacity and deformation capacity of the specimens satisfied the requirements for intermediate moment frames specified in AISC 341-16. Further, the load-carrying capacities predicted using the plastic hinge relocation concept and the effective tension force of the bottom reinforcement at the PC beam section agreed with the test results."
-    },
-    {
-      "id": "paper_2024_4",
-      "date": "2024-08-05",
-      "category": "논문",
-      "title": "Cyclic Loading Test for Beam–Column Joints of Precast Concrete Beam and Concrete-Encased Steel Angle Column [Journal of Structural Engineering] (2023.02.25)",
-      "excerpt": "저자: 임종진, 엄태성, 황현종, 이승재, 이승환\nAbstract : Precast concrete (PC) and composite structures have been widely used in large industrial buildings for constructability and cost efficiency. The PC beams and composite columns are preferrable for use as long-span beams and large-sized columns, respectively, to realize efficient steel-concrete composite construction. The present study developed seismic details of the PC beam-to-composite column joint. A cyclic loading test was performed on the beam-column joints to investigate the seismic performance. For the test parameters, the connection details and the plastic hinge relocation were considered. The test results showed that the load-carrying capacity and deformation capacity of the specimens satisfied the requirements for intermediate moment frames specified in AISC 341-16. Further, the load-carrying capacities predicted using the plastic hinge relocation concept and the effective tension force of the bottom reinforcement at the PC beam section agreed with the test results."
-    },
-    {
-      "id": "public_2024_1",
-      "date": "2024-08-05",
-      "category": "홍보자료",
-      "title": "기술 개발, 설계, 생산, 시공까지 통합 서비스 센 엔지니어링 그룹 [한국강구조학회지] (2024.06)",
-      "excerpt": "저자: 이승환 대표, 김민재 차장"
+      "category": "기술자료",
+      "link": "https://www.klnews.co.kr/news/articleView.html?idxno=311776",
+      "title": "HMB, 물류센터 선조립 건설 기술의 혁명 [물류신문] (2024.04.01)",
+      "excerpt": "저자: 이승환 대표"
     },
     {
       "id": "tech_2024_1",
@@ -150,19 +137,25 @@
       "excerpt": "저자: 이승환, 박호영, 강정호, 임종진"
     },
     {
-      "id": "tech_2024_2",
+      "id": "public_2024_1",
       "date": "2024-08-05",
-      "category": "기술자료",
-      "link": "https://www.klnews.co.kr/news/articleView.html?idxno=311776",
-      "title": "HMB, 물류센터 선조립 건설 기술의 혁명 [물류신문] (2024.04.01)",
-      "excerpt": "저자: 이승환 대표"
+      "category": "홍보자료",
+      "title": "기술 개발, 설계, 생산, 시공까지 통합 서비스 센 엔지니어링 그룹 [한국강구조학회지] (2024.06)",
+      "excerpt": "저자: 이승환 대표, 김민재 차장"
     },
     {
-      "id": "paper_2024_1",
-      "date": "2024-01-10",
+      "id": "paper_2024_4",
+      "date": "2024-08-05",
       "category": "논문",
-      "title": "Cyclic Lateral Load Test for RC Column–Steel Beam Joints with Simplified Connection Details [Journal of Structural Engineering] (2019.05)",
-      "excerpt": "저자: 이호준, 박홍근, 황현종, 김창수\nAbstract: Existing experimental results show that carefully designed RC column-to-steel beam (RCS) joints have high seismic resistance comparable to those of traditional steel or RC frames with seismic details. However, such high seismic performance requires complicated and expensive strengthening details, which causes difficulties in fabrication and construction. This study investigated simpler strengthening methods, targeting moderate seismic capacity. Four interior RCS joint specimens were tested under cyclic lateral loading. The major test parameters were the strengthening details of the beam–column joint such as face bearing plates, transverse beams, and headed studs. The test specimens with the proposed methods exhibited good deformation capacity exceeding 4.0% story drift ratio after yielding of the beams and beam–column connection. However, the peak load did not reach the nominal strength based on the beam plastic moment due to early joint damage. The failure modes and test strengths were compared with the predictions of ASCE design guidelines. On the basis of the results, design recommendations for the simplified connection details were proposed."
+      "title": "Cyclic Loading Test for Beam–Column Joints of Precast Concrete Beam and Concrete-Encased Steel Angle Column [Journal of Structural Engineering] (2023.02.25)",
+      "excerpt": "저자: 임종진, 엄태성, 황현종, 이승재, 이승환\nAbstract : Precast concrete (PC) and composite structures have been widely used in large industrial buildings for constructability and cost efficiency. The PC beams and composite columns are preferrable for use as long-span beams and large-sized columns, respectively, to realize efficient steel-concrete composite construction. The present study developed seismic details of the PC beam-to-composite column joint. A cyclic loading test was performed on the beam-column joints to investigate the seismic performance. For the test parameters, the connection details and the plastic hinge relocation were considered. The test results showed that the load-carrying capacity and deformation capacity of the specimens satisfied the requirements for intermediate moment frames specified in AISC 341-16. Further, the load-carrying capacities predicted using the plastic hinge relocation concept and the effective tension force of the bottom reinforcement at the PC beam section agreed with the test results."
+    },
+    {
+      "id": "paper_2024_3",
+      "date": "2024-08-05",
+      "category": "논문",
+      "title": "Cyclic Loading Test for Beam–Column Joints of Precast Concrete Beam and Concrete-Encased Steel Angle Column [Journal of Structural Engineering] (2023.02.25)",
+      "excerpt": "저자: 임종진, 엄태성, 황현종, 이승재, 이승환\nAbstract : Precast concrete (PC) and composite structures have been widely used in large industrial buildings for constructability and cost efficiency. The PC beams and composite columns are preferrable for use as long-span beams and large-sized columns, respectively, to realize efficient steel-concrete composite construction. The present study developed seismic details of the PC beam-to-composite column joint. A cyclic loading test was performed on the beam-column joints to investigate the seismic performance. For the test parameters, the connection details and the plastic hinge relocation were considered. The test results showed that the load-carrying capacity and deformation capacity of the specimens satisfied the requirements for intermediate moment frames specified in AISC 341-16. Further, the load-carrying capacities predicted using the plastic hinge relocation concept and the effective tension force of the bottom reinforcement at the PC beam section agreed with the test results."
     },
     {
       "id": "paper_2024_2",
@@ -170,6 +163,13 @@
       "category": "논문",
       "title": "중공코어를 갖는 프리스트레스트콘크리트 매입 강합성보의 휨거동[한국강구조학회 논문집](2023.10)",
       "excerpt": "저자: 엄태성, 임종진, 문성환, 윤성환, 정재철\nAbstract :This study investigated the flexural behavior of prestressed concrete-encased steel composite beams (PSC composite beam) with hollow core. The PSC composite section consisted of the precast composite element, made of a steel section (H or box section) and U-shaped concrete encasement, and the cast-in-place concrete slab. By prestressing strands at the bottom of the precast element, the cracking resistance was enhanced. In addition, a void was formed in the web to reduce the beam weight. Six full-scale PSC composite beams were tested under positive bending and their flexural behaviors before and after casting the cast-in-place slab were investigated. The test results have shown that the initial strains of the steel section and reinforcing bars that occurred at the prestressing stage agreed well with the predictions by the existing PSC design theory. During the subsequent flexural testing, all beams were failed by concrete crushing at the compression end or slab. The stiffness and strength of the PSC composite beams agreed well with the effective stiffness and plastic moment strength for encased composite members, respectively, calculated in accordance with AISC 360-16. At the interface across the cast-in-place slab, relative slip did not occur and the interface shear resistance was contributed by both the vertical stirrups of the precast concrete encasement and headed studs of the steel element engaged or embedded within the slab."
+    },
+    {
+      "id": "paper_2024_1",
+      "date": "2024-01-10",
+      "category": "논문",
+      "title": "Cyclic Lateral Load Test for RC Column–Steel Beam Joints with Simplified Connection Details [Journal of Structural Engineering] (2019.05)",
+      "excerpt": "저자: 이호준, 박홍근, 황현종, 김창수\nAbstract: Existing experimental results show that carefully designed RC column-to-steel beam (RCS) joints have high seismic resistance comparable to those of traditional steel or RC frames with seismic details. However, such high seismic performance requires complicated and expensive strengthening details, which causes difficulties in fabrication and construction. This study investigated simpler strengthening methods, targeting moderate seismic capacity. Four interior RCS joint specimens were tested under cyclic lateral loading. The major test parameters were the strengthening details of the beam–column joint such as face bearing plates, transverse beams, and headed studs. The test specimens with the proposed methods exhibited good deformation capacity exceeding 4.0% story drift ratio after yielding of the beams and beam–column connection. However, the peak load did not reach the nominal strength based on the beam plastic moment due to early joint damage. The failure modes and test strengths were compared with the predictions of ASCE design guidelines. On the basis of the results, design recommendations for the simplified connection details were proposed."
     }
   ]
 }

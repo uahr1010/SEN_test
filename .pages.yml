@@ -77,67 +77,69 @@ content:
   #    화면에서 자동으로 합쳐집니다. 번역을 손으로 고치고 싶으면
   #    [② 뉴스 번역] 탭에서 하세요.
   #
-  #    ⚠️ 이 목록은 저장할 때마다 화면에 있는 항목 전체로 통째로 바뀝니다
-  #    (부분 추가/병합이 아닙니다). 새 기사를 올릴 때는 반드시 목록 맨 아래
-  #    "추가" 버튼으로 새 항목만 넣고 저장하세요 — 기존 항목을 지우거나
-  #    직접 다시 입력하지 마세요. 지웠다면 git 기록에서 복구할 수 있습니다.
+  #    기사 하나가 파일 하나(content/news/<고유 ID>.json)입니다 — 그래서
+  #    목록이 표(쪽번호 포함, 25개씩)로 보이고, 최신 날짜 순으로 자동
+  #    정렬되고, 추가·삭제·수정이 각각 독립적으로 됩니다(예전처럼 전체
+  #    목록을 통째로 저장하지 않으니 실수로 다른 기사를 건드릴 걱정이
+  #    없습니다). 실제 홈페이지가 읽는 content/news.json 은 이 폴더가
+  #    바뀔 때마다 GitHub Actions가 자동으로 다시 만들어 줍니다 — 그
+  #    파일은 직접 손대지 마세요.
   # --------------------------------------------------------------------------
   - name: news
     label: ① 뉴스
-    type: file
-    path: content/news.json
+    type: collection
+    path: content/news
     format: json
+    filename: "{fields.id}"
+    view:
+      fields: [date, category, title]
+      default:
+        sort: date
+        order: desc
     fields:
-      - name: items
-        label: 뉴스 목록
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "[{category}] {title}"
-        fields:
-          - name: id
-            label: 고유 ID
-            type: string
-            required: true
-            description: >
-              영문·숫자·하이픈 (예 news-2026-09-award). 중복만 아니면 됩니다.
-              [② 뉴스 번역] 탭에서 번역을 연결할 때도 이 ID를 씁니다.
-          - name: date
-            label: 날짜
-            type: date
-            required: true
-          - name: category
-            label: 분류
-            type: select
-            options:
-              values:
-                - 언론보도
-                - 행사
-                - 홍보자료
-                - 논문
-                - 기술자료
-            description: >
-              번역하지 않고 이 한국어 표기가 모든 언어에 그대로 쓰입니다.
-          - name: image
-            label: 썸네일
-            type: image
-            description: 비워 두면 블루 그라디언트가 표시됩니다.
-          - name: link
-            label: 원문 링크 (선택)
-            type: string
-            description: >
-              언론사 기사 등 외부 원문이 있으면 적어 주세요.
-              카드를 누르면 항상 이 사이트 안의 상세 페이지가 먼저 열리고,
-              그 페이지 안에 "원문 보기" 버튼으로 표시됩니다. 비워도 됩니다.
-          - name: title
-            label: 제목 (한국어)
-            type: string
-            required: true
-          - name: excerpt
-            label: 요약 (한국어)
-            type: text
-            required: true
+      - name: id
+        label: 고유 ID
+        type: string
+        required: true
+        description: >
+          영문·숫자·하이픈 (예 news-2026-09-award). 중복만 아니면 됩니다.
+          [② 뉴스 번역] 탭에서 번역을 연결할 때도 이 ID를 씁니다.
+          (한 번 정하면 나중에 바꾸지 마세요 — 이 값이 곧 파일 이름입니다.)
+      - name: date
+        label: 날짜
+        type: date
+        required: true
+      - name: category
+        label: 분류
+        type: select
+        options:
+          values:
+            - 언론보도
+            - 행사
+            - 홍보자료
+            - 논문
+            - 기술자료
+        description: >
+          번역하지 않고 이 한국어 표기가 모든 언어에 그대로 쓰입니다.
+      - name: image
+        label: 썸네일
+        type: image
+        description: 비워 두면 블루 그라디언트가 표시됩니다.
+      - name: link
+        label: 원문 링크 (선택)
+        type: string
+        description: >
+          언론사 기사 등 외부 원문이 있으면 적어 주세요.
+          카드를 누르면 항상 이 사이트 안의 상세 페이지가 먼저 열리고,
+          그 페이지 안에 "원문 보기" 버튼으로 표시됩니다. 비워도 됩니다.
+      - name: title
+        label: 제목 (한국어)
+        type: string
+        required: true
+      - name: excerpt
+        label: 요약 (한국어)
+        type: text
+        required: true
 
   # --------------------------------------------------------------------------
   # ② 뉴스 번역 — 뉴스 en/中文/日本語 손보기

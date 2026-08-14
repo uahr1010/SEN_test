@@ -1,0 +1,52 @@
+# ============================================================================
+#  뉴스 목록 컴파일 — content/news/*.json (Pages CMS [① 뉴스]가 기사 하나당
+#  파일 하나로 관리하는 원본) 이 바뀔 때마다, 실제 홈페이지가 읽는
+#  content/news.json 하나로 다시 합쳐 커밋합니다.
+#
+#  GitHub Pages는 정적 호스팅이라 폴더 안 파일 목록을 브라우저가 알아낼
+#  방법이 없어서, 커밋될 때 미리 하나로 묶어 둡니다 — Pages CMS에서 기사를
+#  추가/삭제/수정하면 자동으로 돌아가고, 따로 손댈 필요 없습니다.
+# ============================================================================
+name: 뉴스 목록 컴파일
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/news/**'
+      - 'tools/compile_news.py'
+  workflow_dispatch: {}
+
+# content/news.json 을 고쳐 커밋해야 하므로 쓰기 권한이 필요합니다
+permissions:
+  contents: write
+
+# 기사가 연달아 올라와도 커밋이 꼬이지 않도록 한 번에 하나씩
+concurrency:
+  group: compile-news
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 컴파일
+        run: python tools/compile_news.py
+
+      - name: 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/news.json
+          if git diff --cached --quiet; then
+            echo "바뀐 내용이 없습니다."
+          else
+            git commit -m "chore: 뉴스 목록 자동 컴파일 [skip ci]"
+            git push
+          fi

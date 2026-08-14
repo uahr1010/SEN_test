@@ -29,6 +29,7 @@ NEWSREADER = os.path.join(ROOT, 'assets', 'fonts', 'Newsreader-Light.ttf')
 
 BRAND = 'SEN ENGINEERING'   # index.html 의 .cover__brand 기본 표기와 동일
 W, H = 1200, 630
+BRAND_PAD = 46   # 실제 표지의 좌우 여백(clamp(20px,3.4vw,46px))과 같은 값
 
 
 def find_cover_photo():
@@ -97,6 +98,26 @@ def build_radial(w, h):
     return out
 
 
+def fit_font_size(text, font_path, target_width, start_size=100):
+    """cover.js 의 fitBrand() 와 같은 방식 — 기준 크기에서 잰 폭에 비례해
+    맞춘 뒤, 반올림 오차를 몇 번 더 조입니다. 그룹명이 항상 가로 폭을
+    꽉 채우도록(실제 표지와 동일하게) 글자 크기를 정합니다."""
+    probe = ImageDraw.Draw(Image.new('RGB', (1, 1)))
+    font = ImageFont.truetype(font_path, start_size)
+    bbox = probe.textbbox((0, 0), text, font=font)
+    w = bbox[2] - bbox[0]
+    size = start_size * target_width / w
+
+    for _ in range(4):
+        font = ImageFont.truetype(font_path, round(size))
+        bbox = probe.textbbox((0, 0), text, font=font)
+        w = bbox[2] - bbox[0]
+        if w <= target_width:
+            break
+        size *= target_width / w
+    return round(size)
+
+
 def draw_centered_text(canvas, lines, font, y, fill, shadow_alpha, line_gap=1.4):
     w, h = canvas.size
     probe = ImageDraw.Draw(canvas)
@@ -136,8 +157,13 @@ def main():
     draw_centered_text(canvas, wrapped, vision_font, y=118,
                         fill=(255, 255, 255, 245), shadow_alpha=160, line_gap=1.55)
 
-    brand_font = ImageFont.truetype(ANTON, 92)
-    draw_centered_text(canvas, [BRAND], brand_font, y=478,
+    brand_size = fit_font_size(BRAND, ANTON, W - BRAND_PAD * 2)
+    brand_font = ImageFont.truetype(ANTON, brand_size)
+    brand_bbox = ImageDraw.Draw(Image.new('RGB', (1, 1))).textbbox((0, 0), BRAND, font=brand_font)
+    # textbbox 의 y1은 글자가 실제로 그려지는 가장 아래 지점까지의 거리이므로,
+    # 이 값을 그대로 빼야 여백이 실제 픽셀 기준으로 맞습니다.
+    brand_y = H - 56 - brand_bbox[3]
+    draw_centered_text(canvas, [BRAND], brand_font, y=brand_y,
                         fill=(255, 255, 255, 255), shadow_alpha=190, line_gap=1.0)
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
