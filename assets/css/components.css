@@ -598,16 +598,13 @@
 }
 
 /* ---------- 실적 지구본 자리 (국외 탭) ----------
-   원 모양을 유지하며 오른쪽 칸(9fr)보다 작게 묶어 둡니다. 이 최대
-   폭보다 넓은 화면에서는 가운데(margin:auto) 대신 오른쪽 끝에
-   붙입니다 — 가운데 두면 왼쪽 목록은 섹션 왼쪽 끝에 붙어 있는데
-   지구본만 양옆에 빈 공간을 남겨서, 전체적으로 내용이 왼쪽으로
-   쏠려 보였습니다. (국내 탭의 지도는 .pmap — 폭 제한이 없어 이
-   문제가 애초에 없습니다.) */
+   원 모양을 유지하며 .proj-viz__map 칸(국내 탭 지도 .pmap과 같은 칸)
+   보다 작게 묶고, 그 칸 정가운데에 둡니다 — 지도(.pmap)는 칸 전체
+   폭을 꽉 채우니, 지구본도 그 칸의 중앙에 와야 같은 자리로 보입니다. */
 .globe { margin-bottom: var(--sp-5); }
 .globe__stage {
   position: relative; width: 100%; aspect-ratio: 1 / 1;
-  max-width: 560px; margin: 0 0 0 auto;
+  max-width: 560px; margin: 0 auto;
   cursor: grab; touch-action: pan-y;
 }
 .globe__stage.is-dragging { cursor: grabbing; }
@@ -639,16 +636,8 @@
 .globe__tip span { color: var(--c-blue-soft); }
 
 .globe__hint {
-  text-align: right; margin-top: var(--sp-2);
+  text-align: center; margin-top: var(--sp-2);
   font-size: var(--fs-xs); color: var(--c-muted); letter-spacing: .02em;
-}
-/* 900px 이하는 .about-grid--map 이 1단으로 접혀 왼쪽 목록 밑에 지구본이
-   오므로, 오른쪽으로 붙일 이유가 없습니다 — 다시 가운데로 둡니다.
-   (같은 특이도의 .globe__stage/.globe__hint 기본 규칙보다 뒤에 있어야
-   이깁니다 — CSS는 특이도가 같으면 나중에 나온 규칙이 이깁니다.) */
-@media (max-width: 900px) {
-  .globe__stage { margin: 0 auto; }
-  .globe__hint { text-align: center; }
 }
 
 /* ---------- 실적 요약 숫자 ----------
