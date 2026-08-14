@@ -672,10 +672,8 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- 지역별 실적 순위 ----------
-   프로젝트 섹션이 2단(왼쪽 목록)에서 전체 폭 1단으로 바뀌면서, 막대가
-   가로로 너무 길게 늘어나 보이지 않도록 읽기 좋은 폭으로 묶어 둡니다. */
-.regions { display: grid; gap: 10px; max-width: 640px; }
+/* ---------- 지역별 실적 순위 ---------- */
+.regions { display: grid; gap: 10px; align-content: start; }
 .regions li {
   display: grid; grid-template-columns: 8.5rem 1fr 3rem; gap: var(--sp-2);
   align-items: center; font-size: var(--fs-small);
@@ -810,11 +808,19 @@
 .proj-tab:hover { border-color: var(--c-blue-soft); color: var(--c-blue); }
 .proj-tab.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 
+/* ---------- 지도(지구본)와 지역 순위 — 좌우 배치 ---------- */
+.proj-viz {
+  display: grid; gap: var(--sp-5);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .proj-viz { grid-template-columns: 1fr; }
+}
+
 /* ---------- 국내 지도 (MapLibre 실제 지도 타일) ----------
-   assets/js/projectmap.js 가 그립니다. 예전 SVG(kmap.js)와 달리 원을
-   지도 레이어로 그려서 폭 제한 없이 오른쪽 칸(9fr)을 그대로 채웁니다
-   — .globe__stage 처럼 max-width로 묶어 오른쪽 정렬을 따로 챙길
-   필요가 없습니다(900px 이하에서 가운데로 되돌리는 규칙도 불필요). */
+   assets/js/projectmap.js 가 그립니다. .proj-viz 왼쪽 칸 폭을 그대로
+   채우므로 max-width로 묶을 필요가 없습니다. */
 .pmap {
   position: relative; width: 100%; height: min(65vh, 560px); min-height: 380px;
   border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--c-line);
