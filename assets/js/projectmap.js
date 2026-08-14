@@ -483,6 +483,21 @@ window.SEN = window.SEN || {};
       if (window.ResizeObserver && els.wrap) {
         new ResizeObserver(function () { map.resize(); }).observe(els.wrap);
       }
+
+      /* 확대·축소를 한 상태에서 스크롤로 이 칸이 화면 밖으로 나갔다가
+         다시 들어오면, 칸 크기는 그대로인데도(=위 ResizeObserver는 반응
+         안 함) 캔버스가 그린 내용 일부가 지워진 채로 남아 남는 자리에
+         배경(진한 남색)이 비쳐 보이는 경우가 있었습니다 — WebGL 캔버스가
+         화면 밖으로 나가면 그리기 버퍼를 브라우저가 정리해 버릴 수 있는
+         흔한 문제입니다. 다시 화면에 들어올 때마다 강제로 다시 그리게
+         합니다. */
+      if (window.IntersectionObserver && els.wrap) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { map.resize(); map.triggerRepaint(); }
+          });
+        }, { threshold: 0.01 }).observe(els.wrap);
+      }
     }).catch(function (err) {
       console.warn('[SEN] 프로젝트 지도를 불러오지 못했습니다:', err && err.message);
       if (els.wrap) els.wrap.classList.add('is-unavailable');
