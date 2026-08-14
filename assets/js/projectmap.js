@@ -52,7 +52,6 @@ window.SEN = window.SEN || {};
   var map = null, kgeo, kmapData, munis, popup = null;
   var elBack, elLegendMax;
   var started = false;
-  var mobileMap = false;
   var pointCount = null;   // project_points.json 의 count. 탭을 오가도 다시 안 지워지도록 캐시해 둡니다.
 
   function applyPointCount() {
@@ -272,19 +271,17 @@ window.SEN = window.SEN || {};
     map.resize();
     map.fitBounds(HOME_BOUNDS, { padding: 24, duration: 0 });
 
-    /* 모바일: 처음 보여지는(전국) 배율에서는 드래그 이동을 막아 두고,
-       사용자가 확대하면(핀치/더블탭 — 둘 다 zoom 이벤트를 냄) 그때부터
-       이동을 풀어 줍니다. 다시 처음 배율까지 축소하면 도로 막습니다. */
-    if (mobileMap) {
-      var homeZoom = map.getZoom();
-      var zoomThreshold = homeZoom + 0.3;
-      var syncDragPan = function () {
-        var zoomedIn = map.getZoom() > zoomThreshold;
-        if (zoomedIn && !map.dragPan.isEnabled()) map.dragPan.enable();
-        else if (!zoomedIn && map.dragPan.isEnabled()) map.dragPan.disable();
-      };
-      map.on('zoom', syncDragPan);
-    }
+    /* PC·모바일 공통: 처음 보여지는(전국) 배율에서는 드래그 이동을 막아
+       두고, 사용자가 확대하면(휠/핀치/더블탭 — 다 zoom 이벤트를 냄) 그때
+       부터 이동을 풀어 줍니다. 다시 처음 배율까지 축소하면 도로 막습니다. */
+    var homeZoom = map.getZoom();
+    var zoomThreshold = homeZoom + 0.3;
+    var syncDragPan = function () {
+      var zoomedIn = map.getZoom() > zoomThreshold;
+      if (zoomedIn && !map.dragPan.isEnabled()) map.dragPan.enable();
+      else if (!zoomedIn && map.dragPan.isEnabled()) map.dragPan.disable();
+    };
+    map.on('zoom', syncDragPan);
   }
 
   function precLabel(p) {
@@ -459,18 +456,18 @@ window.SEN = window.SEN || {};
       }) };
       var regionFC = buildRegions(bucket);
 
-      /* 모바일은 화면이 좁아 손가락으로 지도를 끌면(드래그) 페이지
-         스크롤과 자꾸 부딪힙니다. 처음 보여지는 범위(HOME_BOUNDS, 전국)에서는
-         드래그 이동을 막고 확대(핀치/더블탭)만 되게 하되, 사용자가 실제로
-         확대하면(build()에서 줌 이벤트로 감시) 그때부터는 이동을 풀어 줍니다.
-         확대해도 maxBounds로 그 전국 범위 밖으로는 못 나가게 묶어 둡니다. */
-      mobileMap = !!(window.matchMedia && matchMedia('(max-width: 760px)').matches);
+      /* 처음 보여지는 범위(HOME_BOUNDS, 전국)에서는 드래그 이동을 막고
+         확대(휠/핀치/더블탭)만 되게 하되, 실제로 확대하면(build()에서
+         줌 이벤트로 감시) 그때부터는 이동을 풀어 줍니다. 확대해도
+         maxBounds로 그 전국 범위 밖으로는 못 나가게 묶어 둡니다.
+         PC·모바일 공통입니다 — 마우스 드래그도 페이지 스크롤과는
+         상관없지만, 처음부터 굳이 끌 수 있게 둘 이유가 없어 똑같이 막습니다. */
       map = new window.maplibregl.Map({
         container: els.canvas, style: styleSpec(),
         center: [129.5, 37.5], zoom: 5.2,
         minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true,
-        dragPan: !mobileMap,
-        maxBounds: mobileMap ? HOME_BOUNDS : null
+        dragPan: false,
+        maxBounds: HOME_BOUNDS
       });
       map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.on('load', function () { build(cnt, exactFC, areaFC, regionFC); });
