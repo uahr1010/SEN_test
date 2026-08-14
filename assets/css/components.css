@@ -120,11 +120,10 @@
   .ceo__body-summary:hover { color: var(--c-blue); }
   .ceo__body[open] .ceo__body-summary { padding-bottom: 10px; }
 }
-@media (min-width: 761px) {
-  /* PC는 항상 펼침 — <details>가 닫혀 있어도 본문은 그대로 보이도록
-     브라우저 기본(닫힘 시 summary 밖 내용을 display:none)을 덮어씁니다. */
-  .ceo__body:not([open]) > .prose { display: block; }
-}
+/* PC에서 항상 펼쳐 두는 건 CSS가 아니라 main.js의 syncCeoBody() 가
+   <details> 의 open 속성을 실제로 켜서 처리합니다 — display 를 강제로
+   덮어쓰는 방식은 최신 크롬이 닫힌 <details> 내용을 content-visibility
+   로 숨겨서(display 가 아니라) author CSS로 못 뚫는 경우가 있었습니다. */
 
 /* ---------- 접이식 묶음 (.acc) ----------
    CEO 약력(약력·자격·수상·저서)과 회사연혁(연대별)이 같은 모양을 씁니다.
