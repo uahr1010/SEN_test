@@ -19,6 +19,8 @@
      차지하던 만큼만 선이 짧아집니다. 단, 가장 마지막(최근) 연대는
      접혀 있어도 그 연대의 마지막(=가장 최신) 항목 하나는 계속 보여
      줍니다 — 접자마자 최신 소식까지 안 보이면 허전해서입니다.
+     동그라미를 눌러도 화면(스크롤 위치)은 그대로입니다 — 자동으로
+     어디론가 이동하지 않습니다.
 
    ▸ 기본 펼침 상태
      PC는 모든 연대가 펼쳐진 채로 시작합니다. 좁은 화면(760px 이하)은
@@ -161,21 +163,10 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /** 연대를 여닫습니다. 펼칠 때는 새로 드러난 구간까지 부드럽게 스크롤합니다. */
+  /** 연대를 여닫습니다. 화면(스크롤 위치)은 건드리지 않고 내용만 바뀝니다. */
   function toggleEra(label) {
-    var wasOpen = !!open[label];
-    open[label] = !wasOpen;
+    open[label] = !open[label];
     draw();
-    if (!wasOpen) {
-      pan.taken = true;
-      cancelAnimationFrame(pan.raf);
-      requestAnimationFrame(function () {
-        var max = elTl.scrollWidth - elTl.clientWidth;
-        if (max <= 0) return;
-        if (reduceMotion()) { elTl.scrollLeft = max; return; }
-        elTl.scrollTo({ left: max, behavior: 'smooth' });
-      });
-    }
   }
 
   /* ---------- 자동 훑기 ----------
