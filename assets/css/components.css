@@ -817,6 +817,11 @@
 }
 .pmap.is-unavailable { display: none; }
 .pmap.is-unavailable ~ .pmap__legend { display: none; }
+/* 모바일은 지도가 크면 스크롤할 때마다 지도 위에서 손가락이 걸려
+   (지도가 터치를 가로채) 페이지를 내리기 불편합니다 — 최대한 작게. */
+@media (max-width: 760px) {
+  .pmap { height: 280px; min-height: 280px; }
+}
 .pmap__canvas { position: absolute; inset: 0; }
 .pmap__back {
   position: absolute; left: 12px; top: 12px; z-index: 2;
