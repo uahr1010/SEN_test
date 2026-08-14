@@ -26,16 +26,17 @@ window.SEN = window.SEN || {};
   /* ---------- 지원하기 팝업 ----------
      실제 메일 발송은 서버 없이는 할 수 없어서(공개 저장소에 발송 자격증명을
      둘 수 없음), "지원하기" 를 누르면 이 팝업이 받는사람·공고명을 먼저
-     보여주고, 팝업 안의 "메일 보내기" 는 평범한 mailto: 링크입니다 —
-     클릭하면 사용자 자신의 메일 앱이 열립니다. */
+     보여주고, 팝업 안의 "메일 보내기" 가 실제 메일 작성 화면을 엽니다.
+     PC는 기본 메일 앱이 아예 없는 경우가 흔해서(Windows) mailto: 를
+     눌러도 아무 반응이 없는 문제가 있었습니다 — PC는 Gmail 웹 작성
+     화면을 새 탭으로 열고, 모바일은(기기에 메일 앱이 있는 게 보통이라)
+     그대로 mailto: 를 씁니다. */
   function initApplyModal() {
     var modal = document.querySelector('[data-apply-modal]');
     if (!modal) return;
 
-    /* PC에 기본 메일 앱이 없으면(윈도우에 흔함) mailto: 버튼을 눌러도
-       아무 일도 안 일어나 "메일 눌렀는데 안 뜬다"가 됩니다. 같은 받는사람
-       /제목/본문으로 Gmail 웹 작성 화면을 새 탭에서 바로 여는 링크를
-       하나 더 둬서, 메일 앱이 없어도 확실히 뭔가는 열리게 합니다. */
+    function isMobile() { return !!(window.matchMedia && matchMedia('(max-width: 760px)').matches); }
+
     function gmailComposeURL(email, subject, body) {
       if (!email) return '#';
       var q = ['view=cm', 'fs=1', 'to=' + encodeURIComponent(email)];
@@ -48,13 +49,20 @@ window.SEN = window.SEN || {};
       var email = btn.getAttribute('data-apply-email') || '';
       modal.querySelector('[data-apply-job]').textContent = btn.getAttribute('data-apply-title') || '';
       modal.querySelector('[data-apply-to]').textContent = email;
-      modal.querySelector('[data-apply-send]').setAttribute('href', btn.getAttribute('data-apply-mailto') || '#');
-      var gmailA = modal.querySelector('[data-apply-gmail]');
-      if (gmailA) {
-        gmailA.setAttribute('href', gmailComposeURL(
+
+      var sendA = modal.querySelector('[data-apply-send]');
+      if (isMobile()) {
+        sendA.setAttribute('href', btn.getAttribute('data-apply-mailto') || '#');
+        sendA.removeAttribute('target');
+        sendA.removeAttribute('rel');
+      } else {
+        sendA.setAttribute('href', gmailComposeURL(
           email, btn.getAttribute('data-apply-subject') || '', btn.getAttribute('data-apply-body') || ''
         ));
+        sendA.setAttribute('target', '_blank');
+        sendA.setAttribute('rel', 'noopener');
       }
+
       modal.hidden = false;
       document.body.classList.add('is-locked');
     }

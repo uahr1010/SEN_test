@@ -350,8 +350,11 @@
 <!-- ============ 지원하기 팝업 ============
      "지원하기" 버튼(위 careers.jobs 카드)을 누르면 뜹니다. 실제 메일 발송은
      서버 없이는 할 수 없어서(공개 저장소에 발송 자격증명을 둘 수 없음),
-     사용자 본인의 메일 앱을 mailto: 링크로 열어 주는 방식입니다 —
-     이 팝업은 그 전에 받는사람·공고명을 한 번 보여주는 확인 단계입니다. -->
+     "메일 보내기" 버튼이 메일을 대신 열어 줍니다 — PC는 기본 메일 앱이
+     없는 경우가 흔해(윈도우) Gmail 웹 작성 화면을 새 탭으로 열고, 모바일은
+     mailto: 로 기기의 메일 앱을 엽니다(js/controls.js가 화면 폭으로
+     판단). 이 팝업은 그 전에 받는사람·공고명을 한 번 보여주는 확인
+     단계입니다. -->
 <div class="apply-modal" data-apply-modal hidden>
   <div class="apply-modal__backdrop" data-apply-close></div>
   <div class="apply-modal__panel" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
@@ -364,12 +367,8 @@
     </p>
     <p class="apply-modal__hint" data-bind="site.ui.sendMail">클릭하면 메일 작성 창이 열립니다</p>
     <a class="btn btn--primary apply-modal__send" data-apply-send href="#" data-bind="site.ui.applySend">메일 보내기</a>
-    <!-- PC에 기본 메일 앱이 설정돼 있지 않으면 위 mailto: 버튼은 눌러도
-         아무 반응이 없습니다(브라우저가 열어 줄 프로그램이 없음). 그런
-         경우를 위해 브라우저에서 바로 Gmail 작성 화면을 여는 대안입니다. -->
-    <a class="btn btn--ghost apply-modal__gmail" data-apply-gmail href="#" target="_blank" rel="noopener" data-bind="site.ui.applyGmail">Gmail로 작성하기</a>
     <p class="apply-modal__fallback" data-bind="site.ui.applyFallback">
-      메일 앱이 안 열리면 위 주소를 복사해 직접 보내거나, Gmail로 작성해 주세요.
+      메일 앱이 안 열리면 위 주소를 복사해 직접 보내주세요.
     </p>
   </div>
 </div>
