@@ -90,7 +90,7 @@ content:
     type: collection
     path: content/news
     format: json
-    filename: "{fields.id}"
+    filename: "{fields.id}.json"
     view:
       fields: [date, category, title]
       default:
