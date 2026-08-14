@@ -142,9 +142,9 @@
         <h2 class="scene__title" data-bind="about.history.heading"></h2>
         <p class="scene__lead" data-bind="about.history.lead"></p>
       </header>
-      <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고, 연대 이름
-           (.tml__band, timeline.js가 그려 넣음)은 누를 수 없는 구간
-           라벨일 뿐이며 모든 항목이 처음부터 다 표시됩니다.
+      <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고, 연대 경계마다
+           세로 구분선(.tml__decade, timeline.js가 그려 넣음)만 놓입니다
+           (글자·개수 없음). 모든 항목이 처음부터 다 표시됩니다.
            내용은 assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
       <div class="tml" data-timeline data-reveal>
         <!-- 좁은 화면 전용 접기/펼치기 버튼 — CSS가 PC에서는 숨깁니다.

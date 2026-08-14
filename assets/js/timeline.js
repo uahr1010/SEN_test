@@ -5,9 +5,9 @@
    고르거나 접고 펼치는 버튼은 없고, 모든 항목이 처음부터 다 보입니다.
 
      · 창립(1973)은 맨 왼쪽에 고정.
-     · 1990 / 2000 / 2010 / 2020년대는 선 위에 연대 이름(.tml__band)이
-       구간을 나누는 라벨로만 붙어 있습니다 — 누를 수 없는 장식용
-       표시입니다. 그 뒤로 그 연대의 항목들이 전부 이어붙습니다.
+     · 1990 / 2000 / 2010 / 2020년대 경계마다 축을 가로지르는 세로선
+       (.tml__decade)만 놓입니다 — 글자·개수 없는 장식용 구분자입니다.
+       그 뒤로 그 연대의 항목들이 전부 이어붙습니다.
      · 선을 좌우로 끌어(드래그) 볼 수 있습니다.
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
@@ -61,7 +61,7 @@ window.SEN = window.SEN || {};
   function draw() {
     if (!history) return;
 
-    [].slice.call(elTrack.querySelectorAll('.tml__node, .tml__band'))
+    [].slice.call(elTrack.querySelectorAll('.tml__node, .tml__decade'))
       .forEach(function (n) { n.remove(); });
 
     var GAP  = cssPx('--tml-gap');
@@ -90,15 +90,11 @@ window.SEN = window.SEN || {};
     (history.pinned || []).forEach(function (it) { addNode(it, 'tml__node--origin'); });
 
     (history.groups || []).forEach(function (g) {
-      var label = t(g.label);
-      var count = (g.items || []).length;
-
       x += ERA;
-      var band = document.createElement('span');
-      band.className = 'tml__band';
-      band.style.left = (x - GAP * 0.5) + 'px';
-      band.innerHTML = esc(label) + ' <span class="tml__band-n">' + count + '</span>';
-      frag.appendChild(band);
+      var decade = document.createElement('span');
+      decade.className = 'tml__decade';
+      decade.style.left = (x - GAP * 0.5) + 'px';
+      frag.appendChild(decade);
 
       (g.items || []).forEach(function (it) { addNode(it, null); });
     });
@@ -120,7 +116,7 @@ window.SEN = window.SEN || {};
       [].slice.call(elTrack.querySelectorAll('.tml__node')).forEach(function (n, k) {
         setTimeout(function () { n.classList.add('is-on'); }, k * 45);
       });
-      [].slice.call(elTrack.querySelectorAll('.tml__band')).forEach(function (n) {
+      [].slice.call(elTrack.querySelectorAll('.tml__decade')).forEach(function (n) {
         n.classList.add('is-on');
       });
       elWalker.classList.add('is-on');
