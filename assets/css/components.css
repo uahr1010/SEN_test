@@ -212,13 +212,17 @@
 .tml__node--origin .tml__when { font-size: 1.5rem; font-weight: 900; color: var(--c-ink); letter-spacing: -.02em; }
 .tml__node--origin .tml__title { font-size: 1rem; }
 
-/* 10년 단위 구분 — 연대 글자(예: "1990년대")를 트랙 맨 위쪽에 두고
-   그 아래로 축까지 가느다란 세로선을 이어, 위로 뻗는 항목 글과
-   겹치지 않게 합니다. 누를 수 없는 장식용 표시이고 개수는 안 씁니다. */
+/* 10년 단위 구분 겸 여닫기 버튼 — 연대 글자(예: "1990년대")를 트랙
+   맨 위쪽에 두고(위로 뻗는 항목 글과 안 겹치도록), 그 아래로 축까지
+   가느다란 세로선을 이어, 축 위에서 크고 진한 동그라미로 끝맺습니다.
+   이 동그라미(전체 버튼)를 누르면 그 연대를 접고 폅니다 — 펼치면
+   동그라미가 파랗게 채워집니다. 개수는 표시하지 않습니다. */
 .tml__decade {
   position: absolute; top: 6px;
+  transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center;
-  pointer-events: none;
+  background: none; border: none; padding: 0; margin: 0; font: inherit;
+  cursor: pointer;
   opacity: 0; transition: opacity .45s ease;
 }
 .tml__decade.is-on { opacity: 1; }
@@ -227,6 +231,15 @@
   color: var(--c-muted); white-space: nowrap;
 }
 .tml__decade-line { width: 1px; background: var(--c-line); margin-top: 8px; }
+.tml__decade-dot {
+  width: 22px; height: 22px; margin-top: -11px;
+  border-radius: 50%; border: 3px solid var(--c-blue); background: var(--c-white);
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.tml__decade:hover .tml__decade-dot { box-shadow: 0 0 0 4px rgba(0, 113, 227, .12); }
+.tml__decade[aria-expanded="true"] .tml__decade-dot {
+  background: var(--c-blue); box-shadow: 0 0 0 5px rgba(0, 113, 227, .16);
+}
 
 /* 앞서가는 사람 — 움직이지 않습니다. 마지막 항목보다 조금 앞에 서 있을 뿐이고,
    "여기서 계속 나아가는 중"이라는 인상만 줍니다. */

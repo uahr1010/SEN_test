@@ -143,18 +143,18 @@
         <p class="scene__lead" data-bind="about.history.lead"></p>
       </header>
       <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고, 연대 경계마다
-           연대 글자+세로 구분선(.tml__decade, timeline.js가 그려 넣음)이
-           트랙 맨 위쪽에 놓입니다(개수는 없음). 모든 항목이 처음부터
-           다 표시됩니다. 내용은 assets/js/timeline.js 가 about.json 의
-           history 로 그립니다. -->
+           연대 글자+크고 진한 동그라미(.tml__decade, timeline.js가
+           그려 넣음)가 트랙 맨 위쪽에 놓입니다(개수는 없음). 이
+           동그라미를 누르면 그 연대를 접고 폅니다 — PC는 전부 펼친
+           채로, 좁은 화면은 전부 접은 채로 시작합니다. 내용은
+           assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
       <div class="tml" data-timeline data-reveal>
-        <p class="tml__hint" data-bind="site.ui.timelineHint">선을 좌우로 끌어 보세요</p>
+        <p class="tml__hint" data-bind="site.ui.timelineHint">동그라미를 눌러 펼치고, 선을 좌우로 끌어 보세요</p>
       </div>
     </div>
 
     <!-- 스크롤 칸은 .scene__inner 밖에 둡니다 — 폭 제한을 받지 않고
-         화면 양 끝까지 써야 선이 길게 뻗어 보입니다. PC·모바일 모두
-         항상 펼쳐져 있습니다(접기/펼치기 없음). -->
+         화면 양 끝까지 써야 선이 길게 뻗어 보입니다. -->
     <div class="tml-stage" data-tml-stage>
       <div class="tml__scroll" data-tml-scroll>
         <div class="tml__track" data-tml-track>

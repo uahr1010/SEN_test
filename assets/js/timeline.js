@@ -1,22 +1,27 @@
 /* ==========================================================================
    timeline.js — 회사연혁 가로 타임라인
 
-   하나의 수평선 위에 연혁을 왼쪽에서 오른쪽으로 늘어놓습니다. 연도를
-   고르거나 접고 펼치는 버튼은 없고, 모든 항목이 처음부터 다 보입니다.
+   하나의 수평선 위에 연혁을 왼쪽에서 오른쪽으로 늘어놓습니다.
 
      · 창립(1973)은 맨 왼쪽에 고정.
      · 1990 / 2000 / 2010 / 2020년대 경계마다 연대 글자(예: "1990년대")와
-       그 아래로 축까지 이어지는 세로선(.tml__decade)이 놓입니다. 글자는
-       위로 뻗는 항목 글과 안 겹치도록 트랙 맨 위쪽에 두고, 개수는
-       표시하지 않습니다. 그 뒤로 그 연대의 항목들이 전부 이어붙습니다.
+       크고 진한 동그라미(.tml__decade)가 트랙 맨 위쪽에 놓입니다. 이
+       동그라미를 누르면 그 연대의 항목들을 접고 펼 수 있습니다(펼치면
+       동그라미가 파랗게 채워집니다). 개수는 표시하지 않습니다.
      · 선을 좌우로 끌어(드래그) 볼 수 있습니다.
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
 
+   ▸ 기본 펼침 상태
+     PC는 모든 연대가 펼쳐진 채로 시작합니다(예전과 동일). 좁은 화면
+     (760px 이하)은 전부 접힌 채로 시작하고, 화면에 들어오면 맨 오른쪽
+     (가장 최근 연대의 동그라미)만 보이도록 스크롤을 오른쪽 끝까지
+     옮깁니다 — 접힌 상태라 내용이 짧아 스크롤할 게 없을 수 있어서,
+     그만큼의 여백을 앞에 미리 넣어 둡니다.
+
    ▸ 자동 훑기
-     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 맨 끝까지
-     미끄러진 뒤 멈춥니다. PC·모바일 모두 항상 펼쳐져 있어(접기/펼치기
-     없음) 이 동작도 공통입니다.
+     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 지금 펼쳐진
+     범위의 끝까지 미끄러진 뒤 멈춥니다.
 
    ▸ 데이터
      content/about.json 의 history 는 main.js 가 이미 받아 왔습니다.
@@ -33,12 +38,15 @@ window.SEN = window.SEN || {};
   var SWEEP_MIN = 900;     // 훑는 데 걸리는 최소 시간(ms)
   var SWEEP_MAX = 2200;    // 최대 시간. 전부 펼쳐도 이 안에 도착합니다
   var DECADE_TOP    = 6;   // 연대 글자가 시작하는 위치 (트랙 맨 위 쪽 — 위로 뻗는 항목 글과 안 겹치도록)
-  var DECADE_LABEL_H = 24; // 연대 글자 한 줄이 차지하는 대략의 높이(줄 높이+여백)
+  var DECADE_LABEL_H = 20; // 연대 글자 한 줄이 차지하는 대략의 높이
+  var DECADE_GAP     = 8;  // 글자와 세로선 사이 간격 (CSS .tml__decade-line 의 margin-top 과 같은 값)
+  var NARROW_LEAD = 1.2;   // 좁은 화면에서 접힌 채 시작할 때, 맨 앞에 화면 너비의 이만큼을 여백으로 둬서 오른쪽 끝만 보이게 함
   /* ================================================================== */
 
   var t, esc;
   var elRoot, elTl, elTrack, elAxis, elArrow, elWalker;
   var history = null;
+  var open = {};
   var pan = { raf: 0, taken: false };
   var started = false;
 
@@ -50,6 +58,9 @@ window.SEN = window.SEN || {};
   }
   function reduceMotion() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function isNarrow() {
+    return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
   }
 
   /* ---------- 그리기 ---------- */
@@ -63,9 +74,20 @@ window.SEN = window.SEN || {};
     var ERA   = cssPx('--tml-era-gap');
     var TAIL  = cssPx('--tml-tail');
     var AXISY = cssPx('--tml-axis-y');
-    var DECADE_LINE_H = Math.max(0, AXISY + 34 - DECADE_TOP - DECADE_LABEL_H);
+    /* 동그라미는 음수 margin-top으로 세로선 끝에 겹쳐 중심을 맞추므로
+       (자기 지름은 서로 상쇄되어) 계산에 지름 값 자체는 필요 없습니다 —
+       라벨 높이 + 간격 + 이 세로선 길이 = 축까지의 거리만 맞추면 됩니다. */
+    var DECADE_LINE_H = Math.max(0, AXISY - DECADE_TOP - DECADE_LABEL_H - DECADE_GAP);
 
-    var x = PAD_LEFT, i = 0;
+    var narrow = isNarrow();
+    var lead = narrow ? Math.round(elTl.clientWidth * NARROW_LEAD) : 0;
+    /* 좁은 화면은 연대를 접었을 때 동그라미끼리 서로 다닥다닥 붙어(연대
+       사이가 --tml-era-gap 뿐이라) 화면 하나에 여러 개가 한꺼번에 보였습니다.
+       "펼치기 전엔 맨 오른쪽 동그라미 하나만 보이게" 하려면 접힌 연대끼리는
+       한 화면 폭만큼 떨어뜨려야 합니다. */
+    var narrowEraExtra = narrow ? Math.round(elTl.clientWidth * 0.8) : 0;
+
+    var x = PAD_LEFT + lead, i = 0;
     var frag = document.createDocumentFragment();
 
     function addNode(it, extra) {
@@ -87,16 +109,25 @@ window.SEN = window.SEN || {};
     (history.pinned || []).forEach(function (it) { addNode(it, 'tml__node--origin'); });
 
     (history.groups || []).forEach(function (g) {
+      var label = t(g.label);
+
       x += ERA;
-      var decade = document.createElement('div');
+      if (narrow && !open[label]) x += narrowEraExtra;
+      var decade = document.createElement('button');
+      decade.type = 'button';
       decade.className = 'tml__decade';
       decade.style.left = (x - GAP * 0.5) + 'px';
+      decade.setAttribute('aria-expanded', open[label] ? 'true' : 'false');
       decade.innerHTML =
-        '<span class="tml__decade-label">' + esc(t(g.label)) + '</span>' +
-        '<span class="tml__decade-line" style="height:' + DECADE_LINE_H + 'px"></span>';
+        '<span class="tml__decade-label">' + esc(label) + '</span>' +
+        '<span class="tml__decade-line" style="height:' + DECADE_LINE_H + 'px"></span>' +
+        '<span class="tml__decade-dot"></span>';
+      decade.addEventListener('click', function () { toggleEra(label); });
       frag.appendChild(decade);
 
-      (g.items || []).forEach(function (it) { addNode(it, null); });
+      if (open[label]) {
+        (g.items || []).forEach(function (it) { addNode(it, null); });
+      }
     });
 
     elTrack.appendChild(frag);
@@ -123,6 +154,23 @@ window.SEN = window.SEN || {};
     });
   }
 
+  /** 연대를 여닫습니다. 펼칠 때는 새로 드러난 구간까지 부드럽게 스크롤합니다. */
+  function toggleEra(label) {
+    var wasOpen = !!open[label];
+    open[label] = !wasOpen;
+    draw();
+    if (!wasOpen) {
+      pan.taken = true;
+      cancelAnimationFrame(pan.raf);
+      requestAnimationFrame(function () {
+        var max = elTl.scrollWidth - elTl.clientWidth;
+        if (max <= 0) return;
+        if (reduceMotion()) { elTl.scrollLeft = max; return; }
+        elTl.scrollTo({ left: max, behavior: 'smooth' });
+      });
+    }
+  }
+
   /* ---------- 자동 훑기 ----------
      1973 에서 멈췄다가 가속 → 감속하며 지금 펼쳐진 범위의 끝까지 미끄러집니다.
      scroll 이벤트로 위치를 재지 않고 우리가 쓰기만 하므로 스크롤이 끊기지 않습니다. */
@@ -135,7 +183,7 @@ window.SEN = window.SEN || {};
     pan.taken = false;
 
     if (reduceMotion()) {
-      elTl.scrollLeft = 0;
+      elTl.scrollLeft = elTl.scrollWidth - elTl.clientWidth;
       return;
     }
 
@@ -233,6 +281,12 @@ window.SEN = window.SEN || {};
     elArrow  = elRoot.querySelector('[data-tml-arrow]');
     elWalker = elRoot.querySelector('[data-tml-walker]');
     if (!elTl || !elTrack) return;
+
+    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다. */
+    var startOpen = !isNarrow();
+    (history.groups || []).forEach(function (g) {
+      open[t(g.label)] = startOpen;
+    });
 
     draw();
     initDrag();
