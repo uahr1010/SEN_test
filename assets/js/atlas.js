@@ -32,7 +32,6 @@ window.SEN = window.SEN || {};
     buildProgress();
     initNav();
     initLang();
-    initLogo();
 
     /* 표지(.cover)가 있는 페이지(index.html)에서만 헤더를 표지 뒤에
        숨겨 뒀다가, 본문(main)이 화면을 덮기 시작하는 지점부터 보여줍니다.
@@ -57,21 +56,6 @@ window.SEN = window.SEN || {};
     scrollTo({
       top: el.getBoundingClientRect().top + scrollY - headerH(),
       behavior: reduce ? 'auto' : 'smooth'
-    });
-  }
-
-  /* ---------- 좌상단 로고 ----------
-     href="#top" 은 원래 <main id="top"> 을 가리켰지만, 표지(.cover)가
-     main 앞에 추가되면서 main 이 화면 한 장(100vh) 아래에서 시작하게
-     됐습니다. 그대로 두면 로고를 눌러도 표지가 아니라 그 아래(회사소개
-     시작 지점)로 이동해 버려서, 페이지 맨 위(표지)로 직접 스크롤하도록
-     가로챕니다. */
-  function initLogo() {
-    var logo = document.querySelector('.topbar__logo[href="#top"]');
-    if (!logo) return;
-    logo.addEventListener('click', function (e) {
-      e.preventDefault();
-      scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     });
   }
 
