@@ -295,12 +295,14 @@
 .brochure { flex: 0 0 auto; }
 .brochure__btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .brochure__btn {
+  display: inline-flex; align-items: center; gap: 6px;
   font-size: var(--fs-small); font-weight: 700; color: var(--c-ink);
   border: 1px solid var(--c-line); border-radius: 999px;
   padding: 8px 16px; background: var(--c-white);
   transition: border-color .2s, color .2s, background .2s;
 }
 .brochure__btn:hover { border-color: var(--c-blue); color: var(--c-blue); background: var(--c-tint); }
+.brochure__btn-ico { flex: none; width: 13px; height: 13px; opacity: .75; }
 
 .methods { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 /* 좁은 화면에서는 카드를 세로로 쌓지 않고 옆으로 드래그해서 보는
