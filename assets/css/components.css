@@ -97,6 +97,31 @@
 .ceo__role { font-size: var(--fs-small); color: var(--c-muted); }
 .ceo__name { font-size: 1.15rem; }
 
+/* 좁은 화면에서 CEO 인사말 본문을 접어 둡니다(인용구·사진·서명은 그대로
+   보임). "더 보기"를 눌러야 전체 글이 펼쳐집니다 — PC는 이 규칙 밖이라
+   항상 전체가 보입니다. */
+.ceo__more { display: none; }
+@media (max-width: 760px) {
+  .ceo__body { position: relative; max-height: 220px; overflow: hidden; }
+  .ceo__body::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 64px;
+    background: linear-gradient(180deg, transparent, var(--c-white) 82%);
+    pointer-events: none;
+  }
+  .ceo__body.is-open { max-height: none; }
+  .ceo__body.is-open::after { display: none; }
+
+  .ceo__more {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; margin-top: 14px; padding: 12px 16px;
+    border: 1px solid var(--c-line); border-radius: 12px; background: var(--c-white);
+    font: inherit; font-size: var(--fs-small); font-weight: 700; color: var(--c-ink);
+    cursor: pointer; position: relative; z-index: 1;
+  }
+  .ceo__more-arrow { transition: transform .25s ease; }
+  .ceo__more[aria-expanded="true"] .ceo__more-arrow { transform: rotate(180deg); }
+}
+
 /* ---------- 접이식 묶음 (.acc) ----------
    CEO 약력(약력·자격·수상·저서)과 회사연혁(연대별)이 같은 모양을 씁니다.
    여닫이 표시는 닫힘 +, 열림 −. */

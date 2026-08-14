@@ -127,7 +127,17 @@
               <strong class="ceo__name" data-bind="about.ceo.name"></strong>
             </p>
           </div>
-          <div class="prose" data-prose="about.ceo.body"></div>
+          <div class="ceo__body" data-ceo-body>
+            <div class="prose" data-prose="about.ceo.body"></div>
+            <!-- 좁은 화면 전용 "더 보기" 버튼 — CSS가 PC에서는 숨깁니다.
+                 PC는 항상 전체 인사말이 그대로 보입니다. -->
+            <button type="button" class="ceo__more" data-ceo-more aria-expanded="false">
+              <span data-bind="site.ui.ceoMoreLabel">인사말 더 보기</span>
+              <svg class="ceo__more-arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div class="ceo__career acc" data-list="about.ceo.careerGroups" data-reveal></div>
