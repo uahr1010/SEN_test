@@ -9,10 +9,18 @@ JS를 실행하지 않아 실제 표지 화면(사진 크로스페이드 + 텍�
 uploads/main/ 에 새 표지 사진이 커밋될 때마다 GitHub Actions
 (.github/workflows/og-cover.yml)가 이 스크립트를 실행해 다시 만듭니다.
 로컬에서 확인하고 싶을 때도 그냥 실행하면 됩니다: python tools/make_og_cover.py
+
+카카오톡·페이스북은 og:image로 가져간 이미지 자체를 그 URL 기준으로 한동안
+캐시합니다. 파일 내용만 바뀌고 주소가 그대로면 계속 옛날 이미지를 보여주므로,
+이 스크립트가 매번 index.html의 og:image/twitter:image 주소 끝에
+이미지 내용 해시(?v=xxxxxxxx)를 새로 붙여 둡니다 — 내용이 바뀔 때마다
+주소 자체가 달라지니 캐시를 무조건 건너뛰게 됩니다.
 """
+import hashlib
 import io
 import json
 import os
+import re
 import textwrap
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -23,6 +31,7 @@ ROOT = os.path.dirname(HERE)
 MAIN_DIR = os.path.join(ROOT, 'uploads', 'main')
 EXTS = ['png', 'jpg', 'jpeg', 'webp']   # cover.js 와 같은 순서로 찾습니다
 OUT = os.path.join(ROOT, 'assets', 'img', 'og-cover.jpg')
+INDEX_HTML = os.path.join(ROOT, 'index.html')
 
 ANTON = os.path.join(ROOT, 'assets', 'fonts', 'Anton-Regular.ttf')
 NEWSREADER = os.path.join(ROOT, 'assets', 'fonts', 'Newsreader-Light.ttf')
@@ -169,6 +178,33 @@ def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     canvas.convert('RGB').save(OUT, 'JPEG', quality=90)
     print('saved', OUT)
+
+    bump_cache_buster()
+
+
+def bump_cache_buster():
+    """카카오톡·페이스북은 og:image 로 가져간 이미지 자체를 그 URL 기준으로
+    한동안 캐시합니다. 파일 내용이 바뀌어도 URL이 그대로면 계속 옛날
+    이미지를 보여주므로, 이미지 내용의 해시를 ?v= 쿼리로 붙여 매번 새
+    URL이 되도록 합니다."""
+    with io.open(OUT, 'rb') as f:
+        digest = hashlib.sha1(f.read()).hexdigest()[:8]
+
+    with io.open(INDEX_HTML, encoding='utf-8') as f:
+        html = f.read()
+
+    new_html = re.sub(
+        r'(assets/img/og-cover\.jpg)(\?v=[0-9a-f]+)?',
+        r'\g<1>?v=' + digest,
+        html,
+    )
+
+    if new_html != html:
+        with io.open(INDEX_HTML, 'w', encoding='utf-8') as f:
+            f.write(new_html)
+        print('index.html og-cover 캐시 버전을', digest, '로 갱신')
+    else:
+        print('index.html og-cover 캐시 버전 변동 없음 (', digest, ')')
 
 
 if __name__ == '__main__':
