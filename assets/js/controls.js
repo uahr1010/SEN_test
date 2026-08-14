@@ -32,10 +32,29 @@ window.SEN = window.SEN || {};
     var modal = document.querySelector('[data-apply-modal]');
     if (!modal) return;
 
+    /* PC에 기본 메일 앱이 없으면(윈도우에 흔함) mailto: 버튼을 눌러도
+       아무 일도 안 일어나 "메일 눌렀는데 안 뜬다"가 됩니다. 같은 받는사람
+       /제목/본문으로 Gmail 웹 작성 화면을 새 탭에서 바로 여는 링크를
+       하나 더 둬서, 메일 앱이 없어도 확실히 뭔가는 열리게 합니다. */
+    function gmailComposeURL(email, subject, body) {
+      if (!email) return '#';
+      var q = ['view=cm', 'fs=1', 'to=' + encodeURIComponent(email)];
+      if (subject) q.push('su=' + encodeURIComponent(subject));
+      if (body) q.push('body=' + encodeURIComponent(body));
+      return 'https://mail.google.com/mail/?' + q.join('&');
+    }
+
     function open(btn) {
+      var email = btn.getAttribute('data-apply-email') || '';
       modal.querySelector('[data-apply-job]').textContent = btn.getAttribute('data-apply-title') || '';
-      modal.querySelector('[data-apply-to]').textContent = btn.getAttribute('data-apply-email') || '';
+      modal.querySelector('[data-apply-to]').textContent = email;
       modal.querySelector('[data-apply-send]').setAttribute('href', btn.getAttribute('data-apply-mailto') || '#');
+      var gmailA = modal.querySelector('[data-apply-gmail]');
+      if (gmailA) {
+        gmailA.setAttribute('href', gmailComposeURL(
+          email, btn.getAttribute('data-apply-subject') || '', btn.getAttribute('data-apply-body') || ''
+        ));
+      }
       modal.hidden = false;
       document.body.classList.add('is-locked');
     }

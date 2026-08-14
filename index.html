@@ -364,8 +364,12 @@
     </p>
     <p class="apply-modal__hint" data-bind="site.ui.sendMail">클릭하면 메일 작성 창이 열립니다</p>
     <a class="btn btn--primary apply-modal__send" data-apply-send href="#" data-bind="site.ui.applySend">메일 보내기</a>
+    <!-- PC에 기본 메일 앱이 설정돼 있지 않으면 위 mailto: 버튼은 눌러도
+         아무 반응이 없습니다(브라우저가 열어 줄 프로그램이 없음). 그런
+         경우를 위해 브라우저에서 바로 Gmail 작성 화면을 여는 대안입니다. -->
+    <a class="btn btn--ghost apply-modal__gmail" data-apply-gmail href="#" target="_blank" rel="noopener" data-bind="site.ui.applyGmail">Gmail로 작성하기</a>
     <p class="apply-modal__fallback" data-bind="site.ui.applyFallback">
-      메일 앱이 안 열리면 위 주소를 복사해 직접 보내주세요.
+      메일 앱이 안 열리면 위 주소를 복사해 직접 보내거나, Gmail로 작성해 주세요.
     </p>
   </div>
 </div>

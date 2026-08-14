@@ -280,7 +280,9 @@ window.SEN = window.SEN || {};
               '<button type="button" class="btn btn--primary" data-apply' +
                 ' data-apply-title="' + esc(t(it.title)) + '"' +
                 ' data-apply-email="' + esc(email || '') + '"' +
-                ' data-apply-mailto="' + esc(mailto(email, subject, mailBody)) + '">' +
+                ' data-apply-mailto="' + esc(mailto(email, subject, mailBody)) + '"' +
+                ' data-apply-subject="' + esc(subject) + '"' +
+                ' data-apply-body="' + esc(mailBody) + '">' +
                 '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2.5 5.5h15v9h-15z" stroke="currentColor" stroke-width="1.5"/><path d="m2.5 6 7.5 5 7.5-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>' +
                 esc(applyLabel) + '</button>' +
             '</div></div></div>' +

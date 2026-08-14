@@ -786,6 +786,7 @@
 }
 .apply-modal__hint { font-size: var(--fs-xs); color: var(--c-muted); margin-bottom: var(--sp-3); }
 .apply-modal__send { width: 100%; justify-content: center; }
+.apply-modal__gmail { width: 100%; justify-content: center; margin-top: 8px; }
 .apply-modal__fallback {
   margin-top: var(--sp-2); font-size: var(--fs-xs); color: var(--c-muted); line-height: 1.5;
 }
