@@ -131,10 +131,25 @@ window.SEN = window.SEN || {};
       }
     }
 
-    /* 시 이름만 적힌 경우 */
+    /* 시 이름만 적힌 경우("수원", "용인"처럼 시/군/구 표시 없이 이름만).
+       뒤에 "시"를 붙여 geo.regions 에서 찾아봅니다 — "경기 수원시"처럼
+       시/도가 붙은 정확한 지역으로 잡힙니다. 이 단계 없이 곧장 geo.city
+       로 넘어가면 시/도 정보가 없는 채로("수원"만) 저장되어, 시/도별
+       집계(지역 목록의 "경기"/"기타" 구분 등)에서 그 시/도가 아니라
+       엉뚱하게 따로 떨어진 항목으로 잡히는 문제가 있었습니다. */
     m = a.match(/^([가-힣]{2,4})/);
-    if (m && geo.city[m[1]]) {
-      return { key: m[1], lat: geo.city[m[1]][0], lng: geo.city[m[1]][1], acc: 'city' };
+    if (m) {
+      var withSi = m[1] + '시', hits2 = [];
+      for (key in geo.regions) {
+        if (tail(key) === withSi) hits2.push(key);
+      }
+      if (hits2.length) {
+        hits2.sort(byPriority);
+        return { key: hits2[0], lat: geo.regions[hits2[0]][0], lng: geo.regions[hits2[0]][1], acc: 'exact' };
+      }
+      if (geo.city[m[1]]) {
+        return { key: m[1], lat: geo.city[m[1]][0], lng: geo.city[m[1]][1], acc: 'city' };
+      }
     }
     return { key: null, lat: null, lng: null, acc: 'none' };
   }
