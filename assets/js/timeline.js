@@ -12,16 +12,24 @@
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
 
+   ▸ 접었을 때는 그 구간 자체가 사라집니다 (선 오려내기)
+     연대를 접으면 그 연대의 항목뿐 아니라 동그라미까지 통째로 그려지지
+     않습니다 — 그래서 선 길이도 그만큼 줄어듭니다. 단, 맨 오른쪽(가장
+     최근) 연대의 동그라미는 접혀 있어도 항상 보입니다 — 접힌 채로
+     "여기부터 더 있다"는 걸 알려줘야 하니까요. 그 동그라미를 펼치면
+     바로 왼쪽(그 전 연대) 동그라미가 새로 나타나는 식으로, 오른쪽에서
+     왼쪽으로 하나씩 지난 역사를 열어 보는 구조입니다. 어느 연대든
+     접으면 그보다 왼쪽(더 과거)에 있는 모든 연대도 함께 사라집니다 —
+     펼쳐 둔 사슬이 끊기면 그 뒤(과거)는 다시 그 연대를 펼쳐야 보입니다.
+
    ▸ 기본 펼침 상태
-     PC는 모든 연대가 펼쳐진 채로 시작합니다(예전과 동일). 좁은 화면
-     (760px 이하)은 전부 접힌 채로 시작하고, 화면에 들어오면 맨 오른쪽
-     (가장 최근 연대의 동그라미)만 보이도록 스크롤을 오른쪽 끝까지
-     옮깁니다 — 접힌 상태라 내용이 짧아 스크롤할 게 없을 수 있어서,
-     그만큼의 여백을 앞에 미리 넣어 둡니다.
+     PC는 모든 연대가 펼쳐진 채로 시작합니다. 좁은 화면(760px 이하)은
+     전부 접힌 채로 시작해서, 맨 오른쪽 연대의 동그라미 하나만 보입니다.
 
    ▸ 자동 훑기
-     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 지금 펼쳐진
-     범위의 끝까지 미끄러진 뒤 멈춥니다.
+     섹션이 화면에 들어오면 1973 에서 잠깐 멈췄다가, 지금 펼쳐진(=보이는)
+     범위의 끝까지 미끄러진 뒤 멈춥니다. 접힌 채 시작하면 보일 내용이
+     짧아서 훑을 것도 별로 없습니다.
 
    ▸ 데이터
      content/about.json 의 history 는 main.js 가 이미 받아 왔습니다.
@@ -40,7 +48,6 @@ window.SEN = window.SEN || {};
   var DECADE_TOP    = 6;   // 연대 글자가 시작하는 위치 (트랙 맨 위 쪽 — 위로 뻗는 항목 글과 안 겹치도록)
   var DECADE_LABEL_H = 20; // 연대 글자 한 줄이 차지하는 대략의 높이
   var DECADE_GAP     = 8;  // 글자와 세로선 사이 간격 (CSS .tml__decade-line 의 margin-top 과 같은 값)
-  var NARROW_LEAD = 1.2;   // 좁은 화면에서 접힌 채 시작할 때, 맨 앞에 화면 너비의 이만큼을 여백으로 둬서 오른쪽 끝만 보이게 함
   /* ================================================================== */
 
   var t, esc;
@@ -63,6 +70,20 @@ window.SEN = window.SEN || {};
     return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
   }
 
+  /** 어느 연대까지 "보이는지" 오른쪽에서 왼쪽으로 정합니다.
+      맨 오른쪽 연대는 항상 보이고, 이어서 왼쪽으로 가다가 접힌 연대를
+      만나면 그 앞(더 과거)은 전부 안 보입니다 — 그 연대를 펼쳐야
+      사슬이 이어져 그 앞이 다시 보입니다. */
+  function visibleFlags(groups) {
+    var flags = new Array(groups.length);
+    var chain = true;
+    for (var gi = groups.length - 1; gi >= 0; gi--) {
+      flags[gi] = chain;
+      chain = chain && !!open[t(groups[gi].label)];
+    }
+    return flags;
+  }
+
   /* ---------- 그리기 ---------- */
   function draw() {
     if (!history) return;
@@ -79,15 +100,10 @@ window.SEN = window.SEN || {};
        라벨 높이 + 간격 + 이 세로선 길이 = 축까지의 거리만 맞추면 됩니다. */
     var DECADE_LINE_H = Math.max(0, AXISY - DECADE_TOP - DECADE_LABEL_H - DECADE_GAP);
 
-    var narrow = isNarrow();
-    var lead = narrow ? Math.round(elTl.clientWidth * NARROW_LEAD) : 0;
-    /* 좁은 화면은 연대를 접었을 때 동그라미끼리 서로 다닥다닥 붙어(연대
-       사이가 --tml-era-gap 뿐이라) 화면 하나에 여러 개가 한꺼번에 보였습니다.
-       "펼치기 전엔 맨 오른쪽 동그라미 하나만 보이게" 하려면 접힌 연대끼리는
-       한 화면 폭만큼 떨어뜨려야 합니다. */
-    var narrowEraExtra = narrow ? Math.round(elTl.clientWidth * 0.8) : 0;
+    var groups = history.groups || [];
+    var visible = visibleFlags(groups);
 
-    var x = PAD_LEFT + lead, i = 0;
+    var x = PAD_LEFT, i = 0;
     var frag = document.createDocumentFragment();
 
     function addNode(it, extra) {
@@ -108,11 +124,12 @@ window.SEN = window.SEN || {};
 
     (history.pinned || []).forEach(function (it) { addNode(it, 'tml__node--origin'); });
 
-    (history.groups || []).forEach(function (g) {
+    groups.forEach(function (g, gi) {
+      if (!visible[gi]) return;   // 접힌 연대보다 과거는 통째로 안 그립니다 — 선도 그만큼 짧아집니다
+
       var label = t(g.label);
 
       x += ERA;
-      if (narrow && !open[label]) x += narrowEraExtra;
       var decade = document.createElement('button');
       decade.type = 'button';
       decade.className = 'tml__decade';
@@ -227,6 +244,7 @@ window.SEN = window.SEN || {};
     var down = false, startX = 0, startScroll = 0;
 
     elTl.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.tml__decade')) return;   // 동그라미 클릭은 드래그로 취급하지 않습니다(클릭이 먹히도록)
       pan.taken = true;                          // 사용자가 잡으면 자동 훑기 중단
       if (e.pointerType === 'touch') return;     // 터치는 브라우저 기본 스크롤에 맡깁니다
       down = true;
@@ -282,7 +300,9 @@ window.SEN = window.SEN || {};
     elWalker = elRoot.querySelector('[data-tml-walker]');
     if (!elTl || !elTrack) return;
 
-    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다. */
+    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다
+       (접었어도 맨 오른쪽 연대의 동그라미 하나는 draw()의 visibleFlags()가
+       항상 보여 줍니다). */
     var startOpen = !isNarrow();
     (history.groups || []).forEach(function (g) {
       open[t(g.label)] = startOpen;
