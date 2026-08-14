@@ -302,7 +302,7 @@
   transition: border-color .2s, color .2s, background .2s;
 }
 .brochure__btn:hover { border-color: var(--c-blue); color: var(--c-blue); background: var(--c-tint); }
-.brochure__btn-ico { flex: none; width: 13px; height: 13px; opacity: .75; }
+.brochure__btn-ico { flex: none; width: 17px; height: 17px; }
 
 .methods { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 /* 좁은 화면에서는 카드를 세로로 쌓지 않고 옆으로 드래그해서 보는
@@ -811,7 +811,7 @@
 /* ---------- 지도(지구본)와 지역 순위 — 좌우 배치 ---------- */
 .proj-viz {
   display: grid; gap: var(--sp-5);
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
   align-items: start;
 }
 @media (max-width: 900px) {
