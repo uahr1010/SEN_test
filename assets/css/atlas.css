@@ -271,14 +271,17 @@ body {
 }
 
 /* ---------- 상단 고정 네비 ----------
-   로고·언어만 남아서 항상 투명 배경 + 어두운 글자로 고정했습니다
+   로고·언어만 남아서 항상 흰 배경 + 어두운 글자로 고정했습니다
    (예전엔 어두운 인트로 위에서 흰 글자 ↔ 밝은 장면에서 흰 배경으로 바뀌었지만,
-   이제 사이트 전체가 밝은 배경이라 그 구분이 필요 없습니다). */
+   이제 사이트 전체가 밝은 배경이라 그 구분이 필요 없습니다). PC·모바일
+   구분 없이 항상 불투명해서, 아래로 스크롤되는 내용 위에 겹쳐도 글자가
+   묻히지 않습니다. */
 .topbar {
   position: fixed; inset: 0 0 auto 0; z-index: 60;
   display: flex; align-items: center; gap: clamp(16px, 3vw, 40px);
   padding: 16px clamp(20px, 4vw, 48px);
-  color: var(--ink);
+  background: var(--paper); color: var(--ink);
+  border-bottom: 1px solid var(--line);
   transition: opacity .3s ease, transform .3s ease;
 }
 /* 표지(.cover)가 있는 페이지(index.html)에서는 atlas.js가 부팅 시

@@ -333,6 +333,9 @@ window.SEN = window.SEN || {};
     //    시작되지 않게 함. 자동재생 정책상 소리는 기본 음소거(mute=1)로
     //    시작하고, 자막도 기본은 꺼진 채로 시작합니다(cc_load_policy=0
     //    — 시청자가 원하면 CC 버튼으로 직접 켤 수는 있습니다).
+    //    playsinline=1 이 없으면 모바일(특히 iOS Safari)에서는 자동재생
+    //    자체가 아예 안 되거나 전체화면으로 튀어서 이 영상 자리 안에서
+    //    조용히 재생되지 않습니다 — 데스크톱에는 영향 없는 값입니다.
     var videoHost = document.querySelector('[data-ceo-video]');
     if (videoHost && !videoHost.querySelector('iframe') && !videoHost._videoWatching) {
       var vid = youtubeId(t(pick(ctx, 'about.ceo.video')));
@@ -340,7 +343,7 @@ window.SEN = window.SEN || {};
       if (vid) {
         var loadCeoVideo = function () {
           videoHost.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid +
-            '?autoplay=1&mute=1&loop=1&playlist=' + vid + '&rel=0&cc_load_policy=0" title="CEO" ' +
+            '?autoplay=1&mute=1&loop=1&playlist=' + vid + '&rel=0&cc_load_policy=0&playsinline=1" title="CEO" ' +
             'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
         };
         if ('IntersectionObserver' in window) {
