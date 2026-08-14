@@ -444,10 +444,17 @@ window.SEN = window.SEN || {};
       }) };
       var regionFC = buildRegions(bucket);
 
+      /* 모바일은 화면이 좁아 손가락으로 지도를 끌면(드래그) 페이지
+         스크롤과 자꾸 부딪힙니다. 처음 보여지는 범위(HOME_BOUNDS, 전국)면
+         충분해서, 드래그 이동은 막고 확대(핀치/더블탭)만 되게 합니다.
+         확대해도 maxBounds로 그 전국 범위 밖으로는 못 나가게 묶어 둡니다. */
+      var mobileMap = window.matchMedia && matchMedia('(max-width: 760px)').matches;
       map = new window.maplibregl.Map({
         container: els.canvas, style: styleSpec(),
         center: [129.5, 37.5], zoom: 5.2,
-        minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true
+        minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true,
+        dragPan: !mobileMap,
+        maxBounds: mobileMap ? HOME_BOUNDS : null
       });
       map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.on('load', function () { build(cnt, exactFC, areaFC, regionFC); });
