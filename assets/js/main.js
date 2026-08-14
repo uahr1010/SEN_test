@@ -116,13 +116,17 @@ window.SEN = window.SEN || {};
   }
 
   /* ---------- 실적 지도 / 지구본 ----------
-     content/projects.json 은 이미 loadContent() 가 한 번에 받아 왔습니다.
-     그 안의 projects 배열(공개 위치만 담긴 목록)을 그대로 넘기기만 하고,
-     여기서 다시 fetch 하지 않습니다 (중복 요청 방지).
-     주소 → 좌표 변환과 집계는 projects.js, 그리기는 kmap.js(국내 지도)와
-     globe.js(국외 지구본)가 맡습니다. 둘 다 한 번씩만 그리고,
-     "국내/국외" 탭 전환은 이미 그려진 두 시각화 중 하나를 숨기고 보이는
-     것뿐입니다 (다시 그리지 않음) — SEN.projectPanel.setTab() 이 그 일을 합니다. */
+     content/projects.json(시/군/구 단위 익명화 목록)은 이미 loadContent()가
+     한 번에 받아 왔습니다. 그 안의 projects 배열을 그대로 넘기기만 하고,
+     여기서 다시 fetch 하지 않습니다(중복 요청 방지) — projects.js가
+     좌우 통계 패널(.globe__stats/.regions)에 쓸 지역별 집계를 만듭니다.
+
+     지도 자체(오른쪽 시각화)는 이 집계와 무관하게 자기 데이터를 따로
+     불러옵니다: 국내 탭은 projectmap.js(MapLibre, assets/data/
+     project_points.json — 번지 단위 정밀 좌표), 국외 탭은 globe.js(집계
+     결과의 overseas.regions). 둘 다 한 번씩만 그리고, "국내/국외" 탭
+     전환은 이미 그려진 두 시각화 중 하나를 숨기고 보이는 것뿐입니다
+     (다시 그리지 않음) — renderProjectPanel() 이 그 일을 합니다. */
   SEN.projectPanel = { tab: 'domestic', data: null, ctx: null };
 
   function renderProjectPanel(tab) {
@@ -166,15 +170,16 @@ window.SEN = window.SEN || {};
       btn.setAttribute('aria-selected', String(on));
     });
 
-    /* 지구본은 국내 탭에 가려진 채로 처음 한 번만 그려지는데, 가려진
-       상태로 초기화되면 크기를 못 잡아 점이 하나도 안 찍힙니다. 국외
-       탭이 열릴 때마다 직접 알려줘서 다시 맞추게 합니다. */
+    /* 지도·지구본은 국내/국외 탭 중 하나에 가려진 채로 처음 그려지는데,
+       가려진 상태로 초기화되면 크기를 못 잡아 텅 비어 보입니다. 그 탭이
+       열릴 때마다 직접 알려줘서 다시 맞추게 합니다. */
     if (tab === 'overseas' && SEN.globe) SEN.globe.refresh();
+    if (tab === 'domestic' && SEN.projectMap) SEN.projectMap.refresh();
   }
   SEN.renderProjectPanel = renderProjectPanel;
 
   function initProjects(data) {
-    var kmapStage = document.querySelector('[data-kmap-tab="domestic"]');
+    var kmapStage = document.querySelector('[data-pmap]');
     var globeStage = document.querySelector('[data-kmap-tab="overseas"]');
     if ((!kmapStage && !globeStage) || !SEN.projects) return;
 
@@ -184,12 +189,12 @@ window.SEN = window.SEN || {};
       SEN.projectPanel.ctx = data;
       renderProjectPanel(SEN.projectPanel.tab);
 
-      if (kmapStage && SEN.kmap) {
-        SEN.kmap.init(res, {
+      if (kmapStage && SEN.projectMap) {
+        SEN.projectMap.init({
           wrap: kmapStage,
-          svg: kmapStage.querySelector('[data-kmap-svg]'),
-          tip: kmapStage.querySelector('[data-kmap-tip]'),
-          drill: document.querySelector('[data-kmap-drill]')
+          canvas: kmapStage.querySelector('[data-pmap-canvas]'),
+          back: kmapStage.querySelector('[data-pmap-back]'),
+          legendMax: document.querySelector('[data-pmap-legend-max]')
         });
       }
       if (globeStage && SEN.globe) {

@@ -206,22 +206,6 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /* ---------- 한국 지도 시/도 드릴다운 팝업 닫기 ----------
-     여는 쪽(openDrill)은 kmap.js 담당, 닫는 쪽만 여기서 —
-     지원하기 팝업과 같은 위임 클릭 패턴입니다. */
-  function initKmapDrill() {
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('[data-kmap-drill-close]')) return;
-      var drill = document.querySelector('[data-kmap-drill]');
-      if (drill && SEN.kmap) SEN.kmap.closeDrill(drill);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
-      var drill = document.querySelector('[data-kmap-drill]');
-      if (drill && !drill.hidden && SEN.kmap) SEN.kmap.closeDrill(drill);
-    });
-  }
-
   /* "더 보기"는 이제 news-list.html로 이동하는 평범한 링크라 여기서
      따로 다룰 동작이 없습니다 — 칩 필터만 남았습니다. */
   function initListControls() {
@@ -238,7 +222,7 @@ window.SEN = window.SEN || {};
   SEN.controls = {
     init: function () {
       initJobs(); initApplyModal(); initListControls();
-      initProjTabs(); initKmapDrill(); initNewsCarousel();
+      initProjTabs(); initNewsCarousel();
     },
     refreshNewsLoop: refreshNewsLoop
   };

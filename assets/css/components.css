@@ -595,14 +595,13 @@
   width: 5px; height: 5px; border-radius: 50%; background: var(--c-blue-soft);
 }
 
-/* ---------- 실적 지구본/지도 자리 ----------
-   지구본(.globe__stage)은 원 모양 유지하며 더 작게, 지도(.kmap-stage)는
-   정사각 대신 좀 더 납작한 비율로 줄여서 왼쪽 프로젝트 목록과 높이
-   차이가 덜 나도록 합니다.
-   오른쪽 칸(9fr)이 이 최대 폭보다 넓은 화면에서는 가운데(margin:auto)
-   대신 오른쪽 끝에 붙입니다 — 가운데 두면 왼쪽 목록은 섹션 왼쪽 끝에
-   붙어 있는데 지도/지구본만 양옆에 빈 공간을 남겨서, 전체적으로 내용이
-   왼쪽으로 쏠려 보였습니다. */
+/* ---------- 실적 지구본 자리 (국외 탭) ----------
+   원 모양을 유지하며 오른쪽 칸(9fr)보다 작게 묶어 둡니다. 이 최대
+   폭보다 넓은 화면에서는 가운데(margin:auto) 대신 오른쪽 끝에
+   붙입니다 — 가운데 두면 왼쪽 목록은 섹션 왼쪽 끝에 붙어 있는데
+   지구본만 양옆에 빈 공간을 남겨서, 전체적으로 내용이 왼쪽으로
+   쏠려 보였습니다. (국내 탭의 지도는 .pmap — 폭 제한이 없어 이
+   문제가 애초에 없습니다.) */
 .globe { margin-bottom: var(--sp-5); }
 .globe__stage {
   position: relative; width: 100%; aspect-ratio: 1 / 1;
@@ -640,6 +639,14 @@
 .globe__hint {
   text-align: right; margin-top: var(--sp-2);
   font-size: var(--fs-xs); color: var(--c-muted); letter-spacing: .02em;
+}
+/* 900px 이하는 .about-grid--map 이 1단으로 접혀 왼쪽 목록 밑에 지구본이
+   오므로, 오른쪽으로 붙일 이유가 없습니다 — 다시 가운데로 둡니다.
+   (같은 특이도의 .globe__stage/.globe__hint 기본 규칙보다 뒤에 있어야
+   이깁니다 — CSS는 특이도가 같으면 나중에 나온 규칙이 이깁니다.) */
+@media (max-width: 900px) {
+  .globe__stage { margin: 0 auto; }
+  .globe__hint { text-align: center; }
 }
 
 /* ---------- 실적 요약 숫자 ---------- */
@@ -794,85 +801,46 @@
 .proj-tab:hover { border-color: var(--c-blue-soft); color: var(--c-blue); }
 .proj-tab.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 
-/* ---------- 한국 지도 ----------
-   kmap.js의 viewBox(760×803)와 같은 비율로 맞췄습니다 — 비율이 다르면
-   SVG가 안에서 letterbox(레터박스)되면서 위아래나 좌우에 쓸모없는
-   흰 여백이 생깁니다. 실제 지도 내용 기준으로 꽉 차게 잘라낸 비율이라
-   정사각형은 아니지만, 그만큼 더 크게 키울 수 있습니다. */
-.kmap-stage {
-  /* 세로 700px 기준, 가로는 같은 비율(760:803)로 자동 계산 → 약 663px */
-  position: relative; width: 100%; aspect-ratio: 760 / 803;
-  max-width: 663px; margin: 0 0 0 auto;
+/* ---------- 국내 지도 (MapLibre 실제 지도 타일) ----------
+   assets/js/projectmap.js 가 그립니다. 예전 SVG(kmap.js)와 달리 원을
+   지도 레이어로 그려서 폭 제한 없이 오른쪽 칸(9fr)을 그대로 채웁니다
+   — .globe__stage 처럼 max-width로 묶어 오른쪽 정렬을 따로 챙길
+   필요가 없습니다(900px 이하에서 가운데로 되돌리는 규칙도 불필요). */
+.pmap {
+  position: relative; width: 100%; height: min(65vh, 560px); min-height: 380px;
+  border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--c-line);
+  background: var(--ph);
 }
-/* 900px 이하는 .about-grid--map 이 1단으로 접혀 왼쪽 목록 밑에 지도/
-   지구본이 오므로, 오른쪽으로 붙일 이유가 없습니다 — 다시 가운데로 둡니다.
-   (같은 특이도의 .globe__stage/.kmap-stage 기본 규칙보다 뒤에 있어야
-   이깁니다 — CSS는 특이도가 같으면 나중에 나온 규칙이 이깁니다.) */
-@media (max-width: 900px) {
-  .globe__stage, .kmap-stage { margin: 0 auto; }
-  .globe__hint { text-align: center; }
+.pmap.is-unavailable { display: none; }
+.pmap.is-unavailable ~ .pmap__legend { display: none; }
+.pmap__canvas { position: absolute; inset: 0; }
+.pmap__back {
+  position: absolute; left: 12px; top: 12px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 15px; border-radius: 999px; border: 1px solid var(--c-line);
+  background: rgba(255, 255, 255, .94); backdrop-filter: blur(6px);
+  font: inherit; font-size: var(--fs-small); font-weight: 700; color: var(--c-ink); cursor: pointer;
+  box-shadow: var(--shadow-sm);
 }
-.kmap-stage.is-unavailable { display: none; }
-.kmap-stage.is-unavailable ~ .globe__hint { display: none; }
-/* overflow: hidden 필수 — 최상위 <svg> 는 (중첩 svg와 달리) 기본값이
-   overflow:visible 이라, 명시하지 않으면 확대(zoom)했을 때 지도 내용이
-   이 상자 밖 옆 영역까지 그대로 삐져나갑니다. */
-.kmap-svg { width: 100%; height: 100%; display: block; overflow: hidden; }
+.pmap__back:hover { border-color: var(--c-blue); color: var(--c-blue); }
 
-.kmap__prov {
-  stroke: var(--c-white); stroke-width: 1.5; cursor: pointer;
-  transition: opacity .15s var(--ease);
+/* MapLibre 팝업(마우스오버·클릭 말풍선) — 사이트 톤(짙은 남색)에 맞춥니다 */
+.maplibregl-popup-content {
+  background: var(--c-navy); color: var(--c-white); border-radius: var(--radius);
+  padding: 9px 12px; font-family: inherit; font-size: var(--fs-xs); line-height: 1.5; max-width: 260px;
 }
-.kmap__prov:hover, .kmap__prov:focus-visible { opacity: .82; outline: none; }
-.kmap__label {
-  font-size: 12px; font-weight: 700; fill: var(--c-navy);
-  text-anchor: middle; pointer-events: none;
-  paint-order: stroke; stroke: var(--c-white); stroke-width: 3px;
-}
+.maplibregl-popup-content strong { font-size: var(--fs-small); }
+.maplibregl-popup-tip { border-top-color: var(--c-navy) !important; border-bottom-color: var(--c-navy) !important; }
+.maplibregl-ctrl-attrib { font-size: 10px; }
 
-.kmap-tip {
-  position: absolute; z-index: 3; pointer-events: none;
-  padding: 7px 12px; border-radius: var(--radius);
-  background: var(--c-navy); color: var(--c-white);
-  font-size: var(--fs-xs); line-height: 1.5; box-shadow: var(--shadow);
-  display: grid;
+/* 범례 — 지도의 색과 정확히 같은 띠여야 거짓말을 하지 않습니다.
+   .pmap 이 안 보이면(is-unavailable) 같이 숨깁니다. */
+.pmap__legend { display: flex; align-items: center; gap: 12px; margin-top: var(--sp-3); flex-wrap: wrap; }
+.pmap__legend-bar {
+  height: 10px; width: min(260px, 38vw); border-radius: 999px;
+  background: linear-gradient(90deg, #c7ddf7, #93c5fd, #3b82f6, #1d4ed8);
+  border: 1px solid var(--c-line);
 }
-.kmap-tip strong { font-size: var(--fs-xs); }
-.kmap-tip span { color: var(--c-blue-soft); }
-
-/* ---------- 시/도 드릴다운 팝업 ---------- */
-.kmap-drill {
-  position: fixed; inset: 0; z-index: 130;
-  display: grid; place-items: center; padding: var(--sp-3);
-}
-.kmap-drill__backdrop {
-  position: absolute; inset: 0;
-  background: rgba(10, 37, 64, .55); backdrop-filter: blur(4px);
-}
-.kmap-drill__panel {
-  position: relative; width: min(1180px, 100%); max-height: 92vh; overflow-y: auto;
-  background: var(--c-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
-  padding: var(--sp-5);
-  animation: applyModalIn .25s var(--ease);
-}
-.kmap-drill__title { font-size: 1.6rem; padding-right: var(--sp-4); }
-.kmap-drill__meta { font-size: var(--fs-small); color: var(--c-muted); margin-bottom: var(--sp-3); }
-.kmap-drill__body {
-  display: grid; gap: var(--sp-5);
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-  align-items: start;
-}
-/* overflow: hidden 필수 — 위 .kmap-svg 와 같은 이유 (확대 시 옆 영역 침범 방지) */
-.kmap-drill__svg { width: 100%; height: auto; aspect-ratio: 640 / 620; overflow: hidden; }
-.kmap__dist { stroke: var(--c-white); stroke-width: 1; }
-.kmap__dist.has { cursor: default; }
-.kmap__dist-label {
-  font-size: 10px; font-weight: 700; fill: var(--c-ink);
-  text-anchor: middle; pointer-events: none;
-  paint-order: stroke; stroke: rgba(255, 255, 255, .8); stroke-width: 2.5px;
-}
-
-@media (max-width: 640px) {
-  .kmap-drill__body { grid-template-columns: 1fr; }
-}
+.pmap__legend-cap { font-size: var(--fs-xs); color: var(--c-muted); font-variant-numeric: tabular-nums; }
+.pmap__legend-title { font-size: var(--fs-xs); font-weight: 700; }
 
