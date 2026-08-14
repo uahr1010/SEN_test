@@ -143,9 +143,10 @@
         <p class="scene__lead" data-bind="about.history.lead"></p>
       </header>
       <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고, 연대 경계마다
-           세로 구분선(.tml__decade, timeline.js가 그려 넣음)만 놓입니다
-           (글자·개수 없음). 모든 항목이 처음부터 다 표시됩니다.
-           내용은 assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
+           연대 글자+세로 구분선(.tml__decade, timeline.js가 그려 넣음)이
+           트랙 맨 위쪽에 놓입니다(개수는 없음). 모든 항목이 처음부터
+           다 표시됩니다. 내용은 assets/js/timeline.js 가 about.json 의
+           history 로 그립니다. -->
       <div class="tml" data-timeline data-reveal>
         <p class="tml__hint" data-bind="site.ui.timelineHint">선을 좌우로 끌어 보세요</p>
       </div>

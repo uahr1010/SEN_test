@@ -5,9 +5,10 @@
    고르거나 접고 펼치는 버튼은 없고, 모든 항목이 처음부터 다 보입니다.
 
      · 창립(1973)은 맨 왼쪽에 고정.
-     · 1990 / 2000 / 2010 / 2020년대 경계마다 축을 가로지르는 세로선
-       (.tml__decade)만 놓입니다 — 글자·개수 없는 장식용 구분자입니다.
-       그 뒤로 그 연대의 항목들이 전부 이어붙습니다.
+     · 1990 / 2000 / 2010 / 2020년대 경계마다 연대 글자(예: "1990년대")와
+       그 아래로 축까지 이어지는 세로선(.tml__decade)이 놓입니다. 글자는
+       위로 뻗는 항목 글과 안 겹치도록 트랙 맨 위쪽에 두고, 개수는
+       표시하지 않습니다. 그 뒤로 그 연대의 항목들이 전부 이어붙습니다.
      · 선을 좌우로 끌어(드래그) 볼 수 있습니다.
      · 오른쪽 끝은 화살표. 마지막 항목보다 조금 더 뻗어 있고
        그 앞에 사람이 서 있습니다 (계속 나아가는 중이라는 표시).
@@ -31,6 +32,8 @@ window.SEN = window.SEN || {};
   var HOLD      = 1100;    // 1973 에서 멈춰 있는 시간(ms)
   var SWEEP_MIN = 900;     // 훑는 데 걸리는 최소 시간(ms)
   var SWEEP_MAX = 2200;    // 최대 시간. 전부 펼쳐도 이 안에 도착합니다
+  var DECADE_TOP    = 6;   // 연대 글자가 시작하는 위치 (트랙 맨 위 쪽 — 위로 뻗는 항목 글과 안 겹치도록)
+  var DECADE_LABEL_H = 24; // 연대 글자 한 줄이 차지하는 대략의 높이(줄 높이+여백)
   /* ================================================================== */
 
   var t, esc;
@@ -56,9 +59,11 @@ window.SEN = window.SEN || {};
     [].slice.call(elTrack.querySelectorAll('.tml__node, .tml__decade'))
       .forEach(function (n) { n.remove(); });
 
-    var GAP  = cssPx('--tml-gap');
-    var ERA  = cssPx('--tml-era-gap');
-    var TAIL = cssPx('--tml-tail');
+    var GAP   = cssPx('--tml-gap');
+    var ERA   = cssPx('--tml-era-gap');
+    var TAIL  = cssPx('--tml-tail');
+    var AXISY = cssPx('--tml-axis-y');
+    var DECADE_LINE_H = Math.max(0, AXISY + 34 - DECADE_TOP - DECADE_LABEL_H);
 
     var x = PAD_LEFT, i = 0;
     var frag = document.createDocumentFragment();
@@ -83,9 +88,12 @@ window.SEN = window.SEN || {};
 
     (history.groups || []).forEach(function (g) {
       x += ERA;
-      var decade = document.createElement('span');
+      var decade = document.createElement('div');
       decade.className = 'tml__decade';
       decade.style.left = (x - GAP * 0.5) + 'px';
+      decade.innerHTML =
+        '<span class="tml__decade-label">' + esc(t(g.label)) + '</span>' +
+        '<span class="tml__decade-line" style="height:' + DECADE_LINE_H + 'px"></span>';
       frag.appendChild(decade);
 
       (g.items || []).forEach(function (it) { addNode(it, null); });
