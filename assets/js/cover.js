@@ -129,9 +129,32 @@ window.SEN = window.SEN || {};
     }
   }
 
+  /* 표지 사진 전환은 CSS @keyframes(무한 반복)라, 스크롤로 화면 밖에
+     나가거나 다른 탭으로 넘어가도 계속 돌아갑니다 — opacity/transform만
+     쓰는 애니메이션이라 브라우저가 어느 정도 알아서 덜 그리긴 하지만,
+     타이머 자체는 안 멈춥니다. 표지가 화면에 없거나(스크롤로 지나감)
+     탭이 안 보일 때는 확실히 멈춰서 불필요하게 도는 걸 없앱니다. */
+  function initAutoPause(cover, bg) {
+    var pausedByScroll = false, pausedByTab = document.hidden;
+    function sync() { bg.classList.toggle('is-paused', pausedByScroll || pausedByTab); }
+
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (entries) {
+        pausedByScroll = !entries[entries.length - 1].isIntersecting;
+        sync();
+      }, { threshold: 0 }).observe(cover);
+    }
+    document.addEventListener('visibilitychange', function () {
+      pausedByTab = document.hidden;
+      sync();
+    });
+  }
+
   function init() {
-    if (!document.querySelector('[data-cover]')) return;
+    var cover = document.querySelector('[data-cover]');
+    if (!cover) return;
     initFade();
+    initAutoPause(cover, cover.querySelector('[data-cover-bg]'));
     fitBrand();
     addEventListener('resize', fitBrand);
     // 웹폰트(Anton)는 늦게 도착합니다. 안 기다리면 대체폰트 기준으로 계산돼 어긋납니다.

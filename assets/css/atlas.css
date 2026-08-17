@@ -110,6 +110,10 @@ body {
   width: 100%; height: 100%; object-fit: cover;
   opacity: 0;
 }
+/* 표지가 스크롤로 화면 밖에 있거나 탭이 안 보일 때(cover.js가 감시)
+   사진 전환 애니메이션을 실제로 멈춥니다 — 안 보이는 동안 계속 도는
+   걸 막습니다. */
+.cover__bg.is-paused img { animation-play-state: paused; }
 .cover__veil {
   position: absolute; inset: 0; z-index: -1;
   background:
