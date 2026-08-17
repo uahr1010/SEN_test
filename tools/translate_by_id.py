@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
-"""[⑤ 번역 요청] 항목 하나를 번역해 content/news-i18n.json 에 넣습니다.
+"""뉴스 기사 하나를 번역해 content/news-i18n.json 에 넣습니다.
 
-Pages CMS의 "entry" 액션(translate-queue/*.md 에 붙은 "번역 시작" 버튼)이
+[② 뉴스 번역] 페이지의 "번역 실행" 버튼(.pages.yml의 news-i18n.actions)이
 GitHub Actions를 통해 이 스크립트를 실행합니다
-(.github/workflows/translate-queue.yml).
+(.github/workflows/translate-queue.yml). 버튼을 누르면 번역할 기사의
+"고유 ID"를 물어보고, 그 값이 payload.inputs.news_id 로 넘어옵니다.
+
+저장소 Actions 탭 → "기사 번역" → Run workflow 에서 news_id 를 직접
+넣어 손으로 돌릴 수도 있습니다(버튼이 안 될 때의 대안).
 
   ┌──────────── API 키는 어디에 있나 ────────────┐
   │ 저장소 Settings → Secrets and variables →     │
@@ -20,19 +24,18 @@ GitHub Actions를 통해 이 스크립트를 실행합니다
   SEN_TRANSLATE_BASE_URL  OpenAI 가 아닌 엔드포인트를 쓸 때만 지정.
 
 사용
-  python tools/translate_by_id.py --payload '{"context":{"path":"translate-queue/x.md","data":{"newsId":"news-..."}}}'
+  python tools/translate_by_id.py --payload '{"inputs":{"news_id":"news-..."}}'
   python tools/translate_by_id.py --news-id news-2026-... --dry-run   직접 지정해서 미리보기만
 
 동작
-  1. Pages CMS가 보낸 payload(또는 --news-id)에서 번역할 기사 id를 찾습니다.
-     payload.context.path 에 적힌 translate-queue/*.md 파일이 저장소에
-     이미 커밋돼 있으므로, 그 파일에서 직접 newsId 를 읽는 쪽을 우선합니다
-     (Pages CMS가 보내는 payload의 필드 모양이 바뀌어도 덜 취약합니다).
+  1. payload(또는 --news-id)에서 번역할 기사 id를 찾습니다.
+     Pages CMS의 "번역 실행" 버튼이 보내는 payload.inputs.news_id 를 읽습니다
+     (news_id_from_queue_file/context.data 는 예전 "번역 요청" 큐 파일 방식의
+     흔적으로, 지금은 거의 안 쓰이지만 혹시 몰라 그대로 뒀습니다).
   2. content/news.json 에서 그 id의 한국어 제목/본문을 찾습니다.
   3. 용어집을 참고해 영어·일본어·중국어로 번역합니다.
-  4. content/news-i18n.json 에 기록합니다 (같은 id 있으면 덮어씀).
-  5. 처리한 translate-queue/*.md 파일을 지웁니다 — [⑤ 번역 요청] 목록에서
-     사라지고, 결과는 [⑥ 번역] 목록(news-i18n.json)에 나타납니다.
+  4. content/news-i18n.json 에 기록합니다 (같은 id 있으면 덮어씀) — [②
+     뉴스 번역] 목록에 바로 나타납니다.
 """
 import argparse
 import io
@@ -75,6 +78,11 @@ def parse_payload(raw):
     if not news_id:
         data = ctx.get('data', {}) or {}
         news_id = data.get('newsId') or data.get('newsid') or data.get('news_id')
+    if not news_id:
+        # [② 뉴스 번역] 페이지의 "번역 실행" 버튼(.pages.yml의 actions.fields)
+        # 이 보내는 모양 — Pages CMS가 그 입력칸 값을 payload.inputs 에 담습니다.
+        inputs = payload.get('inputs', {}) or {}
+        news_id = inputs.get('news_id') or inputs.get('newsId')
     return news_id, path
 
 
@@ -103,8 +111,8 @@ def main():
         sys.exit('--payload 또는 --news-id 중 하나는 있어야 합니다.')
 
     if not news_id:
-        sys.exit('번역할 기사 id를 찾지 못했습니다. [⑤ 번역 요청] 항목의 '
-                  '"번역할 기사 ID" 칸이 비어 있지 않은지 확인하세요.')
+        sys.exit('번역할 기사 id를 찾지 못했습니다. [② 뉴스 번역]의 "번역 실행" '
+                  '버튼에서 "번역할 기사의 고유 ID" 칸이 비어 있지 않은지 확인하세요.')
 
     item = find_news_item(news_id)
     if not item:
@@ -163,14 +171,19 @@ def main():
         json.dumps(i18n_doc, ensure_ascii=False, indent=2) + u'\n')
     print('\ncontent/news-i18n.json 에 기록했습니다 (id: %s)' % news_id)
 
-    if queue_path:
+    # 예전 "번역 요청" 큐 파일(translate-queue/*.md) 방식의 흔적입니다 —
+    # 처리 후 그 요청 파일을 지우던 로직인데, 지금은 [② 뉴스 번역] 액션이
+    # 자기 자신(content/news-i18n.json)의 경로를 context.path 로 보내므로,
+    # 이 조건 없이 지웠다면 방금 쓴 번역 파일이 통째로 삭제될 뻔했습니다.
+    # translate-queue/ 아래 파일일 때만(지금은 사실상 없음) 지웁니다.
+    if queue_path and queue_path.startswith('translate-queue/'):
         full = os.path.join(ROOT, queue_path) if not os.path.isabs(queue_path) else queue_path
         if os.path.exists(full):
             os.remove(full)
             print('처리한 요청 파일을 지웠습니다: %s' % queue_path)
 
     if warnings:
-        print('\n⚠ 용어집과 다르게 번역된 항목이 있습니다. [⑥ 번역] 탭에서 확인하세요.')
+        print('\n⚠ 용어집과 다르게 번역된 항목이 있습니다. [② 뉴스 번역] 탭에서 확인하세요.')
 
 
 if __name__ == '__main__':

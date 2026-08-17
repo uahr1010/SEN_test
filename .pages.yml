@@ -144,16 +144,39 @@ content:
   # --------------------------------------------------------------------------
   # ② 뉴스 번역 — 뉴스 en/中文/日本語 손보기
   #
-  #    새 번역은 저장소 Actions 탭 → "기사 번역" → Run workflow 에서
-  #    ① 뉴스 항목의 "고유 ID"를 넣고 손으로 돌리면 자동으로 채워집니다.
-  #    번역이 어색하면 여기서 직접 고치세요. ID는 [① 뉴스]의 "고유 ID"와
-  #    똑같아야 그 글에 연결됩니다 (다르면 화면에 반영되지 않습니다).
+  #    이 페이지 위쪽의 "번역 실행" 버튼을 누르면 [① 뉴스] 항목의 "고유 ID"를
+  #    물어보고, 그 자리에서 바로 번역을 돌립니다(용어집 참고, 완료까지
+  #    1~2분). 저장된 OPENAI_API_KEY(저장소 Settings → Secrets and
+  #    variables → Actions)를 GitHub Actions 안에서만 씁니다 — Pages CMS나
+  #    브라우저에는 그 키가 전혀 노출되지 않습니다.
+  #
+  #    번역이 어색하면 아래 목록에서 직접 고치세요. ID는 [① 뉴스]의
+  #    "고유 ID"와 똑같아야 그 글에 연결됩니다 (다르면 화면에 반영되지
+  #    않습니다).
   # --------------------------------------------------------------------------
   - name: news-i18n
     label: ② 뉴스 번역
     type: file
     path: content/news-i18n.json
     format: json
+    actions:
+      - name: translate-news
+        label: 번역 실행
+        workflow: translate-queue.yml
+        ref: current
+        confirm:
+          title: 이 기사를 번역할까요?
+          message: >
+            [① 뉴스] 항목의 "고유 ID"를 아래에 입력하세요. 용어집을 참고해
+            영어·중국어·일본어로 번역한 뒤 이 목록에 저장합니다(완료까지
+            1~2분, 같은 ID가 이미 있으면 새 번역으로 덮어씁니다).
+          button: 번역 시작
+        fields:
+          - name: news_id
+            label: 번역할 기사의 고유 ID
+            type: string
+            required: true
+            description: "[① 뉴스] 항목의 \"고유 ID\"를 정확히 복사해서 넣으세요."
     fields:
       - name: items
         label: 뉴스 번역 목록
