@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "id": "public_2025_2",
+      "title": {
+        "en": "Game Changer in the Construction Industry, OSC",
+        "ja": "建設産業のゲームチェンジャー、OSC",
+        "zh": "建筑产业的游戏规则改变者，OSC"
+      },
+      "excerpt": {
+        "en": "OSC (Off-site Construction) is a game changer that transforms the construction industry into an advanced manufacturing industry by overcoming the aging of the construction workforce, strengthened environmental and safety regulations, and rising construction costs.\n\nSEN Engineering Group provides leading domestic and international clients with innovative OSC solutions centered on PSRC and TSC,\noffering one-stop total engineering services that take responsibility for customized technology development, design, fabrication, procurement, construction, and after-sales management.",
+        "ja": "OSC（Off-site Construction）は、施工人材の高齢化、環境および安全関連規制の強化、工事原価の上昇を克服し、\n建設産業を先端製造業へと変貌させるゲームチェンジャーです。\n当社SEN Engineering Groupは、PSRC、TSCを筆頭とする革新的なOSCソリューションにより、国内外の有数のお客様に\nカスタマイズされた技術開発、設計、製作、調達、施工、アフターサービスまで責任を持って担う\nワンストップのトータルエンジニアリングサービスを提供します。",
+        "zh": "OSC（Off-site Construction）是克服施工人员老龄化、环境及安全相关法规加强、工程成本上升，将建筑产业转型为先进制造业的游戏规则改变者。\n\n我们SEN Engineering Group凭借以PSRC、TSC为首的创新型OSC解决方案，为国内外众多客户提供涵盖定制化技术开发、设计、制作、采购、施工及售后管理在内的一站式综合工程服务。"
+      }
+    },
+    {
       "id": "news-2026-08-12-psrc-method-included-in-singapore-buildi",
       "title": {
         "en": "PSRC Method Included in Singapore Building Design Standards",
