@@ -1,5 +1,6 @@
 /* ==========================================================================
-   cover.js — 표지(첫 화면) 사진 크로스페이드 + 그룹명 폭 맞춤
+   cover.js — 표지(첫 화면) 사진 크로스페이드
+   (그룹명 글자 크기는 atlas.css가 container query 단위로 처리합니다)
 
    카카오톡으로 받은 히어로_미리보기_v3.html 을 그대로 이식했습니다
    (클래스명만 .hero__* → .cover__* 로 바꿨습니다 — .hero 는 이미
@@ -101,35 +102,15 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /* ---------- 그룹명을 화면 폭에 정확히 맞춤 ---------- */
-  function fitBrand() {
-    var el = document.querySelector('[data-cover-brand]');
-    if (!el) return;
-    var host = el.parentElement.getBoundingClientRect().width;
-    if (!host || host < 10) return;
+  /* 그룹명(.cover__brand) 글자 크기는 더 이상 여기서 재서 맞추지 않습니다
+     — atlas.css가 container query 단위(cqw)로 .cover__foot 폭에 비례해
+     그립니다. JS로 폭을 측정해 나중에 덮어쓰던 예전 방식(fitBrand())은
+     자바스크립트가 아직 안 돌았을 때(첫 페인트, 폰트 로딩 중)나 이벤트를
+     놓쳤을 때(브라우저 확대/축소가 항상 resize를 내는 게 아님) 글자가
+     잘려 보이는 문제가 있었는데, CSS만 쓰면 그런 타이밍 문제 자체가
+     없어집니다.
 
-    var cs = getComputedStyle(el);
-    var fs = parseFloat(cs.fontSize) || 100;
-    var lsEm = (cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing) || 0) / fs;
-
-    var probe = document.createElement('span');
-    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:-9999px;top:0;' +
-      'font-family:' + cs.fontFamily + ';font-weight:' + cs.fontWeight +
-      ';letter-spacing:' + (lsEm * 100) + 'px;font-size:100px';
-    probe.textContent = el.textContent.trim();
-    document.body.appendChild(probe);
-    var w100 = probe.getBoundingClientRect().width;
-    probe.remove();
-    if (!w100) return;
-
-    el.style.fontSize = (100 * host / w100).toFixed(2) + 'px';
-    // 반올림 오차로 1~2px 넘칠 수 있어 실제 폭을 보고 한 번 더 조입니다
-    for (var i = 0; i < 3 && el.scrollWidth > host; i++) {
-      el.style.fontSize = (parseFloat(el.style.fontSize) * host / el.scrollWidth).toFixed(2) + 'px';
-    }
-  }
-
-  /* 표지 사진 전환은 CSS @keyframes(무한 반복)라, 스크롤로 화면 밖에
+     표지 사진 전환은 CSS @keyframes(무한 반복)라, 스크롤로 화면 밖에
      나가거나 다른 탭으로 넘어가도 계속 돌아갑니다 — opacity/transform만
      쓰는 애니메이션이라 브라우저가 어느 정도 알아서 덜 그리긴 하지만,
      타이머 자체는 안 멈춥니다. 표지가 화면에 없거나(스크롤로 지나감)
@@ -155,15 +136,6 @@ window.SEN = window.SEN || {};
     if (!cover) return;
     initFade();
     initAutoPause(cover, cover.querySelector('[data-cover-bg]'));
-    fitBrand();
-    addEventListener('resize', fitBrand);
-    /* 브라우저 확대/축소(Ctrl +/-, 모바일 핀치줌)는 window의 resize를
-       항상 정확히 내지는 않습니다 — visualViewport의 resize가 더
-       확실히 잡아 줘서, 확대/축소할 때마다 글자가 그대로 남아 있다가
-       칸을 넘쳐 잘리던 문제가 있었습니다. 둘 다 걸어 둡니다. */
-    if (window.visualViewport) visualViewport.addEventListener('resize', fitBrand);
-    // 웹폰트(Anton)는 늦게 도착합니다. 안 기다리면 대체폰트 기준으로 계산돼 어긋납니다.
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBrand);
   }
 
   SEN.cover = { init: init };
