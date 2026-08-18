@@ -87,6 +87,11 @@ html {
   /* 고정 헤더에 앵커 제목이 가려지지 않도록 */
   scroll-padding-top: var(--header-h);
   -webkit-text-size-adjust: 100%;
+  /* 모바일에서 맨 아래로 다 내리면 "고무줄" 튕김 효과로 문서 밖(푸터
+     뒤)이 잠깐 드러나는데, 그 자리엔 표지(.cover, position:fixed)가
+     화면 전체 배경처럼 깔려 있어서 푸터 뒤에 표지가 보이는 것처럼
+     비쳤습니다. 그 튕김 자체를 막아서 없앱니다. */
+  overscroll-behavior-y: none;
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -103,6 +108,7 @@ body {
   color: var(--c-ink);
   background: var(--c-white);
   overflow-x: hidden;
+  overscroll-behavior-y: none;   /* html과 같은 이유 — 브라우저마다 스크롤 주체가 다름 */
   word-break: keep-all;   /* 한국어 줄바꿈을 어절 단위로 */
 }
 body.is-locked { overflow: hidden; }
