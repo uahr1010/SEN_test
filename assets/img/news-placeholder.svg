@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="뉴스">
+  <defs>
+    <linearGradient id="newsGlobeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BEDCFB"/>
+      <stop offset="55%" stop-color="#9FCAF8"/>
+      <stop offset="100%" stop-color="#7FB2F0"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#newsGlobeGrad)"/>
+  <path d="M8 256a248 248 0 0 1 248-248 248 248 0 0 1 175 72A248 248 0 0 0 8 256Z" fill="#ffffff" opacity=".14"/>
+  <path d="M504 256a248 248 0 0 1-248 248 248 248 0 0 1-175-72A248 248 0 0 0 504 256Z" fill="#0E2E52" opacity=".12"/>
+
+  <g fill="none" stroke="#EDF2FA" stroke-width="9" opacity=".85">
+    <ellipse cx="256" cy="256" rx="248" ry="90"/>
+    <ellipse cx="256" cy="256" rx="140" ry="248"/>
+    <line x1="8" y1="256" x2="504" y2="256"/>
+    <line x1="256" y1="8" x2="256" y2="504"/>
+  </g>
+
+  <g transform="translate(256 262) rotate(-3)">
+    <rect x="-186" y="-92" width="372" height="184" rx="20" fill="#0E2E52" opacity=".10"/>
+    <rect x="-190" y="-98" width="372" height="184" rx="20" fill="#ffffff"/>
+    <path d="M-190 -98 h372 a20 20 0 0 1 20 20 v40 C60 -8 -80 60 -190 30 Z" fill="#ffffff"/>
+    <path d="M-190 -98 h372 a20 20 0 0 1 20 20 v18 C40 -30 -90 24 -190 6 Z" fill="#ffffff" opacity=".65"/>
+    <text x="0" y="20" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+          font-size="92" font-weight="800" letter-spacing="2" fill="#7FB2F0">NEWS</text>
+  </g>
+</svg>

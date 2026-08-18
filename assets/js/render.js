@@ -191,17 +191,20 @@ window.SEN = window.SEN || {};
        (외부 원문 링크가 있어도 카드 자체는 내부 상세 페이지를 열고,
        원문은 상세 페이지 안의 "원문 보기" 버튼으로 뺍니다)
        메인 페이지는 한 번에 기사 하나만 보여주는 스포트라이트 방식이라
-       (controls.js의 initNewsSpotlight), 사진이 있으면 카드 왼쪽 절반을
-       채웁니다 — 예전 마퀴 카드와 달리 사진을 넣어도 자리가 넉넉합니다. */
+       (controls.js의 initNewsSpotlight), 사진이 있으면 카드 위쪽을
+       채웁니다. 사진이 없는 기사는 카카오톡으로 받은 기본 이미지
+       (assets/img/news-placeholder.svg, 지구본+NEWS 아이콘)를 대신
+       씁니다 — --ph 그라디언트로만 비워 두지 않습니다. */
     'news.items': function (items, ctx) {
       var readMore = t(pick(ctx, 'site.ui.readMore')) || '자세히 보기';
       if (!items.length) return '<p class="state">' + esc(t(pick(ctx, 'site.ui.empty')) || '등록된 글이 없습니다.') + '</p>';
 
       return items.map(function (it, i) {
         var href = 'news.html?id=' + encodeURIComponent(it.id || '');
+        var img = it.image || 'assets/img/news-placeholder.svg';
         return '' +
           '<a class="card news-spotlight__card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
-            '<div class="card__media">' + imgTag(it.image, '', '') + '</div>' +
+            '<div class="card__media' + (it.image ? '' : ' card__media--placeholder') + '">' + imgTag(img, '', '') + '</div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
                 (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +
