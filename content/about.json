@@ -235,7 +235,7 @@
       },
       {
         "overseas": true,
-        "tag": { "ko": "해외 / Singapore", "en": "Singapore", "zh": "新加坡", "ja": "シンガポール" },
+        "tag": { "ko": "Regional Office : Singapore", "en": "Singapore", "zh": "新加坡", "ja": "シンガポール" },
         "name": { "ko": "SEN SG PTE. LTD.", "en": "SEN SG PTE. LTD.", "zh": "SEN SG PTE. LTD.", "ja": "SEN SG PTE. LTD." },
         "address": {
           "ko": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361",
@@ -243,27 +243,27 @@
           "zh": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361",
           "ja": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361"
         },
-        "tel": "+65 6539 9986",
+        "tel": "+65 9837 5647",
         "fax": "",
         "email": ""
       },
       {
         "overseas": true,
-        "tag": { "ko": "해외 / Malaysia", "en": "Malaysia", "zh": "马来西亚", "ja": "マレーシア" },
+        "tag": { "ko": "Regional Office : Malaysia", "en": "Malaysia", "zh": "马来西亚", "ja": "マレーシア" },
         "name": { "ko": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "en": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "zh": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "ja": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD." },
         "address": {
-          "ko": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia",
-          "en": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia",
-          "zh": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia",
-          "ja": "260 Jln Haruan 5/7, Oakland Commercial Centre, 70300 Seremban, Negeri Sembilan, Malaysia"
+          "ko": "12th Floor, Menara Symphony, No. 5, Jalan Prof. Khoo Kay Kim, Seksyen 13, 46200 Petaling Jaya, Selangor, Malaysia",
+          "en": "12th Floor, Menara Symphony, No. 5, Jalan Prof. Khoo Kay Kim, Seksyen 13, 46200 Petaling Jaya, Selangor, Malaysia",
+          "zh": "12th Floor, Menara Symphony, No. 5, Jalan Prof. Khoo Kay Kim, Seksyen 13, 46200 Petaling Jaya, Selangor, Malaysia",
+          "ja": "12th Floor, Menara Symphony, No. 5, Jalan Prof. Khoo Kay Kim, Seksyen 13, 46200 Petaling Jaya, Selangor, Malaysia"
         },
-        "tel": "+60 17 995 5647",
+        "tel": "",
         "fax": "",
         "email": ""
       },
       {
         "overseas": true,
-        "tag": { "ko": "해외 / Indonesia", "en": "Indonesia", "zh": "印度尼西亚", "ja": "インドネシア" },
+        "tag": { "ko": "Regional Office : Indonesia", "en": "Indonesia", "zh": "印度尼西亚", "ja": "インドネシア" },
         "name": { "ko": "PT SEN ENGINEERING GROUP INDONESIA", "en": "PT SEN ENGINEERING GROUP INDONESIA", "zh": "PT SEN ENGINEERING GROUP INDONESIA", "ja": "PT SEN ENGINEERING GROUP INDONESIA" },
         "address": {
           "ko": "Graha Surveyor Lt 15 Suite 1503, Jl. Gatot Subroto No.Kav 56, RT.1/RW.4, Kuningan Tim., Kecamatan Setiabudi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950, Indonesia",
@@ -277,7 +277,7 @@
       },
       {
         "overseas": true,
-        "tag": { "ko": "해외 / Vietnam", "en": "Vietnam", "zh": "越南", "ja": "ベトナム" },
+        "tag": { "ko": "Regional Office : Vietnam", "en": "Vietnam", "zh": "越南", "ja": "ベトナム" },
         "name": { "ko": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "en": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "zh": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "ja": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH" },
         "address": {
           "ko": "Tầng 3 tầng 4 toà CMC chân cầu Nhật Tân, Toà nhà bảy tầng, xóm Chín, thôn Ngọc Chi, xã Vĩnh Ngọc, huyện Đông Anh, thành phố Hà Nội, Vietnam",
