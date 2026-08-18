@@ -98,9 +98,9 @@
 .ceo__name { font-size: 1.15rem; }
 
 /* 좁은 화면에서 CEO 인사말 본문을 <details>로 접어 둡니다(인용구·사진·
-   서명은 그대로 보임) — 약력·자격 아코디언(.acc__group)과 같은 모양의
-   summary를 눌러야 펼쳐집니다. PC는 summary를 숨기고 :not([open])이어도
-   본문(.prose)을 강제로 펼쳐 보여, 항상 전체 글이 그대로 보입니다. */
+   서명은 그대로 보임) — summary를 눌러야 펼쳐집니다. PC는 summary를
+   숨기고 :not([open])이어도 본문(.prose)을 강제로 펼쳐 보여, 항상 전체
+   글이 그대로 보입니다. */
 .ceo__body-summary {
   display: none;
   cursor: pointer; list-style: none;
@@ -124,41 +124,6 @@
    <details> 의 open 속성을 실제로 켜서 처리합니다 — display 를 강제로
    덮어쓰는 방식은 최신 크롬이 닫힌 <details> 내용을 content-visibility
    로 숨겨서(display 가 아니라) author CSS로 못 뚫는 경우가 있었습니다. */
-
-/* ---------- 접이식 묶음 (.acc) ----------
-   CEO 약력(약력·자격·수상·저서)과 회사연혁(연대별)이 같은 모양을 씁니다.
-   여닫이 표시는 닫힘 +, 열림 −. */
-.acc { border-top: 1px solid var(--c-line); }
-.acc__group { border-bottom: 1px solid var(--c-line); }
-.acc__group summary {
-  cursor: pointer; list-style: none;
-  display: flex; align-items: baseline; gap: 6px 16px; flex-wrap: wrap;
-  padding: 16px 4px;
-  font-weight: 700; font-size: .98rem; color: var(--c-ink);
-  transition: color .2s;
-}
-/* 연대(굵게) + 그 시기를 한 줄로 요약한 헤드 문구 */
-.acc__label { flex-shrink: 0; }
-.acc__headline { font-weight: 500; font-size: var(--fs-small); color: var(--c-muted); }
-.acc__group summary:hover { color: var(--c-blue); }
-.acc__group summary::-webkit-details-marker { display: none; }
-.acc__group summary::after {
-  content: "+"; flex-shrink: 0; margin-left: auto;   /* 헤드 문구가 있든 없든 오른쪽 끝 */
-  font-size: 1.3rem; font-weight: 400; line-height: 1; color: var(--c-blue);
-}
-.acc__group[open] summary::after { content: "−"; }
-
-/* 글머리 점 목록 (CEO 약력) */
-.acc__list { display: grid; gap: 8px; padding: 0 4px 20px; }
-.acc__list li {
-  font-size: var(--fs-small); color: var(--c-muted); padding-left: 14px; position: relative;
-}
-.acc__list li::before {
-  content: ""; position: absolute; left: 0; top: .68em;
-  width: 5px; height: 5px; border-radius: 50%; background: var(--c-blue-soft);
-}
-
-.ceo__career { margin-top: clamp(2rem, 5vw, 3rem); }
 
 /* ---------- 회사연혁 : 가로 타임라인 (.tml) ----------
    수평선 하나 위에 연혁을 왼쪽에서 오른쪽으로 늘어놓습니다.
@@ -416,7 +381,7 @@
 /* 해외 지사 — 국내 카드 3개(.offices__domestic)와 같은 폭으로 그 아래에
    세로로 길게 쌓은 줄들이고, 하나씩 눌러서 폅니다. 모바일에서 국내 카드가
    가로 캐러셀로 바뀌어도 이건 .offices__domestic 바깥이라 영향을 안 받고
-   항상 한 줄 전체 폭으로 나옵니다. +,− 표시는 위 .acc__group 과 같은 패턴. */
+   항상 한 줄 전체 폭으로 나옵니다. */
 .office-overseas {
   display: flex; flex-direction: column;
   border: 1px solid var(--c-line); border-radius: var(--radius); overflow: hidden;

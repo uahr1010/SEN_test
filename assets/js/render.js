@@ -99,17 +99,6 @@ window.SEN = window.SEN || {};
     return newsData;
   }
 
-  /** +,− 로 여닫는 묶음 하나. CEO 약력과 회사연혁이 같은 모양을 씁니다.
-      g.open 이 true 면 펼친 채로 시작합니다. */
-  function accordion(g, inner) {
-    var head = '<b class="acc__label">' + esc(t(g.label)) + '</b>' +
-               (t(g.headline) ? '<span class="acc__headline">' + esc(t(g.headline)) + '</span>' : '');
-    return '<details class="acc__group"' + (g.open ? ' open' : '') + '>' +
-             '<summary>' + head + '</summary>' + inner +
-           '</details>';
-  }
-
-
   /* ---------- 목록 렌더러 ---------- */
   /* key = index.html 의 data-list 값 */
   var RENDERERS = {
@@ -118,15 +107,6 @@ window.SEN = window.SEN || {};
     'site.hero.stats': function (items) {
       return items.map(function (it) {
         return '<li><b>' + esc(t(it.value)) + '</b><span>' + esc(t(it.label)) + '</span></li>';
-      }).join('');
-    },
-
-    /* CEO 약력 — 약력 / 자격 / 주요 수상경력 / 저서 를 각각 +,− 로 여닫습니다.
-       처음에는 모두 접혀 있습니다 (JSON 에서 "open": true 로 두면 펼친 채로 시작). */
-    'about.ceo.careerGroups': function (groups) {
-      return groups.map(function (g) {
-        var lis = tList(g.items).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
-        return accordion(g, '<ul class="acc__list">' + lis + '</ul>');
       }).join('');
     },
 
