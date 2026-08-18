@@ -60,14 +60,8 @@
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: start;
 }
-/* 사진 + 서명 / 본문 2단.
-   사진은 본문 높이 정도에서 끝나도록 폭을 묶어 두고, 바로 아래에 서명을 답니다.
-   (예전에는 사진이 왼쪽 칸 전체를 차지해 본문보다 훨씬 길었습니다) */
-.ceo__intro {
-  display: grid; gap: clamp(1.5rem, 4vw, 3rem);
-  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-  align-items: start;
-}
+/* 사진을 없애고 인사말(인용구 → 본문 → 서명)만 한 줄로 흐르게 둡니다. */
+.ceo__intro { max-width: 68ch; }
 /* CEO 인사말 위 소개 영상 — video URL이 없으면 render.js가 [hidden] 처리,
    있으면 자동재생·반복 iframe으로 바로 채워 넣습니다. */
 .ceo__video {
@@ -76,22 +70,15 @@
 }
 .ceo__video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-.ceo__media {
-  /* 사진을 자르지 않고 원본 그대로(직사각형) 다 보이도록 고정 비율/
-     object-fit:cover 를 안 씁니다 — 세로 길이는 사진 자체 비율을 따라갑니다.
-     라운딩도 없앴습니다(둥근 모서리가 사진 꼭짓점을 살짝 잘라 선처럼 보였음). */
-  overflow: hidden; background: var(--ph);
-}
-.ceo__media img { width: 100%; height: auto; display: block; }
 .ceo__quote {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.2vw, 1.75rem); line-height: 1.45;
   color: var(--c-navy); border-left: 3px solid var(--c-blue);
   padding-left: var(--sp-3); margin: var(--sp-3) 0 var(--sp-4);
 }
-/* 사진 바로 아래 "센 엔지니어링그룹 회장 이창남" */
+/* 본문 바로 아래 "센 엔지니어링그룹 회장 이창남" — 편지 맺음말처럼 끝에 답니다 */
 .ceo__sign {
-  margin-top: var(--sp-2);
+  margin-top: var(--sp-3);
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px;
 }
 .ceo__role { font-size: var(--fs-small); color: var(--c-muted); }
@@ -684,13 +671,6 @@
 
 @media (max-width: 860px) {
   .ceo { grid-template-columns: 1fr; }
-  /* 좁은 화면에서는 사진을 위로 올리고 본문이 그 아래로 흐르게 둡니다.
-     사진이 폭 전체(.ceo__aside)보다 좁아서(max-width:220px) 그냥 두면
-     왼쪽에 붙어 보이므로 가운데로 옮기고, 그 아래 이름/직함도 사진과
-     같이 가운데 맞춥니다(PC는 이 미디어쿼리 밖이라 그대로 유지됩니다). */
-  .ceo__intro { grid-template-columns: 1fr; }
-  .ceo__media { max-width: 220px; margin: 0 auto; }
-  .ceo__sign { justify-content: center; text-align: center; }
   /* 해시태그처럼 붙는 배지(팀/형태/근무지/마감)가 좁은 화면에서 제목과
      한 줄을 다투다 잘려 보이는 일이 없도록, 배지 칸을 아예 새 줄
      전체(100%)로 떼어냅니다 — 그 줄 안에서는 배지끼리 알아서

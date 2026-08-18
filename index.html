@@ -115,8 +115,7 @@
         <p class="scene__lead" data-bind="about.section.lead"></p>
       </header>
 
-      <!-- 인용구는 폭 전체, 그 아래 [사진+서명] / [본문] 2단.
-           약력·자격·수상·저서 아코디언은 없앴습니다 — CEO 인사말만 남깁니다. -->
+      <!-- 사진·약력·자격·수상·저서 다 없앴습니다 — CEO 인사말(인용구+본문+서명)만 남깁니다. -->
       <div class="about-block" id="about-ceo">
         <!-- 영상 URL(about.ceo.video)이 비어 있으면 render.js가 이 자리를 통째로 숨기고,
              있으면 자동재생·반복 iframe을 여기에 채워 넣습니다 -->
@@ -125,17 +124,10 @@
         <blockquote class="ceo__quote" data-bind="about.ceo.quote" data-reveal></blockquote>
 
         <div class="ceo__intro" data-reveal>
-          <div class="ceo__aside">
-            <div class="ceo__media"><img data-src="about.ceo.photo" alt="" loading="lazy"></div>
-            <p class="ceo__sign">
-              <span class="ceo__role" data-bind="about.ceo.role"></span>
-              <strong class="ceo__name" data-bind="about.ceo.name"></strong>
-            </p>
-          </div>
-          <!-- 좁은 화면에서는 약력·자격 아코디언과 같은 <details> 방식으로
-               접혀 있다가 눌러야 펼쳐집니다(브라우저 기본 동작이라 JS
-               없이도 동작). PC는 CSS로 summary를 숨기고 내용을 강제로
-               펼쳐 둬서 항상 전체가 보입니다. -->
+          <!-- 좁은 화면에서는 <details> 방식으로 접혀 있다가 눌러야
+               펼쳐집니다(브라우저 기본 동작이라 JS 없이도 동작). PC는
+               CSS로 summary를 숨기고 내용을 강제로 펼쳐 둬서 항상 전체가
+               보입니다. -->
           <details class="ceo__body" data-ceo-body>
             <summary class="ceo__body-summary">
               <span data-bind="site.ui.ceoMoreLabel">CEO 인사말</span>
@@ -144,6 +136,10 @@
               </svg>
             </summary>
             <div class="prose" data-prose="about.ceo.body"></div>
+            <p class="ceo__sign">
+              <span class="ceo__role" data-bind="about.ceo.role"></span>
+              <strong class="ceo__name" data-bind="about.ceo.name"></strong>
+            </p>
           </details>
         </div>
       </div>
