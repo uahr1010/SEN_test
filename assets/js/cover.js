@@ -157,6 +157,11 @@ window.SEN = window.SEN || {};
     initAutoPause(cover, cover.querySelector('[data-cover-bg]'));
     fitBrand();
     addEventListener('resize', fitBrand);
+    /* 브라우저 확대/축소(Ctrl +/-, 모바일 핀치줌)는 window의 resize를
+       항상 정확히 내지는 않습니다 — visualViewport의 resize가 더
+       확실히 잡아 줘서, 확대/축소할 때마다 글자가 그대로 남아 있다가
+       칸을 넘쳐 잘리던 문제가 있었습니다. 둘 다 걸어 둡니다. */
+    if (window.visualViewport) visualViewport.addEventListener('resize', fitBrand);
     // 웹폰트(Anton)는 늦게 도착합니다. 안 기다리면 대체폰트 기준으로 계산돼 어긋납니다.
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBrand);
   }
