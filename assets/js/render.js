@@ -190,8 +190,9 @@ window.SEN = window.SEN || {};
     /* 뉴스 카드 — 클릭하면 news.html?id=... 상세 페이지로 이동합니다.
        (외부 원문 링크가 있어도 카드 자체는 내부 상세 페이지를 열고,
        원문은 상세 페이지 안의 "원문 보기" 버튼으로 뺍니다)
-       목록 카드에는 이미지를 넣지 않습니다 — 상세 페이지(article__hero)에는
-       그대로 나옵니다. 폼(썸네일 자리) 자체는 그대로 두고 사진만 뺐습니다. */
+       메인 페이지는 한 번에 기사 하나만 보여주는 스포트라이트 방식이라
+       (controls.js의 initNewsSpotlight), 사진이 있으면 카드 왼쪽 절반을
+       채웁니다 — 예전 마퀴 카드와 달리 사진을 넣어도 자리가 넉넉합니다. */
     'news.items': function (items, ctx) {
       var readMore = t(pick(ctx, 'site.ui.readMore')) || '자세히 보기';
       if (!items.length) return '<p class="state">' + esc(t(pick(ctx, 'site.ui.empty')) || '등록된 글이 없습니다.') + '</p>';
@@ -199,7 +200,8 @@ window.SEN = window.SEN || {};
       return items.map(function (it, i) {
         var href = 'news.html?id=' + encodeURIComponent(it.id || '');
         return '' +
-          '<a class="card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
+          '<a class="card news-spotlight__card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
+            '<div class="card__media">' + imgTag(it.image, '', '') + '</div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
                 (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +
@@ -357,46 +359,13 @@ window.SEN = window.SEN || {};
 
       host.innerHTML = RENDERERS[key](items, ctx);
 
-      // 홈 뉴스 캐러셀 — 카드가 다시 그려질 때마다 자동 스크롤용 복제본을 새로 만듦
-      // (news.html/news-list.html 에는 이 캐러셀이 없고 controls.js 도 안 실어서 가드함)
-      if (key === 'news.items' && SEN.controls && SEN.controls.refreshNewsLoop) {
-        SEN.controls.refreshNewsLoop();
+      // 홈 뉴스 스포트라이트 — 카드가 다시 그려질 때마다(언어 전환 등)
+      // 몇 번째를 보고 있었는지 등 상태를 다시 잡음
+      // (news.html/news-list.html 에는 이 위젯이 없고 controls.js 도 안 실어서 가드함)
+      if (key === 'news.items' && SEN.controls && SEN.controls.refreshNewsSpotlight) {
+        SEN.controls.refreshNewsSpotlight();
       }
     });
-
-    // 7) 뉴스/프로젝트 필터 칩 — 분류는 site.news.categories 에 고정 목록으로
-    // 적어 둔 걸 그대로 씁니다(해당 분류 글이 아직 하나도 없어도 칩은 보이도록).
-    // news.json 이 아니라 site.json 에 둔 이유: news.json 은 Pages CMS
-    // "② 뉴스" 탭이 저장할 때 폼에 없는 필드를 통째로 지워버려서(section 이
-    // 그렇게 날아간 적이 있음), 그 탭이 절대 건드리지 않는 site.json 에 둡니다.
-    buildChips(ctx, 'news', '[data-newsfilter]', function (it) { return t(it.category); }, pick(ctx, 'site.news.categories'));
-  }
-
-  function buildChips(ctx, kind, selector, getLabel, fixedLabels) {
-    var host = document.querySelector(selector);
-    if (!host) return;
-    var labels;
-    if (Array.isArray(fixedLabels) && fixedLabels.length) {
-      labels = fixedLabels.slice();
-    } else {
-      var all = pick(ctx, kind + '.items') || [];
-      labels = [];
-      all.forEach(function (it) {
-        var l = getLabel(it);
-        if (l && labels.indexOf(l) === -1) labels.push(l);
-      });
-    }
-    if (labels.length < 2) { host.innerHTML = ''; return; }
-
-    var allLabel = t(pick(ctx, 'site.ui.all')) || '전체';
-    var active = SEN.state.filter[kind];
-    var html = '<button type="button" class="chip' + (!active ? ' is-on' : '') +
-               '" data-chip="' + kind + '" data-value="">' + esc(allLabel) + '</button>';
-    html += labels.map(function (l) {
-      return '<button type="button" class="chip' + (active === l ? ' is-on' : '') +
-             '" data-chip="' + kind + '" data-value="' + esc(l) + '">' + esc(l) + '</button>';
-    }).join('');
-    host.innerHTML = html;
   }
 
   /* 지역별 실적 순위 등에서 화면에 보여줄 때만 손보는 이름입니다.

@@ -411,15 +411,15 @@
 .card__foot::after { content: "→"; transition: transform .25s var(--ease); }
 .card:hover .card__foot::after { transform: translateX(4px); }
 
-/* ---------- 홈 뉴스 섹션 — 가로 캐러셀 ----------
-   카드 자체는 기존 디자인(테두리·그림자·둥근 모서리) 그대로 씁니다.
-   .news-carousel 은 .scene__inner 밖(.scene 의 직계 자식)에 있어서
-   1180px 제한 없이 양쪽 끝까지 꽉 채웁니다(위 index.html 구조 참고).
-   카드 줄은 자동으로 계속 오른쪽으로 흐르고(controls.js), 화살표로도
-   수동 이동이 됩니다. */
+/* ---------- 홈 뉴스 섹션 — 스포트라이트(기사 하나씩) ----------
+   카카오톡으로 받은 참고 컴포넌트(reference/news-animated-testimonials-
+   reference.txt, Aceternity의 AnimatedTestimonials)를 참고했습니다 —
+   카드 여러 장이 계속 흘러가던 마퀴 대신, 사진+글이 나란한 카드 한 장만
+   보여주고 몇 초마다 자동으로 다음 기사로 fade 전환됩니다(controls.js).
+   카드는 전부 같은 자리에 겹쳐 두고 .is-active 만 보이게 합니다. */
 .news__head {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-  gap: var(--sp-3); margin-bottom: var(--sp-3);
+  gap: var(--sp-3); margin-bottom: var(--sp-4);
 }
 .news__seeall {
   flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
@@ -428,55 +428,71 @@
 .news__seeall::after { content: "→"; transition: transform .2s var(--ease); }
 .news__seeall:hover::after { transform: translateX(4px); }
 
-.news-carousel {
+.news-spotlight {
   position: relative; width: 100%; box-sizing: border-box;
   display: flex; align-items: center; gap: var(--sp-3);
   padding: 0 clamp(20px, 4vw, 64px);
 }
+.news-spotlight__arrow { flex-shrink: 0; }
 .news-carousel__arrow {
-  flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+  width: 44px; height: 44px; border-radius: 50%;
   border: 1px solid var(--c-line); background: var(--c-white); color: var(--c-ink);
   display: grid; place-items: center; transition: border-color .2s, color .2s;
 }
 .news-carousel__arrow:hover { border-color: var(--c-blue); color: var(--c-blue); }
 .news-carousel__arrow svg { width: 18px; height: 18px; }
 
-.cards--news[data-news-track] {
-  display: flex; gap: var(--sp-3); overflow-x: hidden;
-  flex: 1 1 auto; min-width: 0; padding: 4px 2px 12px;
+.news-spotlight__viewport {
+  flex: 1 1 auto; min-width: 0;
+  position: relative;
+  height: 360px;
 }
-/* 제목 줄 수가 카드마다 달라 높이가 들쭉날쭉해지지 않도록,
-   flex 신축(stretch)에 기대지 않고 카드 높이를 고정하고 제목도 2줄로 자릅니다.
-   폭은 고정 px가 아니라 트랙 폭의 1/3로 잡아서, 화면 크기와 무관하게
-   한 번에 3장씩 보이도록 합니다(예전엔 300px 고정이라 넓은 화면에서
-   4장 이상 보여 한눈에 안 들어온다는 피드백이 있었습니다). */
-.cards--news[data-news-track] .card { flex: 0 0 calc((100% - 2 * var(--sp-3)) / 3); height: 300px; }
-.cards--news[data-news-track] .card__title {
+.cards--news[data-news-track] { display: block; height: 100%; }
+
+/* 카드를 전부 같은 자리에 겹쳐 두고, 지금 차례(.is-active)만 보이게
+   합니다 — controls.js가 몇 초마다 그 클래스를 다음 카드로 옮깁니다. */
+.news-spotlight__card {
+  position: absolute; inset: 0;
+  flex-direction: row; align-items: stretch;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .5s var(--ease);
+}
+.news-spotlight__card.is-active {
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+.news-spotlight__card .card__media {
+  flex: 0 0 44%; background: var(--ph); overflow: hidden;
+}
+.news-spotlight__card .card__media img { width: 100%; height: 100%; object-fit: cover; }
+.news-spotlight__card .card__body { padding: var(--sp-4); justify-content: center; }
+.news-spotlight__card .card__title {
+  font-size: 1.3rem;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
   line-clamp: 2; overflow: hidden;
 }
-@media (max-width: 640px) {
-  /* 좁은 화면에서는 계속 흐르는 캐러셀 대신 고정된 2×2 격자로 4개만
-     보여줍니다(controls.js가 자동 스크롤·복제도 모바일에서는 건너뜁니다).
-     화살표는 더 이상 움직일 게 없으니 감춥니다. PC는 기존 가로 캐러셀 그대로. */
-  .news-carousel__arrow { display: none; }
-  .cards--news[data-news-track] {
-    /* CSS grid(1fr 두 칸)로 해보니 카드 안의 긴 요약문(-webkit-box
-       말줄임 기법)이 트랙 폭을 무시하고 원래 글자 폭(수천 px)만큼
-       늘어나 버리는 문제가 있었습니다. PC 캐러셀에서 이미 문제없이
-       쓰던 것과 같은 flex + calc() 고정폭 방식(아래)으로 바꾸니
-       해결됐습니다 — 폭이 처음부터 확정된 값이라 안 그런 듯합니다. */
-    display: flex; flex-wrap: wrap; gap: var(--sp-2);
-    overflow-x: visible; padding: 4px 2px 12px;
-  }
-  .cards--news[data-news-track] .card { flex: 0 0 calc(50% - var(--sp-2) / 2); height: 240px; }
-  .cards--news[data-news-track] .card:nth-child(n+5) { display: none; }
-  /* 카드 폭이 좁아져서(153px 안팎) 글자도 그만큼 줄입니다 */
-  .cards--news[data-news-track] .card__title { font-size: 0.92rem; }
-  .cards--news[data-news-track] .card__excerpt { font-size: 0.78rem; }
-  /* 기본 패딩(24px)이 좁은 카드에서 너무 커서 글자 들어갈 자리가
-     모자라 잘려 보였습니다 — 줄여서 글자 공간을 늘립니다. */
-  .cards--news[data-news-track] .card__body { padding: 12px; }
+.news-spotlight__card .card__excerpt { -webkit-line-clamp: 4; line-clamp: 4; }
+
+/* 기사가 몇 번째인지 보여주는 점 — 눌러서 바로 이동도 됩니다 */
+.news-spotlight__dots {
+  display: flex; justify-content: center; gap: 8px; margin-top: var(--sp-3);
+}
+.news-spotlight__dots button {
+  width: 8px; height: 8px; border-radius: 50%; padding: 0;
+  background: var(--c-line); transition: background .2s, transform .2s;
+}
+.news-spotlight__dots button:hover { background: var(--c-blue-soft); }
+.news-spotlight__dots button.is-on { background: var(--c-blue); transform: scale(1.3); }
+
+@media (max-width: 760px) {
+  /* 좁은 화면에서는 사진을 위, 글을 아래로 세로 배치합니다. */
+  .news-spotlight { padding: 0 clamp(12px, 4vw, 24px); gap: var(--sp-2); }
+  .news-spotlight__viewport { height: 480px; }
+  .news-spotlight__card { flex-direction: column; }
+  .news-spotlight__card .card__media { flex: 0 0 42%; }
+  .news-spotlight__card .card__body { padding: var(--sp-3); }
+  .news-spotlight__card .card__title { font-size: 1.05rem; }
+  .news-carousel__arrow { width: 36px; height: 36px; }
+  .news-carousel__arrow svg { width: 15px; height: 15px; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
