@@ -60,8 +60,8 @@
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: start;
 }
-/* 사진을 없애고 인사말(인용구 → 본문 → 서명)만 한 줄로 흐르게 둡니다. */
-.ceo__intro { max-width: 68ch; }
+/* 사진을 없애고 인사말(인용구 → 본문 → 서명)만 한 줄로 흐르게 둡니다.
+   폭은 위 CEO 영상(.ceo__video)과 똑같이 .about-block 전체 폭을 씁니다. */
 /* CEO 인사말 위 소개 영상 — video URL이 없으면 render.js가 [hidden] 처리,
    있으면 자동재생·반복 iframe으로 바로 채워 넣습니다. */
 .ceo__video {
@@ -243,21 +243,6 @@
 }
 .methods__head > div:first-child { flex: 1 1 320px; }
 .methods__head .scene__lead { margin-top: 8px; }
-
-/* 회사소개서 PDF — 공법별 개별 자료가 아니라 전체를 아우르는 브로슈어 하나를
-   언어별로 올려 두고, 언어 이름 자체는 사이트 언어와 무관하게 항상 그
-   언어로 표기합니다(위 헤더의 언어 선택 메뉴와 같은 방식). */
-.brochure { flex: 0 0 auto; }
-.brochure__btns { display: flex; flex-wrap: wrap; gap: 8px; }
-.brochure__btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: var(--fs-small); font-weight: 700; color: var(--c-ink);
-  border: 1px solid var(--c-line); border-radius: 999px;
-  padding: 8px 16px; background: var(--c-white);
-  transition: border-color .2s, color .2s, background .2s;
-}
-.brochure__btn:hover { border-color: var(--c-blue); color: var(--c-blue); background: var(--c-tint); }
-.brochure__btn-ico { flex: none; width: 17px; height: 17px; }
 
 .methods { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 /* 좁은 화면에서는 카드를 세로로 쌓지 않고 옆으로 드래그해서 보는

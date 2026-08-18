@@ -275,15 +275,6 @@ python tools/translate_by_id.py --news-id news-2026-...-예시 --dry-run
 
 ---
 
-### 회사소개서(PDF) 교체
-
-공법별 개별 PDF는 없고, "주요공법" 제목 옆 한국어/English/中文 3개 언어 박스로
-전체 공법을 아우르는 회사소개서 PDF 한 벌을 받습니다. 파일은
-`assets/pdf/senkuzo-brochure-{ko,en,zh}.pdf` 이고, `index.html` 의
-`.brochure__btn` 링크가 이 경로를 직접 가리킵니다. 교체할 땐 같은 파일명으로
-덮어쓰면 됩니다 (원본이 사진 위주로 과도하게 크면 PyMuPDF 등으로 내장 이미지만
-재압축하는 걸 권장합니다 — 텍스트 레이어는 그대로 두고 사진만 JPEG 재인코딩).
-
 ### 채용공고 추가 / "지원하기" 메일 주소 변경
 
 ③ 채용공고 →
