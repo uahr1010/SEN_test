@@ -428,24 +428,28 @@
 .news__seeall::after { content: "→"; transition: transform .2s var(--ease); }
 .news__seeall:hover::after { transform: translateX(4px); }
 
+/* 예전엔 이 폭이 화면 거의 전체였는데, 그러니 카드 한 장이 너무 넓고
+   좌우로 헐렁해 보였습니다 — 그 폭의 1/3 정도(420px)로 줄이고 가운데
+   정렬했습니다. 폭이 좁아진 만큼 사진을 옆이 아니라 위에 두는 세로
+   배치로 바꿨습니다(옆으로 두면 이 폭에서는 사진도 글도 다 좁아 답답해
+   보였습니다) — PC·모바일 구분 없이 항상 이 배치입니다. */
 .news-spotlight {
-  position: relative; width: 100%; box-sizing: border-box;
-  display: flex; align-items: center; gap: var(--sp-3);
-  padding: 0 clamp(20px, 4vw, 64px);
+  position: relative; max-width: 420px; margin: 0 auto; box-sizing: border-box;
+  display: flex; align-items: center; gap: var(--sp-2);
 }
 .news-spotlight__arrow { flex-shrink: 0; }
 .news-carousel__arrow {
-  width: 44px; height: 44px; border-radius: 50%;
+  width: 36px; height: 36px; border-radius: 50%;
   border: 1px solid var(--c-line); background: var(--c-white); color: var(--c-ink);
   display: grid; place-items: center; transition: border-color .2s, color .2s;
 }
 .news-carousel__arrow:hover { border-color: var(--c-blue); color: var(--c-blue); }
-.news-carousel__arrow svg { width: 18px; height: 18px; }
+.news-carousel__arrow svg { width: 15px; height: 15px; }
 
 .news-spotlight__viewport {
   flex: 1 1 auto; min-width: 0;
   position: relative;
-  height: 360px;
+  height: 480px;
 }
 .cards--news[data-news-track] { display: block; height: 100%; }
 
@@ -453,7 +457,7 @@
    합니다 — controls.js가 몇 초마다 그 클래스를 다음 카드로 옮깁니다. */
 .news-spotlight__card {
   position: absolute; inset: 0;
-  flex-direction: row; align-items: stretch;
+  flex-direction: column; align-items: stretch;
   opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity .5s var(--ease);
 }
@@ -461,12 +465,12 @@
   opacity: 1; visibility: visible; pointer-events: auto;
 }
 .news-spotlight__card .card__media {
-  flex: 0 0 44%; background: var(--ph); overflow: hidden;
+  flex: 0 0 42%; background: var(--ph); overflow: hidden;
 }
 .news-spotlight__card .card__media img { width: 100%; height: 100%; object-fit: cover; }
-.news-spotlight__card .card__body { padding: var(--sp-4); justify-content: center; }
+.news-spotlight__card .card__body { padding: var(--sp-3); justify-content: center; }
 .news-spotlight__card .card__title {
-  font-size: 1.3rem;
+  font-size: 1.05rem;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
   line-clamp: 2; overflow: hidden;
 }
@@ -482,18 +486,6 @@
 }
 .news-spotlight__dots button:hover { background: var(--c-blue-soft); }
 .news-spotlight__dots button.is-on { background: var(--c-blue); transform: scale(1.3); }
-
-@media (max-width: 760px) {
-  /* 좁은 화면에서는 사진을 위, 글을 아래로 세로 배치합니다. */
-  .news-spotlight { padding: 0 clamp(12px, 4vw, 24px); gap: var(--sp-2); }
-  .news-spotlight__viewport { height: 480px; }
-  .news-spotlight__card { flex-direction: column; }
-  .news-spotlight__card .card__media { flex: 0 0 42%; }
-  .news-spotlight__card .card__body { padding: var(--sp-3); }
-  .news-spotlight__card .card__title { font-size: 1.05rem; }
-  .news-carousel__arrow { width: 36px; height: 36px; }
-  .news-carousel__arrow svg { width: 15px; height: 15px; }
-}
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
 .tag {
