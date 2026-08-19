@@ -431,11 +431,11 @@
 .news-spotlight-row {
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: var(--sp-5) var(--sp-4);
-  max-width: 1120px; margin: 0 auto;
+  width: min(1320px, 94vw); margin: 0 auto;
 }
 .news-spotlight {
   position: relative; box-sizing: border-box;
-  flex: 1 1 420px; max-width: 520px;
+  flex: 1 1 480px; max-width: 640px;
 }
 .news-spotlight__viewport {
   position: relative;
