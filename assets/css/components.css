@@ -524,12 +524,12 @@
   /* 모바일은 화면이 좁아 2개를 나란히도, 위아래로 쌓아도 부담스러워서
      첫 번째 스포트라이트 하나만 보여줍니다. */
   .news-spotlight[data-news-instance="1"] { display: none; }
-  .news-spotlight { flex-basis: 100%; max-width: 420px; }
-  .news-spotlight__viewport { height: 560px; }
+  .news-spotlight { flex-basis: 100%; max-width: 300px; }
+  .news-spotlight__viewport { height: 480px; }
   .news-spotlight__card {
     grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: var(--sp-3);
   }
-  .news-spotlight__card .card__media { height: 220px; }
+  .news-spotlight__card .card__media { height: 180px; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
