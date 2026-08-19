@@ -459,12 +459,18 @@
 .news-spotlight__card .card__media {
   position: relative; height: 82%; border-radius: 20px; overflow: hidden;
   background: var(--ph);
-  transform: scale(.92) rotate(var(--stack-rot, 0deg));
-  opacity: .55; z-index: 1;
-  transition: transform .5s var(--ease), opacity .5s var(--ease);
+  box-shadow: var(--shadow-sm);
+  /* 회전만으로는 사진이 없는 기사(전부 같은 기본 아이콘)일 때 카드가
+     거의 겹쳐 안 보였습니다 — 카드마다 다른 방향으로 살짝 밀어내는
+     이동(translate)을 더해 "여러 장이 부채처럼 겹쳐 쌓인" 모습이
+     또렷이 드러나게 했습니다. */
+  transform: scale(.9) translate(var(--stack-x, 0), var(--stack-y, 0)) rotate(var(--stack-rot, 0deg));
+  opacity: .6; z-index: 1;
+  transition: transform .5s var(--ease), opacity .5s var(--ease), box-shadow .5s var(--ease);
 }
 .news-spotlight__card.is-active .card__media {
-  transform: scale(1) rotate(0deg); opacity: 1; z-index: 10;
+  transform: scale(1) translate(0, 0) rotate(0deg); opacity: 1; z-index: 10;
+  box-shadow: var(--shadow);
 }
 .news-spotlight__card .card__media img { width: 100%; height: 100%; object-fit: cover; }
 /* 사진이 없는 기사의 기본 아이콘(news-placeholder.svg)은 사진처럼
@@ -477,12 +483,14 @@
 .news-spotlight__card .card__media--placeholder img {
   width: 46%; height: 46%; object-fit: contain;
 }
-/* 사진들이 서로 다른 각도로 겹쳐 보이도록 카드마다 회전값을 다르게 줍니다 */
-.news-spotlight__card:nth-child(5n+1) { --stack-rot: -6deg; }
-.news-spotlight__card:nth-child(5n+2) { --stack-rot: 5deg; }
-.news-spotlight__card:nth-child(5n+3) { --stack-rot: -4deg; }
-.news-spotlight__card:nth-child(5n+4) { --stack-rot: 7deg; }
-.news-spotlight__card:nth-child(5n+5) { --stack-rot: -8deg; }
+/* 사진들이 서로 다른 방향으로 밀리고 다른 각도로 겹쳐 보이도록
+   카드마다 값을 다르게 줍니다 — 사진이 없어 전부 같은 기본 아이콘일
+   때도 이 값 덕분에 "쌓여있다"는 느낌이 납니다. */
+.news-spotlight__card:nth-child(5n+1) { --stack-rot: -7deg; --stack-x: -16px; --stack-y: 10px; }
+.news-spotlight__card:nth-child(5n+2) { --stack-rot: 6deg;  --stack-x: 18px;  --stack-y: 14px; }
+.news-spotlight__card:nth-child(5n+3) { --stack-rot: -5deg; --stack-x: 12px;  --stack-y: -14px; }
+.news-spotlight__card:nth-child(5n+4) { --stack-rot: 8deg;  --stack-x: -20px; --stack-y: -8px; }
+.news-spotlight__card:nth-child(5n+5) { --stack-rot: -9deg; --stack-x: 6px;   --stack-y: 18px; }
 
 .news-spotlight__card .card__body {
   padding: 0; justify-content: center;
