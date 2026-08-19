@@ -510,11 +510,17 @@ window.SEN = window.SEN || {};
       } else {
         pmapInView = true;   // IntersectionObserver가 없으면 그냥 항상 다시 그림
       }
+      /* map.resize()는 캔버스 크기 자체가 안 바뀌는 스크롤 중에는 필요
+         없는데도(그냥 화면에 걸쳐 있는 동안 계속 불렀습니다) 매 스크롤
+         프레임마다 부르기엔 무거운 작업이라, 모바일에서 이 구역을
+         지나칠 때 스크롤이 버벅이는 원인이었습니다 — 화면에 "새로"
+         걸쳐질 때만 resize까지 하는 repaintIfVisible()을 부르고,
+         스크롤 도중에는 가벼운 triggerRepaint()만 부릅니다. */
       var repaintTicking = false;
       addEventListener('scroll', function () {
         if (!pmapInView || repaintTicking) return;
         repaintTicking = true;
-        requestAnimationFrame(function () { repaintTicking = false; repaintIfVisible(); });
+        requestAnimationFrame(function () { repaintTicking = false; map.triggerRepaint(); });
       }, { passive: true });
     }).catch(function (err) {
       console.warn('[SEN] 프로젝트 지도를 불러오지 못했습니다:', err && err.message);

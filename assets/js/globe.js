@@ -194,6 +194,7 @@ window.SEN = window.SEN || {};
       new ResizeObserver(function () {
         size();
         if (wrap.clientWidth > 0) visible = true;
+        needsRender = true;
       }).observe(wrap);
     }
 
@@ -204,11 +205,20 @@ window.SEN = window.SEN || {};
        (예전엔 spin 값을 매 프레임 늘려 계속 돌아갔습니다). */
     var qKorea = quatFor(30, 127.5);
     var visible = true, last = performance.now();
-    _refresh = function () { size(); visible = true; };
+    /* 드래그도 안 하고 이미 원위치(0,0)로 다 돌아온 상태면 매 프레임
+       다시 그려도 화면이 똑같습니다 — 그런데도 계속 renderer.render()
+       (WebGL 그리기)와 지역 점(pill) 수십 개의 DOM 스타일을 매 프레임
+       다시 썼는데, 이게 이 구역을 스크롤로 지나칠 때 버벅임의 한
+       원인이었습니다. 실제로 움직이거나(드래그·아직 감쇠 중) 새로 그릴
+       이유(needsRender)가 있을 때만 그리도록 건너뜁니다. */
+    var EPS_ANGLE = 0.0005;
+    var needsRender = true;
+    _refresh = function () { size(); visible = true; needsRender = true; };
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
         visible = en[0].isIntersecting;
+        if (visible) needsRender = true;
       }, { threshold: 0.01 }).observe(wrap);
     }
 
@@ -218,9 +228,14 @@ window.SEN = window.SEN || {};
       last = t;
       if (!visible) return;                      /* 화면 밖이면 그리지 않음 */
 
+      var moving = dragging || Math.abs(yaw) > EPS_ANGLE || Math.abs(pitch) > EPS_ANGLE;
+      if (!moving && !needsRender) return;        /* 멈춰 있고 새로 그릴 이유도 없으면 이 프레임은 건너뜀 */
+      needsRender = false;
+
       if (!dragging) {
         var k = Math.exp(-dt * 0.6);
         yaw *= k; pitch *= k;
+        if (Math.abs(yaw) < EPS_ANGLE && Math.abs(pitch) < EPS_ANGLE) { yaw = 0; pitch = 0; }
       }
       var qU = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), pitch)
         .multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), yaw));
