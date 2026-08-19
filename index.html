@@ -253,10 +253,14 @@
   <!-- ---------- 장면 3 : 뉴스 ----------
        예전엔 카드 여러 장이 한 줄로 계속 흘러가는 마퀴였는데, 카카오톡으로
        받은 참고 컴포넌트(reference/news-animated-testimonials-reference.txt,
-       Aceternity의 AnimatedTestimonials)를 참고해 "한 번에 기사 하나만
-       보여주고 자동으로 다음 기사로 넘어가는" 방식으로 바꿨습니다. 분류
-       칩(카테고리 선택)은 메인 페이지에서 없앴습니다 — 전체 목록
-       (news-list.html)에서는 그대로 남아 있습니다. -->
+       Aceternity의 AnimatedTestimonials)를 참고해 "사진이 살짝 겹쳐
+       쌓여있다가 지금 차례인 것만 정면으로 나오고 자동으로 다음 기사로
+       넘어가는" 스포트라이트로 바꿨습니다. 이 스포트라이트를 두 개
+       가로로 나란히 두어 한 번에 서로 다른 기사 두 개를 보여줍니다
+       (data-news-instance="0"/"1" — 실제 렌더링은 첫 번째에만 하고
+       controls.js가 두 번째로 그대로 복제합니다). 분류 칩(카테고리 선택)
+       은 메인 페이지에서 없앴습니다 — 전체 목록(news-list.html)에서는
+       그대로 남아 있습니다. -->
   <section class="scene scene--tint" id="scene-news" data-label="뉴스" data-section="news">
     <div class="scene__inner">
       <div class="news__head" data-reveal>
@@ -267,17 +271,32 @@
         <a class="news__seeall" href="news-list.html" data-bind="site.ui.loadMore"></a>
       </div>
     </div>
-    <div class="news-spotlight" data-reveal>
-      <div class="news-spotlight__viewport">
-        <div class="cards cards--news" data-list="news.items" data-news-track></div>
+    <div class="news-spotlight-row" data-reveal>
+      <div class="news-spotlight" data-news-instance="0">
+        <div class="news-spotlight__viewport">
+          <div class="cards cards--news" data-list="news.items" data-news-track></div>
+        </div>
+        <div class="news-spotlight__nav">
+          <button type="button" class="news-spotlight__arrow" data-news-arrow="prev" aria-label="이전 기사">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4.5 6 10l6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="news-spotlight__arrow" data-news-arrow="next" aria-label="다음 기사">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 14 10l-6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="news-spotlight__nav">
-        <button type="button" class="news-spotlight__arrow" data-news-arrow="prev" aria-label="이전 기사">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4.5 6 10l6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button type="button" class="news-spotlight__arrow" data-news-arrow="next" aria-label="다음 기사">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 14 10l-6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+      <div class="news-spotlight" data-news-instance="1">
+        <div class="news-spotlight__viewport">
+          <div class="cards cards--news" data-news-track></div>
+        </div>
+        <div class="news-spotlight__nav">
+          <button type="button" class="news-spotlight__arrow" data-news-arrow="prev" aria-label="이전 기사">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4.5 6 10l6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="news-spotlight__arrow" data-news-arrow="next" aria-label="다음 기사">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 14 10l-6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>

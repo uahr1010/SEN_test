@@ -134,128 +134,89 @@ window.SEN = window.SEN || {};
     });
   }
 
-  /* ---------- 홈 뉴스 스포트라이트 ----------
-     기사를 한 번에 2장씩, 가로로 나란히 보여주는 슬라이드 캐러셀입니다.
-     화살표(또는 5초마다 자동)를 누르면 1장씩 밀리며 넘어가는데, "다음"은
-     왼쪽으로, "이전"은 오른쪽으로 — 방향에 따라 반대로 밀립니다.
-     render.js가 맨 앞뒤에 처음/마지막 몇 장을 복제해 두었으므로(순환에
-     필요한 만큼만), 끝에 닿으면 트랜지션이 끝난 뒤(transitionend) 티
-     안 나게 반대쪽 같은 위치로 순간 이동시켜 무한히 순환하는 것처럼
-     보이게 합니다. */
-  var NEWS_VISIBLE = 2;
-  var newsPos = 0;         // 지금 왼쪽에 보이는 카드의 렌더링상 위치
-  var newsRealCount = 0;   // 복제본을 뺀 실제 기사 수
-  var newsLooping = false; // 실제 기사가 2장보다 많아 복제본이 있는지
-  var newsAnimating = false;
-  var newsSnapTimer = null;
-  var newsPaused = false;
-  var newsResumeTimer = null;
-  var newsTickStarted = false;
+  /* ---------- 홈 뉴스 스포트라이트 (2개, 가로로 나란히) ----------
+     카카오톡으로 받은 참고 컴포넌트(reference/news-animated-testimonials-
+     reference.txt, Aceternity의 AnimatedTestimonials)의 "사진이 살짝
+     겹쳐 쌓여있다가 지금 차례인 것만 정면으로 나오고, 몇 초마다 자동으로
+     다음 기사로 넘어가는" 구성은 그대로 두고, 이 스포트라이트를 두 개
+     가로로 나란히 배치했습니다(index.html의 data-news-instance="0"/"1").
+     실제 카드 목록은 render.js가 첫 번째(0번)에만 그려주므로, 두 번째의
+     내용은 첫 번째 것을 그대로 복제해 채웁니다 — 이후로는 두 인스턴스가
+     각자 자기 카드들 안에서 독립적으로 .is-active 를 옮겨 다니며 서로
+     다른 기사를 보여줍니다(두 번째는 처음부터 한 칸 밀어서 시작). */
+  var newsState = {}; // instance id -> { index, paused, resumeTimer, tickStarted }
 
-  function newsTrack() { return document.querySelector('[data-news-track]'); }
-  function newsCardEls() {
-    var track = newsTrack();
-    return track ? Array.prototype.slice.call(track.children) : [];
+  function newsHosts() {
+    return Array.prototype.slice.call(document.querySelectorAll('.news-spotlight[data-news-instance]'));
+  }
+  function newsTrackOf(host) { return host.querySelector('[data-news-track]'); }
+  function newsCardsOf(host) {
+    var track = newsTrackOf(host);
+    return track ? Array.prototype.slice.call(track.querySelectorAll('.card')) : [];
   }
 
-  /* 카드 사이 gap(var(--sp-3))이 있어서 "칸 폭의 몇 %" 로 계산하면
-     한 칸씩 밀 때마다 gap만큼 오차가 쌓입니다 — 실제로 렌더링된 카드
-     폭 + gap을 픽셀 단위로 재서 그만큼 밉니다. */
-  function newsStepPx() {
-    var track = newsTrack();
-    var first = track && track.firstElementChild;
-    if (!first) return 0;
-    var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-    return first.getBoundingClientRect().width + gap;
+  function setNewsIndex(host, i) {
+    var cards = newsCardsOf(host);
+    if (!cards.length) return;
+    var id = host.getAttribute('data-news-instance');
+    var idx = ((i % cards.length) + cards.length) % cards.length;
+    if (newsState[id]) newsState[id].index = idx;
+    cards.forEach(function (card, k) { card.classList.toggle('is-active', k === idx); });
   }
 
-  function placeNews(pos, animate) {
-    var track = newsTrack();
-    if (!track) return;
-    if (!animate) track.style.transition = 'none';
-    track.style.transform = 'translateX(-' + (pos * newsStepPx()) + 'px)';
-    if (!animate) {
-      void track.offsetWidth; // 강제 리플로우 후 트랜지션을 되살립니다
-      track.style.transition = '';
-    }
-  }
-
-  /* render.js가 news.items 를 다시 그릴 때마다(최초 로드·언어 전환) 부릅니다. */
+  /* render.js가 첫 번째 인스턴스의 news.items 를 다시 그릴 때마다(최초
+     로드·언어 전환) 부릅니다 — 두 번째 인스턴스로 내용을 복제하고,
+     두 인스턴스 모두 보여줄 기사를 다시 잡습니다. */
   function refreshNewsSpotlight() {
-    clearTimeout(newsSnapTimer);
-    var cards = newsCardEls();
-    newsRealCount = cards.filter(function (c) { return !c.hasAttribute('data-clone-of'); }).length;
-    newsLooping = cards.length > newsRealCount;
-    newsAnimating = false;
-    newsPos = newsLooping ? NEWS_VISIBLE : 0;
-    placeNews(newsPos, false);
-  }
-
-  /* dir: 다음이면 +1(왼쪽으로 밀림), 이전이면 -1(오른쪽으로 밀림) */
-  function newsGo(dir) {
-    var cards = newsCardEls();
-    if (newsAnimating || cards.length <= NEWS_VISIBLE) return;
-    var next = newsPos + dir;
-    if (!newsLooping) {
-      var max = cards.length - NEWS_VISIBLE;
-      next = Math.max(0, Math.min(max, next));
-      if (next === newsPos) return;
-    }
-    newsAnimating = true;
-    newsPos = next;
-    placeNews(newsPos, true);
-    /* transitionend가 어떤 이유로든(탭이 백그라운드에 있는 동안 등)
-       안 오더라도 캐러셀이 영영 멈춰있지 않도록, 트랜지션 시간(.5s)보다
-       살짝 긴 안전장치를 같이 걸어둡니다 — 둘 중 먼저 온 쪽이 처리하고
-       나머지는 finishNewsMove의 newsAnimating 체크로 조용히 무시됩니다. */
-    clearTimeout(newsSnapTimer);
-    newsSnapTimer = setTimeout(finishNewsMove, 600);
-  }
-
-  function finishNewsMove() {
-    if (!newsAnimating) return;
-    clearTimeout(newsSnapTimer);
-    newsAnimating = false;
-    if (!newsLooping) return;
-    if (newsPos >= newsRealCount + NEWS_VISIBLE) {
-      newsPos -= newsRealCount;
-      placeNews(newsPos, false);
-    } else if (newsPos < NEWS_VISIBLE) {
-      newsPos += newsRealCount;
-      placeNews(newsPos, false);
-    }
-  }
-
-  function onNewsTransitionEnd(e) {
-    if (e.target === newsTrack() && e.propertyName === 'transform') finishNewsMove();
+    var hosts = newsHosts();
+    if (!hosts.length) return;
+    var sourceTrack = newsTrackOf(hosts[0]);
+    hosts.forEach(function (host, i) {
+      if (i === 0 || !sourceTrack) return;
+      var track = newsTrackOf(host);
+      if (track) track.innerHTML = sourceTrack.innerHTML;
+    });
+    hosts.forEach(function (host, i) {
+      var id = host.getAttribute('data-news-instance');
+      if (!newsState[id]) newsState[id] = { index: 0, paused: false, resumeTimer: null, tickStarted: false };
+      var count = newsCardsOf(host).length;
+      setNewsIndex(host, count ? i % count : 0); // 두 번째 인스턴스는 한 칸 밀어서 시작 → 서로 다른 기사
+    });
   }
 
   function initNewsSpotlight() {
-    var host = document.querySelector('.news-spotlight');
-    if (host) {
-      host.addEventListener('mouseenter', function () { newsPaused = true; });
-      host.addEventListener('mouseleave', function () { newsPaused = false; });
-    }
-    var track = newsTrack();
-    if (track) track.addEventListener('transitionend', onNewsTransitionEnd);
+    var hosts = newsHosts();
+    if (!hosts.length) return;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    hosts.forEach(function (host) {
+      var id = host.getAttribute('data-news-instance');
+      if (!newsState[id]) newsState[id] = { index: 0, paused: false, resumeTimer: null, tickStarted: false };
+      host.addEventListener('mouseenter', function () { newsState[id].paused = true; });
+      host.addEventListener('mouseleave', function () { newsState[id].paused = false; });
+
+      if (!reduceMotion && !newsState[id].tickStarted) {
+        newsState[id].tickStarted = true;
+        setInterval(function () {
+          var st = newsState[id];
+          if (!st.paused && !document.hidden && newsCardsOf(host).length > 1) setNewsIndex(host, st.index + 1);
+        }, 5000);
+      }
+    });
 
     document.addEventListener('click', function (e) {
       var arrow = e.target.closest('[data-news-arrow]');
       if (!arrow) return;
-      newsGo(arrow.getAttribute('data-news-arrow') === 'prev' ? -1 : 1);
+      var host = arrow.closest('[data-news-instance]');
+      if (!host) return;
+      var id = host.getAttribute('data-news-instance');
+      var st = newsState[id];
+      setNewsIndex(host, st.index + (arrow.getAttribute('data-news-arrow') === 'prev' ? -1 : 1));
       /* 화살표를 누른 직후엔 자동 전환이 곧바로 다시 넘기지 않도록 잠깐 멈춤 */
-      newsPaused = true;
-      clearTimeout(newsResumeTimer);
-      newsResumeTimer = setTimeout(function () { newsPaused = false; }, 4000);
+      st.paused = true;
+      clearTimeout(st.resumeTimer);
+      st.resumeTimer = setTimeout(function () { st.paused = false; }, 4000);
     });
-
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion || newsTickStarted) return;   // 모션 최소화 설정이면 자동 전환은 아예 시작하지 않음
-    newsTickStarted = true;
-
-    setInterval(function () {
-      if (!newsPaused && !document.hidden) newsGo(1);
-    }, 5000);
   }
 
   /* ---------- 프로젝트 국내/국외 탭 ---------- */
