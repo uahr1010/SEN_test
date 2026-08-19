@@ -199,11 +199,13 @@ window.SEN = window.SEN || {};
       var readMore = t(pick(ctx, 'site.ui.readMore')) || '자세히 보기';
       if (!items.length) return '<p class="state">' + esc(t(pick(ctx, 'site.ui.empty')) || '등록된 글이 없습니다.') + '</p>';
 
-      return items.map(function (it, i) {
+      function card(it, cloneOf) {
         var href = 'news.html?id=' + encodeURIComponent(it.id || '');
         var img = it.image || 'assets/img/news-placeholder.svg';
         return '' +
-          '<a class="card news-spotlight__card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
+          '<a class="card news-spotlight__card"' +
+            (cloneOf != null ? ' data-clone-of="' + cloneOf + '" aria-hidden="true" tabindex="-1"' : '') +
+            ' href="' + esc(href) + '">' +
             '<div class="card__media' + (it.image ? '' : ' card__media--placeholder') + '">' + imgTag(img, '', '') + '</div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
@@ -215,7 +217,21 @@ window.SEN = window.SEN || {};
               '<span class="card__foot">' + esc(readMore) + '</span>' +
             '</div>' +
           '</a>';
-      }).join('');
+      }
+
+      /* 한 번에 2개씩 보여주는 슬라이드 캐러셀입니다. 화살표를 한 번
+         누르면 1개씩 밀리면서 자연스럽게 끝에서 처음으로(처음에서
+         끝으로) 이어지도록, 맨 앞뒤에 처음/마지막 몇 장을 "복제"해
+         두었습니다(controls.js가 복제 구간에 도달하면 티 안 나게
+         제자리로 되돌립니다) — 실제 항목이 화면에 보이는 개수(2장)
+         보다 적으면 순환시킬 필요가 없으니 복제하지 않습니다. */
+      var visible = 2;
+      var real = items.map(function (it) { return card(it); });
+      if (items.length <= visible) return real.join('');
+
+      var head = items.slice(-visible).map(function (it, i) { return card(it, items.length - visible + i); });
+      var tail = items.slice(0, visible).map(function (it, i) { return card(it, i); });
+      return head.concat(real, tail).join('');
     },
 
     /* 채용 - 공고 아코디언 (지원하기 → mailto) */
