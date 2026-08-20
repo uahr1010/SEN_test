@@ -9,20 +9,25 @@
    main.js 와 별도로 여기서 직접 fetch 합니다(표지가 첫 화면이라 다른
    콘텐츠를 기다리지 않고 바로 사진을 올리기 위함).
 
-   표지 사진은 Pages CMS [③ 표지 사진]에서 관리합니다 — 예전에는
-   uploads/main/ 에 main_1.png, main_2.png … 처럼 정해진 파일 이름으로
-   올려야 했고(파일 업로드 방식이라 "이 폴더에 뭐가 있는지" 알려줄
-   목록이 없어, 정해진 이름을 하나씩 찔러 보는 방식으로 우회했습니다),
-   사진마다 제목을 붙일 수도 없었습니다. 지금은 그 탭에서 사진을 목록
-   으로 직접 추가·순서 변경·제목 입력을 하면 content/cover-photos.json
-   에 그대로 저장되고, 여기서는 그 파일을 읽어 파일 이름과 상관없이
-   그 목록에 있는 사진을 그대로 씁니다. */
+   표지 사진 자체는 Pages CMS [③ 표지 사진](미디어) 탭에서 그냥 폴더에
+   올립니다 — 파일 이름은 아무거나 됩니다. 예전엔 main_1.png,
+   main_2.png … 처럼 정해진 이름을 하나씩 찔러 보는 방식으로 "이 폴더에
+   뭐가 있는지" 알아냈는데(정적 사이트라 폴더 목록을 브라우저가 직접
+   못 읽음), 지금은 uploads/main/ 이 바뀔 때마다 저장소 Actions(표지
+   사진 목록 컴파일)가 실제 폴더 내용을 content/cover-photos.json 으로
+   미리 적어 둡니다 — 그래서 파일 이름과 무관하게 그 목록을 그대로
+   씁니다. 사진마다 제목은 [⑥ 표지 사진 제목] 탭에서 파일 이름으로
+   연결해 따로 관리합니다(content/cover-photo-titles.json) — 사진
+   "업로드"용 이미지 선택 필드를 그 목록 폼 안에 같이 두면 Pages CMS가
+   사진 대신 JSON만 고를 수 있게 보여주는 문제가 있어(2026-08-20),
+   업로드는 미디어 탭에서, 제목은 별도 목록 폼에서 하도록 나눴습니다. */
 window.SEN = window.SEN || {};
 
 (function (SEN) {
   'use strict';
 
-  var DATA_URL   = 'content/cover-photos.json';
+  var PHOTOS_URL = 'content/cover-photos.json';
+  var TITLES_URL = 'content/cover-photo-titles.json';
   var FALLBACK   = [1, 2, 3, 4].map(function (i) { return { image: 'assets/img/hero/hero-' + i + '.jpg', title: '' }; });
   var PHOTO_SEC  = 1;  // 사진 한 장이 보이는 시간(초). 장수가 몇 장이든 이 값은 고정입니다
 
@@ -36,17 +41,39 @@ window.SEN = window.SEN || {};
     return s.replace(/^\/+/, '');
   }
 
-  /** content/cover-photos.json 을 읽어 {image, title} 목록을 돌려줍니다.
-      파일이 없거나 목록이 비어 있으면(첫 설치 등) 기본 사진 4장을 씁니다. */
-  function loadPhotos() {
-    return fetch(DATA_URL, { cache: 'no-cache' })
+  function basename(p) {
+    var s = String(p || '');
+    return s.slice(s.lastIndexOf('/') + 1);
+  }
+
+  function fetchJson(url) {
+    return fetch(url, { cache: 'no-cache' })
       .then(function (res) { return res.ok ? res.json() : null; })
-      .then(function (data) {
-        var list = (data && Array.isArray(data.photos)) ? data.photos : [];
-        list = list.filter(function (p) { return p && p.image; });
-        return list.length ? list : FALLBACK;
-      })
-      .catch(function () { return FALLBACK; });
+      .catch(function () { return null; });
+  }
+
+  /** content/cover-photos.json(자동 생성된 파일 목록)과
+      content/cover-photo-titles.json(파일 이름→제목)을 파일 이름
+      기준으로 짝지어 {image, title} 목록을 돌려줍니다. 사진이 하나도
+      없으면(첫 설치 등) 기본 사진 4장을 씁니다. */
+  function loadPhotos() {
+    return Promise.all([fetchJson(PHOTOS_URL), fetchJson(TITLES_URL)])
+      .then(function (results) {
+        var photosData = results[0], titlesData = results[1];
+        var paths = (photosData && Array.isArray(photosData.photos)) ? photosData.photos : [];
+        paths = paths.filter(Boolean);
+        if (!paths.length) return FALLBACK;
+
+        var titleByFile = {};
+        var titleEntries = (titlesData && Array.isArray(titlesData.titles)) ? titlesData.titles : [];
+        titleEntries.forEach(function (t) {
+          if (t && t.file) titleByFile[t.file] = t.title || '';
+        });
+
+        return paths.map(function (p) {
+          return { image: p, title: titleByFile[basename(p)] || '' };
+        });
+      });
   }
 
   /* ---------- 배경 사진 교차 전환 ---------- */

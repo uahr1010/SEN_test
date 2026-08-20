@@ -13,14 +13,17 @@
 #    ⑤ 센코어테크 역량 : 강구조시공능력 순위·기준연도, 연도별 매출
 #                        그래프 값. 숫자만 입력하며 번역이 필요 없습니다
 #                        (그래프 제목·단위 등 문구는 고정값이라 여기 없음).
-#    ⑥ 표지 사진 : 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들과
-#                  각 사진의 제목(SEN ENGINEERING GROUP 글자 위에 표시).
-#                  이 목록 순서대로 화면에 나옵니다.
+#    ⑥ 표지 사진 제목 : [표지 사진](미디어 ③)에 올린 사진마다 제목을
+#                       붙입니다(SEN ENGINEERING GROUP 글자 위에 표시).
+#                       파일 이름을 정확히 적어야 그 사진에 연결됩니다.
 #
 #  ── 미디어(파일 업로드) ──
 #    ① 프로젝트 데이터 : 실적 4,575건 — 파일을 통째로 내려받아 고친 뒤
 #                        다시 올려 덮어쓰는 방식입니다.
 #    ② 이미지          : 뉴스 썸네일 등 일반 이미지
+#    ③ 표지 사진        : 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들.
+#                        파일 이름은 아무거나 됩니다 — 올리면 저장소
+#                        Actions가 자동으로 목록을 다시 만듭니다.
 #
 #  회사 소개·연혁·주요공법·CONTACT·섹션 문구 등 나머지는 전부 고정값입니다.
 #  바꿔야 할 일이 생기면 content/*.json 파일을 직접 수정하세요.
@@ -55,6 +58,23 @@ media:
     input: uploads/images
     output: /uploads/images
     extensions: [jpg, jpeg, png, webp, gif, svg]
+
+  # ③ 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들입니다.
+  #   1. 여기서 사진을 올립니다 — 파일 이름은 아무거나 됩니다(예전처럼
+  #      main_1.png 같은 정해진 이름일 필요 없습니다).
+  #   2. 확장자는 jpg/jpeg/png/webp/gif 중 아무거나 됩니다.
+  #   3. 올리거나 지우면 저장소 Actions(표지 사진 목록 컴파일)가 자동으로
+  #      실제 폴더 내용을 다시 읽어 화면에 반영합니다(1분 이내). 파일
+  #      이름 오름차순으로 나오니, 순서를 정하고 싶으면 앞에 01-, 02-
+  #      처럼 번호를 붙이세요.
+  #   4. 사진마다 제목을 붙이려면 [⑥ 표지 사진 제목]에서 파일 이름을
+  #      정확히 적어 연결하세요.
+  #   5. 한 장도 없으면 기본 사진 4장이 대신 나옵니다.
+  - name: main-photos
+    label: ③ 표지 사진
+    input: uploads/main
+    output: /uploads/main
+    extensions: [jpg, jpeg, png, webp, gif]
 
 content:
 
@@ -370,42 +390,37 @@ content:
             required: true
 
   # --------------------------------------------------------------------------
-  # ⑥ 표지 사진 — 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들
-  #
-  #    예전에는 uploads/main/ 에 main_1.png, main_2.png … 처럼 정해진
-  #    파일 이름으로 올려야만 화면에 반영됐습니다(파일 업로드 방식이라
-  #    "이 폴더에 뭐가 있는지" 알려줄 목록이 따로 없어서, 정해진 이름을
-  #    하나씩 찔러 보는 방식으로 우회했습니다). 지금은 여기서 사진을
-  #    목록으로 직접 추가·삭제·순서 변경하고 사진마다 제목도 붙일 수
-  #    있습니다 — 파일 이름은 더 이상 안 봅니다.
+  # ⑥ 표지 사진 제목 — [표지 사진](미디어 ③)에 올린 사진마다 제목을
+  #    붙입니다. 사진 자체는 여기서 안 올립니다 — 파일 업로드는 미디어
+  #    ③에서 하고, 여기서는 그 파일 이름과 보여줄 제목만 짝지어 둡니다.
+  #    (이미지 선택 필드를 이 목록 폼 안에 같이 두었더니 Pages CMS에서
+  #    사진 대신 JSON 파일만 골라지는 문제가 있어 — 사진 업로드와 제목
+  #    입력을 아예 분리했습니다.)
   # --------------------------------------------------------------------------
-  - name: cover-photos
-    label: ⑥ 표지 사진
+  - name: cover-photo-titles
+    label: ⑥ 표지 사진 제목
     type: file
-    path: content/cover-photos.json
+    path: content/cover-photo-titles.json
     format: json
     fields:
-      - name: photos
-        label: 사진 목록
+      - name: titles
+        label: 사진 제목 목록
         description: >
-          위에서부터 순서대로 표지에서 서서히 넘어갑니다(항목을 드래그해
-          순서를 바꿀 수 있습니다). 10장 안팎을 권장합니다 — 너무 많으면
-          한 장당 보이는 시간이 짧아집니다. 사진명을 적으면 그 사진이
-          보이는 동안 SEN ENGINEERING GROUP 글자 바로 위에 함께
-          나타납니다(비워 두면 그 사진 차례에는 글자가 안 뜹니다).
+          file 칸에는 [표지 사진](미디어 ③)에 실제로 올린 파일 이름을
+          정확히 적으세요(예: main_1.jpg — 대소문자·확장자까지 똑같아야
+          연결됩니다). title이 SEN ENGINEERING GROUP 글자 바로 위에
+          그 사진이 보이는 동안 함께 나타납니다. 여기 없는 사진은 제목
+          없이 나옵니다.
         type: object
         list:
           collapsible:
             collapsed: true
-            summary: "{title}"
+            summary: "{file}"
         fields:
-          - name: image
-            label: 사진
-            type: image
+          - name: file
+            label: 파일 이름
+            type: string
             required: true
-            input: uploads/main
-            output: /uploads/main
-            extensions: [jpg, jpeg, png, webp]
           - name: title
-            label: 사진명 (선택)
+            label: 제목
             type: string
