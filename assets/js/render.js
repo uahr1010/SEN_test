@@ -51,6 +51,17 @@ window.SEN = window.SEN || {};
     return 'mailto:' + email + (q.length ? '?' + q.join('&') : '');
   }
 
+  /** 주소 지도 링크 생성. 국내 주소(overseas 아님)는 네이버 지도, 해외
+      주소는 구글 지도로 보냅니다 — 네이버 지도는 국내 주소 검색에 더
+      정확하고, 해외 주소는 네이버 지도에서 검색이 안 되는 경우가 많아
+      구글 지도를 씁니다. */
+  function mapUrl(address, overseas) {
+    if (!address) return '#';
+    return overseas
+      ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address)
+      : 'https://map.naver.com/p/search/' + encodeURIComponent(address);
+  }
+
   /** 이미지 태그. 경로가 없으면 아무것도 넣지 않고
       컨테이너의 --ph 그라디언트 배경이 그대로 보이게 둡니다. */
   function imgTag(src, alt, cls) {
@@ -170,6 +181,18 @@ window.SEN = window.SEN || {};
         return meta.length ? '<div class="office__meta">' + meta.join('') + '</div>' : '';
       }
 
+      /* 주소를 누르면 지도로 이동합니다. 국내 주소는 항상 'ko' 원문으로
+         찾아야(현재 언어가 en/zh/ja라도) 네이버 지도가 정확히 찾습니다 —
+         영문 표기는 도로명주소 로마자 표기라 검색이 잘 안 맞는 경우가
+         있습니다. 해외 주소는 언어별 표기가 모두 같은 원문(영문)이라
+         현재 언어 그대로 씁니다. */
+      function officeAddr(it) {
+        var shown = t(it.address);
+        var query = it.overseas ? shown : (pick(it, 'address.ko') || shown);
+        return '<p class="office__addr"><a href="' + esc(mapUrl(query, it.overseas)) +
+          '" target="_blank" rel="noopener">' + esc(shown) + '</a></p>';
+      }
+
       var domestic = items.filter(function (it) { return !it.overseas; });
       var overseas = items.filter(function (it) { return it.overseas; });
 
@@ -178,7 +201,7 @@ window.SEN = window.SEN || {};
           '<div class="office reveal" data-delay="' + (i % 4) + '">' +
             (t(it.tag) ? '<p class="office__tag">' + esc(t(it.tag)) + '</p>' : '') +
             '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
-            '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
+            officeAddr(it) +
             officeMeta(it) +
           '</div>';
       }).join('');
@@ -191,7 +214,7 @@ window.SEN = window.SEN || {};
               '<summary class="office-overseas__row-head">' + esc(t(it.tag) || t(it.name)) + '</summary>' +
               '<div class="office-overseas__row-body">' +
                 '<h4 class="office__name">' + esc(t(it.name)) + '</h4>' +
-                '<p class="office__addr">' + esc(t(it.address)) + '</p>' +
+                officeAddr(it) +
                 officeMeta(it) +
               '</div>' +
             '</details>';

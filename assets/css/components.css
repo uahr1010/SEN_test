@@ -306,6 +306,8 @@
 }
 .office__name { font-size: 1rem; margin-bottom: 8px; color: var(--c-ink); }
 .office__addr { font-size: var(--fs-small); color: var(--c-muted); margin-bottom: 8px; }
+.office__addr a { color: inherit; border-bottom: 1px solid var(--c-line); }
+.office__addr a:hover { color: var(--c-blue); border-color: var(--c-blue); }
 .office__meta { font-size: var(--fs-small); color: var(--c-ink); display: grid; gap: 3px; }
 .office__meta a { border-bottom: 1px solid var(--c-line); }
 .office__meta a:hover { color: var(--c-blue); border-color: var(--c-blue); }
