@@ -70,8 +70,11 @@
 
 <!-- ============ 표지 (첫 화면) ============
      본문(main) 앞에 배경처럼 고정되어 있다가, 스크롤하면 아래(main)가
-     이 위로 슬라이드해 올라와 덮습니다. 사진 4장이 서서히 교차 전환됩니다
-     (assets/js/cover.js가 타이밍을 계산해 넣습니다). -->
+     이 위로 슬라이드해 올라와 덮습니다. Pages CMS [③ 표지 사진]에
+     등록된 사진들이 순서대로 서서히 교차 전환됩니다(assets/js/cover.js
+     가 content/cover-photos.json을 읽어 타이밍을 계산해 넣습니다).
+     사진마다 제목을 넣으면 SEN ENGINEERING GROUP 글자 바로 위에
+     같은 타이밍으로 함께 전환됩니다(.cover__photo-titles). -->
 <section class="cover" data-cover>
   <div class="cover__bg" data-cover-bg></div>
   <div class="cover__veil"></div>
@@ -84,6 +87,7 @@
     <div class="cover__row">
       <span class="cover__cue"><i></i>SCROLL</span>
     </div>
+    <div class="cover__photo-titles" data-cover-photo-titles aria-hidden="true"></div>
     <span class="cover__brand" data-cover-brand>SEN ENGINEERING GROUP</span>
   </div>
 </section>

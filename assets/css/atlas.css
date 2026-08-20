@@ -115,9 +115,11 @@ body {
   opacity: 0;
 }
 /* 표지가 스크롤로 화면 밖에 있거나 탭이 안 보일 때(cover.js가 감시)
-   사진 전환 애니메이션을 실제로 멈춥니다 — 안 보이는 동안 계속 도는
-   걸 막습니다. */
-.cover__bg.is-paused img { animation-play-state: paused; }
+   사진·사진명 전환 애니메이션을 실제로 멈춥니다 — 안 보이는 동안
+   계속 도는 걸 막고, 사진과 사진명이 같은 타이밍을 공유하므로 함께
+   멈춰야 다시 보일 때도 서로 안 어긋납니다. */
+.cover.is-paused .cover__bg img,
+.cover.is-paused .cover__photo-titles span { animation-play-state: paused; }
 .cover__veil {
   position: absolute; inset: 0; z-index: -1;
   background:
@@ -161,6 +163,25 @@ body {
   text-shadow: 0 6px 40px rgba(0,0,0,.42);
 }
 .cover__row { display: flex; justify-content: flex-end; }
+/* 사진명 — SEN ENGINEERING GROUP 글자 바로 위, .cover__foot의 grid
+   gap이 자연스러운 간격(offset)을 만들어 줍니다. 사진처럼 여러 장이
+   같은 자리에 겹쳐 있다가(coverFade) 지금 사진의 제목만 보입니다.
+   제목이 없는 사진은 빈 칸으로 지나갑니다. */
+.cover__photo-titles {
+  position: relative;
+  height: 1.1em;
+  text-align: center;
+}
+.cover__photo-titles span {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+  text-shadow: 0 2px 12px rgba(0,0,0,.4);
+  opacity: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .cover__cue {
   display: inline-flex; align-items: center; gap: 10px;
   font-size: .68rem; letter-spacing: .3em; color: rgba(255,255,255,.72);
@@ -193,6 +214,16 @@ body {
     top: 50%; left: clamp(20px, 3.4vw, 46px); right: clamp(20px, 3.4vw, 46px);
     transform: translateY(-50%);
     text-align: center;
+  }
+  /* 사진명도 그룹명과 같은 기준(.cover, 화면 정중앙)으로 옮겨 그 바로
+     위에 오게 합니다 — 그룹명 글자 높이의 절반(11.7cqw × line-height
+     1.06 의 절반 ≈ 6.2cqw)만큼 중앙선에서 띄운 뒤, 여유(offset)를
+     더합니다. 그룹명과 같은 cqw 단위를 쓰므로 화면 폭이 바뀌어도
+     비율이 그대로 유지됩니다. */
+  .cover__photo-titles {
+    position: absolute;
+    left: clamp(20px, 3.4vw, 46px); right: clamp(20px, 3.4vw, 46px);
+    bottom: calc(50% + 9cqw);
   }
 }
 
