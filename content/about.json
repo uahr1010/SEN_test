@@ -16,14 +16,14 @@
   },
 
   "ceo": {
-    "heading": { "ko": "CEO 인사말", "en": "Message from the CEO", "zh": "总裁致辞", "ja": "CEO ご挨拶" },
-    "video": "https://www.youtube.com/watch?v=5-EM4UqqhA8",
+    "heading": { "ko": "", "en": "", "zh": "", "ja": "" },
+    "video": "https://youtube.com/watch?v=isYstuhRmUY&feature=youtu.be",
     "photo": "/uploads/images/ceo.jpg",
     "quote": {
-      "ko": "믿음으로 약속을 지키고, 경제적이며 편리하고 안전하며 아름다운 구조를 추구합니다.",
-      "en": "We keep our promises through trust, pursuing structures that are economical, practical, safe and beautiful.",
-      "zh": "以诚信履行承诺，追求经济、便利、安全而优美的结构。",
-      "ja": "信頼をもって約束を守り、経済的で使いやすく安全かつ美しい構造を追求します。"
+      "ko": "",
+      "en": "",
+      "zh": "",
+      "ja": ""
     },
     "body": {
       "ko": "",
