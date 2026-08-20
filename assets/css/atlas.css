@@ -162,6 +162,11 @@ body {
   color: #fff;
   text-shadow: 0 6px 40px rgba(0,0,0,.42);
 }
+/* "SEN" 부분만 메인페이지 회사소개(인트로) 플립워드("센벡스" 등)와
+   같은 파란색(--blue, atlas.css :root — 전역 변수라 여기서도 그대로
+   씁니다)으로 강조합니다. 나머지 "ENGINEERING GROUP"은 부모의 흰색을
+   그대로 물려받습니다. */
+.cover__brand-accent { color: var(--blue); }
 .cover__row { display: flex; justify-content: flex-end; }
 /* 사진명 — SEN ENGINEERING GROUP 글자 바로 위, .cover__foot의 grid
    gap이 자연스러운 간격(offset)을 만들어 줍니다. 사진처럼 여러 장이
@@ -175,7 +180,8 @@ body {
 .cover__photo-titles span {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: .8rem; font-weight: 600; letter-spacing: .18em;
+  /* PC는 3pt 더 키움(요청) — 모바일은 아래 미디어쿼리에서 원래 크기(.8rem)로 되돌립니다. */
+  font-size: calc(.8rem + 3pt); font-weight: 600; letter-spacing: .18em;
   text-transform: uppercase;
   color: rgba(255,255,255,.82);
   text-shadow: 0 2px 12px rgba(0,0,0,.4);
@@ -215,16 +221,12 @@ body {
     transform: translateY(-50%);
     text-align: center;
   }
-  /* 사진명도 그룹명과 같은 기준(.cover, 화면 정중앙)으로 옮겨 그 바로
-     위에 오게 합니다 — 그룹명 글자 높이의 절반(11.7cqw × line-height
-     1.06 의 절반 ≈ 6.2cqw)만큼 중앙선에서 띄운 뒤, 여유(offset)를
-     더합니다. 그룹명과 같은 cqw 단위를 쓰므로 화면 폭이 바뀌어도
-     비율이 그대로 유지됩니다. */
-  .cover__photo-titles {
-    position: absolute;
-    left: clamp(20px, 3.4vw, 46px); right: clamp(20px, 3.4vw, 46px);
-    bottom: calc(50% + 9cqw);
-  }
+  /* 그룹명은 화면 정중앙으로 빠지지만(위 .cover__brand), 사진명은 그대로
+     .cover__foot의 기본 흐름에 남겨 둡니다 — .cover__foot 자체가 화면
+     아래쪽에 붙어 있고 text-align:center 라서, 자연스럽게 화면
+     "가운데 아래"에 오게 됩니다(요청사항). PC 크기(.8rem + 3pt)는
+     모바일에서는 다시 원래 크기로 되돌립니다. */
+  .cover__photo-titles span { font-size: .8rem; }
 }
 
 /* 표지 바로 다음(본문 전체)을 표지 높이만큼 내려서 시작시킵니다 —
