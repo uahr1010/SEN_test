@@ -553,13 +553,16 @@
 }
 
 /* ---------- 실적 지구본 자리 (국외 탭) ----------
-   원 모양을 유지하며 .proj-viz__map 칸(국내 탭 지도 .pmap과 같은 칸)
-   보다 작게 묶고, 그 칸 정가운데에 둡니다 — 지도(.pmap)는 칸 전체
-   폭을 꽉 채우니, 지구본도 그 칸의 중앙에 와야 같은 자리로 보입니다. */
+   원 모양은 유지하되, 높이는 국내 탭 지도(.pmap)와 똑같은 공식(min(65vh,
+   560px))을 씁니다 — 예전에는 폭(100%)을 기준으로 정사각형을 잡아서,
+   지도보다 폭이 좁은 대신 높이가 들쭉날쭉 달라 두 탭을 오가면 화면
+   높이가 출렁였습니다. 폭은 그 높이에 맞춰 정사각형으로 따라오므로
+   .pmap보다는 좁지만(칸 정가운데에 옵니다), 높이는 항상 같습니다. */
 .globe { margin-bottom: var(--sp-5); }
 .globe__stage {
-  position: relative; width: 100%; aspect-ratio: 1 / 1;
-  max-width: 560px; margin: 0 auto;
+  position: relative; aspect-ratio: 1 / 1;
+  height: min(65vh, 560px); min-height: 380px; max-width: 100%;
+  margin: 0 auto;
   cursor: grab; touch-action: pan-y;
 }
 .globe__stage.is-dragging { cursor: grabbing; }
@@ -567,6 +570,11 @@
 /* WebGL 을 못 쓰는 환경 — 지구본 자리를 접고 아래 숫자·목록만 남깁니다 */
 .globe__stage.is-unavailable { display: none; }
 .globe__stage.is-unavailable ~ .globe__hint { display: none; }
+/* .pmap과 같은 이유(모바일에서 스크롤 시 손가락이 걸림)로 모바일에서는
+   .pmap과 동일한 고정 높이로 맞춥니다. */
+@media (max-width: 760px) {
+  .globe__stage { height: 280px; min-height: 280px; }
+}
 
 .globe__pills { position: absolute; inset: 0; pointer-events: none; }
 .gpill {
