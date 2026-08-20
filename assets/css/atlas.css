@@ -220,6 +220,15 @@ body {
     top: 50%; left: clamp(20px, 3.4vw, 46px); right: clamp(20px, 3.4vw, 46px);
     transform: translateY(-50%);
     text-align: center;
+    /* 뒤 사진이 밝거나 복잡하면 흰 글자가 잘 안 보여서, 글자 뒤에 검은
+       반투명 배경을 깝니다. padding 대신 box-shadow(번짐 0, 퍼짐만)로
+       그려서 실제 박스 폭(위 left/right로 정확히 계산된, cqw 글자
+       크기의 기준이 되는 폭)은 그대로 두고 칠만 바깥으로 번지게 합니다
+       — padding을 쓰면 그 폭 계산이 틀어져 글자가 칸을 못 채우거나
+       넘칩니다. */
+    background: rgba(0, 0, 0, .38);
+    box-shadow: 0 0 0 14px rgba(0, 0, 0, .38);
+    border-radius: 10px;
   }
   /* 그룹명은 화면 정중앙으로 빠지지만(위 .cover__brand), 사진명은 그대로
      .cover__foot의 기본 흐름에 남겨 둡니다 — .cover__foot 자체가 화면
