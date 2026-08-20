@@ -9,25 +9,24 @@
    main.js 와 별도로 여기서 직접 fetch 합니다(표지가 첫 화면이라 다른
    콘텐츠를 기다리지 않고 바로 사진을 올리기 위함).
 
-   표지 사진 자체는 Pages CMS [③ 표지 사진](미디어) 탭에서 그냥 폴더에
-   올립니다 — 파일 이름은 아무거나 됩니다. 예전엔 main_1.png,
-   main_2.png … 처럼 정해진 이름을 하나씩 찔러 보는 방식으로 "이 폴더에
-   뭐가 있는지" 알아냈는데(정적 사이트라 폴더 목록을 브라우저가 직접
-   못 읽음), 지금은 uploads/main/ 이 바뀔 때마다 저장소 Actions(표지
-   사진 목록 컴파일)가 실제 폴더 내용을 content/cover-photos.json 으로
-   미리 적어 둡니다 — 그래서 파일 이름과 무관하게 그 목록을 그대로
-   씁니다. 사진마다 제목은 [⑥ 표지 사진 제목] 탭에서 파일 이름으로
-   연결해 따로 관리합니다(content/cover-photo-titles.json) — 사진
-   "업로드"용 이미지 선택 필드를 그 목록 폼 안에 같이 두면 Pages CMS가
-   사진 대신 JSON만 고를 수 있게 보여주는 문제가 있어(2026-08-20),
-   업로드는 미디어 탭에서, 제목은 별도 목록 폼에서 하도록 나눴습니다. */
+   표지 사진은 Pages CMS [③ 표지 사진](미디어) 탭에서 그냥 폴더에
+   올립니다 — 예전엔 main_1.png, main_2.png … 처럼 정해진 이름을
+   하나씩 찔러 보는 방식으로 "이 폴더에 뭐가 있는지" 알아냈는데(정적
+   사이트라 폴더 목록을 브라우저가 직접 못 읽음), 지금은 uploads/main/
+   이 바뀔 때마다 저장소 Actions(표지 사진 목록 컴파일)가 실제 폴더
+   내용을 content/cover-photos.json 으로 미리 적어 둡니다.
+
+   사진 제목은 별도 입력칸이 없습니다 — 업로드한 파일 이름 자체가 곧
+   화면에 뜨는 제목입니다("본사 전경.jpg" → "본사 전경"). 순서를 정하려고
+   앞에 붙인 번호(01-, 02_ 등)와 확장자는 제목에서 자동으로 빠집니다.
+   제목 없이 순서만 정하고 싶으면 파일 이름을 숫자만으로 두세요(예:
+   1.jpg) — 남는 글자가 없으면 제목이 안 뜹니다. */
 window.SEN = window.SEN || {};
 
 (function (SEN) {
   'use strict';
 
   var PHOTOS_URL = 'content/cover-photos.json';
-  var TITLES_URL = 'content/cover-photo-titles.json';
   var FALLBACK   = [1, 2, 3, 4].map(function (i) { return { image: 'assets/img/hero/hero-' + i + '.jpg', title: '' }; });
   var PHOTO_SEC  = 1;  // 사진 한 장이 보이는 시간(초). 장수가 몇 장이든 이 값은 고정입니다
 
@@ -41,39 +40,32 @@ window.SEN = window.SEN || {};
     return s.replace(/^\/+/, '');
   }
 
-  function basename(p) {
-    var s = String(p || '');
-    return s.slice(s.lastIndexOf('/') + 1);
+  /** 파일 경로에서 제목을 뽑아냅니다: 파일 이름만 남기고(폴더 제거),
+      확장자를 떼고, 순서용 번호 접두사(예: "01-", "02_", "3.")를
+      지우고, 남은 -/_ 는 띄어쓰기로 바꿉니다. "main_1.jpg"처럼 순서
+      번호뿐이면 빈 문자열이 되어 제목이 안 뜹니다. */
+  function titleFromPath(p) {
+    var name = String(p || '').split('/').pop();
+    name = name.replace(/\.[a-z0-9]+$/i, '');
+    name = name.replace(/^\s*\d+[\s._-]+/, '');
+    name = name.replace(/[_-]+/g, ' ').trim();
+    if (/^\d+$/.test(name)) name = '';  // "3.jpg"처럼 순서용 숫자만 남으면 제목 없음
+    return name;
   }
 
-  function fetchJson(url) {
-    return fetch(url, { cache: 'no-cache' })
-      .then(function (res) { return res.ok ? res.json() : null; })
-      .catch(function () { return null; });
-  }
-
-  /** content/cover-photos.json(자동 생성된 파일 목록)과
-      content/cover-photo-titles.json(파일 이름→제목)을 파일 이름
-      기준으로 짝지어 {image, title} 목록을 돌려줍니다. 사진이 하나도
-      없으면(첫 설치 등) 기본 사진 4장을 씁니다. */
+  /** content/cover-photos.json(저장소 Actions가 자동 생성한 파일 목록)을
+      읽어 {image, title} 목록을 돌려줍니다. 사진이 하나도 없으면(첫
+      설치 등) 기본 사진 4장을 씁니다. */
   function loadPhotos() {
-    return Promise.all([fetchJson(PHOTOS_URL), fetchJson(TITLES_URL)])
-      .then(function (results) {
-        var photosData = results[0], titlesData = results[1];
-        var paths = (photosData && Array.isArray(photosData.photos)) ? photosData.photos : [];
+    return fetch(PHOTOS_URL, { cache: 'no-cache' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        var paths = (data && Array.isArray(data.photos)) ? data.photos : [];
         paths = paths.filter(Boolean);
         if (!paths.length) return FALLBACK;
-
-        var titleByFile = {};
-        var titleEntries = (titlesData && Array.isArray(titlesData.titles)) ? titlesData.titles : [];
-        titleEntries.forEach(function (t) {
-          if (t && t.file) titleByFile[t.file] = t.title || '';
-        });
-
-        return paths.map(function (p) {
-          return { image: p, title: titleByFile[basename(p)] || '' };
-        });
-      });
+        return paths.map(function (p) { return { image: p, title: titleFromPath(p) }; });
+      })
+      .catch(function () { return FALLBACK; });
   }
 
   /* ---------- 배경 사진 교차 전환 ---------- */
