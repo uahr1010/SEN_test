@@ -129,9 +129,6 @@ window.SEN = window.SEN || {};
      (다시 그리지 않음) — renderProjectPanel() 이 그 일을 합니다. */
   SEN.projectPanel = { tab: 'domestic', data: null, ctx: null };
 
-  var narrowMq = window.matchMedia && matchMedia('(max-width: 760px)');
-  function isNarrowViewport() { return !!(narrowMq && narrowMq.matches); }
-
   function renderProjectPanel(tab) {
     var p = SEN.projectPanel;
     if (!p.data) return;
@@ -167,45 +164,11 @@ window.SEN = window.SEN || {};
         }).join('');
       }
     }
-    if (elList) {
-      /* 국내는 "서울특별시 강남구"·"서울특별시 용산구"처럼 구/군까지
-         나뉜 목록 대신, 시/도 단위로 다 합쳐서 보여줍니다(예: "서울특별시"
-         하나에 그 안의 모든 구 실적을 더함). 원본 group.regions(구/군
-         단위)는 그대로 두고 표시할 때만 묶습니다 — 지도 등 다른 곳에서
-         구/군 단위 데이터가 그대로 필요할 수 있어서입니다. */
-      var listRegions = group.regions;
-      if (tab === 'domestic') {
-        var byProv = {}, order = [];
-        group.regions.forEach(function (r) {
-          var head = r.name.split(' ')[0];
-          if (!byProv[head]) { byProv[head] = { name: head, n: 0 }; order.push(head); }
-          byProv[head].n += r.n;
-        });
-        if (isNarrowViewport()) {
-          /* 좁은 화면은 목록이 길면 스크롤이 늘어져 불편해서, 실적이
-             몰려 있는 서울·경기 두 곳만 따로 보여주고 나머지는 전부
-             "기타"로 묶어 딱 3줄만 나오게 합니다. 순서는 건수와 무관하게
-             항상 서울 → 경기 → 기타 고정입니다. */
-          var seoul = byProv['서울'] ? byProv['서울'].n : 0;
-          var gyeonggi = byProv['경기'] ? byProv['경기'].n : 0;
-          var etc = 0;
-          order.forEach(function (k) {
-            if (k !== '서울' && k !== '경기') etc += byProv[k].n;
-          });
-          listRegions = [
-            { name: '서울', n: seoul },
-            { name: '경기', n: gyeonggi },
-            { name: '기타', n: etc }
-          ];
-        } else {
-          listRegions = order.map(function (k) { return byProv[k]; })
-            .sort(function (a, b) { return b.n - a.n; });
-        }
-      }
-      var shown = listRegions.slice(0, 12);
-      /* 막대 길이는 목록 중 최댓값 기준입니다 — "기타"를 항상 맨 아래
-         고정해 두면(정렬 순서와 무관) 0번째가 최댓값이 아닐 수 있어
-         따로 구합니다. */
+    if (elList && tab === 'overseas') {
+      /* 국내 탭의 오른쪽 칸은 이제 projectmap.js가 그리는 시/도 카드 →
+         시/군/구 → 프로젝트 목록 패널([data-pmap-side])이 맡습니다. 이
+         목록(.regions)은 국외 탭 전용입니다. */
+      var shown = group.regions.slice(0, 12);
       var maxN = shown.reduce(function (m, r) { return Math.max(m, r.n); }, 1);
       elList.innerHTML = !shown.length ? '' : shown.map(function (r) {
         return '<li><span class="regions__name">' + SEN.util.esc(SEN.util.regionName(r.name)) + '</span>' +
@@ -248,16 +211,9 @@ window.SEN = window.SEN || {};
           wrap: kmapStage,
           canvas: kmapStage.querySelector('[data-pmap-canvas]'),
           back: kmapStage.querySelector('[data-pmap-back]'),
-          legendMax: document.querySelector('[data-pmap-legend-max]')
+          legendMax: document.querySelector('[data-pmap-legend-max]'),
+          side: document.querySelector('[data-pmap-side]')
         });
-      }
-      /* 화면 폭이 760px 경계를 넘나들 때(창 크기 조절, 기기 회전) 지역
-         목록을 다시 그려 좁은 화면용 3줄 요약과 전체 목록을 맞바꿉니다. */
-      if (narrowMq && !narrowMq._wiredProjects) {
-        narrowMq._wiredProjects = true;
-        var onNarrowChange = function () { renderProjectPanel(SEN.projectPanel.tab); };
-        if (narrowMq.addEventListener) narrowMq.addEventListener('change', onNarrowChange);
-        else if (narrowMq.addListener) narrowMq.addListener(onNarrowChange);
       }
 
       if (globeStage && SEN.globe) {

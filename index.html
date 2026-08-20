@@ -232,7 +232,12 @@
           <p class="globe__hint" data-globe-hint></p>
         </div>
 
-        <ol class="regions" data-region-list></ol>
+        <!-- 국내 탭: 시/도 카드 → 시/군/구 목록 → 프로젝트 목록으로 파고드는
+             패널. 내용은 assets/js/projectmap.js가 그리며, 지도 클릭과
+             서로 연동됩니다. -->
+        <aside class="pmap-side" data-kmap-tab="domestic" data-pmap-side></aside>
+        <!-- 국외 탭: 예전부터 쓰던 지역별 순위 목록 -->
+        <ol class="regions" data-kmap-tab="overseas" data-region-list></ol>
       </div>
     </div>
   </section>
