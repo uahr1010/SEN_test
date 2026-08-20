@@ -507,10 +507,12 @@
 }
 .news-spotlight__card .card__excerpt { -webkit-line-clamp: 4; line-clamp: 4; }
 
-/* 이전/다음 버튼 — 각 스포트라이트 아래 가운데에 둡니다 */
+/* 이전/다음 버튼 — 두 스포트라이트를 대표하는 화살표 한 쌍만 두고,
+   화면(두 스포트라이트를 담은 행) 가운데 아래에 둡니다. 누르면
+   controls.js가 두 스포트라이트를 함께 한 칸씩 움직입니다. */
 .news-spotlight__nav {
   display: flex; justify-content: center; gap: var(--sp-2);
-  margin-top: var(--sp-3);
+  margin-top: var(--sp-4);
 }
 .news-spotlight__arrow {
   width: 36px; height: 36px; border-radius: 50%;
