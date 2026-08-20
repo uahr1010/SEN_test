@@ -515,11 +515,11 @@ window.SEN = window.SEN || {};
     var lead = '카드를 누르면 지도가 그 지역으로 이동하고 시군구 실적이 열립니다 · 전체 <b>' + fmt(totN) + '건</b>';
     elSide.innerHTML = '<div class="panel"><div class="panel__head panel__head--tight"><div class="panel__title">' + title + '</div>' +
       '<div class="panel__sub">' + lead + '</div></div>' +
-      '<div class="panel__body"><div class="cards">' + rows.map(function (r) {
-        return '<button type="button" class="card" data-prov="' + r.key + '">' +
-          '<span class="card__nm">' + esc(r.label) + '</span>' +
-          '<span class="card__n">' + fmt(r.n) + '<small>건</small></span>' +
-          '<span class="card__bar"><i style="width:' + Math.max(2, Math.round(r.n / maxN * 100)) + '%"></i></span></button>';
+      '<div class="panel__body"><div class="prov-cards">' + rows.map(function (r) {
+        return '<button type="button" class="prov-card" data-prov="' + r.key + '">' +
+          '<span class="prov-card__nm">' + esc(r.label) + '</span>' +
+          '<span class="prov-card__n">' + fmt(r.n) + '<small>건</small></span>' +
+          '<span class="prov-card__bar"><i style="width:' + Math.max(2, Math.round(r.n / maxN * 100)) + '%"></i></span></button>';
       }).join('') + '</div></div>' +
       '<div class="panel__foot"><span class="panel__lgd">막대는 시/도 간 실적 비교</span></div></div>';
     elSide.querySelectorAll('[data-prov]').forEach(function (b) {

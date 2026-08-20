@@ -853,24 +853,26 @@
   font-size: var(--fs-xs); color: var(--c-muted);
 }
 
-/* 시/도 카드 그리드 */
-.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
-.card {
+/* 시/도 카드 그리드 — 클래스명이 .cards/.card 이면 뉴스 카드(.cards--news
+   .card, components.css 위쪽 342행 부근)와 이름이 겹쳐 스타일이 서로
+   덮어써지므로, 이 패널 전용 이름(.prov-*)을 씁니다. */
+.prov-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.prov-card {
   display: grid; gap: 2px; text-align: left; border: 1px solid var(--c-line);
   border-radius: var(--radius); background: var(--c-white); padding: 11px 13px 10px;
   font: inherit; color: var(--c-ink); cursor: pointer;
   transition: border-color .15s, box-shadow .15s, transform .15s;
 }
-.card:hover { border-color: var(--c-blue); box-shadow: 0 6px 18px rgba(0, 113, 227, .12); transform: translateY(-1px); }
-.card__nm {
+.prov-card:hover { border-color: var(--c-blue); box-shadow: 0 6px 18px rgba(0, 113, 227, .12); transform: translateY(-1px); }
+.prov-card__nm {
   font-size: var(--fs-xs); font-weight: 700; letter-spacing: -.01em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.card__n { font-size: 1.2rem; font-weight: 900; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.15; }
-.card__n small { font-size: .7rem; font-weight: 500; color: var(--c-muted); margin-left: 2px; }
-.card__bar { height: 5px; border-radius: 999px; background: var(--c-tint); overflow: hidden; margin-top: 5px; }
-.card__bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--c-blue-mid), var(--c-blue)); }
-@media (max-width: 1100px) { .cards { grid-template-columns: 1fr; } }
+.prov-card__n { font-size: 1.2rem; font-weight: 900; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.prov-card__n small { font-size: .7rem; font-weight: 500; color: var(--c-muted); margin-left: 2px; }
+.prov-card__bar { height: 5px; border-radius: 999px; background: var(--c-tint); overflow: hidden; margin-top: 5px; }
+.prov-card__bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--c-blue-mid), var(--c-blue)); }
+@media (max-width: 1100px) { .prov-cards { grid-template-columns: 1fr; } }
 
 /* 시/도 안의 시/군/구 목록 */
 .arow {
