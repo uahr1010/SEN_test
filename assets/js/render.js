@@ -110,6 +110,26 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
+    /* 센코어테크 연도별 매출 막대그래프 — 값이 가장 큰 해를 100%로 두고
+       나머지는 그 비율로 막대 높이를 정합니다(디자인용 상대 비교이지
+       절대 축은 아닙니다). Pages CMS의 [⑤ 센코어테크 역량]에서 연도·
+       금액을 입력하면 그대로 반영됩니다. */
+    'sencoretech.yearly': function (items, ctx) {
+      if (!items.length) return '';
+      var unit = t(pick(ctx, 'sencoretech.yearlyUnit'));
+      var max = items.reduce(function (m, it) { return Math.max(m, Number(it.value) || 0); }, 0);
+      return items.map(function (it) {
+        var v = Number(it.value) || 0;
+        var h = max > 0 ? Math.max(4, Math.round((v / max) * 100)) : 4;
+        return '' +
+          '<div class="sct-bar">' +
+            '<span class="sct-bar__value">' + esc(v.toLocaleString()) + (unit ? ' ' + esc(unit) : '') + '</span>' +
+            '<span class="sct-bar__col" style="height:' + h + '%"></span>' +
+            '<span class="sct-bar__year">' + esc(t(it.year)) + '</span>' +
+          '</div>';
+      }).join('');
+    },
+
 
     /* 주요공법 — 사진 자리에 소개 영상의 유튜브 썸네일을 넣고, 카드
        전체를 눌러 그 영상으로 이동합니다. 개별 공법 PDF는 없고,
@@ -348,6 +368,17 @@ window.SEN = window.SEN || {};
           loadCeoVideo();
         }
       }
+    }
+
+    /* 센코어테크 순위 라벨 — "{year}년 기준 강구조시공능력 순위"처럼
+       기준 연도가 문구 중간에 들어가서 data-bind 하나로 못 채웁니다.
+       {job} 을 실제 값으로 바꿔치는 site.json의 지원 메일 제목과 같은
+       방식(단순 문자열 치환)입니다. */
+    var rankLabelHost = document.querySelector('[data-sct-rank-label]');
+    if (rankLabelHost) {
+      var rk = pick(ctx, 'sencoretech.rank') || {};
+      var rankLabel = t(rk.label).replace('{year}', t(rk.year));
+      if (rankLabel) rankLabelHost.textContent = rankLabel;
     }
 
 

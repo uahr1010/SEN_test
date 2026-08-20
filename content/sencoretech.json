@@ -1,0 +1,42 @@
+{
+  "section": {
+    "eyebrow": { "ko": "SENCORETECH", "en": "SENCORETECH", "zh": "SENCORETECH", "ja": "SENCORETECH" },
+    "title": {
+      "ko": "센코어테크의 역량",
+      "en": "SENcoretech's Capability",
+      "zh": "SENcoretech 的实力",
+      "ja": "SENcoretechの実力"
+    },
+    "lead": {
+      "ko": "강구조 전문건설사 센코어테크의 시공능력과 성장을 소개합니다.",
+      "en": "The construction capability and growth of SENcoretech, our steel construction specialist.",
+      "zh": "介绍钢结构专业施工企业SENcoretech的施工能力与成长。",
+      "ja": "鉄骨専門建設会社センコアテックの施工能力と成長をご紹介します。"
+    }
+  },
+
+  "founded": {
+    "ko": "2010년 6월 설립",
+    "en": "Founded June 2010",
+    "zh": "2010年6月成立",
+    "ja": "2010年6月設立"
+  },
+
+  "rank": {
+    "label": {
+      "ko": "{year}년 기준 강구조시공능력 순위",
+      "en": "Steel construction capability ranking ({year})",
+      "zh": "钢结构施工能力评估排名（{year}年）",
+      "ja": "鉄骨施工能力評価ランキング（{year}年基準）"
+    },
+    "suffix": { "ko": "위", "en": "th", "zh": "名", "ja": "位" }
+  },
+
+  "chartTitle": {
+    "ko": "최근 매출 동향",
+    "en": "Recent Revenue Trend",
+    "zh": "近期营收趋势",
+    "ja": "最近の売上動向"
+  },
+  "yearlyUnit": { "ko": "억원", "en": "KRW 100M", "zh": "亿韩元", "ja": "億ウォン" }
+}

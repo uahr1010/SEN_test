@@ -806,3 +806,65 @@
 .pmap__legend-cap { font-size: var(--fs-xs); color: var(--c-muted); font-variant-numeric: tabular-nums; }
 .pmap__legend-title { font-size: var(--fs-xs); font-weight: 700; }
 
+/* ---------- 센코어테크의 역량 (순위 뱃지 + 매출 막대그래프) ----------
+   왼쪽 원형 뱃지는 시공능력 순위, 오른쪽은 연도별 매출 막대그래프
+   입니다. 순위·기준연도·연도별 금액은 Pages CMS의 [⑤ 센코어테크 역량]
+   에서 입력하면 render.js가 그대로 반영합니다(설립연도만 고정값). */
+.sct-capability {
+  display: grid; grid-template-columns: minmax(200px, 300px) 1fr;
+  gap: var(--sp-5); align-items: center;
+}
+@media (max-width: 760px) {
+  .sct-capability { grid-template-columns: 1fr; }
+}
+
+.sct-rank {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: var(--sp-2);
+}
+.sct-rank__ring {
+  width: 190px; height: 190px; border-radius: 50%;
+  background: linear-gradient(155deg, var(--c-blue-mid), var(--c-blue) 60%, var(--c-blue-dark));
+  display: grid; place-items: center;
+  box-shadow: var(--shadow);
+}
+.sct-rank__hole {
+  width: 76%; height: 76%; border-radius: 50%;
+  background: var(--c-white);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.sct-rank__num { font-size: 3.25rem; font-weight: 800; color: var(--c-navy); line-height: 1; }
+.sct-rank__suffix { font-size: var(--fs-lead); color: var(--c-muted); font-weight: 700; margin-top: 2px; }
+.sct-rank__label { font-size: var(--fs-small); font-weight: 700; color: var(--c-ink); max-width: 240px; }
+.sct-rank__founded { font-size: var(--fs-xs); color: var(--c-muted); }
+
+.sct-chart__title {
+  font-size: var(--fs-h3); margin-bottom: var(--sp-4);
+}
+.sct-chart__bars {
+  display: flex; align-items: flex-end; gap: var(--sp-2);
+  height: 260px; padding: 0 var(--sp-2) var(--sp-2);
+  border-bottom: 1px solid var(--c-line);
+}
+.sct-bar {
+  flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  height: 100%; gap: 6px;
+}
+.sct-bar__value {
+  font-size: var(--fs-xs); color: var(--c-muted); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.sct-bar__col {
+  width: 100%; max-width: 46px;
+  background: linear-gradient(180deg, var(--c-blue-mid), var(--c-blue));
+  border-radius: 8px 8px 0 0;
+}
+.sct-bar__year {
+  font-size: var(--fs-xs); color: var(--c-muted); margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 480px) {
+  .sct-bar__value { font-size: 10px; }
+}
+

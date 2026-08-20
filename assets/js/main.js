@@ -7,7 +7,7 @@ window.SEN = window.SEN || {};
 (function (SEN) {
   'use strict';
 
-  var FILES = ['site', 'about', 'news', 'news-i18n', 'projects', 'careers'];
+  var FILES = ['site', 'about', 'news', 'news-i18n', 'projects', 'careers', 'sencoretech', 'sencoretech-data'];
 
   /* ---------- 목록 상태 (필터 · 더보기) ---------- */
   SEN.state = {
@@ -284,6 +284,22 @@ window.SEN = window.SEN || {};
     loadContent().then(function (data) {
       SEN.data = data;
       SEN.util.mergeNewsI18n(data.news, data['news-i18n']);
+      /* 센코어테크 순위·매출은 Pages CMS에서 편집할 수 있어야 해서
+         고정 문구(content/sencoretech.json)와 값(content/
+         sencoretech-data.json)을 서로 다른 파일로 나눠 뒀습니다 — 한
+         파일에 같이 두면, CMS 폼을 저장할 때 폼에 없는 고정 문구
+         필드까지 통째로 지워지는 사고가 나기 때문입니다(채용공고에서
+         한 번 겪은 문제라 같은 방식을 피했습니다). 여기서 두 파일을
+         하나로 합쳐 render.js는 늘 data.sencoretech 하나만 봅니다. */
+      var scData = data['sencoretech-data'];
+      if (data.sencoretech && scData) {
+        data.sencoretech.rank = data.sencoretech.rank || {};
+        if (scData.rank) {
+          data.sencoretech.rank.current = scData.rank.current;
+          data.sencoretech.rank.year = scData.rank.year;
+        }
+        data.sencoretech.yearly = scData.yearly || [];
+      }
 
       SEN.render(data);
       applyMeta(data);

@@ -10,6 +10,9 @@
 #                  news_id 칸에 ①의 "고유 ID"를 적으면 됩니다.)
 #    ③ 채용공고  : 새 채용공고 추가 (한국어만)
 #    ④ 용어집    : 고유명사 표기 통일 (기사 번역에 사용)
+#    ⑤ 센코어테크 역량 : 강구조시공능력 순위·기준연도, 연도별 매출
+#                        그래프 값. 숫자만 입력하며 번역이 필요 없습니다
+#                        (그래프 제목·단위 등 문구는 고정값이라 여기 없음).
 #
 #  ── 미디어(파일 업로드) ──
 #    ① 프로젝트 데이터 : 실적 4,575건 — 파일을 통째로 내려받아 고친 뒤
@@ -327,4 +330,54 @@ content:
         label: 中文
         type: string
         required: true
+
+  # --------------------------------------------------------------------------
+  # ⑤ 센코어테크 역량 — 강구조시공능력 순위·기준연도, 연도별 매출
+  #
+  #    숫자만 입력합니다(번역 없음). 그래프 제목·단위·순위 문구 같은
+  #    고정 텍스트는 content/sencoretech.json에 따로 있고 이 폼에서는
+  #    다루지 않습니다 — 한 파일에 같이 두면 이 폼을 저장할 때마다 폼에
+  #    없는 고정 문구까지 통째로 지워지기 때문에([③ 채용공고]에서 겪은
+  #    것과 같은 문제) 데이터만 이 파일(content/sencoretech-data.json)로
+  #    분리했습니다. 설립연도(2010년 6월)는 안 바뀌는 값이라 여기 없고
+  #    content/sencoretech.json에 고정으로 있습니다.
+  # --------------------------------------------------------------------------
+  - name: sencoretech-data
+    label: ⑤ 센코어테크 역량
+    type: file
+    path: content/sencoretech-data.json
+    format: json
+    fields:
+      - name: rank
+        label: 강구조시공능력 순위
+        type: object
+        fields:
+          - name: current
+            label: 순위 (숫자만, 예 4)
+            type: number
+            required: true
+          - name: year
+            label: 기준 연도
+            type: number
+            required: true
+      - name: yearly
+        label: 연도별 매출
+        description: >
+          홈페이지의 막대그래프는 이 목록 순서를 그대로 따릅니다 —
+          연도 오름차순으로 넣어 주세요. 지금 들어있는 값은 더미(예시)
+          데이터이니 실제 매출로 바꿔 주세요.
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{year}"
+        fields:
+          - name: year
+            label: 연도
+            type: number
+            required: true
+          - name: value
+            label: 매출 (억원)
+            type: number
+            required: true
 
