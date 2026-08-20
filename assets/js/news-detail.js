@@ -90,9 +90,10 @@ window.SEN = window.SEN || {};
         '<span class="article__share-toast" data-share-toast hidden>' + shareCopiedLabel + '</span>' +
       '</div>';
 
+    var catLabel = SEN.util.categoryLabel(item.category, data);
     host.innerHTML =
       '<div class="article__meta">' +
-        (t(item.category) ? '<span class="article__cat">' + esc(t(item.category)) + '</span><span>·</span>' : '') +
+        (catLabel ? '<span class="article__cat">' + esc(catLabel) + '</span><span>·</span>' : '') +
         '<time datetime="' + esc(item.date || '') + '">' + esc(fmtDate(item.date)) + '</time>' +
         share +
       '</div>' +

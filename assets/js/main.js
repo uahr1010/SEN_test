@@ -22,7 +22,7 @@ window.SEN = window.SEN || {};
 
       if (f) {
         out = out.filter(function (it) {
-          if (kind === 'news') return SEN.i18n.t(it.category) === f;
+          if (kind === 'news') return it.category === f;
           return (it.methods || []).indexOf(f) > -1;
         });
       }

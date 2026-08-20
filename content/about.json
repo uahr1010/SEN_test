@@ -4,13 +4,13 @@
     "title": {
       "ko": "설계에서 시공까지,\n하나의 책임으로",
       "en": "From design to erection,\nunder one responsibility",
-      "zh": "从设计到施工，\n一体化责任",
+      "zh": "从设计到施工，\n全程负责",
       "ja": "設計から施工まで、\nひとつの責任で"
     },
     "lead": {
       "ko": "센 엔지니어링그룹은 구조설계사(센구조연구소), 기술연구소(센벡스), 강구조 전문건설사(센코어테크)가 수직 계열화된 조직입니다.\n신공법 개발부터 설계, 자재 생산, 시공까지 하나의 흐름으로 진행합니다.",
       "en": "SEN Engineering Group is a vertically integrated organisation of a structural design firm (SEN Structural Engineers), an R&D institute (SENVEX) and a steel construction specialist (SENcoretech).\nFrom technology development to design, fabrication and erection in a single flow.",
-      "zh": "SEN 工程集团由结构设计公司（SEN结构研究所）、技术研究所（SENVEX）与钢结构专业施工企业（SENcoretech）垂直整合而成。\n从新工法研发、设计、材料生产到施工，一气呵成。",
+      "zh": "SEN工程集团由结构设计公司（SEN结构研究所）、技术研发机构（SENVEX）与钢结构专业施工企业（SENcoretech）垂直整合而成。\n从新工法研发、结构设计、材料生产到施工，实现全流程一体化服务。",
       "ja": "SEN エンジニアリンググループは、構造設計事務所（セン構造研究所）、技術研究所（センベックス）、鉄骨専門建設会社（センコアテック）が垂直統合された組織です。\n新工法開発から設計・製作・施工までを一貫して進めます。"
     }
   },
@@ -36,11 +36,11 @@
   },
 
   "history": {
-    "heading": { "ko": "회사연혁", "en": "Company History", "zh": "公司沿革", "ja": "沿革" },
+    "heading": { "ko": "회사연혁", "en": "Company History", "zh": "发展历程", "ja": "沿革" },
     "lead": {
       "ko": "1973년 센구조연구소 창립 이후 지금까지의 주요 발자취입니다.",
       "en": "Milestones since the founding of SEN Structural Engineers in 1973.",
-      "zh": "自1973年SEN结构研究所创立以来的主要历程。",
+      "zh": "自1973年SEN结构研究所创立以来的发展历程",
       "ja": "1973年のセン構造研究所創立以来の主な歩みです。"
     },
     "pinned": [
@@ -131,7 +131,7 @@
     "lead": {
       "ko": "센 엔지니어링그룹이 보유한 자체 공법을 소개합니다.",
       "en": "An overview of SEN Engineering Group's proprietary construction systems.",
-      "zh": "介绍SEN工程集团自有的核心工法。",
+      "zh": "介绍SEN工程集团自主研发的核心工法。",
       "ja": "SENエンジニアリンググループ独自の工法をご紹介します。"
     },
     "items": [
@@ -141,13 +141,13 @@
         "summary": {
           "ko": "U형 강판 거푸집과 콘크리트가 일체화된 박판 강관 합성보로, 거푸집·동바리 공정을 없앱니다.",
           "en": "A thin-walled U-shaped steel tube acting as both permanent formwork and structure, eliminating shoring.",
-          "zh": "U型钢板模板与混凝土一体化的薄壁钢管组合梁，取消模板与支撑工序。",
+          "zh": "采用U型钢板与混凝土一体化的组合梁，无需另设模板及临时支撑。",
           "ja": "U形鋼板型枠とコンクリートが一体化した薄板鋼管合成梁。型枠・支保工工程を不要にします。"
         },
         "points": [
-          { "ko": "거푸집·동바리 불필요 — 현장 인력 절감", "en": "No formwork or shoring — fewer site workers", "zh": "无需模板与支撑，节省现场人力", "ja": "型枠・支保工が不要で現場人員を削減" },
-          { "ko": "층고 절감 및 설비 공간 확보에 유리", "en": "Reduced floor-to-floor height, more MEP space", "zh": "有利于降低层高并确保设备空间", "ja": "階高の低減と設備スペース確保に有利" },
-          { "ko": "PSRC 기둥과 조합 시 OSC 골조 완성", "en": "Combines with PSRC columns for a full OSC frame", "zh": "与PSRC柱组合可实现完整OSC主体结构", "ja": "PSRC柱との組合せでOSC躯体が完成" }
+          { "ko": "거푸집·동바리 불필요 — 현장 인력 절감", "en": "No formwork or shoring — fewer site workers", "zh": "无需模板及临时支撑，大幅减少现场作业人员", "ja": "型枠・支保工が不要で現場人員を削減" },
+          { "ko": "층고 절감 및 설비 공간 확보에 유리", "en": "Reduced floor-to-floor height, more MEP space", "zh": "有利于降低结构层高，确保充足的设备安装空间", "ja": "階高の低減と設備スペース確保に有利" },
+          { "ko": "PSRC 기둥과 조합 시 OSC 골조 완성", "en": "Combines with PSRC columns for a full OSC frame", "zh": "与PSRC柱组合，可构建完整的OSC主体结构体系", "ja": "PSRC柱との組合せでOSC躯体が完成" }
         ],
         "image": "https://img.youtube.com/vi/jgq7mU9fKKg/hqdefault.jpg",
         "video": "https://youtu.be/jgq7mU9fKKg"
@@ -158,13 +158,13 @@
         "summary": {
           "ko": "철근을 공장에서 선조립하여 현장 작업을 최소화한 SRC 합성기둥 공법입니다.",
           "en": "An SRC composite column system with factory-prefabricated reinforcement that minimises on-site work.",
-          "zh": "在工厂预先组装钢筋、最大限度减少现场作业的SRC组合柱工法。",
+          "zh": "在工厂预先组装钢骨与钢筋，最大限度减少现场作业的SRC组合柱工法。",
           "ja": "鉄筋を工場で先組立し、現場作業を最小化したSRC合成柱工法です。"
         },
         "points": [
-          { "ko": "현장 철근 배근 공정 제거로 공기 30% 이상 단축", "en": "Over 30% schedule reduction by removing on-site rebar work", "zh": "取消现场配筋工序，工期缩短30%以上", "ja": "現場配筋工程の削減により工期を30%以上短縮" },
-          { "ko": "싱가포르 BCA 설계기준 BC4:2025 등재", "en": "Listed in Singapore BCA design code BC4:2025", "zh": "列入新加坡BCA设计标准 BC4:2025", "ja": "シンガポールBCA設計基準 BC4:2025 に収載" },
-          { "ko": "고층 오피스·데이터센터 적용 실적 다수", "en": "Proven on high-rise offices and data centres", "zh": "在高层办公楼与数据中心多有应用实绩", "ja": "高層オフィス・データセンターへの適用実績多数" }
+          { "ko": "현장 철근 배근 공정 제거로 공기 30% 이상 단축", "en": "Over 30% schedule reduction by removing on-site rebar work", "zh": "无需现场配筋，工期可缩短30%以上", "ja": "現場配筋工程の削減により工期を30%以上短縮" },
+          { "ko": "싱가포르 BCA 설계기준 BC4:2025 등재", "en": "Listed in Singapore BCA design code BC4:2025", "zh": "纳入新加坡BCA设计标准 BC4:2025", "ja": "シンガポールBCA設計基準 BC4:2025 に収載" },
+          { "ko": "고층 오피스·데이터센터 적용 실적 다수", "en": "Proven on high-rise offices and data centres", "zh": "广泛应用于高层办公楼及数据中心等项目", "ja": "高層オフィス・データセンターへの適用実績多数" }
         ],
         "image": "https://img.youtube.com/vi/FLhl4Q43oWM/hqdefault.jpg",
         "video": "https://youtu.be/FLhl4Q43oWM"
@@ -175,13 +175,13 @@
         "summary": {
           "ko": "TSC·PSRC를 비롯해 OSC 건설을 가능하게 하는 브라켓 공법(HMB 등), 앵글형 합성보 등 다수의 특허공법을 활용하여, 설계 단계부터 제작·시공을 함께 고려하는 DfMA 기반의 통합 엔지니어링 서비스를 제공합니다.",
           "en": "Drawing on TSC and PSRC together with a portfolio of patented systems that make off-site construction possible — bracket connections such as HMB, angle-type composite beams and more — we deliver integrated engineering built on DfMA, where fabrication and erection are considered from the design stage.",
-          "zh": "以TSC·PSRC为核心，结合使OSC建造成为可能的托座工法（HMB等）、角钢型组合梁等多项专利工法，提供从设计阶段即统筹制造与施工的DfMA一体化工程服务。",
+          "zh": "以TSC、PSRC为核心，并结合HMB等牛腿连接技术、角钢型组合梁等多项专利工法，提供基于DfMA、从设计阶段即综合考虑制作与施工的一体化工程服务。",
           "ja": "TSC・PSRCに加え、OSC建設を可能にするブラケット工法（HMB等）、アングル型合成梁など多数の特許工法を活用し、設計段階から製作・施工を織り込むDfMAベースの統合エンジニアリングサービスを提供します。"
         },
         "points": [
-          { "ko": "브라켓 공법(HMB 등)·앵글형 합성보 등 다수의 특허공법 보유", "en": "A portfolio of patented systems — HMB bracket connections, angle-type composite beams and more", "zh": "拥有托座工法（HMB等）、角钢型组合梁等多项专利工法", "ja": "ブラケット工法（HMB等）・アングル型合成梁など多数の特許工法を保有" },
-          { "ko": "설계–생산–시공 수직 계열화로 책임 일원화", "en": "Vertically integrated design, fabrication and erection", "zh": "设计—生产—施工垂直整合，责任统一", "ja": "設計・生産・施工の垂直統合で責任を一元化" },
-          { "ko": "BIM 기반 간섭 검토 및 물량 산출", "en": "BIM-based clash detection and quantity take-off", "zh": "基于BIM的碰撞检查与工程量计算", "ja": "BIMベースの干渉検討・数量算出" }
+          { "ko": "브라켓 공법(HMB 등)·앵글형 합성보 등 다수의 특허공법 보유", "en": "A portfolio of patented systems — HMB bracket connections, angle-type composite beams and more", "zh": "拥有HMB等牛腿连接技术、角钢型组合梁等多项专利工法", "ja": "ブラケット工法（HMB等）・アングル型合成梁など多数の特許工法を保有" },
+          { "ko": "설계–생산–시공 수직 계열화로 책임 일원화", "en": "Vertically integrated design, fabrication and erection", "zh": "设计—生产—施工垂直一体化，实现责任主体统一", "ja": "設計・生産・施工の垂直統合で責任を一元化" },
+          { "ko": "BIM 기반 간섭 검토 및 물량 산출", "en": "BIM-based clash detection and quantity take-off", "zh": "基于BIM进行碰撞检查及工程量提取", "ja": "BIMベースの干渉検討・数量算出" }
         ],
         "image": "https://img.youtube.com/vi/lL4TqGROH5M/hqdefault.jpg",
         "video": "https://youtu.be/lL4TqGROH5M"
@@ -190,7 +190,7 @@
   },
 
   "contact": {
-    "heading": { "ko": "CONTACT", "en": "Contact Us", "zh": "联系我们", "ja": "お問い合わせ" },
+    "heading": { "ko": "CONTACT", "en": "Contact Us", "zh": "联系方式", "ja": "お問い合わせ" },
     "generalLabel": { "ko": "대표 문의", "en": "General enquiries", "zh": "综合咨询", "ja": "総合お問い合わせ" },
     "generalEmail": "info@senkuzo.com",
     "offices": [
@@ -235,7 +235,7 @@
       },
       {
         "overseas": true,
-        "tag": { "ko": "Regional Office : Singapore", "en": "Singapore", "zh": "新加坡", "ja": "シンガポール" },
+        "tag": { "ko": "Regional Office : Singapore", "en": "Regional Office : Singapore", "zh": "Regional Office : Singapore", "ja": "Regional Office : Singapore" },
         "name": { "ko": "SEN SG PTE. LTD.", "en": "SEN SG PTE. LTD.", "zh": "SEN SG PTE. LTD.", "ja": "SEN SG PTE. LTD." },
         "address": {
           "ko": "19 Jalan Kilang Barat #06-01 Acetech Centre, Singapore 159361",
@@ -249,7 +249,7 @@
       },
       {
         "overseas": true,
-        "tag": { "ko": "Regional Office : Malaysia", "en": "Malaysia", "zh": "马来西亚", "ja": "マレーシア" },
+        "tag": { "ko": "Regional Office : Malaysia", "en": "Regional Office : Malaysia", "zh": "Regional Office : Malaysia", "ja": "Regional Office : Malaysia" },
         "name": { "ko": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "en": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "zh": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD.", "ja": "SEN ENGINEERING GROUP MALAYSIA SDN., BHD." },
         "address": {
           "ko": "12th Floor, Menara Symphony, No. 5, Jalan Prof. Khoo Kay Kim, Seksyen 13, 46200 Petaling Jaya, Selangor, Malaysia",
@@ -263,7 +263,7 @@
       },
       {
         "overseas": true,
-        "tag": { "ko": "Regional Office : Indonesia", "en": "Indonesia", "zh": "印度尼西亚", "ja": "インドネシア" },
+        "tag": { "ko": "Regional Office : Indonesia", "en": "Regional Office : Indonesia", "zh": "Regional Office : Indonesia", "ja": "Regional Office : Indonesia" },
         "name": { "ko": "PT SEN ENGINEERING GROUP INDONESIA", "en": "PT SEN ENGINEERING GROUP INDONESIA", "zh": "PT SEN ENGINEERING GROUP INDONESIA", "ja": "PT SEN ENGINEERING GROUP INDONESIA" },
         "address": {
           "ko": "Graha Surveyor Lt 15 Suite 1503, Jl. Gatot Subroto No.Kav 56, RT.1/RW.4, Kuningan Tim., Kecamatan Setiabudi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950, Indonesia",
@@ -277,7 +277,7 @@
       },
       {
         "overseas": true,
-        "tag": { "ko": "Regional Office : Vietnam", "en": "Vietnam", "zh": "越南", "ja": "ベトナム" },
+        "tag": { "ko": "Regional Office : Vietnam", "en": "Regional Office : Vietnam", "zh": "Regional Office : Vietnam", "ja": "Regional Office : Vietnam" },
         "name": { "ko": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "en": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "zh": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH", "ja": "Công ty TRÁCH NHIỆM HỮU HẠN SENCORETECH" },
         "address": {
           "ko": "Tầng 3 tầng 4 toà CMC chân cầu Nhật Tân, Toà nhà bảy tầng, xóm Chín, thôn Ngọc Chi, xã Vĩnh Ngọc, huyện Đông Anh, thành phố Hà Nội, Vietnam",

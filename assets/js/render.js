@@ -202,12 +202,13 @@ window.SEN = window.SEN || {};
       return items.map(function (it, i) {
         var href = 'news.html?id=' + encodeURIComponent(it.id || '');
         var img = it.image || 'assets/img/news-placeholder.svg';
+        var cat = categoryLabel(it.category, ctx);
         return '' +
           '<a class="card news-spotlight__card reveal" data-delay="' + (i % 4) + '" href="' + esc(href) + '">' +
             '<div class="card__media' + (it.image ? '' : ' card__media--placeholder') + '">' + imgTag(img, '', '') + '</div>' +
             '<div class="card__body">' +
               '<div class="card__meta">' +
-                (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +
+                (cat ? '<span class="card__cat">' + esc(cat) + '</span><span>·</span>' : '') +
                 '<time datetime="' + esc(it.date || '') + '">' + esc(fmtDate(it.date)) + '</time>' +
               '</div>' +
               '<h3 class="card__title">' + esc(t(it.title)) + '</h3>' +
@@ -395,6 +396,20 @@ window.SEN = window.SEN || {};
     return s;
   }
 
+  /* news.json 의 category 는 "언론보도"처럼 한국어 원문 문자열 그대로
+     저장돼 있습니다(기사마다 4개 언어를 중복해서 넣지 않으려고) — 화면에
+     보여줄 다국어 표기는 site.json 의 news.categories(같은 값의
+     {ko,en,zh,ja} 목록)에서 찾아옵니다. 목록에 없는 값(오타 등)이면
+     한국어 원문을 그대로 보여줍니다. */
+  function categoryLabel(ko, ctx) {
+    if (!ko) return '';
+    var list = pick(ctx, 'site.news.categories') || [];
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] && list[i].ko === ko) return t(list[i]);
+    }
+    return ko;
+  }
+
   SEN.render = render;
-  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName, mergeNewsI18n: mergeNewsI18n };
+  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName, mergeNewsI18n: mergeNewsI18n, categoryLabel: categoryLabel };
 })(window.SEN);

@@ -39,7 +39,7 @@
     "subtitle": {
       "ko": "믿음으로 약속을 지키고, 경제적이며 편리하고 안전하며 아름다운 구조를 추구합니다. 기본설계부터 강구조 시공까지 하나의 팀이 책임집니다.",
       "en": "Keeping our promises through trust, pursuing structures that are economical, practical, safe and beautiful — from schematic design to steel erection, delivered by one team.",
-      "zh": "以诚信履约，追求经济、便利、安全且优美的结构。从基本设计到钢结构施工，由一个团队全程负责。",
+      "zh": "秉持诚信履约的理念，追求兼具经济性、施工性、安全性与美观性的结构。从基本设计到钢结构施工，由一个团队全程负责。",
       "ja": "信頼をもって約束を守り、経済的で使いやすく安全かつ美しい構造を追求します。基本設計から鉄骨施工まで一つのチームが責任を持ちます。"
     },
     "flipWords": ["센구조연구소", "센코어테크", "센벡스"],
@@ -80,20 +80,26 @@
     "lead": {
       "ko": "언론 보도, 행사, 홍보자료, 학회 논문, 기술자료를 한곳에서 확인하실 수 있습니다.",
       "en": "Press coverage, events, PR materials, academic papers and technical notes in one place.",
-      "zh": "媒体报道、活动、宣传资料、学会论文与技术资料，尽在于此。",
+      "zh": "汇集媒体报道、活动资讯、宣传资料、学术论文及各类技术资料。",
       "ja": "報道、イベント、広報資料、学会論文、技術資料をまとめてご覧いただけます。"
     },
-    "categories": ["언론보도", "행사", "홍보자료", "논문", "기술자료"]
+    "categories": [
+      { "ko": "언론보도", "en": "Press", "zh": "媒体报道", "ja": "報道" },
+      { "ko": "행사", "en": "Events", "zh": "活动资讯", "ja": "イベント" },
+      { "ko": "홍보자료", "en": "PR Materials", "zh": "宣传资料", "ja": "広報資料" },
+      { "ko": "논문", "en": "Papers", "zh": "学术论文", "ja": "論文" },
+      { "ko": "기술자료", "en": "Technical Notes", "zh": "技术资料", "ja": "技術資料" }
+    ]
   },
 
   "careers": {
     "section": {
       "eyebrow": { "ko": "04 — CAREERS", "en": "04 — CAREERS", "zh": "04 — 招聘", "ja": "04 — 採用" },
-      "title": { "ko": "50년의 역사, 앞으로 함께 걸어갈 엔지니어를 찾습니다.", "en": "", "zh": "", "ja": "" },
+      "title": { "ko": "50년의 역사, 앞으로 함께 걸어갈 엔지니어를 찾습니다.", "en": "", "zh": "五十载历程，诚邀优秀工程师与我们携手前行。", "ja": "" },
       "lead": {
         "ko": "업계 최고 수준의 교육과 보상으로 직원의 성장을 지원합니다.\n관심 있는 공고를 펼쳐 '지원하기'를 누르면 지원 메일 작성 창이 열립니다.",
         "en": "We invest in our people with industry-leading training and rewards.\nOpen a posting and click Apply — your mail app opens with the application email ready.",
-        "zh": "以业界顶尖的培训与薪酬支持员工成长。\n展开感兴趣的职位并点击「立即申请」，即可打开申请邮件撰写窗口。",
+        "zh": "以行业领先的培训体系与薪酬福利，助力每一位员工成长。\n展开您感兴趣的职位，点击「立即申请」，即可通过邮件提交申请。",
         "ja": "業界最高水準の教育と報酬で社員の成長を支援します。\n気になる募集を開いて「応募する」を押すと、応募メールの作成画面が開きます。"
       }
     },

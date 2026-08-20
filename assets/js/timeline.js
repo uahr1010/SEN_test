@@ -122,15 +122,15 @@ window.SEN = window.SEN || {};
       decade.type = 'button';
       decade.className = 'tml__decade';
       decade.style.left = decadeX + 'px';
-      decade.setAttribute('aria-expanded', open[label] ? 'true' : 'false');
+      decade.setAttribute('aria-expanded', open[gi] ? 'true' : 'false');
       decade.innerHTML =
         '<span class="tml__decade-label">' + esc(label) + '</span>' +
         '<span class="tml__decade-line" style="height:' + DECADE_LINE_H + 'px"></span>' +
         '<span class="tml__decade-dot"></span>';
-      decade.addEventListener('click', function () { toggleEra(label); });
+      decade.addEventListener('click', function () { toggleEra(gi); });
       frag.appendChild(decade);
 
-      if (open[label]) {
+      if (open[gi]) {
         (g.items || []).forEach(function (it) { addNode(it, null); });
       } else if (isLastGroup && g.items && g.items.length) {
         /* 가장 마지막 연대는 접혀 있어도 최신 소식 하나(마지막 항목)는
@@ -164,8 +164,8 @@ window.SEN = window.SEN || {};
   }
 
   /** 연대를 여닫습니다. 화면(스크롤 위치)은 건드리지 않고 내용만 바뀝니다. */
-  function toggleEra(label) {
-    open[label] = !open[label];
+  function toggleEra(gi) {
+    open[gi] = !open[gi];
     draw();
   }
 
@@ -281,11 +281,15 @@ window.SEN = window.SEN || {};
     elWalker = elRoot.querySelector('[data-tml-walker]');
     if (!elTl || !elTrack) return;
 
-    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다. */
+    /* PC는 전부 펼친 채로 시작하고, 좁은 화면은 전부 접은 채로 시작합니다.
+       그룹 인덱스(gi)로 열림 상태를 기억합니다 — 예전엔 번역된 라벨
+       문자열("1990년대")을 키로 썼는데, 언어를 바꾸면 라벨 문자열도
+       바뀌어서(예: "1990s") 그 키의 열림 상태가 사라져 동그라미를
+       누르지 않아도 전부 접혀 보이던 버그가 있었습니다. */
     var narrow = isNarrow();
     var startOpen = !narrow;
-    (history.groups || []).forEach(function (g) {
-      open[t(g.label)] = startOpen;
+    (history.groups || []).forEach(function (g, gi) {
+      open[gi] = startOpen;
     });
 
     draw();

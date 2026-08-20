@@ -42,13 +42,13 @@ window.SEN = window.SEN || {};
     return 'news-list.html' + (q.length ? '?' + q.join('&') : '');
   }
 
-  function cardHtml(it, t, esc, fmtDate, readMore) {
+  function cardHtml(it, t, esc, fmtDate, readMore, catLabel) {
     var href = 'news.html?id=' + encodeURIComponent(it.id || '');
     return '' +
       '<a class="card reveal is-in" href="' + esc(href) + '">' +
         '<div class="card__body">' +
           '<div class="card__meta">' +
-            (t(it.category) ? '<span class="card__cat">' + esc(t(it.category)) + '</span><span>·</span>' : '') +
+            (catLabel ? '<span class="card__cat">' + esc(catLabel) + '</span><span>·</span>' : '') +
             '<time datetime="' + esc(it.date || '') + '">' + esc(fmtDate(it.date)) + '</time>' +
           '</div>' +
           '<h3 class="card__title">' + esc(t(it.title)) + '</h3>' +
@@ -60,37 +60,42 @@ window.SEN = window.SEN || {};
 
   function renderList(data) {
     var t = SEN.i18n.t, esc = SEN.util.esc, fmtDate = SEN.i18n.formatDate, pick = SEN.util.pick;
+    var categoryLabel = SEN.util.categoryLabel;
 
     var all = ((data.news && data.news.items) || []).slice()
       .sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
 
-    // 분류 칩 — 홈페이지 칩과 달리 클릭이 아니라 링크입니다 (?cat=...).
-    // site.news.categories 의 고정 목록을 그대로 써서, 해당 분류 글이
-    // 아직 없어도 칩은 보이도록 합니다(홈 화면 캐러셀과 동일한 방식).
-    var fixedLabels = (data.site && data.site.news && data.site.news.categories) || [];
-    var labels = fixedLabels.length ? fixedLabels.slice() : [];
-    if (!labels.length) {
+    /* 분류 칩 — 홈페이지 칩과 달리 클릭이 아니라 링크입니다 (?cat=...).
+       site.news.categories 의 고정 목록({ko,en,zh,ja} 객체들)을 그대로
+       써서, 해당 분류 글이 아직 없어도 칩은 보이도록 합니다. 칩의 표시
+       글자는 언어에 따라 바뀌지만, URL의 ?cat= 값과 필터 비교는 항상
+       한국어 원문(ko)으로 고정해 둡니다 — 그래야 언어를 바꿔도 같은
+       분류를 계속 가리키고, 공유된 링크도 언어와 무관하게 동작합니다. */
+    var fixedCats = (data.site && data.site.news && data.site.news.categories) || [];
+    var cats = fixedCats.length ? fixedCats.slice() : [];
+    if (!cats.length) {
       all.forEach(function (it) {
-        var l = t(it.category);
-        if (l && labels.indexOf(l) === -1) labels.push(l);
+        var ko = it.category;
+        if (ko && !cats.some(function (c) { return (c.ko || c) === ko; })) cats.push({ ko: ko });
       });
     }
     var cat = currentCat();
     var chipsHost = document.querySelector('[data-news-list-filter]');
     if (chipsHost) {
-      if (labels.length < 2) {
+      if (cats.length < 2) {
         chipsHost.innerHTML = '';
       } else {
         var allLabel = esc(t(pick(data, 'site.ui.all')) || '전체');
         var chipsHtml = '<a class="chip' + (!cat ? ' is-on' : '') + '" href="' + pageHref('', 1) + '">' + allLabel + '</a>';
-        chipsHtml += labels.map(function (l) {
-          return '<a class="chip' + (cat === l ? ' is-on' : '') + '" href="' + esc(pageHref(l, 1)) + '">' + esc(l) + '</a>';
+        chipsHtml += cats.map(function (c) {
+          var ko = c.ko || c;
+          return '<a class="chip' + (cat === ko ? ' is-on' : '') + '" href="' + esc(pageHref(ko, 1)) + '">' + esc(t(c) || ko) + '</a>';
         }).join('');
         chipsHost.innerHTML = chipsHtml;
       }
     }
 
-    var filtered = cat ? all.filter(function (it) { return t(it.category) === cat; }) : all;
+    var filtered = cat ? all.filter(function (it) { return it.category === cat; }) : all;
     var totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
     var page = Math.min(currentPage(), totalPages);
     var pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -99,7 +104,7 @@ window.SEN = window.SEN || {};
     var listHost = document.querySelector('[data-news-list]');
     if (listHost) {
       listHost.innerHTML = pageItems.length
-        ? pageItems.map(function (it) { return cardHtml(it, t, esc, fmtDate, readMore); }).join('')
+        ? pageItems.map(function (it) { return cardHtml(it, t, esc, fmtDate, readMore, categoryLabel(it.category, data)); }).join('')
         : '<p class="state">' + esc(t(pick(data, 'site.ui.empty')) || '등록된 글이 없습니다.') + '</p>';
     }
 
