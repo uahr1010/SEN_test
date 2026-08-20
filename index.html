@@ -234,17 +234,18 @@
   </section>
 
   <!-- ---------- 장면 2.5 : 센코어테크의 역량 ----------
-       왼쪽은 강구조시공능력 순위(고정 값이 아니라 Pages CMS의
-       [⑤ 센코어테크 역량]에서 순위·기준 연도를 입력하면 바뀝니다),
-       오른쪽은 연도별 매출 막대그래프(같은 탭에서 연도·금액을 입력).
-       설립연도(2010년 6월)는 고정값이라 CMS에 없습니다. 그래프 값은
-       아직 더미(예시) 데이터입니다 — content/sencoretech.json의
-       "_dummyNotice" 참고. -->
+       제목·리드 바로 밑에 설립일(2010년 6월, 고정값 —
+       content/sencoretech.json). 그 아래 왼쪽은 강구조시공능력 순위
+       (Pages CMS의 [⑤ 센코어테크 역량]에서 순위·기준 연도를 입력하면
+       바뀝니다), 오른쪽은 연도별 매출 막대그래프(같은 탭에서 연도·
+       금액을 입력). 그래프 값은 아직 더미(예시) 데이터입니다 —
+       content/sencoretech-data.json 참고. -->
   <section class="scene scene--paper" id="scene-sencoretech" data-label="센코어테크">
     <div class="scene__inner">
       <header class="scene__head" data-reveal>
         <h2 class="scene__title" data-bind="sencoretech.section.title"></h2>
         <p class="scene__lead" data-bind="sencoretech.section.lead"></p>
+        <p class="sct-founded" data-bind="sencoretech.founded"></p>
       </header>
 
       <div class="sct-capability">
@@ -256,7 +257,6 @@
             </div>
           </div>
           <p class="sct-rank__label" data-sct-rank-label></p>
-          <p class="sct-rank__founded" data-bind="sencoretech.founded"></p>
         </div>
 
         <div class="sct-chart" data-reveal>

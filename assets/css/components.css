@@ -836,7 +836,12 @@
 .sct-rank__num { font-size: 3.25rem; font-weight: 800; color: var(--c-navy); line-height: 1; }
 .sct-rank__suffix { font-size: var(--fs-lead); color: var(--c-muted); font-weight: 700; margin-top: 2px; }
 .sct-rank__label { font-size: var(--fs-small); font-weight: 700; color: var(--c-ink); max-width: 240px; }
-.sct-rank__founded { font-size: var(--fs-xs); color: var(--c-muted); }
+
+/* 설립일 — 제목·리드 바로 아래, 순위/그래프 칸 위에 한 줄로 둡니다 */
+.sct-founded {
+  font-size: var(--fs-xs); font-weight: 700; color: var(--c-blue);
+  margin-top: var(--sp-1);
+}
 
 .sct-chart__title {
   font-size: var(--fs-h3); margin-bottom: var(--sp-4);
