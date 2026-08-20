@@ -26,13 +26,13 @@
       "ja": "信頼をもって約束を守り、経済的で使いやすく安全かつ美しい構造を追求します。"
     },
     "body": {
-      "ko": "저희 센 엔지니어링그룹 홈페이지 방문을 환영합니다.\n\n센 엔지니어링그룹은 1973년부터 현재까지 5,000여 건의 구조설계와 500여 건의 구조안전진단 경험을 축적하였습니다. 또한 다년간의 실무 경험을 기초로 연구개발한 독자 원천기술(특허 110여 건, 신기술 2건 등)을 활용하여 기본설계부터 강구조 시공까지 건축구조 전반을 망라하는 '원스톱' 서비스를 제공하고 있습니다.\n\n앞으로도 지속적인 연구개발로 구조설계, 시공자문, 진단, 특수보강공사, 구조안전 모니터링, 그리고 강구조 시공 업무에 이르는 각각의 Project마다 고객들께 물질·시간·정신적인 이익이 돌아가는 Total Value Engineering을 약속합니다.\n\n감사합니다.",
-      "en": "Welcome to the SEN Engineering Group website.\n\nSince 1973 we have accumulated experience across more than 5,000 structural design projects and 500 structural safety diagnoses. Building on decades of practice, we apply proprietary technologies developed in-house — over 110 patents and two certified new technologies — to provide a true one-stop service spanning the whole of building structures, from schematic design through to steel construction.\n\nWe will continue to invest in research and development so that every project — structural design, construction consulting, diagnosis, special reinforcement work, structural health monitoring and steel erection — returns material, temporal and intellectual value to our clients through Total Value Engineering.\n\nThank you.",
-      "zh": "欢迎访问 SEN 工程集团网站。\n\n自1973年至今，我们积累了5,000余项结构设计与500余项结构安全诊断经验。在多年实务经验基础上，我们运用自主研发的原创技术（专利110余项、新技术2项等），提供涵盖从基本设计到钢结构施工的建筑结构全流程「一站式」服务。\n\n今后我们将持续研发，在结构设计、施工咨询、诊断、特殊加固工程、结构安全监测及钢结构施工等每一个项目中，为客户带来物质、时间与精神层面收益的 Total Value Engineering。\n\n谢谢。",
-      "ja": "SEN エンジニアリンググループのウェブサイトへようこそ。\n\n当グループは1973年から現在までに5,000件を超える構造設計と500件以上の構造安全診断の経験を蓄積してまいりました。長年の実務経験に基づき研究開発した独自技術（特許110件超、新技術2件など）を活用し、基本設計から鉄骨施工まで建築構造全般を網羅する「ワンストップ」サービスを提供しています。\n\n今後も継続的な研究開発により、構造設計・施工コンサルティング・診断・特殊補強工事・構造安全モニタリング・鉄骨施工に至る各プロジェクトで、お客様に物質的・時間的・精神的な利益をもたらす Total Value Engineering をお約束します。\n\nありがとうございます。"
+      "ko": "",
+      "en": "",
+      "zh": "",
+      "ja": ""
     },
-    "role": { "ko": "센 엔지니어링그룹 회장", "en": "Chairman, SEN Engineering Group", "zh": "SEN 工程集团 会长", "ja": "SEN エンジニアリンググループ 会長" },
-    "name": { "ko": "이창남", "en": "Lee Chang-nam", "zh": "Lee Chang-nam", "ja": "Lee Chang-nam" }
+    "role": { "ko": "센 엔지니어링그룹 대표이사", "en": "CEO, SEN Engineering Group", "zh": "SEN 工程集团 代表理事", "ja": "SEN エンジニアリンググループ 代表取締役" },
+    "name": { "ko": "이승환", "en": "Lee Seung-hwan", "zh": "Lee Seung-hwan", "ja": "Lee Seung-hwan" }
   },
 
   "history": {

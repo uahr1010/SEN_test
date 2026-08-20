@@ -55,15 +55,9 @@
 .chip.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 
 /* ---------- CEO 인사말 ---------- */
-.ceo {
-  display: grid; gap: clamp(2rem, 5vw, 4rem);
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  align-items: start;
-}
-/* 사진을 없애고 인사말(인용구 → 본문 → 서명)만 한 줄로 흐르게 둡니다.
-   폭은 위 CEO 영상(.ceo__video)과 똑같이 .about-block 전체 폭을 씁니다. */
-/* CEO 인사말 위 소개 영상 — video URL이 없으면 render.js가 [hidden] 처리,
-   있으면 자동재생·반복 iframe으로 바로 채워 넣습니다. */
+/* 인사말 본문(긴 글)은 지웠습니다 — 영상 → 제목 → 인용구 → 서명(직함·
+   이름)만 남아 한 줄로 흐릅니다. 폭은 위 CEO 영상(.ceo__video)과 똑같이
+   .about-block 전체 폭을 씁니다. */
 .ceo__video {
   position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius-lg);
   overflow: hidden; background: var(--ph); margin-bottom: var(--sp-4);
@@ -76,37 +70,13 @@
   color: var(--c-navy); border-left: 3px solid var(--c-blue);
   padding-left: var(--sp-3); margin: var(--sp-3) 0 var(--sp-4);
 }
-/* 본문 바로 아래 "센 엔지니어링그룹 회장 이창남" — 편지 맺음말처럼 끝에 답니다 */
+/* 인용구 바로 아래 "센 엔지니어링그룹 대표이사 이승환" — 편지 맺음말처럼 끝에 답니다 */
 .ceo__sign {
   margin-top: var(--sp-3);
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px;
 }
 .ceo__role { font-size: var(--fs-small); color: var(--c-muted); }
 .ceo__name { font-size: 1.15rem; }
-
-/* 좁은 화면에서 CEO 인사말 본문을 <details>로 접어 둡니다(인용구·사진·
-   서명은 그대로 보임) — summary를 눌러야 펼쳐집니다. PC는 summary를
-   숨기고 :not([open])이어도 본문(.prose)을 강제로 펼쳐 보여, 항상 전체
-   글이 그대로 보입니다. */
-.ceo__body-summary {
-  display: none;
-  cursor: pointer; list-style: none;
-  align-items: center; gap: 6px;
-  font-weight: 500; font-size: var(--fs-small); color: var(--c-muted);
-  transition: color .2s;
-}
-.ceo__body-summary::-webkit-details-marker { display: none; }
-.ceo__body-arrow { flex-shrink: 0; width: 16px; height: 16px; transition: transform .25s ease; }
-.ceo__body[open] .ceo__body-arrow { transform: rotate(180deg); }
-
-@media (max-width: 760px) {
-  .ceo__body-summary {
-    display: flex;
-    padding: 4px 0 14px;
-  }
-  .ceo__body-summary:hover { color: var(--c-blue); }
-  .ceo__body[open] .ceo__body-summary { padding-bottom: 10px; }
-}
 /* PC에서 항상 펼쳐 두는 건 CSS가 아니라 main.js의 syncCeoBody() 가
    <details> 의 open 속성을 실제로 켜서 처리합니다 — display 를 강제로
    덮어쓰는 방식은 최신 크롬이 닫힌 <details> 내용을 content-visibility

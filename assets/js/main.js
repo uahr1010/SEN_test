@@ -132,19 +132,6 @@ window.SEN = window.SEN || {};
   var narrowMq = window.matchMedia && matchMedia('(max-width: 760px)');
   function isNarrowViewport() { return !!(narrowMq && narrowMq.matches); }
 
-  /* CEO 인사말(<details data-ceo-body>) — PC는 항상 펼쳐진 채로 보여야
-     합니다. CSS만으로 "닫혀 있어도 내용은 보이게" 처리했더니 최신 크롬은
-     닫힌 <details> 내용을 display 가 아니라 content-visibility 로 숨겨서
-     (::details-content 내부 UA 규칙) author CSS로 안 뚫리는 브라우저가
-     있었습니다 — PC에서 인사말 본문이 통째로 안 보이던 원인이 이것입니다.
-     그래서 아예 PC에서는 진짜로 open 속성을 켜 둡니다(요소 자체가 열린
-     상태라 어떤 UA 구현이든 안전). 모바일은 사용자가 누르기 전까지
-     닫힌 채로 둡니다. */
-  function syncCeoBody() {
-    var body = document.querySelector('[data-ceo-body]');
-    if (body && !isNarrowViewport()) body.open = true;
-  }
-
   function renderProjectPanel(tab) {
     var p = SEN.projectPanel;
     if (!p.data) return;
@@ -300,12 +287,6 @@ window.SEN = window.SEN || {};
 
       SEN.render(data);
       applyMeta(data);
-      syncCeoBody();
-      if (narrowMq) {
-        var onBreakpointChange = function () { syncCeoBody(); };
-        if (narrowMq.addEventListener) narrowMq.addEventListener('change', onBreakpointChange);
-        else if (narrowMq.addListener) narrowMq.addListener(onBreakpointChange);
-      }
 
       SEN.controls.init();
       SEN.atlas.init();
@@ -319,7 +300,6 @@ window.SEN = window.SEN || {};
       SEN.i18n.onChange(function () {
         SEN.render(SEN.data);
         applyMeta(SEN.data);
-        syncCeoBody();
         renderProjectPanel(SEN.projectPanel.tab);   // 통계·지역 목록 라벨은 render() 대상이 아님
         if (SEN.timeline) SEN.timeline.refresh(SEN.data);   // 연혁도 render() 대상이 아님
       });
