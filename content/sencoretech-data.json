@@ -1,5 +1,6 @@
 {
   "rank": { "current": 4, "year": 2026 },
+  "headcount": { "own": 402, "partner": 119 },
   "yearly": [
     { "year": 2021, "value": 850 },
     { "year": 2022, "value": 990 },

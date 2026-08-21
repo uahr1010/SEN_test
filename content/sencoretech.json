@@ -15,13 +15,17 @@
     }
   },
 
-  "founded": {
-    "year": "2010",
+  "headcount": {
     "caption": {
-      "ko": "6월 설립",
-      "en": "Founded in June",
-      "zh": "6月成立",
-      "ja": "6月設立"
+      "ko": "2010년 6월에 설립된 강구조 전문건설사 센코어테크의 임직원 수",
+      "en": "Employees of SEN CORETECH, a steel construction specialist founded in June 2010",
+      "zh": "2010年6月成立的钢结构专业施工企业SEN CORETECH的员工人数",
+      "ja": "2010年6月に設立された鉄骨専門建設会社SEN CORETECHの従業員数"
+    },
+    "unit": { "ko": "명", "en": " people", "zh": "人", "ja": "名" },
+    "breakdown": {
+      "own": { "ko": "센코어테크 소속", "en": "SEN CORETECH staff", "zh": "SEN CORETECH 员工", "ja": "SEN CORETECH 所属" },
+      "partner": { "ko": "협력업체 소속", "en": "Partner company staff", "zh": "合作企业员工", "ja": "協力会社所属" }
     }
   },
 

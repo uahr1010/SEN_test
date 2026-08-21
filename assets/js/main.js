@@ -254,6 +254,11 @@ window.SEN = window.SEN || {};
           data.sencoretech.rank.current = scData.rank.current;
           data.sencoretech.rank.year = scData.rank.year;
         }
+        if (scData.headcount) {
+          data.sencoretech.headcount = data.sencoretech.headcount || {};
+          data.sencoretech.headcount.own = scData.headcount.own;
+          data.sencoretech.headcount.partner = scData.headcount.partner;
+        }
         data.sencoretech.yearly = scData.yearly || [];
       }
 

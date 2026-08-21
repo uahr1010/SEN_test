@@ -127,13 +127,15 @@ window.SEN = window.SEN || {};
        [⑤ 센코어테크 역량]에서 연도·금액을 입력하면 그대로 반영됩니다
        (연도 오름차순으로 넣어야 합니다 — 큰 숫자(.sct-revenue__value)도
        이 목록의 마지막 항목을 그대로 씁니다). */
-    'sencoretech.yearly': function (items) {
+    'sencoretech.yearly': function (items, ctx) {
       if (!items.length) return '';
+      var unit = t(pick(ctx, 'sencoretech.yearlyUnit'));
       var W = 600, H = 200, padX = 6, padTop = 16, padBottom = 16;
       var innerH = H - padTop - padBottom;
       var n = items.length;
       var values = items.map(function (it) { return Number(it.value) || 0; });
       var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+      var mid = (min + max) / 2;
 
       var coords = items.map(function (it, i) {
         var x = n > 1 ? padX + (i * (W - padX * 2)) / (n - 1) : W / 2;
@@ -165,17 +167,29 @@ window.SEN = window.SEN || {};
         ' L' + coords[n - 1][0].toFixed(1) + ',' + baseY +
         ' L' + coords[0][0].toFixed(1) + ',' + baseY + ' Z';
 
+      /* y축 눈금 — 그래프의 padTop/padBottom과 같은 비율로 위/가운데/
+         아래에 값을 적어, 곡선의 봉우리·바닥과 눈금이 실제로 맞습니다
+         (CSS 쪽 .sct-revenue__axis 의 위아래 여백도 이 비율을 따릅니다). */
+      function fmtTick(v) { return Math.round(v).toLocaleString() + (unit ? unit : ''); }
+
       return '' +
-        '<svg class="sct-revenue__svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
-          '<defs><linearGradient id="sctChartFill" x1="0" y1="0" x2="0" y2="1">' +
-            '<stop offset="0%" stop-color="var(--c-blue)" stop-opacity=".28"/>' +
-            '<stop offset="100%" stop-color="var(--c-blue)" stop-opacity="0"/>' +
-          '</linearGradient></defs>' +
-          '<path d="' + areaPath + '" fill="url(#sctChartFill)" stroke="none"/>' +
-          '<path d="' + linePath + '" fill="none" stroke="var(--c-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '</svg>' +
-        '<div class="sct-revenue__years">' +
-          items.map(function (it) { return '<span>' + esc(t(it.year)) + '</span>'; }).join('') +
+        '<div class="sct-revenue__axis">' +
+          '<span>' + esc(fmtTick(max)) + '</span>' +
+          '<span>' + esc(fmtTick(mid)) + '</span>' +
+          '<span>' + esc(fmtTick(min)) + '</span>' +
+        '</div>' +
+        '<div class="sct-revenue__plot">' +
+          '<svg class="sct-revenue__svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
+            '<defs><linearGradient id="sctChartFill" x1="0" y1="0" x2="0" y2="1">' +
+              '<stop offset="0%" stop-color="var(--c-blue)" stop-opacity=".28"/>' +
+              '<stop offset="100%" stop-color="var(--c-blue)" stop-opacity="0"/>' +
+            '</linearGradient></defs>' +
+            '<path d="' + areaPath + '" fill="url(#sctChartFill)" stroke="none"/>' +
+            '<path d="' + linePath + '" fill="none" stroke="var(--c-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg>' +
+          '<div class="sct-revenue__years">' +
+            items.map(function (it) { return '<span>' + esc(t(it.year)) + '</span>'; }).join('') +
+          '</div>' +
         '</div>';
     },
 
@@ -440,6 +454,25 @@ window.SEN = window.SEN || {};
       var rk = pick(ctx, 'sencoretech.rank') || {};
       var rankLabel = t(rk.label).replace('{year}', t(rk.year));
       if (rankLabel) rankLabelHost.textContent = rankLabel;
+    }
+
+    /* 센코어테크 총 인원 큰 숫자·소속 내역 — 큰 숫자(521)는 별도 입력칸
+       없이 소속(402) + 협력업체(119) 인원의 합입니다. 소속 내역 줄은
+       "센코어테크 소속 402명 · 협력업체 소속 119명"처럼 라벨과 숫자를
+       합쳐야 해서 data-bind 하나로 못 채웁니다. */
+    var hcValueHost = document.querySelector('[data-sct-headcount-value]');
+    var hcBreakdownHost = document.querySelector('[data-sct-headcount-breakdown]');
+    var hc = pick(ctx, 'sencoretech.headcount') || {};
+    if (hc.own != null && hc.partner != null) {
+      var hcUnit = t(hc.unit);
+      var hcTotal = (Number(hc.own) || 0) + (Number(hc.partner) || 0);
+      if (hcValueHost) hcValueHost.textContent = hcTotal.toLocaleString();
+      if (hcBreakdownHost) {
+        hcBreakdownHost.textContent =
+          t(pick(hc, 'breakdown.own')) + ' ' + (Number(hc.own) || 0).toLocaleString() + hcUnit +
+          ' · ' +
+          t(pick(hc, 'breakdown.partner')) + ' ' + (Number(hc.partner) || 0).toLocaleString() + hcUnit;
+      }
     }
 
     /* 센코어테크 매출액 큰 숫자·라벨 — 별도 입력칸 없이 연도별 매출
