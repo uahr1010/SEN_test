@@ -410,6 +410,33 @@ window.SEN = window.SEN || {};
       map.resize();
       map.fitBounds(START_BOUNDS, { padding: 30, duration: 0 });
       if (elBack) elBack.hidden = false;
+      settleLate();
+    }
+    /* ensureStart()는 칸 폭이 50px만 넘으면(=아직 최종 폭이 아닐 수
+       있음) 바로 fitBounds를 해버립니다 — 제목·리드문 줄바꿈이나 표지를
+       지나 헤더가 나타나는 등 그 뒤로도 레이아웃이 계속 자리를 잡는
+       동안, 바깥 ResizeObserver(아래)가 창(canvas) 픽셀 크기는
+       맞춰줘도 fitBounds는 다시 안 해서, 좁을 때 기준으로 맞춘 화면이
+       넓어진 칸에 그대로 늘어나 보이거나(헤더가 가린 만큼 잘려 보이는
+       것처럼) 남는 자리가 생겼습니다. 처음 몇 초 동안 칸 크기가 실제로
+       안정됐는지 몇 번 더 확인해서, 바뀌었으면 다시 맞춥니다. */
+    function settleLate() {
+      var tries = [200, 600, 1500, 3000];
+      var lastW = map.getContainer().clientWidth, lastH = map.getContainer().clientHeight;
+      tries.forEach(function (delay) {
+        setTimeout(function () {
+          if (!map) return;
+          var c = map.getContainer();
+          if (c.clientWidth < 50 || c.clientHeight < 50) return;
+          if (Math.abs(c.clientWidth - lastW) > 4 || Math.abs(c.clientHeight - lastH) > 4) {
+            lastW = c.clientWidth; lastH = c.clientHeight;
+            map.resize();
+            map.fitBounds(START_BOUNDS, { padding: 30, duration: 0 });
+          } else {
+            map.resize();
+          }
+        }, delay);
+      });
     }
     ensureStart();
     if (!didStart) {
@@ -747,14 +774,27 @@ window.SEN = window.SEN || {};
       map.on('load', function () { build(cnt, cntPat, exactFC, areaFC, regionFC); });
 
       /* MapLibre는 창(window) 크기 변화만 자동으로 따라갑니다. 이 칸의
-         높이(.pmap)는 제목·리드문 줄바꿈, 웹폰트 로딩, 언어 전환 등으로
-         창 크기와 상관없이 나중에 바뀔 수 있는데, 그럴 때 캔버스가 못
-         따라가면 지도가 칸을 다 못 채우고 남는 자리에 자리표시가 그대로
-         비쳐 보였습니다. 칸 자체를 감시해서 크기가 바뀔 때마다 다시
-         맞춥니다. */
+         높이(.pmap)는 제목·리드문 줄바꿈, 웹폰트 로딩, 헤더가 나타나는
+         시점 등으로 창 크기와 상관없이 나중에 바뀔 수 있는데, 그럴 때
+         캔버스가 못 따라가면 지도가 칸을 다 못 채우고(헤더가 가린
+         만큼 잘려 보이는 것처럼) 남는 자리에 자리표시가 그대로 비쳐
+         보였습니다. 칸 자체를 감시해서 크기가 바뀔 때마다 다시
+         맞춥니다 — resize()를 ResizeObserver 콜백 안에서 바로 부르면
+         드물게 이번 프레임에 반영이 안 되는 경우가 있어(레이아웃이 막
+         끝난 시점과 겹칠 때), 다음 프레임으로 한 번 미룹니다. */
       if (window.ResizeObserver && els.wrap) {
-        new ResizeObserver(function () { map.resize(); }).observe(els.wrap);
+        new ResizeObserver(function () {
+          requestAnimationFrame(function () { if (map) map.resize(); });
+        }).observe(els.wrap);
       }
+      /* 위 감시가 크기 변화를 놓치는 경우에 대비한 안전장치 — 지도가
+         생긴 직후 몇 초 동안은 한 번 더 확인해서 맞춥니다. 첫 화면
+         맞추기(build() 안의 ensureStart)는 지도 타일이 다 뜬 뒤(load)
+         에만 하지만, 이 칸 크기 자체는 그보다 먼저 안정되므로 여기서는
+         load를 기다리지 않습니다. */
+      [300, 800, 1800, 3500].forEach(function (delay) {
+        setTimeout(function () { if (map) map.resize(); }, delay);
+      });
 
       /* 이 칸이 브라우저 창보다 커서 한 화면에 다 안 들어오면, 화면 밖으로
          벗어난 부분은 브라우저가 캔버스를 실제로 안 그려 둡니다(성능
