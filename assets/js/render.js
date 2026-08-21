@@ -121,24 +121,62 @@ window.SEN = window.SEN || {};
       }).join('');
     },
 
-    /* 센코어테크 연도별 매출 막대그래프 — 값이 가장 큰 해를 100%로 두고
-       나머지는 그 비율로 막대 높이를 정합니다(디자인용 상대 비교이지
-       절대 축은 아닙니다). Pages CMS의 [⑤ 센코어테크 역량]에서 연도·
-       금액을 입력하면 그대로 반영됩니다. */
-    'sencoretech.yearly': function (items, ctx) {
+    /* 센코어테크 연도별 매출 곡선 그래프 — 값들을 부드러운 곡선(카디널
+       스플라인)으로 잇고 아래를 옅게 채웁니다. 절대 축이 아니라 연도
+       사이의 상대적인 흐름을 보여주는 디자인용 그래프입니다. Pages CMS의
+       [⑤ 센코어테크 역량]에서 연도·금액을 입력하면 그대로 반영됩니다
+       (연도 오름차순으로 넣어야 합니다 — 큰 숫자(.sct-revenue__value)도
+       이 목록의 마지막 항목을 그대로 씁니다). */
+    'sencoretech.yearly': function (items) {
       if (!items.length) return '';
-      var unit = t(pick(ctx, 'sencoretech.yearlyUnit'));
-      var max = items.reduce(function (m, it) { return Math.max(m, Number(it.value) || 0); }, 0);
-      return items.map(function (it) {
-        var v = Number(it.value) || 0;
-        var h = max > 0 ? Math.max(4, Math.round((v / max) * 100)) : 4;
-        return '' +
-          '<div class="sct-bar">' +
-            '<span class="sct-bar__value">' + esc(v.toLocaleString()) + (unit ? ' ' + esc(unit) : '') + '</span>' +
-            '<span class="sct-bar__col" style="height:' + h + '%"></span>' +
-            '<span class="sct-bar__year">' + esc(t(it.year)) + '</span>' +
-          '</div>';
-      }).join('');
+      var W = 600, H = 200, padX = 6, padTop = 16, padBottom = 16;
+      var innerH = H - padTop - padBottom;
+      var n = items.length;
+      var values = items.map(function (it) { return Number(it.value) || 0; });
+      var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+
+      var coords = items.map(function (it, i) {
+        var x = n > 1 ? padX + (i * (W - padX * 2)) / (n - 1) : W / 2;
+        var ratio = max > min ? ((Number(it.value) || 0) - min) / (max - min) : 0.5;
+        var y = padTop + (1 - ratio) * innerH;
+        return [x, y];
+      });
+
+      /* 카디널 스플라인 → 3차 베지에 변환(장력 1/6, 흔히 쓰는 값) —
+         점을 직선이 아니라 부드러운 곡선으로 이어 줍니다. */
+      function smoothPath(pts) {
+        var d = 'M' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1);
+        if (pts.length < 2) return d;
+        for (var i = 0; i < pts.length - 1; i++) {
+          var p0 = pts[i === 0 ? 0 : i - 1], p1 = pts[i], p2 = pts[i + 1];
+          var p3 = pts[i + 2 < pts.length ? i + 2 : i + 1];
+          var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+          var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+          d += ' C' + c1x.toFixed(1) + ',' + c1y.toFixed(1) + ' ' +
+               c2x.toFixed(1) + ',' + c2y.toFixed(1) + ' ' +
+               p2[0].toFixed(1) + ',' + p2[1].toFixed(1);
+        }
+        return d;
+      }
+
+      var linePath = smoothPath(coords);
+      var baseY = (H - padBottom).toFixed(1);
+      var areaPath = linePath +
+        ' L' + coords[n - 1][0].toFixed(1) + ',' + baseY +
+        ' L' + coords[0][0].toFixed(1) + ',' + baseY + ' Z';
+
+      return '' +
+        '<svg class="sct-revenue__svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
+          '<defs><linearGradient id="sctChartFill" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0%" stop-color="var(--c-blue)" stop-opacity=".28"/>' +
+            '<stop offset="100%" stop-color="var(--c-blue)" stop-opacity="0"/>' +
+          '</linearGradient></defs>' +
+          '<path d="' + areaPath + '" fill="url(#sctChartFill)" stroke="none"/>' +
+          '<path d="' + linePath + '" fill="none" stroke="var(--c-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '</svg>' +
+        '<div class="sct-revenue__years">' +
+          items.map(function (it) { return '<span>' + esc(t(it.year)) + '</span>'; }).join('') +
+        '</div>';
     },
 
 
@@ -402,6 +440,22 @@ window.SEN = window.SEN || {};
       var rk = pick(ctx, 'sencoretech.rank') || {};
       var rankLabel = t(rk.label).replace('{year}', t(rk.year));
       if (rankLabel) rankLabelHost.textContent = rankLabel;
+    }
+
+    /* 센코어테크 매출액 큰 숫자·라벨 — 별도 입력칸 없이 연도별 매출
+       목록([⑤ 센코어테크 역량]의 "연도별 매출", 연도 오름차순)의 가장
+       마지막(최신) 항목을 그대로 씁니다. 그래야 그래프의 최신 값과
+       화면 위 큰 숫자가 항상 같습니다. */
+    var revValueHost = document.querySelector('[data-sct-revenue-value]');
+    var revLabelHost = document.querySelector('[data-sct-revenue-label]');
+    var yearly = pick(ctx, 'sencoretech.yearly');
+    var last = Array.isArray(yearly) && yearly.length ? yearly[yearly.length - 1] : null;
+    if (last) {
+      if (revValueHost) revValueHost.textContent = (Number(last.value) || 0).toLocaleString();
+      if (revLabelHost) {
+        var revLabel = t(pick(ctx, 'sencoretech.revenueLabel')).replace('{year}', t(last.year));
+        if (revLabel) revLabelHost.textContent = revLabel;
+      }
     }
 
 

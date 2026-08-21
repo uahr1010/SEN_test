@@ -16,10 +16,13 @@
   },
 
   "founded": {
-    "ko": "2010년 6월 설립",
-    "en": "Founded June 2010",
-    "zh": "2010年6月成立",
-    "ja": "2010年6月設立"
+    "year": "2010",
+    "caption": {
+      "ko": "6월 설립",
+      "en": "Founded in June",
+      "zh": "6月成立",
+      "ja": "6月設立"
+    }
   },
 
   "rank": {
@@ -32,11 +35,11 @@
     "suffix": { "ko": "위", "en": "th", "zh": "名", "ja": "位" }
   },
 
-  "chartTitle": {
-    "ko": "최근 매출 동향",
-    "en": "Recent Revenue Trend",
-    "zh": "近期营收趋势",
-    "ja": "最近の売上動向"
+  "revenueLabel": {
+    "ko": "{year}년 기준 매출액",
+    "en": "Revenue as of {year}",
+    "zh": "{year}年营收",
+    "ja": "{year}年売上高"
   },
   "yearlyUnit": { "ko": "억원", "en": "KRW 100M", "zh": "亿韩元", "ja": "億ウォン" }
 }

@@ -243,34 +243,37 @@
   </section>
 
   <!-- ---------- 장면 2.5 : 센코어테크의 역량 ----------
-       제목·리드 바로 밑에 설립일(2010년 6월, 고정값 —
-       content/sencoretech.json). 그 아래 왼쪽은 강구조시공능력 순위
-       (Pages CMS의 [⑤ 센코어테크 역량]에서 순위·기준 연도를 입력하면
-       바뀝니다), 오른쪽은 연도별 매출 막대그래프(같은 탭에서 연도·
-       금액을 입력). 그래프 값은 아직 더미(예시) 데이터입니다 —
-       content/sencoretech-data.json 참고. -->
+       왼쪽에 설립연도·강구조시공능력 순위를 어두운 카드 두 장으로 세로로
+       쌓고, 오른쪽에 기준연도 매출액 + 연도별 매출 곡선 그래프를 큰 카드
+       하나로 둡니다. 순위·기준연도·연도별 금액은 Pages CMS의 [⑤ 센코어테크
+       역량]에서 입력하면 render.js가 그대로 반영합니다(설립연도만 고정값
+       — content/sencoretech.json). 매출액 큰 숫자와 그 라벨의 연도는 연도별
+       목록의 "가장 마지막(최신) 항목"에서 그대로 가져옵니다 — 별도 입력칸
+       없이 항상 그래프의 최신 값과 같은 숫자를 보여줍니다. 그래프 값은
+       아직 더미(예시) 데이터입니다 — content/sencoretech-data.json 참고. -->
   <section class="scene scene--paper" id="scene-sencoretech" data-label="센코어테크">
     <div class="scene__inner">
       <header class="scene__head" data-reveal>
         <h2 class="scene__title" data-bind="sencoretech.section.title"></h2>
         <p class="scene__lead" data-bind="sencoretech.section.lead"></p>
-        <p class="sct-founded" data-bind="sencoretech.founded"></p>
       </header>
 
       <div class="sct-capability">
-        <div class="sct-rank" data-reveal>
-          <div class="sct-rank__ring">
-            <div class="sct-rank__hole">
-              <strong class="sct-rank__num" data-bind="sencoretech.rank.current"></strong>
-              <span class="sct-rank__suffix" data-bind="sencoretech.rank.suffix"></span>
-            </div>
+        <div class="sct-stats">
+          <div class="sct-stat" data-reveal>
+            <strong class="sct-stat__value" data-bind="sencoretech.founded.year"></strong>
+            <span class="sct-stat__label" data-bind="sencoretech.founded.caption"></span>
           </div>
-          <p class="sct-rank__label" data-sct-rank-label></p>
+          <div class="sct-stat" data-reveal>
+            <strong class="sct-stat__value"><span data-bind="sencoretech.rank.current"></span><span class="sct-stat__unit" data-bind="sencoretech.rank.suffix"></span></strong>
+            <span class="sct-stat__label" data-sct-rank-label></span>
+          </div>
         </div>
 
-        <div class="sct-chart" data-reveal>
-          <h3 class="sct-chart__title" data-bind="sencoretech.chartTitle"></h3>
-          <div class="sct-chart__bars" data-list="sencoretech.yearly"></div>
+        <div class="sct-revenue" data-reveal>
+          <span class="sct-revenue__label" data-sct-revenue-label></span>
+          <strong class="sct-revenue__value"><span data-sct-revenue-value></span><span class="sct-revenue__unit" data-bind="sencoretech.yearlyUnit"></span></strong>
+          <div class="sct-revenue__chart" data-list="sencoretech.yearly"></div>
         </div>
       </div>
     </div>

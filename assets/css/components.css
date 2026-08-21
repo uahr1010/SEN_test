@@ -908,70 +908,63 @@
 .pmap-chip.is-tsc { background: #34aadc; }
 .panel__empty { padding: 26px 20px; color: var(--c-muted); font-size: var(--fs-small); text-align: center; }
 
-/* ---------- 센코어테크의 역량 (순위 뱃지 + 매출 막대그래프) ----------
-   왼쪽 원형 뱃지는 시공능력 순위, 오른쪽은 연도별 매출 막대그래프
-   입니다. 순위·기준연도·연도별 금액은 Pages CMS의 [⑤ 센코어테크 역량]
+/* ---------- 센코어테크의 역량 (설립연도·순위 카드 + 매출 카드) ----------
+   왼쪽에 어두운 카드 두 장(설립연도, 강구조시공능력 순위)을 세로로
+   쌓고, 오른쪽에 기준연도 매출액과 곡선 그래프를 담은 큰 카드 하나를
+   둡니다. 순위·기준연도·연도별 금액은 Pages CMS의 [⑤ 센코어테크 역량]
    에서 입력하면 render.js가 그대로 반영합니다(설립연도만 고정값). */
 .sct-capability {
-  display: grid; grid-template-columns: minmax(200px, 300px) 1fr;
-  gap: var(--sp-5); align-items: center;
+  display: grid; grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: var(--sp-3); align-items: stretch;
 }
 @media (max-width: 760px) {
   .sct-capability { grid-template-columns: 1fr; }
 }
 
-.sct-rank {
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  gap: var(--sp-2);
+/* 왼쪽 — 설립연도·순위 카드 두 장 */
+.sct-stats { display: flex; flex-direction: column; gap: var(--sp-3); }
+@media (max-width: 760px) {
+  .sct-stats { flex-direction: row; }
 }
-.sct-rank__ring {
-  width: 190px; height: 190px; border-radius: 50%;
-  background: linear-gradient(155deg, var(--c-blue-mid), var(--c-blue) 60%, var(--c-blue-dark));
-  display: grid; place-items: center;
-  box-shadow: var(--shadow);
+.sct-stat {
+  flex: 1 1 0;
+  display: flex; flex-direction: column; justify-content: center; gap: 8px;
+  padding: var(--sp-4); border-radius: var(--radius-lg);
+  background: var(--c-navy); box-shadow: var(--shadow);
 }
-.sct-rank__hole {
-  width: 76%; height: 76%; border-radius: 50%;
-  background: var(--c-white);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+.sct-stat__value {
+  font-size: 2.75rem; font-weight: 800; color: var(--c-white);
+  line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums;
 }
-.sct-rank__num { font-size: 3.25rem; font-weight: 800; color: var(--c-navy); line-height: 1; }
-.sct-rank__suffix { font-size: var(--fs-lead); color: var(--c-muted); font-weight: 700; margin-top: 2px; }
-.sct-rank__label { font-size: var(--fs-small); font-weight: 700; color: var(--c-ink); max-width: 240px; }
-
-/* 설립일 — 제목·리드 바로 아래, 순위/그래프 칸 위에 한 줄로 둡니다 */
-.sct-founded {
-  font-size: var(--fs-xs); font-weight: 700; color: var(--c-blue);
-  margin-top: var(--sp-1);
+.sct-stat__unit { font-size: 1.4rem; font-weight: 700; color: rgba(255, 255, 255, .6); margin-left: 4px; }
+.sct-stat__label { font-size: var(--fs-small); color: rgba(255, 255, 255, .58); }
+@media (max-width: 480px) {
+  .sct-stat__value { font-size: 2.1rem; }
 }
 
-.sct-chart__title {
-  font-size: var(--fs-h3); margin-bottom: var(--sp-4);
+/* 오른쪽 — 기준연도 매출액 + 곡선 그래프 카드 */
+.sct-revenue {
+  padding: var(--sp-4); border-radius: var(--radius-lg);
+  background: var(--c-white); border: 1px solid var(--c-line); box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column;
 }
-.sct-chart__bars {
-  display: flex; align-items: flex-end; gap: var(--sp-2);
-  height: 260px; padding: 0 var(--sp-2) var(--sp-2);
-  border-bottom: 1px solid var(--c-line);
+.sct-revenue__label { font-size: var(--fs-xs); color: var(--c-muted); font-weight: 600; }
+.sct-revenue__value {
+  display: block; margin-top: 6px;
+  font-size: 2.75rem; font-weight: 800; color: var(--c-navy);
+  line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums;
 }
-.sct-bar {
-  flex: 1 1 0; min-width: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-  height: 100%; gap: 6px;
+.sct-revenue__unit { font-size: 1.15rem; font-weight: 700; color: var(--c-muted); margin-left: 4px; }
+.sct-revenue__chart {
+  flex: 1; display: flex; flex-direction: column; gap: 8px;
+  margin-top: var(--sp-4); min-height: 0;
 }
-.sct-bar__value {
-  font-size: var(--fs-xs); color: var(--c-muted); white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-.sct-bar__col {
-  width: 100%; max-width: 46px;
-  background: linear-gradient(180deg, var(--c-blue-mid), var(--c-blue));
-  border-radius: 8px 8px 0 0;
-}
-.sct-bar__year {
-  font-size: var(--fs-xs); color: var(--c-muted); margin-top: 4px;
-  font-variant-numeric: tabular-nums;
+.sct-revenue__svg { display: block; width: 100%; height: 170px; }
+.sct-revenue__years {
+  display: flex; justify-content: space-between;
+  font-size: var(--fs-xs); color: var(--c-muted); font-variant-numeric: tabular-nums;
 }
 @media (max-width: 480px) {
-  .sct-bar__value { font-size: 10px; }
+  .sct-stat__value, .sct-revenue__value { font-size: 2.1rem; }
 }
 
