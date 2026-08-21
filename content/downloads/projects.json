@@ -8,13 +8,15 @@
     },
     "title": {
       "ko": "센구조연구소의 역사",
-      "en": "History of SEN Structural Engineers",
-      "zh": "SEN结构研究所的历史",
-      "ja": "セン構造研究所の歴史"
+      "en": "History of SEN ENGINEERING GROUP",
+      "zh": "SEN ENGINEERING GROUP的历史",
+      "ja": "SEN ENGINEERING GROUPの歴史"
     },
     "lead": {
       "ko": "1973년 설립 이후 약 1만건 이상의 구조설계 프로젝트를 수행했습니다.\n2016년~2026년의 10년간의 수행 프로젝트를 확인하세요.",
-      "en": "", "zh": "自1973年成立以来，我们已完成超过10,000项结构设计项目。这里展示了2016年至2026年十年间的主要项目。", "ja": "1973年の設立以来、約1万件を超える構造設計プロジェクトを手がけてきました。2016年から2026年までの10年間のプロジェクトをご覧ください。"
+      "en": "We have carried out more than 10,000 structural design projects since our founding in 1973.\nSee our projects from the ten years between 2016 and 2026.",
+      "zh": "自1973年成立以来，我们已完成超过10,000项结构设计项目。这里展示了2016年至2026年十年间的主要项目。",
+      "ja": "1973年の設立以来、約1万件を超える構造設計プロジェクトを手がけてきました。2016年から2026年までの10年間のプロジェクトをご覧ください。"
     }
   },
   "tabs": {
@@ -30,7 +32,9 @@
     },
     "mapHint": {
       "ko": "확대할수록 시/군/구, 개별 현장까지 자세히 보입니다",
-      "en": "", "zh": "", "ja": ""
+      "en": "Zoom in for more detail, down to districts and individual sites",
+      "zh": "放大后可查看更详细的信息，直至市/区/县及各个现场",
+      "ja": "拡大するほど市区町村・現場ごとの詳細が表示されます"
     },
     "totalLabel": {
       "ko": "누적 실적",
@@ -40,7 +44,7 @@
     },
     "unit": {
       "ko": "건",
-      "en": "",
+      "en": " projects",
       "zh": "件",
       "ja": "件"
     },
@@ -52,9 +56,45 @@
     },
     "regionUnit": {
       "ko": "곳",
-      "en": "",
+      "en": " regions",
       "zh": "处",
       "ja": "カ所"
+    },
+    "domesticAllTimeLabel": {
+      "ko": "1973년부터 수행된 프로젝트",
+      "en": "Projects since 1973",
+      "zh": "1973年至今完成的项目",
+      "ja": "1973年から手がけたプロジェクト"
+    },
+    "domesticAllTimeValue": {
+      "ko": "약 1만 1천건",
+      "en": "Approx. 11,000",
+      "zh": "约1万1千件",
+      "ja": "約1万1千件"
+    },
+    "domesticRecentLabel": {
+      "ko": "2016년~2026년간 수행된 프로젝트",
+      "en": "Projects from 2016 to 2026",
+      "zh": "2016年至2026年完成的项目",
+      "ja": "2016年から2026年までのプロジェクト"
+    },
+    "mapBack": {
+      "ko": "← 전국으로",
+      "en": "← Nationwide",
+      "zh": "← 返回全国",
+      "ja": "← 全国へ"
+    },
+    "mapLegendTitle": {
+      "ko": "시/도별 실적 건수",
+      "en": "Projects by province",
+      "zh": "各省市实绩件数",
+      "ja": "都道府県別実績件数"
+    },
+    "mapLegendMin": {
+      "ko": "적음",
+      "en": "Fewer",
+      "zh": "较少",
+      "ja": "少ない"
     }
   },
   "projects": [

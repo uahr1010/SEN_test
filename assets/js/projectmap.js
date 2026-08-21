@@ -64,9 +64,37 @@ window.SEN = window.SEN || {};
   var started = false;
   var pointCount = null;
 
+  /* 이 칸(지도 팝업·오른쪽 패널)의 화면 문구입니다. content/downloads/
+     projects.json을 읽지 않고 프로젝트 지도 데이터만 다루는 독립된
+     모듈이라, 문구도 여기 직접 4개 언어로 채워 둡니다 — 하나라도
+     비우면 SEN.i18n.t()가 한국어로 대신 채우기 때문입니다. */
+  var UNIT_LABEL = { ko: '건', en: ' projects', zh: '件', ja: '件' };
+  var UI = {
+    thisArea:      { ko: '이 일대', en: 'This area', zh: '此区域', ja: 'この一帯' },
+    mergedCount:   { ko: '구 {n}곳 합계', en: 'Combined across {n} districts', zh: '合计{n}个区', ja: '{n}区の合計' },
+    clickForList:  { ko: '눌러서 프로젝트 목록 보기', en: 'Click to see the project list', zh: '点击查看项目列表', ja: 'クリックしてプロジェクト一覧を表示' },
+    districtOnly:  { ko: '주소가 이 구역까지만 있습니다', en: 'Address known only down to this district', zh: '地址仅精确到该区', ja: '住所はこの区域までしか分かりません' },
+    clickForDetail:{ ko: '눌러서 자세히', en: 'Click for details', zh: '点击查看详情', ja: 'クリックで詳細表示' },
+    methodApplied: { ko: '{method} 공법 적용', en: '{method} method applied', zh: '应用{method}工法', ja: '{method}工法を適用' },
+    patLine:       { ko: '특허공법(TSC·PSRC) {pat}건 · {pct}%', en: 'Patented methods (TSC/PSRC) {pat} projects · {pct}%', zh: '专利工法（TSC・PSRC）{pat}件 · {pct}%', ja: '特許工法（TSC・PSRC）{pat}件 · {pct}%' },
+    cardsTitle:    { ko: '시/도별 실적', en: 'Results by province', zh: '各省市实绩', ja: '都道府県別実績' },
+    cardsLead:     { ko: '카드를 누르면 지도가 그 지역으로 이동하고 시군구 실적이 열립니다 · 전체 <b>{n}건</b>', en: 'Click a card to move the map there and open district results · <b>{n} projects</b> in total', zh: '点击卡片可将地图移至该地区并展开市区县实绩 · 共<b>{n}件</b>', ja: 'カードを押すと地図がその地域へ移動し、市区町村別実績が開きます · 全体<b>{n}件</b>' },
+    cardsFoot:     { ko: '막대는 시/도 간 실적 비교', en: 'Bars compare results across provinces', zh: '柱状条用于比较各省市实绩', ja: '棒グラフは都道府県間の実績比較です' },
+    backToAll:     { ko: '← 시/도 전체', en: '← All provinces', zh: '← 全部省市', ja: '← 都道府県全体' },
+    districtCount: { ko: '시군구 {n}곳', en: '{n} districts', zh: '{n}个市区县', ja: '{n}市区町村' },
+    provFoot:      { ko: '시군구를 누르면 프로젝트 목록이 열립니다', en: 'Click a district to open its project list', zh: '点击市区县可展开项目列表', ja: '市区町村をクリックするとプロジェクト一覧が開きます' },
+    emptyProjects: { ko: '표시할 프로젝트가 없습니다', en: 'No projects to display', zh: '暂无可显示的项目', ja: '表示できるプロジェクトがありません' },
+    areaFoot:      { ko: '{n}건 · 담당자 등 내부 정보는 표시하지 않습니다', en: '{n} projects · Internal details such as staff names are not shown', zh: '{n}件 · 不显示负责人等内部信息', ja: '{n}件 · 担当者等の内部情報は表示しません' }
+  };
+  function tf(dict, vars) {
+    var s = SEN.i18n.t(dict);
+    if (vars) { for (var k in vars) { s = s.replace('{' + k + '}', vars[k]); } }
+    return s;
+  }
+
   function applyPointCount() {
     var el = document.querySelector('[data-pmap-count]');
-    if (el && pointCount != null) el.textContent = fmt(pointCount) + '건';
+    if (el && pointCount != null) el.textContent = fmt(pointCount) + SEN.i18n.t(UNIT_LABEL);
   }
 
   /* ---------- 시/군/구 중심점 ---------- */
@@ -242,7 +270,7 @@ window.SEN = window.SEN || {};
 
   function patLine(n, pat) {
     if (!SHOW_PAT) return '';
-    return '<br><span class="pp">특허공법(TSC·PSRC) ' + fmt(pat) + '건 · ' + pct(pat, n) + '%</span>';
+    return '<br><span class="pp">' + esc(tf(UI.patLine, { pat: fmt(pat), pct: pct(pat, n) })) + '</span>';
   }
 
   var MX = 1;
@@ -250,7 +278,7 @@ window.SEN = window.SEN || {};
     var mx = 1;
     Object.keys(byProvCount).forEach(function (k) { if (byProvCount[k] > mx) mx = byProvCount[k]; });
     MX = mx;
-    if (elLegendMax) elLegendMax.textContent = fmt(mx) + '건';
+    if (elLegendMax) elLegendMax.textContent = fmt(mx) + SEN.i18n.t(UNIT_LABEL);
 
     var fc = { type: 'FeatureCollection', features: kgeo.features.map(function (f) {
       var short = kmapData.prefix[f.properties.name] || f.properties.name;
@@ -405,12 +433,6 @@ window.SEN = window.SEN || {};
     });
   }
 
-  function precLabel(p) {
-    return ({ ROAD_ADDR: '도로명 주소로 찾은 위치', REGION_ADDR: '지번 주소로 찾은 위치', KEYWORD: '장소명으로 찾은 위치',
-              REGION: '동 중심 (번지는 못 찾음)', ROAD: '도로 중심 (번지는 못 찾음)', SIGUNGU: '시/군/구 중심 (대략 위치)',
-              CITY: '시 중심 (대략 위치)', SIDO: '시/도 중심 (대략 위치)' })[p] || '';
-  }
-
   function wireEvents() {
     var GL = window.maplibregl;
     function areaShown() { return map.getZoom() >= CLUST_FADE[0] && map.getZoom() < AREA_SWAP[1]; }
@@ -435,14 +457,14 @@ window.SEN = window.SEN || {};
       if (!shown()) return;
       var p = e.features[0].properties;
       pop(e.features[0].geometry.coordinates, '<strong>' + esc(p.name || p.addr) + '</strong>' +
-        ((SHOW_PAT && p.method) ? '<br><span class="pp">' + esc(p.method) + ' 공법 적용</span>' : '') +
+        ((SHOW_PAT && p.method) ? '<br><span class="pp">' + esc(tf(UI.methodApplied, { method: p.method })) + '</span>' : '') +
         '<br>' + (p.year ? p.year + ' · ' : '') + esc(p.addr));
     });
     map.on('mouseenter', 'ar', function (e) {
       if (!areaShown()) return;
       var f = e.features[0], p = f.properties;
-      pop(f.geometry.coordinates, '<strong>' + esc(p.name || '이 일대') + ' ' + fmt(p.n) + '건</strong>' + patLine(p.n, p.pat) +
-        (p.nsub > 1 ? '<br>구 ' + p.nsub + '곳 합계' : '') + '<br>눌러서 프로젝트 목록 보기', 16);
+      pop(f.geometry.coordinates, '<strong>' + esc(p.name || tf(UI.thisArea)) + ' ' + fmt(p.n) + esc(SEN.i18n.t(UNIT_LABEL)) + '</strong>' + patLine(p.n, p.pat) +
+        (p.nsub > 1 ? '<br>' + esc(tf(UI.mergedCount, { n: p.nsub })) : '') + '<br>' + esc(tf(UI.clickForList)), 16);
     });
     map.on('mouseleave', 'ar', unpop);
     map.on('mousemove', 'rg-fill', function (e) {
@@ -451,7 +473,7 @@ window.SEN = window.SEN || {};
       for (var i = 1; i < e.features.length; i++) { if (e.features[i].properties.prec === 'SIGUNGU') { best = e.features[i]; break; } }
       var p = best.properties;
       map.getCanvas().style.cursor = 'help';
-      pop(e.lngLat, '<strong>' + esc(p.name) + ' ' + fmt(p.n) + '건</strong>' + patLine(p.n, p.pat) + '<br>주소가 이 구역까지만 있습니다', 8);
+      pop(e.lngLat, '<strong>' + esc(p.name) + ' ' + fmt(p.n) + esc(SEN.i18n.t(UNIT_LABEL)) + '</strong>' + patLine(p.n, p.pat) + '<br>' + esc(tf(UI.districtOnly)), 8);
     });
     map.on('mouseleave', 'rg-fill', function () { map.getCanvas().style.cursor = ''; unpop(); });
     map.on('click', 'ar', function (e) {
@@ -476,14 +498,14 @@ window.SEN = window.SEN || {};
     map.on('mouseenter', 'cl', function (e) {
       if (!shown()) return;
       var f = e.features[0];
-      pop(f.geometry.coordinates, '<strong>' + fmt(f.properties.point_count) + '건</strong>' + patLine(f.properties.point_count, f.properties.pat) + '<br>눌러서 자세히', 16);
+      pop(f.geometry.coordinates, '<strong>' + fmt(f.properties.point_count) + esc(SEN.i18n.t(UNIT_LABEL)) + '</strong>' + patLine(f.properties.point_count, f.properties.pat) + '<br>' + esc(tf(UI.clickForDetail)), 16);
     });
     map.on('mouseleave', 'cl', unpop);
     map.on('mousemove', 'prov-fill', function (e) {
       if (map.getZoom() >= CLUST_FADE[0]) return;
       var p = e.features[0].properties;
       map.getCanvas().style.cursor = 'pointer';
-      pop(e.lngLat, '<strong>' + esc(p.name) + '</strong><br>' + fmt(p.n) + '건' + patLine(p.n, p.pat) + '<br>눌러서 프로젝트 목록 보기', 8);
+      pop(e.lngLat, '<strong>' + esc(p.name) + '</strong><br>' + fmt(p.n) + esc(SEN.i18n.t(UNIT_LABEL)) + patLine(p.n, p.pat) + '<br>' + esc(tf(UI.clickForList)), 8);
     });
     map.on('mouseleave', 'prov-fill', function () { map.getCanvas().style.cursor = ''; unpop(); });
     map.on('click', 'prov-fill', function (e) {
@@ -511,17 +533,17 @@ window.SEN = window.SEN || {};
     pState.view = 'cards'; pState.prov = null; pState.area = null;
     var rows = provRows(), maxN = rows.reduce(function (m, r) { return Math.max(m, r.n); }, 1);
     var totN = 0; rows.forEach(function (r) { totN += r.n; });
-    var title = '시/도별 실적';
-    var lead = '카드를 누르면 지도가 그 지역으로 이동하고 시군구 실적이 열립니다 · 전체 <b>' + fmt(totN) + '건</b>';
-    elSide.innerHTML = '<div class="panel"><div class="panel__head panel__head--tight"><div class="panel__title">' + title + '</div>' +
+    var title = tf(UI.cardsTitle);
+    var lead = tf(UI.cardsLead, { n: fmt(totN) });
+    elSide.innerHTML = '<div class="panel"><div class="panel__head panel__head--tight"><div class="panel__title">' + esc(title) + '</div>' +
       '<div class="panel__sub">' + lead + '</div></div>' +
       '<div class="panel__body"><div class="prov-cards">' + rows.map(function (r) {
         return '<button type="button" class="prov-card" data-prov="' + r.key + '">' +
           '<span class="prov-card__nm">' + esc(r.label) + '</span>' +
-          '<span class="prov-card__n">' + fmt(r.n) + '<small>건</small></span>' +
+          '<span class="prov-card__n">' + fmt(r.n) + '<small>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</small></span>' +
           '<span class="prov-card__bar"><i style="width:' + Math.max(2, Math.round(r.n / maxN * 100)) + '%"></i></span></button>';
       }).join('') + '</div></div>' +
-      '<div class="panel__foot"><span class="panel__lgd">막대는 시/도 간 실적 비교</span></div></div>';
+      '<div class="panel__foot"><span class="panel__lgd">' + esc(tf(UI.cardsFoot)) + '</span></div></div>';
     elSide.querySelectorAll('[data-prov]').forEach(function (b) {
       b.addEventListener('click', function () { var k = b.getAttribute('data-prov'); openProv(k); flyToProv(k); });
     });
@@ -531,7 +553,7 @@ window.SEN = window.SEN || {};
 
   function headHTML(crumbs, title, n, sub) {
     return '<div class="panel__head"><div class="panel__crumb">' + crumbs + '</div><div class="panel__title">' + esc(title) + '</div>' +
-      '<div class="panel__big">' + fmt(n) + '<small>건' + (sub ? ' · ' + esc(sub) : '') + '</small></div></div>';
+      '<div class="panel__big">' + fmt(n) + '<small>' + esc(SEN.i18n.t(UNIT_LABEL)) + (sub ? ' · ' + esc(sub) : '') + '</small></div></div>';
   }
 
   function openProv(key) {
@@ -541,15 +563,15 @@ window.SEN = window.SEN || {};
     var areas = Object.keys(P.areas).map(function (k) { return P.areas[k]; }).sort(function (a, b) { return b.n - a.n; });
     var maxN = areas.reduce(function (m, a) { return Math.max(m, a.n); }, 1);
     elSide.innerHTML = '<div class="panel">' +
-      headHTML('<button type="button" data-back-rank>← 시/도 전체</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(P.label) + '</span>', P.label, P.n, '시군구 ' + areas.length + '곳') +
+      headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(P.label) + '</span>', P.label, P.n, tf(UI.districtCount, { n: areas.length })) +
       '<div class="panel__body">' + areas.map(function (a) {
         var rest = a.name.split(' ').slice(1).join(' ');
         var nm = rest ? rest : a.name;   /* 세종처럼 구가 없는 시는 이름을 그대로 씁니다 */
         if (rest && P.shorts.length > 1) nm = shortProv(a.name) + ' ' + nm;   /* 통합 표기(전남+광주) 구분용 */
         return '<div class="arow" data-area="' + esc(a.name) + '"><span class="arow__nm">' + esc(nm) + '</span>' +
-          '<span class="arow__ct"><b>' + fmt(a.n) + '</b>건</span>' +
+          '<span class="arow__ct"><b>' + fmt(a.n) + '</b>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</span>' +
           '<span class="arow__bar"><i style="width:' + Math.max(2, Math.round(a.n / maxN * 100)) + '%"></i></span></div>';
-      }).join('') + '</div><div class="panel__foot">시군구를 누르면 프로젝트 목록이 열립니다</div></div>';
+      }).join('') + '</div><div class="panel__foot">' + esc(tf(UI.provFoot)) + '</div></div>';
     var panel = elSide.querySelector('.panel');
     panel.querySelector('[data-back-rank]').addEventListener('click', function () { renderCards(); map.fitBounds(HOME_BOUNDS, { padding: 24, duration: 700 }); });
     panel.querySelectorAll('[data-area]').forEach(function (el) {
@@ -557,7 +579,7 @@ window.SEN = window.SEN || {};
     });
   }
 
-  function openArea(areaFull) {
+  function openArea(areaFull, skipFly) {
     if (!elSide) return;
     var key = SHORT2KEY[shortProv(areaFull)], P = key && PROV_AGG[key], A = P && P.areas[areaFull];
     if (!A) {
@@ -571,20 +593,20 @@ window.SEN = window.SEN || {};
     pState.view = 'area'; pState.prov = key; pState.area = areaFull;
     var nm = areaFull.split(' ').slice(1).join(' ') || areaFull;
     elSide.innerHTML = '<div class="panel">' +
-      headHTML('<button type="button" data-back-rank>← 시/도 전체</button><span class="panel__sep">›</span>' +
+      headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span>' +
         '<button type="button" data-back-prov>' + esc(P.label) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(nm) + '</span>',
         areaFull, A.n, null) +
       '<div class="panel__body">' + A.items.slice().sort(function (a, b) { return (b.year || 0) - (a.year || 0); }).map(function (it) {
         return '<div class="prow"><div class="prow__nm">' + esc(it.name || it.addr) +
           ((SHOW_PAT && it.method) ? '<span class="pmap-chip' + (it.method === 'TSC' ? ' is-tsc' : '') + '">' + esc(it.method) + '</span>' : '') + '</div>' +
           '<div class="prow__kd">' + (it.year ? it.year + ' · ' : '') + esc(it.gubun || '') + (it.addr ? ' · ' + esc(it.addr) : '') + '</div></div>';
-      }).join('') + (A.items.length ? '' : '<div class="panel__empty">표시할 프로젝트가 없습니다</div>') + '</div>' +
-      '<div class="panel__foot">' + fmt(A.items.length) + '건 · 담당자 등 내부 정보는 표시하지 않습니다</div></div>';
+      }).join('') + (A.items.length ? '' : '<div class="panel__empty">' + esc(tf(UI.emptyProjects)) + '</div>') + '</div>' +
+      '<div class="panel__foot">' + esc(tf(UI.areaFoot, { n: fmt(A.items.length) })) + '</div></div>';
     var panel = elSide.querySelector('.panel');
     panel.querySelector('[data-back-rank]').addEventListener('click', function () { renderCards(); map.fitBounds(HOME_BOUNDS, { padding: 24, duration: 700 }); });
     panel.querySelector('[data-back-prov]').addEventListener('click', function () { openProv(key); flyToProv(key); });
     var c = A.center;
-    if (c && map) map.easeTo({ center: c, zoom: Math.max(map.getZoom(), 9.5), duration: 700 });
+    if (!skipFly && c && map) map.easeTo({ center: c, zoom: Math.max(map.getZoom(), 9.5), duration: 700 });
   }
 
   /* ---------- 진입점 ----------
@@ -737,10 +759,19 @@ window.SEN = window.SEN || {};
   }
 
   /* 탭을 국외→국내로 되돌아왔을 때, 그 사이 화면 폭이 바뀌었을 수 있으니
-     캔버스 크기를 다시 맞춥니다(globe.js의 refresh()와 같은 이유). */
+     캔버스 크기를 다시 맞춥니다(globe.js의 refresh()와 같은 이유). 언어를
+     바꿨을 때도 이 함수가 불리므로, 화면에 남아 있는 문구(범례 최댓값,
+     오른쪽 패널)도 지금 보고 있던 자리 그대로 다시 그립니다 — openArea만
+     지도 이동(easeTo)을 같이 하길래 skipFly로 그 부분만 막았습니다. */
   function refresh() {
     if (map) map.resize();
     applyPointCount();
+    if (elLegendMax && MX != null) elLegendMax.textContent = fmt(MX) + SEN.i18n.t(UNIT_LABEL);
+    if (elSide) {
+      if (pState.view === 'area' && pState.area) openArea(pState.area, true);
+      else if (pState.view === 'prov' && pState.prov) openProv(pState.prov);
+      else renderCards();
+    }
   }
 
   SEN.projectMap = { init: init, refresh: refresh };

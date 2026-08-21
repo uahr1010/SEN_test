@@ -213,12 +213,12 @@
                더 들어갈 필요가 없어져 예전의 시/군/구 드릴다운 팝업은
                없앴습니다. 내용은 assets/js/projectmap.js 가 그립니다. -->
           <div class="pmap" data-kmap-tab="domestic" data-pmap>
-            <button class="pmap__back" type="button" data-pmap-back hidden>← 전국으로</button>
+            <button class="pmap__back" type="button" data-pmap-back data-bind="projects.ui.mapBack" hidden>← 전국으로</button>
             <div class="pmap__canvas" data-pmap-canvas></div>
           </div>
           <div class="pmap__legend" data-kmap-tab="domestic">
-            <span class="pmap__legend-title">시/도별 실적 건수</span>
-            <span class="pmap__legend-cap">적음</span>
+            <span class="pmap__legend-title" data-bind="projects.ui.mapLegendTitle">시/도별 실적 건수</span>
+            <span class="pmap__legend-cap" data-bind="projects.ui.mapLegendMin">적음</span>
             <span class="pmap__legend-bar"></span>
             <span class="pmap__legend-cap" data-pmap-legend-max>—</span>
           </div>

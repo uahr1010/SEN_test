@@ -153,8 +153,8 @@ window.SEN = window.SEN || {};
            최초 채워지기 전이거나 이미 알고 있으면 SEN.projectMap.refresh()
            가 곧바로 다시 채웁니다. */
         elStats.innerHTML =
-          '<div><dt>1973년부터 수행된 프로젝트</dt><dd>약 1만 1천건</dd></div>' +
-          '<div><dt>2016년~2026년간 수행된 프로젝트</dt><dd data-pmap-count>—</dd></div>';
+          '<div><dt>' + SEN.util.esc(t(ui.domesticAllTimeLabel) || '1973년부터 수행된 프로젝트') + '</dt><dd>' + SEN.util.esc(t(ui.domesticAllTimeValue) || '약 1만 1천건') + '</dd></div>' +
+          '<div><dt>' + SEN.util.esc(t(ui.domesticRecentLabel) || '2016년~2026년간 수행된 프로젝트') + '</dt><dd data-pmap-count>—</dd></div>';
       } else {
         elStats.innerHTML = [
           [t(ui.totalLabel) || '누적 실적', group.total.toLocaleString() + (t(ui.unit) || '건')],

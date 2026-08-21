@@ -9,9 +9,9 @@
     },
     "lead": {
       "ko": "센 엔지니어링그룹은 구조설계사(센구조연구소), 기술연구소(센벡스), 강구조 전문건설사(센코어테크)가 수직 계열화된 조직입니다.\n신공법 개발부터 설계, 자재 생산, 시공까지 하나의 흐름으로 진행합니다.",
-      "en": "SEN Engineering Group is a vertically integrated organisation of a structural design firm (SEN Structural Engineers), an R&D institute (SENVEX) and a steel construction specialist (SEN CORETECH).\nFrom technology development to design, fabrication and erection in a single flow.",
-      "zh": "SEN工程集团由结构设计公司（SEN结构研究所）、技术研发机构（SENVEX）与钢结构专业施工企业（SEN CORETECH）垂直整合而成。\n从新工法研发、结构设计、材料生产到施工，实现全流程一体化服务。",
-      "ja": "SEN エンジニアリンググループは、構造設計事務所（セン構造研究所）、技術研究所（センベックス）、鉄骨専門建設会社（センコアテック）が垂直統合された組織です。\n新工法開発から設計・製作・施工までを一貫して進めます。"
+      "en": "SEN Engineering Group is a vertically integrated organisation of a structural design firm (SEN ENGINEERING GROUP), an R&D institute (SENVEX) and a steel construction specialist (SEN CORETECH).\nFrom technology development to design, fabrication and erection in a single flow.",
+      "zh": "SEN工程集团由结构设计公司（SEN ENGINEERING GROUP）、技术研发机构（SENVEX）与钢结构专业施工企业（SEN CORETECH）垂直整合而成。\n从新工法研发、结构设计、材料生产到施工，实现全流程一体化服务。",
+      "ja": "SEN エンジニアリンググループは、構造設計事務所（SEN ENGINEERING GROUP）、技術研究所（センベックス）、鉄骨専門建設会社（センコアテック）が垂直統合された組織です。\n新工法開発から設計・製作・施工までを一貫して進めます。"
     }
   },
 
@@ -39,15 +39,15 @@
     "heading": { "ko": "회사연혁", "en": "Company History", "zh": "发展历程", "ja": "沿革" },
     "lead": {
       "ko": "1973년 센구조연구소 창립 이후 지금까지의 주요 발자취입니다.",
-      "en": "Milestones since the founding of SEN Structural Engineers in 1973.",
-      "zh": "自1973年SEN结构研究所创立以来的发展历程",
-      "ja": "1973年のセン構造研究所創立以来の主な歩みです。"
+      "en": "Milestones since the founding of SEN ENGINEERING GROUP in 1973.",
+      "zh": "自1973年SEN ENGINEERING GROUP创立以来的发展历程",
+      "ja": "1973年のSEN ENGINEERING GROUP創立以来の主な歩みです。"
     },
     "pinned": [
       {
         "year": "1973", "month": "7월",
         "label": { "ko": "1973년", "en": "1973", "zh": "1973年", "ja": "1973年" },
-        "title": { "ko": "센구조연구소 회사 설립", "en": "SEN Structural Engineers founded", "zh": "SEN结构研究所 成立", "ja": "セン構造研究所 設立" }
+        "title": { "ko": "센구조연구소 회사 설립", "en": "SEN ENGINEERING GROUP founded", "zh": "SEN ENGINEERING GROUP 成立", "ja": "SEN ENGINEERING GROUP 設立" }
       }
     ],
 
@@ -64,7 +64,7 @@
         "items": [
           { "year": "1995", "month": "4월",  "title": { "ko": "(주)센구조안전기술연구소 법인전환", "en": "Incorporated as SEN Structural Safety Technology Institute Co., Ltd.", "zh": "转型为法人企业「SEN结构安全技术研究所」", "ja": "（株）セン構造安全技術研究所として法人化" } },
           { "year": "1995", "month": "9월",  "title": { "ko": "안전진단 전문기관 지정 (건설교통부 제4호)", "en": "Designated as a Safety Diagnosis Specialist Institution (Ministry of Construction and Transportation No. 4)", "zh": "获指定为安全诊断专业机构（建设交通部 第4号）", "ja": "安全診断専門機関に指定（建設交通部 第4号）" } },
-          { "year": "1997", "month": "2월",  "title": { "ko": "(주)센구조연구소 상호 변경", "en": "Renamed to SEN Structural Engineers Co., Ltd.", "zh": "更名为「SEN结构研究所」", "ja": "（株）セン構造研究所に商号変更" } },
+          { "year": "1997", "month": "2월",  "title": { "ko": "(주)센구조연구소 상호 변경", "en": "Renamed to SEN ENGINEERING GROUP Co., Ltd.", "zh": "更名为「SEN ENGINEERING GROUP」", "ja": "（株）SEN ENGINEERING GROUPに商号変更" } },
           { "year": "1997", "month": "3월",  "title": { "ko": "한국엔지니어링 진흥 협회 가입 (10-567호)", "en": "Joined the Korea Engineering Promotion Association (No. 10-567)", "zh": "加入韩国工程振兴协会（第10-567号）", "ja": "韓国エンジニアリング振興協会に加入（10-567号）" } },
           { "year": "1999", "month": "1월",  "title": { "ko": "전문건설업 등록 (시설물 유지관리업 영등포-99-30-1)", "en": "Registered as a Specialty Construction Business (Facility Maintenance, Yeongdeungpo-99-30-1)", "zh": "注册专业建设业（设施维护管理业，永登浦-99-30-1）", "ja": "専門建設業登録（施設物維持管理業、永登浦-99-30-1）" } },
           { "year": "1999", "month": "5월",  "title": { "ko": "ISO 9001 인증 (QM-0217) (한능경영인증원)", "en": "Obtained ISO 9001 certification (QM-0217, Hanneung Management Certification)", "zh": "取得ISO 9001认证（QM-0217，Hanneung管理认证院）", "ja": "ISO 9001認証取得（QM-0217、ハンヌン経営認証院）" } },
