@@ -28,7 +28,7 @@ window.SEN = window.SEN || {};
 
   var PHOTOS_URL = 'content/cover-photos.json';
   var FALLBACK   = [1, 2, 3, 4].map(function (i) { return { image: 'assets/img/hero/hero-' + i + '.jpg', title: '' }; });
-  var PHOTO_SEC  = 1;  // 사진 한 장이 보이는 시간(초). 장수가 몇 장이든 이 값은 고정입니다
+  var PHOTO_SEC  = 1.5;  // 사진 한 장이 보이는 시간(초). 장수가 몇 장이든 이 값은 고정입니다
 
   /** render.js의 asset()과 같은 규칙 — 앞의 슬래시만 정리합니다.
       cover.js는 render.js보다 먼저(또는 무관하게) 실행될 수 있어
