@@ -158,8 +158,15 @@ window.SEN = window.SEN || {};
          나라가 곧 지구본에 찍힌 점이 됩니다("연동"). 좌표는 COUNTRIES의
          수도 좌표를 그대로 씁니다. */
       if (globeEls && SEN.globe) {
-        var regions = ORDER.map(function (c) {
-          var geo = COUNTRIES[c] || {};
+        /* 관리자가 새 나라를 올렸는데 아직 COUNTRIES 표(수도 좌표)에
+           없으면 카드에는 뜨지만 지구본 점은 못 찍습니다 — 좌표가 없는
+           채로 넘기면 NaN 좌표로 깨지므로, 좌표가 있는 나라만 지구본에
+           넘깁니다. */
+        var regions = ORDER.filter(function (c) {
+          var geo = COUNTRIES[c];
+          return geo && typeof geo.lat === 'number' && typeof geo.lng === 'number';
+        }).map(function (c) {
+          var geo = COUNTRIES[c];
           return { name: c, lat: geo.lat, lng: geo.lng, n: COUNTRY_AGG[c].n,
                     i18n: { en: geo.en, zh: geo.zh, ja: geo.ja } };
         });

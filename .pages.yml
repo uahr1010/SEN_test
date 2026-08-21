@@ -15,8 +15,13 @@
 #                        (그래프 제목·단위 등 문구는 고정값이라 여기 없음).
 #
 #  ── 미디어(파일 업로드) ──
-#    ① 프로젝트 데이터 : 실적 4,575건 — 파일을 통째로 내려받아 고친 뒤
-#                        다시 올려 덮어쓰는 방식입니다.
+#    ① 프로젝트 데이터(국내/해외) : 실적을 새로 추가할 때 쓰는 폴더입니다.
+#                        양식에 맞춘 json 파일을 올리면(파일 이름은
+#                        아무거나 됩니다) 저장소 Actions가 자동으로
+#                        기존 실적 뒤에 이어 붙여 지도·해외 카드·지구본에
+#                        반영합니다(1분 이내). 폴더 안 "_예시.json"이
+#                        정확한 칸 형식입니다 — 그 파일은 지우지 말고
+#                        새 파일을 추가로 올리세요.
 #    ② 이미지          : 뉴스 썸네일 등 일반 이미지
 #    ③ 표지 사진        : 홈페이지 맨 위 표지에서 서서히 넘어가는 사진들.
 #                        파일 이름은 아무거나 됩니다 — 올리면 저장소
@@ -41,20 +46,43 @@
 # ============================================================================
 
 media:
-  # ① 프로젝트(실적) 원본 데이터 — 4,575건이라 목록 폼 대신 파일을 통째로
-  # 내려받아 고치는 방식입니다. content/downloads/ 에는 이 파일만 있어서,
-  # 실수로 다른(구조화 폼으로 관리하는) 파일을 여기서 건드릴 위험이 없습니다.
-  #   1. 이 파일을 눌러 다운로드
-  #   2. projects 배열을 고침(추가/수정/삭제) — 형식은 파일을 열어 참고
-  #      {id: 고유값, address: "서울특별시 강남구"처럼 시/군/구 수준 공개
-  #      위치만, visible: true/false(꺼두면 삭제 없이 숨김)}
-  #   3. 같은 파일 이름(projects.json)으로 다시 올려 덮어쓰기
+  # ① 국내 실적 추가 — 새 프로젝트를 json 파일로 올리면(파일 이름 자유,
+  # 여러 파일 동시 운영 가능) 저장소 Actions(프로젝트 데이터 컴파일)가
+  # 기존 실적(assets/data/project_points_base.json, 여기서는 안 건드림)
+  # 뒤에 자동으로 이어 붙여 assets/data/project_points.json 을 다시
+  # 만듭니다. 파일 하나의 형식:
+  #   { "items": [
+  #       { "name": "프로젝트명",
+  #         "addr": "서울특별시 강남구 ...(공개 가능한 수준까지만)",
+  #         "area": "서울특별시 강남구",   ← 시/도 + 시/군/구, 꼭 이 형식
+  #         "year": 2026, "gubun": "구조설계",   ← 구조설계/안전진단/유지관리 등
+  #         "method": "",                 ← TSC/PSRC 등, 없으면 빈 문자열
+  #         "lat": 37.4979, "lng": 127.0276 }  ← 카카오맵 등에서 주소로
+  #                                              검색해 좌표를 복사
+  #   ] }
   #   ⚠️ 이 저장소는 public 입니다 — 정확한 도로명·지번·건물명, 담당자
   #      이름, 계약금액 같은 내부 정보는 절대 넣지 마세요.
-  - name: projects-data
-    label: ① 프로젝트 데이터
-    input: content/downloads
-    output: /content/downloads
+  #   ⚠️ 필수 칸(name/addr/area/year/gubun/lat/lng)이 비어 있거나 형식이
+  #      안 맞는 항목은 그 항목만 조용히 건너뜁니다 — 저장소 Actions 탭에서
+  #      "프로젝트 데이터 컴파일" 실행 기록을 열면 어떤 항목이 왜
+  #      빠졌는지 나옵니다.
+  - name: project-uploads-domestic
+    label: ① 프로젝트 데이터 (국내)
+    input: content/project-uploads/domestic
+    output: /content/project-uploads/domestic
+    extensions: [json]
+
+  # ① 해외 실적 추가 — 국내와 같은 방식이되 칸이 더 간단합니다(좌표 불필요
+  # — 나라 이름만으로 지구본에 자동 배치됩니다. 다만 새 나라는 assets/js/
+  # overseasmap.js의 COUNTRIES 표에 좌표를 먼저 추가해야 지구본에 점이
+  # 찍힙니다 — 그 전까지는 카드에만 나타납니다).
+  #   { "items": [
+  #       { "year": 2026, "gubun": "구조설계", "country": "필리핀" }
+  #   ] }
+  - name: project-uploads-overseas
+    label: ① 프로젝트 데이터 (해외)
+    input: content/project-uploads/overseas
+    output: /content/project-uploads/overseas
     extensions: [json]
 
   - name: images

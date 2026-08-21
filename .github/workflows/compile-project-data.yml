@@ -1,0 +1,71 @@
+# ============================================================================
+#  프로젝트 데이터 컴파일 — content/project-uploads/domestic|overseas/ (Pages
+#  CMS [① 프로젝트 데이터]가 폴더 업로드로 관리하는 실적 추가분) 이 바뀔
+#  때마다, 지도(assets/js/projectmap.js)와 해외 카드·지구본(assets/js/
+#  overseasmap.js)이 읽는 assets/data/project_points.json /
+#  overseas_projects.json 을 다시 만들어 커밋합니다.
+#
+#  기존 실적(assets/data/*_base.json)은 이 워크플로가 절대 건드리지
+#  않는 고정 원본입니다 — 업로드 폴더의 내용은 매번 그 원본 뒤에 새로
+#  이어 붙습니다. 업로드 폴더에서 파일을 지우면 그 파일의 내용만
+#  사라지고, 원본 실적은 항상 그대로 남습니다.
+# ============================================================================
+name: 프로젝트 데이터 컴파일
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/project-uploads/**'
+      - 'assets/data/project_points_base.json'
+      - 'assets/data/overseas_projects_base.json'
+      - 'tools/compile_project_uploads.py'
+  workflow_dispatch: {}
+
+# assets/data/*.json 을 고쳐 커밋해야 하므로 쓰기 권한이 필요합니다
+permissions:
+  contents: write
+
+# 파일이 연달아 올라와도 커밋이 꼬이지 않도록 한 번에 하나씩
+concurrency:
+  group: compile-project-data
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 컴파일
+        run: python tools/compile_project_uploads.py
+
+      - name: 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/project_points.json assets/data/overseas_projects.json
+          if git diff --cached --quiet; then
+            echo "바뀐 내용이 없습니다."
+            exit 0
+          fi
+          git commit -m "chore: 프로젝트 데이터 자동 컴파일 [skip ci]"
+
+          # Pages CMS가 같은 타이밍에 main에 바로 커밋을 넣을 수 있어서
+          # (파일을 여러 개 빠르게 올리거나 지울 때 특히), push가 그
+          # 사이 밀린 커밋 때문에 거절될 수 있습니다. 실패하면 새로 받아
+          # rebase 하고 다시 시도합니다.
+          for i in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "push 실패 — 새 커밋을 받아 다시 시도합니다 ($i/5)"
+            git fetch origin main
+            git rebase origin/main
+          done
+          echo "::error::여러 번 재시도했지만 push에 계속 실패했습니다."
+          exit 1

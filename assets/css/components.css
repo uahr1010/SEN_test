@@ -55,24 +55,31 @@
 .chip.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 
 /* ---------- CEO 인사말 ---------- */
+/* "SINCE 1973" — about.section.eyebrow. .scene__kicker는 여러 섹션이
+   같이 쓰는 공용 클래스라 여기서만 5px 키우도록 이 섹션에서만 덮어씁니다. */
+#scene-about .scene__kicker { font-size: 16px; }
+
 /* 영상 위, 센구조연구소→센벡스→센코어테크로 이어지는 계열 구조를 날짜와
    함께 짧게 보여줍니다(content/about.json의 milestones, 3개 고정).
    가로로 나란히 놓고 "+" 기호로 잇습니다 — 좁은 화면에서는 그 기호를
-   숨기고 세로로 쌓습니다. 마지막 항목(센코어테크)은 오른쪽 끝 글자가
-   영상 오른쪽 끝과 맞도록 오른쪽 정렬합니다. */
+   숨기고 세로로 쌓습니다. 마지막 항목(센코어테크)의 회사명은 다른
+   두 항목처럼 왼쪽 정렬 그대로 두되(justify-content: space-between이
+   이 항목 전체를 오른쪽 끝에 붙여 주므로, 셋 중 가장 넓은 회사명 글자
+   자체가 이미 영상 오른쪽 끝에 맞습니다), 연월·업무 설명도 같은 왼쪽
+   정렬을 그대로 씁니다 — 예전엔 이 항목만 오른쪽 정렬을 줬는데, 회사명
+   기준으로 통일해 달라는 요청으로 없앴습니다. */
 .about-milestones {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: clamp(16px, 3vw, 36px);
   margin-bottom: var(--sp-5);
 }
 .about-milestone { display: flex; flex-direction: column; gap: 5px; }
-.about-milestone:last-child { align-items: flex-end; text-align: right; }
 .about-milestone__date {
   font-size: calc(var(--fs-small) + 2px); color: var(--c-blue); font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 .about-milestone__name {
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 800;
+  font-size: clamp(1.44rem, 2.6vw, 2.04rem); font-weight: 800;
   color: var(--c-ink); letter-spacing: -.01em; line-height: 1.15;
 }
 .about-milestone__role { font-size: var(--fs-small); color: var(--c-muted); }
