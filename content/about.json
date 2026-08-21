@@ -54,68 +54,88 @@
     "groups": [
       {
         "label": { "ko": "1990년대", "en": "1990s", "zh": "1990年代", "ja": "1990年代" },
-        "headline": { "ko": "법인 전환과 품질·연구 체계 구축" },
+        "headline": {
+          "ko": "법인 전환과 품질·연구 체계 구축",
+          "en": "Corporate conversion and building a quality and R&D framework",
+          "zh": "转型为法人企业，构建质量与研发体系",
+          "ja": "法人化と品質・研究体制の構築"
+        },
         "open": false,
         "items": [
-          { "year": "1995", "month": "4월",  "title": { "ko": "(주)센구조안전기술연구소 법인전환" } },
-          { "year": "1995", "month": "9월",  "title": { "ko": "안전진단 전문기관 지정 (건설교통부 제4호)" } },
-          { "year": "1997", "month": "2월",  "title": { "ko": "(주)센구조연구소 상호 변경" } },
-          { "year": "1997", "month": "3월",  "title": { "ko": "한국엔지니어링 진흥 협회 가입 (10-567호)" } },
-          { "year": "1999", "month": "1월",  "title": { "ko": "전문건설업 등록 (시설물 유지관리업 영등포-99-30-1)" } },
-          { "year": "1999", "month": "5월",  "title": { "ko": "ISO 9001 인증 (QM-0217) (한능경영인증원)" } },
-          { "year": "1999", "month": "11월", "title": { "ko": "연구개발 전담부서 인가 (한국산업기술진흥협회)" } }
+          { "year": "1995", "month": "4월",  "title": { "ko": "(주)센구조안전기술연구소 법인전환", "en": "Incorporated as SEN Structural Safety Technology Institute Co., Ltd.", "zh": "转型为法人企业「SEN结构安全技术研究所」", "ja": "（株）セン構造安全技術研究所として法人化" } },
+          { "year": "1995", "month": "9월",  "title": { "ko": "안전진단 전문기관 지정 (건설교통부 제4호)", "en": "Designated as a Safety Diagnosis Specialist Institution (Ministry of Construction and Transportation No. 4)", "zh": "获指定为安全诊断专业机构（建设交通部 第4号）", "ja": "安全診断専門機関に指定（建設交通部 第4号）" } },
+          { "year": "1997", "month": "2월",  "title": { "ko": "(주)센구조연구소 상호 변경", "en": "Renamed to SEN Structural Engineers Co., Ltd.", "zh": "更名为「SEN结构研究所」", "ja": "（株）セン構造研究所に商号変更" } },
+          { "year": "1997", "month": "3월",  "title": { "ko": "한국엔지니어링 진흥 협회 가입 (10-567호)", "en": "Joined the Korea Engineering Promotion Association (No. 10-567)", "zh": "加入韩国工程振兴协会（第10-567号）", "ja": "韓国エンジニアリング振興協会に加入（10-567号）" } },
+          { "year": "1999", "month": "1월",  "title": { "ko": "전문건설업 등록 (시설물 유지관리업 영등포-99-30-1)", "en": "Registered as a Specialty Construction Business (Facility Maintenance, Yeongdeungpo-99-30-1)", "zh": "注册专业建设业（设施维护管理业，永登浦-99-30-1）", "ja": "専門建設業登録（施設物維持管理業、永登浦-99-30-1）" } },
+          { "year": "1999", "month": "5월",  "title": { "ko": "ISO 9001 인증 (QM-0217) (한능경영인증원)", "en": "Obtained ISO 9001 certification (QM-0217, Hanneung Management Certification)", "zh": "取得ISO 9001认证（QM-0217，Hanneung管理认证院）", "ja": "ISO 9001認証取得（QM-0217、ハンヌン経営認証院）" } },
+          { "year": "1999", "month": "11월", "title": { "ko": "연구개발 전담부서 인가 (한국산업기술진흥협회)", "en": "Approved as a Dedicated R&D Department (Korea Industrial Technology Association)", "zh": "获认定为研发专责部门（韩国产业技术振兴协会）", "ja": "研究開発専担部署に認可（韓国産業技術振興協会）" } }
         ]
       },
       {
         "label": { "ko": "2000년대", "en": "2000s", "zh": "2000年代", "ja": "2000年代" },
-        "headline": { "ko": "TSC 합성보 신기술 지정, 연구 전담법인 설립" },
+        "headline": {
+          "ko": "TSC 합성보 신기술 지정, 연구 전담법인 설립",
+          "en": "TSC composite beam designated New Technology; founded dedicated R&D affiliate",
+          "zh": "TSC组合梁获认定为新技术，成立专属研发法人",
+          "ja": "TSC合成梁が新技術に指定、研究専担法人を設立"
+        },
         "open": false,
         "items": [
-          { "year": "2000", "month": "5월",  "title": { "ko": "대한전문건설협회 가입 (시설물 유지관리업)" } },
-          { "year": "2002", "month": "2월",  "title": { "ko": "한국리모델링협회 가입" } },
-          { "year": "2004", "month": "8월",  "title": { "ko": "TSC 합성보 신기술 418호 지정 (건설교통부)" } },
-          { "year": "2005", "month": "6월",  "title": { "ko": "TSC 합성보 우수제품 인정 (조달청)" } },
-          { "year": "2006", "month": "9월",  "title": { "ko": "(주)센벡스 법인 설립" } },
-          { "year": "2006", "month": "10월", "title": { "ko": "강판띠기둥 신기술 505호 지정 (건설교통부)" } },
-          { "year": "2006", "month": "12월", "title": { "ko": "TSC 합성보 성능인증 (대한건축학회)" } },
-          { "year": "2007", "month": "1월",  "title": { "ko": "(주)센구조홀딩스 기업분할" } },
-          { "year": "2007", "month": "9월",  "title": { "ko": "TSC 합성보 신기술 418호 지정연장 (건설교통부)" } },
-          { "year": "2008", "month": "7월",  "title": { "ko": "CRC(원심력고강도콘크리트기둥) 국내최초 적용 성공" } },
-          { "year": "2009", "month": "11월", "title": { "ko": "TSC 합성보 2시간 & 3시간 내화인증 획득 (건설기술연구원)" } }
+          { "year": "2000", "month": "5월",  "title": { "ko": "대한전문건설협회 가입 (시설물 유지관리업)", "en": "Joined the Korea Specialty Contractors Association (Facility Maintenance)", "zh": "加入韩国专业建设业协会（设施维护管理业）", "ja": "大韓専門建設協会に加入（施設物維持管理業）" } },
+          { "year": "2002", "month": "2월",  "title": { "ko": "한국리모델링협회 가입", "en": "Joined the Korea Remodeling Association", "zh": "加入韩国改造协会", "ja": "韓国リモデリング協会に加入" } },
+          { "year": "2004", "month": "8월",  "title": { "ko": "TSC 합성보 신기술 418호 지정 (건설교통부)", "en": "TSC composite beam designated New Technology No. 418 (Ministry of Construction and Transportation)", "zh": "TSC组合梁获认定为新技术第418号（建设交通部）", "ja": "TSC合成梁が新技術第418号に指定（建設交通部）" } },
+          { "year": "2005", "month": "6월",  "title": { "ko": "TSC 합성보 우수제품 인정 (조달청)", "en": "TSC composite beam recognised as an Excellent Product (Public Procurement Service)", "zh": "TSC组合梁获认定为优秀产品（调达厅）", "ja": "TSC合成梁が優秀製品に認定（調達庁）" } },
+          { "year": "2006", "month": "9월",  "title": { "ko": "(주)센벡스 법인 설립", "en": "Founded SENVEX Co., Ltd.", "zh": "成立SENVEX法人公司", "ja": "（株）センベックスを設立" } },
+          { "year": "2006", "month": "10월", "title": { "ko": "강판띠기둥 신기술 505호 지정 (건설교통부)", "en": "Steel-band column designated New Technology No. 505 (Ministry of Construction and Transportation)", "zh": "钢板带柱获认定为新技术第505号（建设交通部）", "ja": "鋼板帯柱が新技術第505号に指定（建設交通部）" } },
+          { "year": "2006", "month": "12월", "title": { "ko": "TSC 합성보 성능인증 (대한건축학회)", "en": "TSC composite beam performance certified (Architectural Institute of Korea)", "zh": "TSC组合梁通过性能认证（大韩建筑学会）", "ja": "TSC合成梁の性能認証取得（大韓建築学会）" } },
+          { "year": "2007", "month": "1월",  "title": { "ko": "(주)센구조홀딩스 기업분할", "en": "Corporate spin-off establishing SEN Structural Holdings Co., Ltd.", "zh": "企业分割，成立SEN结构控股公司", "ja": "会社分割により（株）セン構造ホールディングスを設立" } },
+          { "year": "2007", "month": "9월",  "title": { "ko": "TSC 합성보 신기술 418호 지정연장 (건설교통부)", "en": "TSC composite beam New Technology No. 418 designation extended (Ministry of Construction and Transportation)", "zh": "TSC组合梁新技术第418号认定延期（建设交通部）", "ja": "TSC合成梁 新技術第418号の指定延長（建設交通部）" } },
+          { "year": "2008", "month": "7월",  "title": { "ko": "CRC(원심력고강도콘크리트기둥) 국내최초 적용 성공", "en": "First domestic application of CRC (centrifugally cast high-strength concrete column)", "zh": "国内首次成功应用CRC（离心成型高强度混凝土柱）", "ja": "CRC（遠心力高強度コンクリート柱）を国内で初めて適用成功" } },
+          { "year": "2009", "month": "11월", "title": { "ko": "TSC 합성보 2시간 & 3시간 내화인증 획득 (건설기술연구원)", "en": "TSC composite beam obtained 2-hour and 3-hour fire resistance certification (Korea Institute of Civil Engineering and Building Technology)", "zh": "TSC组合梁取得2小时及3小时耐火认证（韩国建设技术研究院）", "ja": "TSC合成梁が2時間・3時間耐火認証を取得（韓国建設技術研究院）" } }
         ]
       },
       {
         "label": { "ko": "2010년대", "en": "2010s", "zh": "2010年代", "ja": "2010年代" },
-        "headline": { "ko": "생산·시공 체계 완성과 해외 진출" },
+        "headline": {
+          "ko": "생산·시공 체계 완성과 해외 진출",
+          "en": "Completing production and construction capabilities, expanding overseas",
+          "zh": "完善生产与施工体系，开拓海外市场",
+          "ja": "生産・施工体制の完成と海外進出"
+        },
         "open": false,
         "items": [
-          { "year": "2010", "month": "3월",  "title": { "ko": "PRC 최초 적용 성공" } },
-          { "year": "2010", "month": "6월",  "title": { "ko": "(주)센코어테크 법인 설립 및 강구조 면허 취득" } },
-          { "year": "2010", "month": "8월",  "title": { "ko": "TSC 합성보 미국 ICC Acceptance Criteria 등록" } },
-          { "year": "2010", "month": "10월", "title": { "ko": "(주)센코어테크 진천 공장 확장이전" } },
-          { "year": "2011", "month": "3월",  "title": { "ko": "TSC 합성보 + PRC 기둥 내진접합부 실험으로 SMF조건 충족을 입증" } },
-          { "year": "2011", "month": "6월",  "title": { "ko": "PSRC(선조립SRC) 최초 적용 성공 (초대형반도체공장)" } },
-          { "year": "2011", "month": "10월", "title": { "ko": "(주)센벡스 병역특례업체 지정" } },
-          { "year": "2012", "month": "3월",  "title": { "ko": "TSC 합성보 v.5.0 (TSC V) 출시" } },
-          { "year": "2012", "month": "4월",  "title": { "ko": "영구거푸집 PSRC 최초 적용 성공" } },
-          { "year": "2014", "month": "7월",  "title": { "ko": "BRV Lotus 벤처펀드 투자유치" } },
-          { "year": "2017", "month": "8월",  "title": { "ko": "싱가포르 JTC Logistics Hub 프로젝트 수주" } }
+          { "year": "2010", "month": "3월",  "title": { "ko": "PRC 최초 적용 성공", "en": "First successful application of PRC", "zh": "首次成功应用PRC", "ja": "PRCを初めて適用成功" } },
+          { "year": "2010", "month": "6월",  "title": { "ko": "(주)센코어테크 법인 설립 및 강구조 면허 취득", "en": "Founded SEN CORETECH Co., Ltd. and obtained a steel construction license", "zh": "成立SEN CORETECH法人公司并取得钢结构施工资质", "ja": "（株）SEN CORETECHを設立、鉄骨工事業免許を取得" } },
+          { "year": "2010", "month": "8월",  "title": { "ko": "TSC 합성보 미국 ICC Acceptance Criteria 등록", "en": "TSC composite beam registered under U.S. ICC Acceptance Criteria", "zh": "TSC组合梁获美国ICC Acceptance Criteria登记认可", "ja": "TSC合成梁が米国ICC Acceptance Criteriaに登録" } },
+          { "year": "2010", "month": "10월", "title": { "ko": "(주)센코어테크 진천 공장 확장이전", "en": "Relocated and expanded SEN CORETECH's Jincheon factory", "zh": "SEN CORETECH镇川工厂扩建搬迁", "ja": "SEN CORETECH 鎮川工場を拡張移転" } },
+          { "year": "2011", "month": "3월",  "title": { "ko": "TSC 합성보 + PRC 기둥 내진접합부 실험으로 SMF조건 충족을 입증", "en": "Seismic connection tests on TSC composite beam + PRC column verified compliance with SMF requirements", "zh": "TSC组合梁+PRC柱抗震接合部试验，验证满足SMF（特殊抗弯框架）要求", "ja": "TSC合成梁+PRC柱の耐震接合部実験でSMF条件充足を実証" } },
+          { "year": "2011", "month": "6월",  "title": { "ko": "PSRC(선조립SRC) 최초 적용 성공 (초대형반도체공장)", "en": "First successful application of PSRC (prefabricated SRC) at a major semiconductor plant", "zh": "PSRC（预组装SRC）首次成功应用（超大型半导体工厂）", "ja": "PSRC（先組立SRC）を大型半導体工場で初適用成功" } },
+          { "year": "2011", "month": "10월", "title": { "ko": "(주)센벡스 병역특례업체 지정", "en": "SENVEX designated as a Military Service Exemption company", "zh": "SENVEX获指定为兵役特例企业", "ja": "（株）センベックスが兵役特例業体に指定" } },
+          { "year": "2012", "month": "3월",  "title": { "ko": "TSC 합성보 v.5.0 (TSC V) 출시", "en": "Launched TSC composite beam v.5.0 (TSC V)", "zh": "推出TSC组合梁v.5.0（TSC V）", "ja": "TSC合成梁 v.5.0（TSC V）を発売" } },
+          { "year": "2012", "month": "4월",  "title": { "ko": "영구거푸집 PSRC 최초 적용 성공", "en": "First successful application of permanent-formwork PSRC", "zh": "首次成功应用永久模板型PSRC", "ja": "永久型枠PSRCを初めて適用成功" } },
+          { "year": "2014", "month": "7월",  "title": { "ko": "BRV Lotus 벤처펀드 투자유치", "en": "Secured investment from the BRV Lotus venture fund", "zh": "获BRV Lotus创投基金投资", "ja": "BRV Lotusベンチャーファンドから投資誘致" } },
+          { "year": "2017", "month": "8월",  "title": { "ko": "싱가포르 JTC Logistics Hub 프로젝트 수주", "en": "Won the JTC Logistics Hub project in Singapore", "zh": "承接新加坡JTC Logistics Hub项目", "ja": "シンガポールJTC Logistics Hubプロジェクトを受注" } }
         ]
       },
       {
         "label": { "ko": "2020년대", "en": "2020s", "zh": "2020年代", "ja": "2020年代" },
-        "headline": { "ko": "해외 설계기준 등재 및 특허공법 확대적용 (반도체공장, 데이터센터)" },
+        "headline": {
+          "ko": "해외 설계기준 등재 및 특허공법 확대적용 (반도체공장, 데이터센터)",
+          "en": "Listed in overseas design codes and expanded application of patented methods (semiconductor plants, data centres)",
+          "zh": "列入海外设计标准并扩大专利工法应用（半导体工厂、数据中心）",
+          "ja": "海外設計基準への収載と特許工法の適用拡大（半導体工場、データセンター）"
+        },
         "open": true,
         "items": [
-          { "year": "2021", "month": "11월", "title": { "ko": "JTC 물류허브, 싱가포르건설청(BCA) IDD Award 2021 수상" } },
-          { "year": "2023", "month": "5월",  "title": { "ko": "LS전선 동해 해저케이블 공장(해저4동) PSRC·TSC 적용" } },
-          { "year": "2024",                  "title": { "ko": "BCA 올해의 프로젝트 2024 수상 (선조립 합성공법)" } },
+          { "year": "2021", "month": "11월", "title": { "ko": "JTC 물류허브, 싱가포르건설청(BCA) IDD Award 2021 수상", "en": "JTC Logistics Hub won the Singapore BCA's IDD Award 2021", "zh": "JTC物流枢纽荣获新加坡建设局（BCA）IDD Award 2021", "ja": "JTC物流ハブがシンガポール建設庁（BCA）IDD Award 2021を受賞" } },
+          { "year": "2023", "month": "5월",  "title": { "ko": "LS전선 동해 해저케이블 공장(해저4동) PSRC·TSC 적용", "en": "Applied PSRC and TSC at LS Cable & System's Donghae subsea cable plant (Building 4)", "zh": "LS电线东海海底电缆工厂（海底4号馆）应用PSRC・TSC工法", "ja": "LS電線 東海海底ケーブル工場（海底4棟）にPSRC・TSCを適用" } },
+          { "year": "2024",                  "title": { "ko": "BCA 올해의 프로젝트 2024 수상 (선조립 합성공법)", "en": "Won the BCA Project of the Year 2024 (prefabricated composite method)", "zh": "荣获BCA「Project of the Year 2024」（预组装组合工法）", "ja": "BCA「Project of the Year 2024」を受賞（先組立合成工法）" } },
           {
             "year": "2025", "month": "4월",
             "title": { "ko": "PSRC 공법 싱가포르 설계기준(BC4:2025) 등재", "en": "PSRC included in Singapore design code BC4:2025", "zh": "PSRC 工法列入新加坡设计标准 BC4:2025", "ja": "PSRC工法がシンガポール設計基準 BC4:2025 に収載" },
             "desc": { "ko": "BCA 고강도 합성기둥 설계가이드에 독립 장으로 수록", "en": "Dedicated chapter in the BCA composite column design guide", "zh": "作为独立章节收录于BCA高强度组合柱设计指南", "ja": "BCA高強度合成柱設計ガイドに独立章として収載" }
           },
-          { "year": "2026", "month": "1월",  "title": { "ko": "한국전력공사(KEPCO) TSC·PSRC 적용" } },
+          { "year": "2026", "month": "1월",  "title": { "ko": "한국전력공사(KEPCO) TSC·PSRC 적용", "en": "Applied TSC and PSRC at Korea Electric Power Corporation (KEPCO)", "zh": "韩国电力公社（KEPCO）项目应用TSC・PSRC工法", "ja": "韓国電力公社（KEPCO）にTSC・PSRCを適用" } },
           {
             "year": "2026", "month": "8월",
             "title": { "ko": "AI 데이터센터 골조 OSC 공법 적용 확대", "en": "OSC adoption expanded to AI data centre frames", "zh": "AI数据中心主体结构OSC工法应用扩大", "ja": "AIデータセンター躯体へのOSC工法適用を拡大" },

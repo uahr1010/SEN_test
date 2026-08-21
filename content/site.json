@@ -95,7 +95,7 @@
   "careers": {
     "section": {
       "eyebrow": { "ko": "04 — CAREERS", "en": "04 — CAREERS", "zh": "04 — 招聘", "ja": "04 — 採用" },
-      "title": { "ko": "50년의 역사, 앞으로 함께 걸어갈 엔지니어를 찾습니다.", "en": "", "zh": "五十载历程，诚邀优秀工程师与我们携手前行。", "ja": "50年の歴史、これから共に歩むエンジニアを求めています。" },
+      "title": { "ko": "50년의 역사, 앞으로 함께 걸어갈 엔지니어를 찾습니다.", "en": "Fifty years of history, and we're looking for engineers to build the next chapter with us.", "zh": "五十载历程，诚邀优秀工程师与我们携手前行。", "ja": "50年の歴史、これから共に歩むエンジニアを求めています。" },
       "lead": {
         "ko": "업계 최고 수준의 교육과 보상으로 직원의 성장을 지원합니다.\n관심 있는 공고를 펼쳐 '지원하기'를 누르면 지원 메일 작성 창이 열립니다.",
         "en": "We invest in our people with industry-leading training and rewards.\nOpen a posting and click Apply — your mail app opens with the application email ready.",
