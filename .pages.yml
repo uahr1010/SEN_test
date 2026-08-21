@@ -380,9 +380,6 @@ content:
             required: true
       - name: headcount
         label: 임직원 수
-        description: >
-          홈페이지의 총 인원 큰 숫자는 이 "총 인원"을 그대로 씁니다
-          (센코어테크+협력업체 합계와 다를 수 있어 따로 입력합니다).
         type: object
         fields:
           - name: total
@@ -399,10 +396,6 @@ content:
             required: true
       - name: yearly
         label: 연도별 매출
-        description: >
-          홈페이지의 막대그래프는 이 목록 순서를 그대로 따릅니다 —
-          연도 오름차순으로 넣어 주세요. 지금 들어있는 값은 더미(예시)
-          데이터이니 실제 매출로 바꿔 주세요.
         type: object
         list:
           collapsible:
