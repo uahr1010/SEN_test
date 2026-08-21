@@ -237,7 +237,7 @@ window.SEN = window.SEN || {};
        핵심 3개 이정표만 간추려 여기로 옮겼습니다. */
     'about.milestones': function (items) {
       return items.map(function (it, i) {
-        return (i ? '<span class="about-milestone__arrow" aria-hidden="true">→</span>' : '') +
+        return (i ? '<span class="about-milestone__arrow" aria-hidden="true">+</span>' : '') +
           '<div class="about-milestone">' +
             '<span class="about-milestone__date">' + esc(t(it.date)) + '</span>' +
             '<strong class="about-milestone__name">' + esc(t(it.name)) + '</strong>' +
@@ -382,7 +382,7 @@ window.SEN = window.SEN || {};
       var dueLabel = t(siteCareers.deadlineLabel) || '마감';
       var mailBody = t(siteCareers.applyMailBody) || '';
 
-      if (!items.length) return '<p class="state">' + esc(t(ui.empty) || '진행 중인 채용이 없습니다.') + '</p>';
+      if (!items.length) return '<p class="state">' + esc(t(siteCareers.empty) || t(ui.empty) || '지금은 채용 중인 직무가 없습니다.') + '</p>';
 
       return items.map(function (it, i) {
         var email = it.email || careers.applyEmail;

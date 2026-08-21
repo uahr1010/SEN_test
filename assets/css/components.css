@@ -57,16 +57,18 @@
 /* ---------- CEO 인사말 ---------- */
 /* 영상 위, 센구조연구소→센벡스→센코어테크로 이어지는 계열 구조를 날짜와
    함께 짧게 보여줍니다(content/about.json의 milestones, 3개 고정).
-   가로로 나란히 놓고 화살표로 잇습니다 — 좁은 화면에서는 화살표를
-   숨기고 세로로 쌓습니다. */
+   가로로 나란히 놓고 "+" 기호로 잇습니다 — 좁은 화면에서는 그 기호를
+   숨기고 세로로 쌓습니다. 마지막 항목(센코어테크)은 오른쪽 끝 글자가
+   영상 오른쪽 끝과 맞도록 오른쪽 정렬합니다. */
 .about-milestones {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: clamp(16px, 3vw, 36px);
   margin-bottom: var(--sp-5);
 }
 .about-milestone { display: flex; flex-direction: column; gap: 5px; }
+.about-milestone:last-child { align-items: flex-end; text-align: right; }
 .about-milestone__date {
-  font-size: var(--fs-small); color: var(--c-muted); font-weight: 600;
+  font-size: calc(var(--fs-small) + 2px); color: var(--c-blue); font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 .about-milestone__name {
@@ -74,7 +76,7 @@
   color: var(--c-ink); letter-spacing: -.01em; line-height: 1.15;
 }
 .about-milestone__role { font-size: var(--fs-small); color: var(--c-muted); }
-.about-milestone__arrow { color: var(--c-line); font-size: 1.6rem; flex: 0 0 auto; }
+.about-milestone__arrow { color: var(--c-line); font-size: 1.6rem; font-weight: 300; flex: 0 0 auto; }
 @media (max-width: 640px) {
   .about-milestones { flex-direction: column; align-items: flex-start; gap: 12px; }
   .about-milestone__arrow { display: none; }
