@@ -541,12 +541,15 @@ body {
   margin-bottom: clamp(24px, 4vh, 40px);
 }
 .article__hero {
-  overflow: hidden; background: var(--ph);
+  overflow: hidden; background: var(--c-white);
   aspect-ratio: 16 / 9; margin-bottom: clamp(28px, 4vh, 44px);
 }
 /* object-fit:cover 였을 때는 사진이 16:9가 아니면 위아래(또는 좌우)가
    잘려 나갔습니다 — contain으로 바꿔 이 칸의 높이에 맞춰 사진 전체가
-   줄어들거나 늘어나며 항상 다 보이게 합니다(남는 자리는 --ph 배경). */
+   줄어들거나 늘어나며 항상 다 보이게 합니다. 남는 자리(레터박스)는
+   다른 자리표시(--ph, 진한 남색)와 달리 흰 배경으로 둡니다 — 사진이
+   있을 때만 만들어지는 칸이라 로딩 placeholder 용도가 아니고, 남는
+   자리가 파랗게 두드러지면 사진 일부가 잘린 것처럼 보이기 때문입니다. */
 .article__hero img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .article__body { font-size: 1.05rem; line-height: 1.9; }
 .article__body p + p { margin-top: 1.3em; }
