@@ -565,6 +565,22 @@ window.SEN = window.SEN || {};
     return ko;
   }
 
+  /* 프로젝트 "구분"(구조설계·안전진단·유지관리·실내건축) — 정해진 몇
+     개 값만 나오는 분류표라 뉴스 카테고리와 비슷하게 번역합니다.
+     assets/js/projectmap.js(국내 지도)·overseasmap.js(해외 카드) 둘
+     다에서 씁니다. */
+  var GUBUN_LABEL = {
+    '구조설계': { ko: '구조설계', en: 'Structural Design', zh: '结构设计', ja: '構造設計' },
+    '안전진단': { ko: '안전진단', en: 'Safety Diagnosis', zh: '安全诊断', ja: '安全診断' },
+    '유지관리': { ko: '유지관리', en: 'Maintenance', zh: '维护管理', ja: '維持管理' },
+    '실내건축': { ko: '실내건축', en: 'Interior Architecture', zh: '室内建筑', ja: '室内建築' }
+  };
+  function gubunLabel(ko) {
+    if (!ko) return '';
+    var d = GUBUN_LABEL[ko];
+    return d ? t(d) : ko;
+  }
+
   SEN.render = render;
-  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName, mergeNewsI18n: mergeNewsI18n, categoryLabel: categoryLabel };
+  SEN.util = { pick: pick, esc: esc, asset: asset, mailto: mailto, regionName: regionName, mergeNewsI18n: mergeNewsI18n, categoryLabel: categoryLabel, gubunLabel: gubunLabel };
 })(window.SEN);

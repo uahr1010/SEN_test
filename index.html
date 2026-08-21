@@ -205,40 +205,50 @@
 
       <dl class="globe__stats" data-globe-stats></dl>
 
-      <!-- 지도(또는 지구본)는 왼쪽, 지역별 실적 순위는 오른쪽 — 좌우 배치. -->
-      <div class="proj-viz">
-        <div class="proj-viz__map">
-          <!-- 국내 탭: 실제 지도(MapLibre). 4,576개 현장을 점으로 올려 두고
-               확대할수록 뭉친 덩어리가 저절로 갈라집니다 — 팝업으로 한 번
-               더 들어갈 필요가 없어져 예전의 시/군/구 드릴다운 팝업은
-               없앴습니다. 내용은 assets/js/projectmap.js 가 그립니다. -->
-          <div class="pmap" data-kmap-tab="domestic" data-pmap>
+      <!-- 지도/지구본과 카드 패널을 좌우로 배치합니다. 국내는 지도(왼쪽,
+           넓게) + 카드 패널(오른쪽, 좁게), 국외는 반대로 카드 패널
+           (왼쪽, 좁게) + 지구본(오른쪽, 넓게) — main.js가 탭을 바꿀 때
+           .proj-viz에 is-overseas 클래스를 붙여 두 칸의 폭 배정을
+           맞바꿉니다(components.css의 .proj-viz.is-overseas 참고).
+           네 요소 모두 이 grid의 바로 아래 자식이고, order로 자리를
+           잡습니다(.proj-viz__map/.oproj-side는 order:1=왼쪽,
+           .pmap-side/두번째 .proj-viz__map은 order:2=오른쪽). -->
+      <div class="proj-viz" data-proj-viz>
+        <!-- 국내 탭: 실제 지도(MapLibre). 4,576개 현장을 점으로 올려 두고
+             확대할수록 뭉친 덩어리가 저절로 갈라집니다 — 팝업으로 한 번
+             더 들어갈 필요가 없어져 예전의 시/군/구 드릴다운 팝업은
+             없앴습니다. 내용은 assets/js/projectmap.js 가 그립니다. -->
+        <div class="proj-viz__map" data-kmap-tab="domestic">
+          <div class="pmap" data-pmap>
             <button class="pmap__back" type="button" data-pmap-back data-bind="projects.ui.mapBack" hidden>← 전국으로</button>
             <div class="pmap__canvas" data-pmap-canvas></div>
           </div>
-          <div class="pmap__legend" data-kmap-tab="domestic">
+          <div class="pmap__legend">
             <span class="pmap__legend-title" data-bind="projects.ui.mapLegendTitle">시/도별 실적 건수</span>
             <span class="pmap__legend-cap" data-bind="projects.ui.mapLegendMin">적음</span>
             <span class="pmap__legend-bar"></span>
             <span class="pmap__legend-cap" data-pmap-legend-max>—</span>
           </div>
-
-          <!-- 국외 탭: 지구본만 뜹니다(지도는 없음). 가만히 두면 한국이
-               정면에서 멈춰 있고, 드래그만 됩니다. -->
-          <div class="globe__stage" data-globe data-kmap-tab="overseas" hidden>
-            <div class="globe__pills" data-globe-pills aria-hidden="true"></div>
-            <div class="globe__tip" data-globe-tip hidden></div>
-          </div>
-          <p class="globe__hint" data-globe-hint></p>
         </div>
-
         <!-- 국내 탭: 시/도 카드 → 시/군/구 목록 → 프로젝트 목록으로 파고드는
              패널. 내용은 assets/js/projectmap.js가 그리며, 지도 클릭과
              서로 연동됩니다. -->
         <aside class="pmap-side" data-kmap-tab="domestic" data-pmap-side></aside>
-        <!-- 국외 탭: 예전부터 쓰던 지역별 순위 목록 -->
-        <ol class="regions" data-kmap-tab="overseas" data-region-list></ol>
+
+        <!-- 국외 탭: 나라 카드 → 연도별 구조설계/안전진단 건수 패널.
+             내용은 assets/js/overseasmap.js가 그리며, 카드를 고르면
+             지구본도 그 나라 쪽으로 돌아갑니다. -->
+        <aside class="pmap-side" data-kmap-tab="overseas" data-oproj-side></aside>
+        <!-- 국외 탭: 지구본. 가만히 두면 한국이 정면에서 멈춰 있고,
+             드래그만 됩니다. -->
+        <div class="proj-viz__map" data-kmap-tab="overseas">
+          <div class="globe__stage" data-globe>
+            <div class="globe__pills" data-globe-pills aria-hidden="true"></div>
+            <div class="globe__tip" data-globe-tip hidden></div>
+          </div>
+        </div>
       </div>
+      <p class="globe__hint" data-globe-hint></p>
     </div>
   </section>
 
@@ -389,6 +399,7 @@
 <script src="assets/js/projects.js"></script>
 <script src="assets/js/globe.js"></script>
 <script src="assets/js/projectmap.js"></script>
+<script src="assets/js/overseasmap.js"></script>
 <script src="assets/js/controls.js"></script>
 <script src="assets/js/atlas.js"></script>
 <script src="assets/js/hero.js"></script>

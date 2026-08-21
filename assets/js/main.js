@@ -137,9 +137,14 @@ window.SEN = window.SEN || {};
     var t = SEN.i18n.t;
     var ui = SEN.util.pick(p.ctx, 'projects.ui') || {};
     var elStats = document.querySelector('[data-globe-stats]');
-    var elList = document.querySelector('[data-region-list]');
     var elHint = document.querySelector('[data-globe-hint]');
     var group = tab === 'overseas' ? p.data.overseas : p.data.domestic;
+
+    /* .proj-viz의 두 칸 폭 배정을 맞바꿉니다 — 국내는 지도(넓게)+카드
+       패널(좁게), 국외는 카드 패널(좁게)+지구본(넓게). components.css의
+       .proj-viz.is-overseas 참고. */
+    var elViz = document.querySelector('[data-proj-viz]');
+    if (elViz) elViz.classList.toggle('is-overseas', tab === 'overseas');
 
     if (elHint) {
       elHint.textContent = tab === 'overseas' ? (t(ui.dragHint) || '') : (t(ui.mapHint) || '');
@@ -164,20 +169,6 @@ window.SEN = window.SEN || {};
         }).join('');
       }
     }
-    if (elList && tab === 'overseas') {
-      /* 국내 탭의 오른쪽 칸은 이제 projectmap.js가 그리는 시/도 카드 →
-         시/군/구 → 프로젝트 목록 패널([data-pmap-side])이 맡습니다. 이
-         목록(.regions)은 국외 탭 전용입니다. */
-      var shown = group.regions.slice(0, 12);
-      var maxN = shown.reduce(function (m, r) { return Math.max(m, r.n); }, 1);
-      elList.innerHTML = !shown.length ? '' : shown.map(function (r) {
-        return '<li><span class="regions__name">' + SEN.util.esc(SEN.util.regionName(r.name)) + '</span>' +
-               '<span class="regions__bar"><i style="width:' +
-               Math.max(4, Math.round(r.n / maxN * 100)) + '%"></i></span>' +
-               '<span class="regions__n">' + r.n + '</span></li>';
-      }).join('');
-    }
-
     document.querySelectorAll('[data-kmap-tab]').forEach(function (el) {
       el.hidden = el.getAttribute('data-kmap-tab') !== tab;
     });
@@ -191,13 +182,14 @@ window.SEN = window.SEN || {};
        가려진 상태로 초기화되면 크기를 못 잡아 텅 비어 보입니다. 그 탭이
        열릴 때마다 직접 알려줘서 다시 맞추게 합니다. */
     if (tab === 'overseas' && SEN.globe) SEN.globe.refresh();
+    if (tab === 'overseas' && SEN.overseasMap) SEN.overseasMap.refresh();
     if (tab === 'domestic' && SEN.projectMap) SEN.projectMap.refresh();
   }
   SEN.renderProjectPanel = renderProjectPanel;
 
   function initProjects(data) {
     var kmapStage = document.querySelector('[data-pmap]');
-    var globeStage = document.querySelector('[data-kmap-tab="overseas"]');
+    var globeStage = document.querySelector('[data-globe]');
     if ((!kmapStage && !globeStage) || !SEN.projects) return;
 
     SEN.projects.load(SEN.util.pick(data, 'projects.projects') || []).then(function (res) {
@@ -226,6 +218,11 @@ window.SEN = window.SEN || {};
           pills: globeStage.querySelector('[data-globe-pills]'),
           tip: globeStage.querySelector('[data-globe-tip]')
         });
+      }
+
+      var oprojSide = document.querySelector('[data-oproj-side]');
+      if (oprojSide && SEN.overseasMap) {
+        SEN.overseasMap.init({ side: oprojSide });
       }
     }).catch(function (err) {
       console.warn('[SEN] 실적 데이터를 불러오지 못했습니다:', err && err.message);

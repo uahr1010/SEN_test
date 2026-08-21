@@ -569,9 +569,12 @@
 }
 .globe__stage.is-dragging { cursor: grabbing; }
 .globe__stage canvas { display: block; width: 100% !important; height: 100% !important; }
-/* WebGL 을 못 쓰는 환경 — 지구본 자리를 접고 아래 숫자·목록만 남깁니다 */
+/* WebGL 을 못 쓰는 환경 — 지구본 자리를 접고 아래 숫자·목록만 남깁니다.
+   .globe__hint는 이제 .proj-viz 형제라 .globe__stage와 같은 부모 밑
+   형제(~)가 아니므로, .proj-viz 안에 .is-unavailable이 있는지를
+   :has()로 봅니다. */
 .globe__stage.is-unavailable { display: none; }
-.globe__stage.is-unavailable ~ .globe__hint { display: none; }
+.proj-viz:has(.globe__stage.is-unavailable) ~ .globe__hint { display: none; }
 /* .pmap과 같은 이유(모바일에서 스크롤 시 손가락이 걸림)로 모바일에서는
    .pmap과 동일한 고정 높이로 맞춥니다. */
 @media (max-width: 760px) {
@@ -755,14 +758,26 @@
 .proj-tab:hover { border-color: var(--c-blue-soft); color: var(--c-blue); }
 .proj-tab.is-on { background: var(--c-blue); border-color: var(--c-blue); color: var(--c-white); }
 
-/* ---------- 지도(지구본)와 지역 순위 — 좌우 배치 ---------- */
+/* ---------- 지도(지구본)와 카드 패널 — 좌우 배치 ----------
+   국내: 지도(왼쪽, 넓게) + 카드 패널(오른쪽, 좁게).
+   국외: 카드 패널(왼쪽, 좁게) + 지구본(오른쪽, 넓게) — 반대 순서입니다.
+   네 요소(.proj-viz__map×2, [data-pmap-side], [data-oproj-side])가
+   모두 .proj-viz의 바로 아래 자식이고, 안 쓰는 탭 쪽은 [hidden]이라
+   grid 배치에서 아예 빠지므로, order로만 자리를 정하면 됩니다.
+   폭 배정(8fr/4fr ↔ 4fr/8fr)은 main.js가 탭을 바꿀 때 붙이는
+   .is-overseas 클래스로 맞바꿉니다. */
 .proj-viz {
   display: grid; gap: var(--sp-5);
   grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
   align-items: start;
 }
+.proj-viz.is-overseas { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+.proj-viz > .proj-viz__map[data-kmap-tab="domestic"] { order: 1; }
+.proj-viz > [data-pmap-side] { order: 2; }
+.proj-viz > [data-oproj-side] { order: 1; }
+.proj-viz > .proj-viz__map[data-kmap-tab="overseas"] { order: 2; }
 @media (max-width: 900px) {
-  .proj-viz { grid-template-columns: 1fr; }
+  .proj-viz, .proj-viz.is-overseas { grid-template-columns: 1fr; }
 }
 
 /* ---------- 국내 지도 (MapLibre 실제 지도 타일) ----------
@@ -895,6 +910,8 @@
 .arow__ct b { color: var(--c-ink); }
 .arow__bar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: var(--c-tint); overflow: hidden; }
 .arow__bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--c-blue-mid), var(--c-blue)); }
+/* 해외 실적 카드: 연도 행 아래 "구조설계 N건 · 안전진단 M건" 상세 */
+.arow__detail { grid-column: 1 / -1; font-size: var(--fs-xs); color: var(--c-muted); }
 
 /* 시/군/구 안의 프로젝트 목록 */
 .prow { padding: 10px 20px 10px 26px; border-bottom: 1px solid var(--c-tint); font-size: var(--fs-xs); line-height: 1.5; }

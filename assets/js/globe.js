@@ -19,9 +19,9 @@ window.SEN = window.SEN || {};
   var TEX_URL = 'assets/img/world-map.jpg';
   var D2R = Math.PI / 180;
 
-  var api = { init: init, refresh: refresh };
+  var api = { init: init, refresh: refresh, focus: focus };
   SEN.globe = api;
-  var _refresh = null;
+  var _refresh = null, _focus = null;
 
   /* main.js 가 "국외" 탭을 열 때 부릅니다.
      이 지구본은 국내 탭에 가려진 채로 딱 한 번만 초기화되는데, 이 환경에서는
@@ -30,6 +30,13 @@ window.SEN = window.SEN || {};
      지구본 점·라벨이 실제로 찍힙니다. */
   function refresh() {
     if (_refresh) _refresh();
+  }
+
+  /* 해외 실적 카드(overseasmap.js)에서 나라를 고르면 부릅니다 —
+     지구본을 그 나라(lat,lng)가 정면에 오는 자세로 부드럽게 돌립니다.
+     build() 가 아직 안 끝났으면(지구본 로드 전) 조용히 무시합니다. */
+  function focus(lat, lng) {
+    if (_focus) _focus(lat, lng);
   }
 
   function init(data, els) {
@@ -204,6 +211,10 @@ window.SEN = window.SEN || {};
        스르륵 돌아옵니다. 자동으로 계속 도는 자전은 없습니다
        (예전엔 spin 값을 매 프레임 늘려 계속 돌아갔습니다). */
     var qKorea = quatFor(30, 127.5);
+    /* 나라를 골랐을 때 qKorea 자체(=드래그를 안 할 때 쉬는 자세)를
+       현재 자세에서 목표 자세로 slerp 로 부드럽게 옮깁니다. restT 가
+       1 이 되면 끝나고, 그 뒤로는 목표 자세가 새 "쉬는 자세"가 됩니다. */
+    var qRestFrom = qKorea.clone(), qRestTo = qKorea.clone(), restT = 1, restDur = 900;
     var visible = true, last = performance.now();
     /* 드래그도 안 하고 이미 원위치(0,0)로 다 돌아온 상태면 매 프레임
        다시 그려도 화면이 똑같습니다 — 그런데도 계속 renderer.render()
@@ -214,6 +225,12 @@ window.SEN = window.SEN || {};
     var EPS_ANGLE = 0.0005;
     var needsRender = true;
     _refresh = function () { size(); visible = true; needsRender = true; };
+    _focus = function (lat, lng) {
+      qRestFrom = qKorea.clone();
+      qRestTo = quatFor(lat, lng);
+      restT = 0;
+      needsRender = true;
+    };
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
@@ -228,9 +245,16 @@ window.SEN = window.SEN || {};
       last = t;
       if (!visible) return;                      /* 화면 밖이면 그리지 않음 */
 
-      var moving = dragging || Math.abs(yaw) > EPS_ANGLE || Math.abs(pitch) > EPS_ANGLE;
+      var resting = restT < 1;
+      var moving = dragging || Math.abs(yaw) > EPS_ANGLE || Math.abs(pitch) > EPS_ANGLE || resting;
       if (!moving && !needsRender) return;        /* 멈춰 있고 새로 그릴 이유도 없으면 이 프레임은 건너뜀 */
       needsRender = false;
+
+      if (resting) {
+        restT = Math.min(1, restT + dt * 1000 / restDur);
+        var ease = 1 - Math.pow(1 - restT, 3);
+        qKorea = qRestFrom.clone().slerp(qRestTo, ease);
+      }
 
       if (!dragging) {
         var k = Math.exp(-dt * 0.6);
