@@ -18,6 +18,16 @@ window.SEN = window.SEN || {};
   var THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js';
   var TEX_URL = 'assets/img/world-map.jpg';
   var D2R = Math.PI / 180;
+  var UNIT_LABEL = { ko: '건', en: ' projects', zh: '件', ja: '件' };
+
+  /* 지역 이름 — overseasmap.js가 data.regions[i].i18n(en/zh/ja)을 같이
+     넘겨주면 그걸 우선 쓰고, 없으면(국내처럼 REGION_NAMES 표에서 찾는
+     경우) 기존 SEN.util.regionName으로 넘어갑니다. */
+  function labelOf(r) {
+    var lang = SEN.i18n.get();
+    if (lang !== 'ko' && r.i18n && r.i18n[lang]) return r.i18n[lang];
+    return SEN.util.regionName(r.name);
+  }
 
   var api = { init: init, refresh: refresh, focus: focus };
   SEN.globe = api;
@@ -120,16 +130,19 @@ window.SEN = window.SEN || {};
     });
 
     /* ---- 국가/도시 라벨 ----
-       이 지구본은 국외 실적만 받으므로(main.js 가 res.overseas.regions 만
-       넘겨줍니다), 국내 시/도를 걸러낼 필요 없이 받은 지역을 그대로
-       라벨로 띄웁니다. */
+       이 지구본은 국외 실적만 받으므로(overseasmap.js가 넘겨줍니다),
+       국내 시/도를 걸러낼 필요 없이 받은 지역을 그대로 라벨로 띄웁니다. */
+    function pillText(r) { return esc(labelOf(r)) + ' <small>' + r.n + esc(SEN.i18n.t(UNIT_LABEL)) + '</small>'; }
     var pills = data.regions.map(function (r) {
       var el = document.createElement('div');
       el.className = 'gpill';
-      el.innerHTML = esc(SEN.util.regionName(r.name)) + ' <small>' + r.n + '건</small>';
+      el.innerHTML = pillText(r);
       pillWrap.appendChild(el);
-      return { el: el, v: llToV3(r.lat, r.lng, R * 1.01), tmp: new THREE.Vector3() };
+      return { el: el, r: r, v: llToV3(r.lat, r.lng, R * 1.01), tmp: new THREE.Vector3() };
     });
+    /* 언어를 바꾸면(=refresh()) 라벨 글자도 다시 씁니다 — 좌표·크기는
+       그대로이므로 3D 쪽은 다시 계산할 필요 없습니다. */
+    function relabelPills() { pills.forEach(function (p) { p.el.innerHTML = pillText(p.r); }); }
 
     /* ---- 드래그 회전 ---- */
     var yaw = 0, pitch = 0, dragging = false, lastX = 0, lastY = 0;
@@ -172,7 +185,7 @@ window.SEN = window.SEN || {};
       });
       if (hit) {
         tip.hidden = false;
-        tip.innerHTML = '<strong>' + esc(SEN.util.regionName(hit.name)) + '</strong><span>' + hit.n + '건</span>';
+        tip.innerHTML = '<strong>' + esc(labelOf(hit)) + '</strong><span>' + hit.n + esc(SEN.i18n.t(UNIT_LABEL)) + '</span>';
         tip.style.left = (e.clientX - b.left) + 'px';
         tip.style.top = (e.clientY - b.top) + 'px';
       } else {
@@ -224,7 +237,7 @@ window.SEN = window.SEN || {};
        이유(needsRender)가 있을 때만 그리도록 건너뜁니다. */
     var EPS_ANGLE = 0.0005;
     var needsRender = true;
-    _refresh = function () { size(); visible = true; needsRender = true; };
+    _refresh = function () { size(); visible = true; needsRender = true; relabelPills(); };
     _focus = function (lat, lng) {
       qRestFrom = qKorea.clone();
       qRestTo = quatFor(lat, lng);
@@ -232,10 +245,14 @@ window.SEN = window.SEN || {};
       needsRender = true;
     };
 
+    /* projectmap.js의 지도와 같은 이유로, 화면에 걸칠 때마다 크기를 한 번
+       더 맞춥니다 — 숨겨진 탭 안에 있는 동안 칸 크기가 바뀌었으면(제목·
+       리드문 줄바꿈 등) ResizeObserver가 그 순간을 놓칠 수 있는데,
+       스크롤로 실제 보이게 되는 시점에 다시 확인해 바로잡습니다. */
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
         visible = en[0].isIntersecting;
-        if (visible) needsRender = true;
+        if (visible) { size(); needsRender = true; }
       }, { threshold: 0.01 }).observe(wrap);
     }
 

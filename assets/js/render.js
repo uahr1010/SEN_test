@@ -122,26 +122,49 @@ window.SEN = window.SEN || {};
     },
 
     /* 센코어테크 연도별 매출 곡선 그래프 — 값들을 부드러운 곡선(카디널
-       스플라인)으로 잇고 아래를 옅게 채웁니다. 절대 축이 아니라 연도
-       사이의 상대적인 흐름을 보여주는 디자인용 그래프입니다. Pages CMS의
-       [⑤ 센코어테크 역량]에서 연도·금액을 입력하면 그대로 반영됩니다
-       (연도 오름차순으로 넣어야 합니다 — 큰 숫자(.sct-revenue__value)도
-       이 목록의 마지막 항목을 그대로 씁니다). */
+       스플라인)으로 잇고 아래를 옅게 채웁니다. Pages CMS의 [⑤ 센코어테크
+       역량]에서 연도·금액을 입력하면 그대로 반영됩니다(연도 오름차순으로
+       넣어야 합니다 — 큰 숫자(.sct-revenue__value)도 이 목록의 마지막
+       항목을 그대로 씁니다).
+
+       예전엔 min~max 사이만 잘라 보여주는 "흐름 위주" 그래프였는데,
+       0원부터 시작하는 실제 축 + 연도별 값 + 점을 요청받아 일반적인
+       꺾은선 그래프로 바꿨습니다. 0~최댓값을 "보기 좋은" 간격(niceNum,
+       흔한 차트 라이브러리들이 쓰는 방식)으로 나눠 눈금을 긋습니다.
+       점 위 값 라벨은 SVG 글자를 쓰면 viewBox가 가로세로 다른 비율로
+       늘어날 때(preserveAspectRatio="none") 숫자가 찌그러져 보여서,
+       같은 칸 위에 겹치는 HTML(.sct-revenue__pts)로 따로 그립니다 —
+       점·글자는 항상 원래 비율 그대로 보입니다. */
     'sencoretech.yearly': function (items, ctx) {
       if (!items.length) return '';
       var unit = t(pick(ctx, 'sencoretech.yearlyUnit'));
-      var W = 600, H = 200, padX = 6, padTop = 16, padBottom = 16;
+      var W = 600, H = 200, padX = 24, padTop = 30, padBottom = 16;
       var innerH = H - padTop - padBottom;
       var n = items.length;
       var values = items.map(function (it) { return Number(it.value) || 0; });
-      var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
-      var mid = (min + max) / 2;
+      var dataMax = Math.max.apply(null, values);
+
+      /* "보기 좋은" 눈금 간격 구하기 — 예: 최댓값이 1,580이면 500 단위로
+         0/500/1000/1500/2000. (Paul Heckbert의 nice-numbers 방식) */
+      function niceNum(range, round) {
+        if (range <= 0) return 1;
+        var exp = Math.floor(Math.log10(range));
+        var frac = range / Math.pow(10, exp), nf;
+        if (round) { nf = frac < 1.5 ? 1 : frac < 3 ? 2 : frac < 7 ? 5 : 10; }
+        else { nf = frac <= 1 ? 1 : frac <= 2 ? 2 : frac <= 5 ? 5 : 10; }
+        return nf * Math.pow(10, exp);
+      }
+      var TICKS = 4;
+      var step = niceNum((dataMax || 1) / TICKS, true);
+      var axisMax = step * TICKS;
+      while (axisMax < dataMax) axisMax += step;
+      var tickCount = Math.round(axisMax / step);
+
+      function yOf(v) { return padTop + (1 - (axisMax > 0 ? v / axisMax : 0)) * innerH; }
 
       var coords = items.map(function (it, i) {
         var x = n > 1 ? padX + (i * (W - padX * 2)) / (n - 1) : W / 2;
-        var ratio = max > min ? ((Number(it.value) || 0) - min) / (max - min) : 0.5;
-        var y = padTop + (1 - ratio) * innerH;
-        return [x, y];
+        return [x, yOf(Number(it.value) || 0)];
       });
 
       /* 카디널 스플라인 → 3차 베지에 변환(장력 1/6, 흔히 쓰는 값) —
@@ -162,31 +185,46 @@ window.SEN = window.SEN || {};
       }
 
       var linePath = smoothPath(coords);
-      var baseY = (H - padBottom).toFixed(1);
+      var baseY = yOf(0).toFixed(1);
       var areaPath = linePath +
         ' L' + coords[n - 1][0].toFixed(1) + ',' + baseY +
         ' L' + coords[0][0].toFixed(1) + ',' + baseY + ' Z';
 
-      /* y축 눈금 — 그래프의 padTop/padBottom과 같은 비율로 위/가운데/
-         아래에 값을 적어, 곡선의 봉우리·바닥과 눈금이 실제로 맞습니다
-         (CSS 쪽 .sct-revenue__axis 의 위아래 여백도 이 비율을 따릅니다). */
       function fmtTick(v) { return Math.round(v).toLocaleString() + (unit ? unit : ''); }
 
+      /* 0을 포함해 axisMax까지 등간격 눈금. 왼쪽 .sct-revenue__axis는
+         flex 세로열 + space-between이라, 위(axisMax)→아래(0) 순서로
+         나열하면 이 눈금 위치와 그대로 맞습니다. */
+      var axisTicks = '';
+      var gridlines = '';
+      for (var i = tickCount; i >= 0; i--) {
+        var v = step * i;
+        axisTicks += '<span>' + esc(fmtTick(v)) + '</span>';
+        gridlines += '<line class="sct-revenue__grid' + (i === 0 ? ' sct-revenue__grid--base' : '') + '" ' +
+          'x1="' + padX + '" y1="' + yOf(v).toFixed(1) + '" x2="' + (W - padX) + '" y2="' + yOf(v).toFixed(1) + '"/>';
+      }
+
+      var pts = coords.map(function (c, i) {
+        return '<span class="sct-revenue__pt" style="left:' + (c[0] / W * 100).toFixed(2) + '%;top:' + (c[1] / H * 100).toFixed(2) + '%">' +
+          '<em class="sct-revenue__ptval">' + esc(fmtTick(values[i])) + '</em>' +
+        '</span>';
+      }).join('');
+
       return '' +
-        '<div class="sct-revenue__axis">' +
-          '<span>' + esc(fmtTick(max)) + '</span>' +
-          '<span>' + esc(fmtTick(mid)) + '</span>' +
-          '<span>' + esc(fmtTick(min)) + '</span>' +
-        '</div>' +
+        '<div class="sct-revenue__axis">' + axisTicks + '</div>' +
         '<div class="sct-revenue__plot">' +
-          '<svg class="sct-revenue__svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
-            '<defs><linearGradient id="sctChartFill" x1="0" y1="0" x2="0" y2="1">' +
-              '<stop offset="0%" stop-color="var(--c-blue)" stop-opacity=".28"/>' +
-              '<stop offset="100%" stop-color="var(--c-blue)" stop-opacity="0"/>' +
-            '</linearGradient></defs>' +
-            '<path d="' + areaPath + '" fill="url(#sctChartFill)" stroke="none"/>' +
-            '<path d="' + linePath + '" fill="none" stroke="var(--c-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
-          '</svg>' +
+          '<div class="sct-revenue__chartbox">' +
+            '<svg class="sct-revenue__svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
+              '<defs><linearGradient id="sctChartFill" x1="0" y1="0" x2="0" y2="1">' +
+                '<stop offset="0%" stop-color="var(--c-blue)" stop-opacity=".28"/>' +
+                '<stop offset="100%" stop-color="var(--c-blue)" stop-opacity="0"/>' +
+              '</linearGradient></defs>' +
+              gridlines +
+              '<path d="' + areaPath + '" fill="url(#sctChartFill)" stroke="none"/>' +
+              '<path d="' + linePath + '" fill="none" stroke="var(--c-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '</svg>' +
+            '<div class="sct-revenue__pts">' + pts + '</div>' +
+          '</div>' +
           '<div class="sct-revenue__years">' +
             items.map(function (it) { return '<span>' + esc(t(it.year)) + '</span>'; }).join('') +
           '</div>' +

@@ -140,12 +140,6 @@ window.SEN = window.SEN || {};
     var elHint = document.querySelector('[data-globe-hint]');
     var group = tab === 'overseas' ? p.data.overseas : p.data.domestic;
 
-    /* .proj-viz의 두 칸 폭 배정을 맞바꿉니다 — 국내는 지도(넓게)+카드
-       패널(좁게), 국외는 카드 패널(좁게)+지구본(넓게). components.css의
-       .proj-viz.is-overseas 참고. */
-    var elViz = document.querySelector('[data-proj-viz]');
-    if (elViz) elViz.classList.toggle('is-overseas', tab === 'overseas');
-
     if (elHint) {
       elHint.textContent = tab === 'overseas' ? (t(ui.dragHint) || '') : (t(ui.mapHint) || '');
     }
@@ -208,21 +202,21 @@ window.SEN = window.SEN || {};
         });
       }
 
-      if (globeStage && SEN.globe) {
-        /* 지구본은 국외 실적만 보여줍니다. res.regions 를 그대로 넘기면
-           국내 지역까지 점으로 찍히므로, res.overseas 만 골라 넘깁니다
-           (byProv 는 globe.js 가 더 이상 쓰지 않습니다 — 라벨을
-           regions 에서 직접 만듭니다). */
-        SEN.globe.init({ regions: res.overseas.regions }, {
-          wrap: globeStage,
-          pills: globeStage.querySelector('[data-globe-pills]'),
-          tip: globeStage.querySelector('[data-globe-tip]')
-        });
-      }
-
+      /* 지구본에 찍히는 나라·점은 이제 이 res.overseas(주소 기반 전체
+         집계)가 아니라, 카드 패널과 똑같은 assets/data/overseas_projects.json
+         집계를 씁니다 — 카드에 뜬 나라와 지구본의 점이 항상 같도록
+         overseasmap.js가 자기 데이터를 다 읽은 뒤 SEN.globe.init을
+         직접 부릅니다(아래에서 els.globe로 필요한 DOM만 건네줍니다). */
       var oprojSide = document.querySelector('[data-oproj-side]');
-      if (oprojSide && SEN.overseasMap) {
-        SEN.overseasMap.init({ side: oprojSide });
+      if (SEN.overseasMap) {
+        SEN.overseasMap.init({
+          side: oprojSide,
+          globe: (globeStage && SEN.globe) ? {
+            wrap: globeStage,
+            pills: globeStage.querySelector('[data-globe-pills]'),
+            tip: globeStage.querySelector('[data-globe-tip]')
+          } : null
+        });
       }
     }).catch(function (err) {
       console.warn('[SEN] 실적 데이터를 불러오지 못했습니다:', err && err.message);
@@ -267,7 +261,6 @@ window.SEN = window.SEN || {};
       SEN.atlas.init();
       initProjects(data);
       if (SEN.hero) SEN.hero.init(data);
-      if (SEN.timeline) SEN.timeline.init(data);   // 회사연혁 가로 타임라인
       // 등장 효과는 내용이 다 채워진 뒤에 켜야 높이 계산이 맞습니다
       if (SEN.reveal) SEN.reveal.init();
 
@@ -276,7 +269,6 @@ window.SEN = window.SEN || {};
         SEN.render(SEN.data);
         applyMeta(SEN.data);
         renderProjectPanel(SEN.projectPanel.tab);   // 통계·지역 목록 라벨은 render() 대상이 아님
-        if (SEN.timeline) SEN.timeline.refresh(SEN.data);   // 연혁도 render() 대상이 아님
       });
 
       scrollToHash();

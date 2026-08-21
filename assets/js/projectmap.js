@@ -62,6 +62,10 @@ window.SEN = window.SEN || {};
   var map = null, kgeo, kmapData, munis, popup = null;
   var elWrap, elBack, elLegendMax, elSide;
   var started = false;
+  /* build() 안에서 정의되는 resettle()을 init()의 IntersectionObserver
+     콜백에서도 부를 수 있도록 바깥으로 내보내는 자리(globe.js의
+     _refresh/_focus와 같은 방식) */
+  var _resettle = null;
   var pointCount = null;
 
   /* 이 칸(지도 팝업·오른쪽 패널)의 화면 문구입니다. content/downloads/
@@ -391,42 +395,48 @@ window.SEN = window.SEN || {};
     /* 첫 화면(서울)로 맞춥니다. 지도가 숨겨진 탭 안에 있거나 아직 폭이
        잡히지 않았을 때 fitBounds를 부르면 조용히 무시되므로, 크기가
        생기는 첫 순간에 한 번 더 맞춰 줍니다. */
-    var didStart = false;
+    var didStart = false, userMoved = false;
+    /* fitBounds를 마지막으로 맞췄을 때 기준으로 삼은 칸 크기 — 이후 이
+       크기와 실제로 달라지면(4px 넘게) 다시 맞춰야 한다는 뜻입니다. */
+    var settledW = 0, settledH = 0;
+    /* ensureStart()는 칸 폭이 50px만 넘으면(=아직 최종 폭이 아닐 수
+       있음) 바로 fitBounds를 해버립니다 — 제목·리드문 줄바꿈, 웹폰트
+       로딩 등으로 그 뒤에도 레이아웃이 계속 자리를 잡는 동안, 칸 크기
+       자체는 ResizeObserver가 따라가 줘도 fitBounds는 다시 안 해서,
+       좁을 때 기준으로 맞춘 화면이 넓어진 칸에 그대로 늘어나 보이거나
+       (헤더가 가린 만큼 잘려 보이는 것처럼) 남는 자리가 생겼습니다.
+       resettle()이 그 보정을 맡습니다 — 아래 두 군데에서 부릅니다:
+       ① 초기 몇 초 동안 정해진 시각마다, ② 이 구역이 화면에 실제로
+       걸칠 때마다(IntersectionObserver, init() 참고) — 사용자가 스크롤로
+       한참 뒤에야 이 구역에 도달해도(=위 ①의 짧은 시간 안에 크기가 아직
+       안 바뀐 채였어도) 그 시점에 다시 확인해 바로잡습니다. 단, 사용자가
+       한 번이라도 직접 드래그·확대/축소했으면 그 뒤로는 절대 화면을
+       되돌리지 않습니다(userMoved). */
+    function resettle() {
+      if (!map || userMoved) return;
+      var c = map.getContainer();
+      if (c.clientWidth < 50 || c.clientHeight < 50) return;
+      if (Math.abs(c.clientWidth - settledW) > 4 || Math.abs(c.clientHeight - settledH) > 4) {
+        settledW = c.clientWidth; settledH = c.clientHeight;
+        map.resize();
+        map.fitBounds(START_BOUNDS, { padding: 30, duration: 0 });
+      } else {
+        map.resize();
+      }
+    }
+    _resettle = resettle;
+    map.on('dragstart', function (e) { if (e.originalEvent) userMoved = true; });
+    map.on('zoomstart', function (e) { if (e.originalEvent) userMoved = true; });
     function ensureStart() {
       if (didStart) return;
       var c = map.getContainer();
       if (c.clientWidth < 50 || c.clientHeight < 50) return;
       didStart = true;
+      settledW = c.clientWidth; settledH = c.clientHeight;
       map.resize();
       map.fitBounds(START_BOUNDS, { padding: 30, duration: 0 });
       if (elBack) elBack.hidden = false;
-      settleLate();
-    }
-    /* ensureStart()는 칸 폭이 50px만 넘으면(=아직 최종 폭이 아닐 수
-       있음) 바로 fitBounds를 해버립니다 — 제목·리드문 줄바꿈이나 표지를
-       지나 헤더가 나타나는 등 그 뒤로도 레이아웃이 계속 자리를 잡는
-       동안, 바깥 ResizeObserver(아래)가 창(canvas) 픽셀 크기는
-       맞춰줘도 fitBounds는 다시 안 해서, 좁을 때 기준으로 맞춘 화면이
-       넓어진 칸에 그대로 늘어나 보이거나(헤더가 가린 만큼 잘려 보이는
-       것처럼) 남는 자리가 생겼습니다. 처음 몇 초 동안 칸 크기가 실제로
-       안정됐는지 몇 번 더 확인해서, 바뀌었으면 다시 맞춥니다. */
-    function settleLate() {
-      var tries = [200, 600, 1500, 3000];
-      var lastW = map.getContainer().clientWidth, lastH = map.getContainer().clientHeight;
-      tries.forEach(function (delay) {
-        setTimeout(function () {
-          if (!map) return;
-          var c = map.getContainer();
-          if (c.clientWidth < 50 || c.clientHeight < 50) return;
-          if (Math.abs(c.clientWidth - lastW) > 4 || Math.abs(c.clientHeight - lastH) > 4) {
-            lastW = c.clientWidth; lastH = c.clientHeight;
-            map.resize();
-            map.fitBounds(START_BOUNDS, { padding: 30, duration: 0 });
-          } else {
-            map.resize();
-          }
-        }, delay);
-      });
+      [200, 600, 1500, 3000].forEach(function (delay) { setTimeout(resettle, delay); });
     }
     ensureStart();
     if (!didStart) {
@@ -794,7 +804,7 @@ window.SEN = window.SEN || {};
       var pmapInView = false;
       function repaintIfVisible() {
         if (!pmapInView) return;
-        map.resize();
+        if (_resettle) _resettle(); else if (map) map.resize();
         map.triggerRepaint();
       }
       if (window.IntersectionObserver && els.wrap) {

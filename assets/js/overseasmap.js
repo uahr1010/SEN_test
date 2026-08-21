@@ -96,7 +96,7 @@ window.SEN = window.SEN || {};
     if (!elSide) return;
     var C = COUNTRY_AGG[ko]; if (!C) return;
     pState.view = 'country'; pState.country = ko;
-    var years = Object.keys(C.years).map(Number).sort(function (a, b) { return a - b; });
+    var years = Object.keys(C.years).map(Number).sort(function (a, b) { return b - a; });
     elSide.innerHTML = '<div class="panel">' +
       headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(countryName(ko)) + '</span>', countryName(ko), C.n, null) +
       '<div class="panel__body">' + years.map(function (y) {
@@ -118,10 +118,12 @@ window.SEN = window.SEN || {};
     }
   }
 
+  var globeEls = null;
   function init(els) {
     if (started) return;
     started = true;
     elSide = els.side;
+    globeEls = els.globe || null;
     fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error(DATA_URL + ' (' + r.status + ')');
       return r.json();
@@ -136,6 +138,18 @@ window.SEN = window.SEN || {};
       });
       ORDER.sort(function (a, b) { return COUNTRY_AGG[b].n - COUNTRY_AGG[a].n; });
       renderCards();
+
+      /* 지구본은 카드와 같은 나라 목록·건수를 씁니다 — 그래야 카드에 뜬
+         나라가 곧 지구본에 찍힌 점이 됩니다("연동"). 좌표는 COUNTRIES의
+         수도 좌표를 그대로 씁니다. */
+      if (globeEls && SEN.globe) {
+        var regions = ORDER.map(function (c) {
+          var geo = COUNTRIES[c] || {};
+          return { name: c, lat: geo.lat, lng: geo.lng, n: COUNTRY_AGG[c].n,
+                    i18n: { en: geo.en, zh: geo.zh, ja: geo.ja } };
+        });
+        SEN.globe.init({ regions: regions }, globeEls);
+      }
     }).catch(function (err) {
       console.warn('[SEN] 해외 실적 카드 데이터를 불러오지 못했습니다:', err && err.message);
     });

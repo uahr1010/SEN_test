@@ -133,60 +133,6 @@
     </div>
   </section>
 
-  <!-- ---------- 장면 2 : 회사연혁 ---------- -->
-  <section class="scene scene--tint" id="scene-history" data-label="회사연혁">
-    <div class="scene__inner">
-      <header class="scene__head" data-reveal>
-        <h2 class="scene__title" data-bind="about.history.heading"></h2>
-        <p class="scene__lead" data-bind="about.history.lead"></p>
-      </header>
-      <!-- 가로 타임라인. 창립(1973)은 맨 왼쪽 고정이고, 연대 경계마다
-           연대 글자+크고 진한 동그라미(.tml__decade, timeline.js가
-           그려 넣음)가 트랙 맨 위쪽에 놓입니다(개수는 없음). 이
-           동그라미를 누르면 그 연대를 접고 폅니다 — PC는 전부 펼친
-           채로, 좁은 화면은 전부 접은 채로 시작합니다. 내용은
-           assets/js/timeline.js 가 about.json 의 history 로 그립니다. -->
-      <div class="tml" data-timeline data-reveal>
-        <p class="tml__hint" data-bind="site.ui.timelineHint">동그라미를 눌러 펼치고, 선을 좌우로 끌어 보세요</p>
-      </div>
-    </div>
-
-    <!-- 스크롤 칸은 .scene__inner 밖에 둡니다 — 폭 제한을 받지 않고
-         화면 양 끝까지 써야 선이 길게 뻗어 보입니다. -->
-    <div class="tml-stage" data-tml-stage>
-      <div class="tml__scroll" data-tml-scroll>
-        <div class="tml__track" data-tml-track>
-          <div class="tml__axis" data-tml-axis></div>
-          <div class="tml__arrow" data-tml-arrow></div>
-          <div class="tml__walker" data-tml-walker><img src="assets/img/run.png" alt=""></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- 장면 3 : 주요공법 ---------- -->
-  <section class="scene scene--paper" id="scene-methods" data-label="주요공법">
-    <div class="scene__inner">
-      <div class="methods__head" data-reveal>
-        <div>
-          <h2 class="scene__title" data-bind="about.methods.heading"></h2>
-          <p class="scene__lead" data-bind="about.methods.lead"></p>
-        </div>
-      </div>
-      <div class="scene__scroll"><div class="methods" data-list="about.methods.items" data-reveal></div></div>
-    </div>
-  </section>
-
-  <!-- ---------- 장면 4 : CONTACT ---------- -->
-  <section class="scene scene--tint scene--tight" id="scene-contact" data-label="CONTACT">
-    <div class="scene__inner">
-      <header class="scene__head" data-reveal>
-        <h2 class="scene__title" data-bind="about.contact.heading"></h2>
-      </header>
-      <div class="scene__scroll"><div class="offices" data-list="about.contact.offices" data-reveal></div></div>
-    </div>
-  </section>
-
   <!-- ---------- 장면 2 : 프로젝트 (실적 지구본) ---------- -->
   <section class="scene scene--paper" id="scene-projects" data-label="프로젝트" data-section="projects">
     <div class="scene__inner">
@@ -293,7 +239,20 @@
     </div>
   </section>
 
-  <!-- ---------- 장면 3 : 뉴스 ----------
+  <!-- ---------- 장면 3 : 주요공법 ---------- -->
+  <section class="scene scene--paper" id="scene-methods" data-label="주요공법">
+    <div class="scene__inner">
+      <div class="methods__head" data-reveal>
+        <div>
+          <h2 class="scene__title" data-bind="about.methods.heading"></h2>
+          <p class="scene__lead" data-bind="about.methods.lead"></p>
+        </div>
+      </div>
+      <div class="scene__scroll"><div class="methods" data-list="about.methods.items" data-reveal></div></div>
+    </div>
+  </section>
+
+  <!-- ---------- 장면 4 : 뉴스 ----------
        예전엔 카드 여러 장이 한 줄로 계속 흘러가는 마퀴였는데, 카카오톡으로
        받은 참고 컴포넌트(reference/news-animated-testimonials-reference.txt,
        Aceternity의 AnimatedTestimonials)를 참고해 "사진이 살짝 겹쳐
@@ -337,8 +296,8 @@
     </div>
   </section>
 
-  <!-- ---------- 장면 4 : 채용 ---------- -->
-  <section class="scene scene--paper scene--closing" id="scene-careers" data-label="채용" data-section="careers">
+  <!-- ---------- 장면 5 : 채용 ---------- -->
+  <section class="scene scene--paper" id="scene-careers" data-label="채용" data-section="careers">
     <div class="scene__inner">
       <header class="scene__head" data-reveal>
         <h2 class="scene__title" data-bind="site.careers.section.title"></h2>
@@ -348,6 +307,16 @@
       <div class="scene__scroll">
         <div class="jobs" data-list="careers.jobs" data-reveal></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ---------- 장면 6 : CONTACT ---------- -->
+  <section class="scene scene--tint scene--tight scene--closing" id="scene-contact" data-label="CONTACT">
+    <div class="scene__inner">
+      <header class="scene__head" data-reveal>
+        <h2 class="scene__title" data-bind="about.contact.heading"></h2>
+      </header>
+      <div class="scene__scroll"><div class="offices" data-list="about.contact.offices" data-reveal></div></div>
     </div>
   </section>
 
@@ -404,7 +373,6 @@
 <script src="assets/js/atlas.js"></script>
 <script src="assets/js/hero.js"></script>
 <script src="assets/js/cover.js"></script>
-<script src="assets/js/timeline.js"></script>
 <script src="assets/js/reveal.js"></script>
 <script src="assets/js/main.js"></script>
 
