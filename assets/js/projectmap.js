@@ -92,6 +92,40 @@ window.SEN = window.SEN || {};
     return s;
   }
 
+  /* 프로젝트 "구분"(구조설계·안전진단·유지관리·실내건축)은 정해진 몇
+     개 값만 나오는 분류표라, 뉴스 카테고리와 같은 방식으로 번역합니다. */
+  var GUBUN_LABEL = {
+    '구조설계': { ko: '구조설계', en: 'Structural Design', zh: '结构设计', ja: '構造設計' },
+    '안전진단': { ko: '안전진단', en: 'Safety Diagnosis', zh: '安全诊断', ja: '安全診断' },
+    '유지관리': { ko: '유지관리', en: 'Maintenance', zh: '维护管理', ja: '維持管理' },
+    '실내건축': { ko: '실내건축', en: 'Interior Architecture', zh: '室内建筑', ja: '室内建築' }
+  };
+  function gubunLabel(ko) {
+    if (!ko) return '';
+    var d = GUBUN_LABEL[ko];
+    return d ? SEN.i18n.t(d) : ko;
+  }
+
+  /* 시/도·시/군/구 지명 번역 — assets/data/region_names_i18n.json(지도
+     지명은 그대로 두고 오른쪽 패널에만 씁니다. 프로젝트명·주소는 원본
+     데이터라 번역 대상이 아닙니다). 표에 없는 이름은 한국어 그대로
+     보여줍니다(신규 지역이 추가돼도 화면이 깨지지 않도록). */
+  var REGION_NAMES = {};
+  function regionPart(ko) {
+    if (!ko) return ko;
+    var lang = SEN.i18n.get();
+    if (lang === 'ko') return ko;
+    var d = REGION_NAMES[ko];
+    return d && d[lang] ? d[lang] : ko;
+  }
+  /* "서울특별시 강남구"처럼 시/도 + 시/군/구가 공백으로 이어진 전체
+     이름을 통째로 번역합니다. */
+  function regionFullName(full) {
+    var toks = String(full || '').split(' ');
+    if (toks.length < 2) return regionPart(toks[0]);
+    return regionPart(toks[0]) + ' ' + regionPart(toks.slice(1).join(' '));
+  }
+
   function applyPointCount() {
     var el = document.querySelector('[data-pmap-count]');
     if (el && pointCount != null) el.textContent = fmt(pointCount) + SEN.i18n.t(UNIT_LABEL);
@@ -539,7 +573,7 @@ window.SEN = window.SEN || {};
       '<div class="panel__sub">' + lead + '</div></div>' +
       '<div class="panel__body"><div class="prov-cards">' + rows.map(function (r) {
         return '<button type="button" class="prov-card" data-prov="' + r.key + '">' +
-          '<span class="prov-card__nm">' + esc(r.label) + '</span>' +
+          '<span class="prov-card__nm">' + esc(regionPart(r.label)) + '</span>' +
           '<span class="prov-card__n">' + fmt(r.n) + '<small>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</small></span>' +
           '<span class="prov-card__bar"><i style="width:' + Math.max(2, Math.round(r.n / maxN * 100)) + '%"></i></span></button>';
       }).join('') + '</div></div>' +
@@ -563,11 +597,11 @@ window.SEN = window.SEN || {};
     var areas = Object.keys(P.areas).map(function (k) { return P.areas[k]; }).sort(function (a, b) { return b.n - a.n; });
     var maxN = areas.reduce(function (m, a) { return Math.max(m, a.n); }, 1);
     elSide.innerHTML = '<div class="panel">' +
-      headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(P.label) + '</span>', P.label, P.n, tf(UI.districtCount, { n: areas.length })) +
+      headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(regionPart(P.label)) + '</span>', regionPart(P.label), P.n, tf(UI.districtCount, { n: areas.length })) +
       '<div class="panel__body">' + areas.map(function (a) {
         var rest = a.name.split(' ').slice(1).join(' ');
-        var nm = rest ? rest : a.name;   /* 세종처럼 구가 없는 시는 이름을 그대로 씁니다 */
-        if (rest && P.shorts.length > 1) nm = shortProv(a.name) + ' ' + nm;   /* 통합 표기(전남+광주) 구분용 */
+        var nm = regionPart(rest ? rest : a.name);   /* 세종처럼 구가 없는 시는 이름을 그대로 씁니다 */
+        if (rest && P.shorts.length > 1) nm = regionPart(shortProv(a.name)) + ' ' + nm;   /* 통합 표기(전남+광주) 구분용 */
         return '<div class="arow" data-area="' + esc(a.name) + '"><span class="arow__nm">' + esc(nm) + '</span>' +
           '<span class="arow__ct"><b>' + fmt(a.n) + '</b>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</span>' +
           '<span class="arow__bar"><i style="width:' + Math.max(2, Math.round(a.n / maxN * 100)) + '%"></i></span></div>';
@@ -591,15 +625,15 @@ window.SEN = window.SEN || {};
     }
     if (!A) return;
     pState.view = 'area'; pState.prov = key; pState.area = areaFull;
-    var nm = areaFull.split(' ').slice(1).join(' ') || areaFull;
+    var nm = regionPart(areaFull.split(' ').slice(1).join(' ') || areaFull);
     elSide.innerHTML = '<div class="panel">' +
       headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span>' +
-        '<button type="button" data-back-prov>' + esc(P.label) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(nm) + '</span>',
-        areaFull, A.n, null) +
+        '<button type="button" data-back-prov>' + esc(regionPart(P.label)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(nm) + '</span>',
+        regionFullName(areaFull), A.n, null) +
       '<div class="panel__body">' + A.items.slice().sort(function (a, b) { return (b.year || 0) - (a.year || 0); }).map(function (it) {
         return '<div class="prow"><div class="prow__nm">' + esc(it.name || it.addr) +
           ((SHOW_PAT && it.method) ? '<span class="pmap-chip' + (it.method === 'TSC' ? ' is-tsc' : '') + '">' + esc(it.method) + '</span>' : '') + '</div>' +
-          '<div class="prow__kd">' + (it.year ? it.year + ' · ' : '') + esc(it.gubun || '') + (it.addr ? ' · ' + esc(it.addr) : '') + '</div></div>';
+          '<div class="prow__kd">' + (it.year ? it.year + ' · ' : '') + esc(gubunLabel(it.gubun)) + (it.addr ? ' · ' + esc(it.addr) : '') + '</div></div>';
       }).join('') + (A.items.length ? '' : '<div class="panel__empty">' + esc(tf(UI.emptyProjects)) + '</div>') + '</div>' +
       '<div class="panel__foot">' + esc(tf(UI.areaFoot, { n: fmt(A.items.length) })) + '</div></div>';
     var panel = elSide.querySelector('.panel');
@@ -621,9 +655,10 @@ window.SEN = window.SEN || {};
       getJSON('assets/data/kgeo.json'),
       getJSON('assets/data/kmap.json'),
       getJSON('assets/data/project_points.json'),
-      getJSON('assets/data/munis.json')
+      getJSON('assets/data/munis.json'),
+      getJSON('assets/data/region_names_i18n.json').catch(function () { return {}; })
     ]).then(function (res) {
-      kgeo = res[0]; kmapData = res[1]; munis = res[3];
+      kgeo = res[0]; kmapData = res[1]; munis = res[3]; REGION_NAMES = res[4] || {};
       var raw = res[2];
 
       /* 표시 그룹 초기화 + 지도 이동용 경계(가장 큰 조각 기준 — 먼 섬으로
