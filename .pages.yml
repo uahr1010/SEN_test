@@ -378,6 +378,25 @@ content:
             label: 기준 연도
             type: number
             required: true
+      - name: headcount
+        label: 임직원 수
+        description: >
+          홈페이지의 총 인원 큰 숫자는 이 "총 인원"을 그대로 씁니다
+          (센코어테크+협력업체 합계와 다를 수 있어 따로 입력합니다).
+        type: object
+        fields:
+          - name: total
+            label: 총 인원 (숫자만)
+            type: number
+            required: true
+          - name: own
+            label: 센코어테크 소속 인원
+            type: number
+            required: true
+          - name: partner
+            label: 협력업체 소속 인원
+            type: number
+            required: true
       - name: yearly
         label: 연도별 매출
         description: >

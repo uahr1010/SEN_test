@@ -256,6 +256,7 @@ window.SEN = window.SEN || {};
         }
         if (scData.headcount) {
           data.sencoretech.headcount = data.sencoretech.headcount || {};
+          data.sencoretech.headcount.total = scData.headcount.total;
           data.sencoretech.headcount.own = scData.headcount.own;
           data.sencoretech.headcount.partner = scData.headcount.partner;
         }

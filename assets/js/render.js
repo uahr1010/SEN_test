@@ -456,18 +456,19 @@ window.SEN = window.SEN || {};
       if (rankLabel) rankLabelHost.textContent = rankLabel;
     }
 
-    /* 센코어테크 총 인원 큰 숫자·소속 내역 — 큰 숫자(521)는 별도 입력칸
-       없이 소속(402) + 협력업체(119) 인원의 합입니다. 소속 내역은
-       "센코어테크 소속 402명"·"협력업체 소속 119명" 두 줄로, 라벨과
-       숫자를 합쳐야 해서 data-bind 하나로 못 채웁니다. */
+    /* 센코어테크 총 인원 큰 숫자·소속 내역 — 총 인원·센코어테크 소속·
+       협력업체 소속 세 숫자 모두 Pages CMS의 [⑤ 센코어테크 역량 → 임직원
+       수]에서 각각 입력합니다(총 인원이 두 소속의 합과 항상 같지는
+       않을 수 있어 따로 입력받습니다). 소속 내역은 "센코어테크 소속
+       402명"·"협력업체 소속 119명" 두 줄로, 라벨과 숫자를 합쳐야 해서
+       data-bind 하나로 못 채웁니다. */
     var hcValueHost = document.querySelector('[data-sct-headcount-value]');
     var hcBreakdownHost = document.querySelector('[data-sct-headcount-breakdown]');
     var hc = pick(ctx, 'sencoretech.headcount') || {};
-    if (hc.own != null && hc.partner != null) {
+    if (hc.total != null) {
       var hcUnit = t(hc.unit);
-      var hcTotal = (Number(hc.own) || 0) + (Number(hc.partner) || 0);
-      if (hcValueHost) hcValueHost.textContent = hcTotal.toLocaleString();
-      if (hcBreakdownHost) {
+      if (hcValueHost) hcValueHost.textContent = (Number(hc.total) || 0).toLocaleString();
+      if (hcBreakdownHost && hc.own != null && hc.partner != null) {
         var hcOwnLine = t(pick(hc, 'breakdown.own')) + ' ' + (Number(hc.own) || 0).toLocaleString() + hcUnit;
         var hcPartnerLine = t(pick(hc, 'breakdown.partner')) + ' ' + (Number(hc.partner) || 0).toLocaleString() + hcUnit;
         hcBreakdownHost.innerHTML = esc(hcOwnLine) + '<br>' + esc(hcPartnerLine);
