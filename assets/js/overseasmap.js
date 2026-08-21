@@ -72,6 +72,20 @@ window.SEN = window.SEN || {};
       '<div class="panel__big">' + fmt(n) + '<small>' + esc(SEN.i18n.t(UNIT_LABEL)) + (sub ? ' · ' + esc(sub) : '') + '</small></div></div>';
   }
 
+  /* 상단 "누적 실적/수행 지역" 숫자(main.js가 그리는 data-globe-stats
+     안의 빈 자리)도 카드·지구본과 같은 이 데이터를 기준으로 채웁니다 —
+     domestic의 data-pmap-count와 같은 방식으로, DOM에 그 자리가 있을
+     때마다(탭 전환·언어 전환으로 main.js가 다시 그릴 때마다) 채워
+     넣습니다. */
+  function applyStats() {
+    var elT = document.querySelector('[data-oproj-total]');
+    var elR = document.querySelector('[data-oproj-regions]');
+    if (!elT && !elR) return;
+    var total = ORDER.reduce(function (s, c) { return s + COUNTRY_AGG[c].n; }, 0);
+    if (elT) elT.textContent = fmt(total);
+    if (elR) elR.textContent = ORDER.length;
+  }
+
   function renderCards() {
     if (!elSide) return;
     pState.view = 'cards'; pState.country = null;
@@ -138,6 +152,7 @@ window.SEN = window.SEN || {};
       });
       ORDER.sort(function (a, b) { return COUNTRY_AGG[b].n - COUNTRY_AGG[a].n; });
       renderCards();
+      applyStats();
 
       /* 지구본은 카드와 같은 나라 목록·건수를 씁니다 — 그래야 카드에 뜬
          나라가 곧 지구본에 찍힌 점이 됩니다("연동"). 좌표는 COUNTRIES의
@@ -162,6 +177,7 @@ window.SEN = window.SEN || {};
     if (!elSide) return;
     if (pState.view === 'country' && pState.country) openCountry(pState.country, true);
     else renderCards();
+    applyStats();
   }
 
   SEN.overseasMap = { init: init, refresh: refresh };

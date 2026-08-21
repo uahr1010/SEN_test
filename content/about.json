@@ -35,6 +35,24 @@
     "name": { "ko": "이승환", "en": "Lee Seung-hwan", "zh": "Lee Seung-hwan", "ja": "Lee Seung-hwan" }
   },
 
+  "milestones": [
+    {
+      "date": "1973",
+      "name": { "ko": "센구조연구소", "en": "SEN ENGINEERING GROUP", "zh": "SEN ENGINEERING GROUP", "ja": "SEN ENGINEERING GROUP" },
+      "role": { "ko": "구조설계", "en": "Structural Design", "zh": "结构设计", "ja": "構造設計" }
+    },
+    {
+      "date": "2006.09",
+      "name": { "ko": "센벡스", "en": "SENVEX", "zh": "SENVEX", "ja": "SENVEX" },
+      "role": { "ko": "기술연구소, 신공법 개발", "en": "R&D institute, new-method development", "zh": "技术研究所，新工法研发", "ja": "技術研究所、新工法開発" }
+    },
+    {
+      "date": "2010.06",
+      "name": { "ko": "센코어테크", "en": "SEN CORETECH", "zh": "SEN CORETECH", "ja": "SEN CORETECH" },
+      "role": { "ko": "강구조 전문건설", "en": "Steel construction specialist", "zh": "钢结构专业施工", "ja": "鉄骨専門建設" }
+    }
+  ],
+
   "history": {
     "heading": { "ko": "회사연혁", "en": "Company History", "zh": "发展历程", "ja": "沿革" },
     "lead": {

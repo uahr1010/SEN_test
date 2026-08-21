@@ -138,7 +138,6 @@ window.SEN = window.SEN || {};
     var ui = SEN.util.pick(p.ctx, 'projects.ui') || {};
     var elStats = document.querySelector('[data-globe-stats]');
     var elHint = document.querySelector('[data-globe-hint]');
-    var group = tab === 'overseas' ? p.data.overseas : p.data.domestic;
 
     if (elHint) {
       elHint.textContent = tab === 'overseas' ? (t(ui.dragHint) || '') : (t(ui.mapHint) || '');
@@ -155,12 +154,15 @@ window.SEN = window.SEN || {};
           '<div><dt>' + SEN.util.esc(t(ui.domesticAllTimeLabel) || '1973년부터 수행된 프로젝트') + '</dt><dd>' + SEN.util.esc(t(ui.domesticAllTimeValue) || '약 1만 1천건') + '</dd></div>' +
           '<div><dt>' + SEN.util.esc(t(ui.domesticRecentLabel) || '2016년~2026년간 수행된 프로젝트') + '</dt><dd data-pmap-count>—</dd></div>';
       } else {
-        elStats.innerHTML = [
-          [t(ui.totalLabel) || '누적 실적', group.total.toLocaleString() + (t(ui.unit) || '건')],
-          [t(ui.regionLabel) || '수행 지역', group.regions.length + (t(ui.regionUnit) || '곳')]
-        ].map(function (r) {
-          return '<div><dt>' + SEN.util.esc(r[0]) + '</dt><dd>' + SEN.util.esc(r[1]) + '</dd></div>';
-        }).join('');
+        /* 카드·지구본이 이제 assets/data/overseas_projects.json 기준
+           (12개국)이라, 위 숫자도 옛 주소 기반 집계(group=p.data.overseas,
+           9개국)가 아니라 그 데이터에 맞춰야 서로 다른 숫자가 보이지
+           않습니다. overseasmap.js가 자기 데이터를 다 읽은 뒤
+           data-oproj-total/-regions를 채웁니다(domestic의 data-pmap-count
+           와 같은 방식). */
+        elStats.innerHTML =
+          '<div><dt>' + SEN.util.esc(t(ui.totalLabel) || '누적 실적') + '</dt><dd><span data-oproj-total>—</span>' + SEN.util.esc(t(ui.unit) || '건') + '</dd></div>' +
+          '<div><dt>' + SEN.util.esc(t(ui.regionLabel) || '수행 지역') + '</dt><dd><span data-oproj-regions>—</span>' + SEN.util.esc(t(ui.regionUnit) || '곳') + '</dd></div>';
       }
     }
     document.querySelectorAll('[data-kmap-tab]').forEach(function (el) {

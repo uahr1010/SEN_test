@@ -231,6 +231,20 @@ window.SEN = window.SEN || {};
         '</div>';
     },
 
+    /* 회사소개(인사말) 영상 위, "센구조연구소 → 센벡스 → 센코어테크"
+       세 회사로 이어지는 계열 구조를 날짜와 함께 짧게 보여주는 줄.
+       예전의 회사연혁(가로 타임라인) 섹션을 없애면서, 그 안에 있던
+       핵심 3개 이정표만 간추려 여기로 옮겼습니다. */
+    'about.milestones': function (items) {
+      return items.map(function (it, i) {
+        return (i ? '<span class="about-milestone__arrow" aria-hidden="true">→</span>' : '') +
+          '<div class="about-milestone">' +
+            '<span class="about-milestone__date">' + esc(t(it.date)) + '</span>' +
+            '<strong class="about-milestone__name">' + esc(t(it.name)) + '</strong>' +
+            '<span class="about-milestone__role">' + esc(t(it.role)) + '</span>' +
+          '</div>';
+      }).join('');
+    },
 
     /* 주요공법 — 사진 자리에 소개 영상의 유튜브 썸네일을 넣고, 카드
        전체를 눌러 그 영상으로 이동합니다. 개별 공법 PDF는 없고,
