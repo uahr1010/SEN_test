@@ -939,6 +939,11 @@
   line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums;
 }
 .sct-stat__unit { font-size: 1.5rem; font-weight: 700; color: var(--c-muted); margin-left: 4px; }
+/* 순위 앞에 붙는 말(중국어 "第4名"의 "第") — 한/영/일은 값이 없어 빈
+   span으로 남으므로, :empty일 때는 여백을 주지 않아 자리가 티나지
+   않게 합니다. */
+.sct-stat__prefix { font-size: 1.5rem; font-weight: 700; color: var(--c-muted); }
+.sct-stat__prefix:not(:empty) { margin-right: 2px; }
 .sct-stat__label { font-size: var(--fs-small); color: var(--c-ink); font-weight: 600; }
 .sct-stat__sublabel { font-size: var(--fs-xs); color: var(--c-muted); }
 @media (max-width: 480px) {

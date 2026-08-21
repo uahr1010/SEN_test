@@ -456,6 +456,20 @@ window.SEN = window.SEN || {};
       if (rankLabel) rankLabelHost.textContent = rankLabel;
     }
 
+    /* 순위 앞에 붙는 말 — 중국어는 "第4名"처럼 서수를 숫자 앞에 씁니다
+       (한/영/일처럼 뒤에 붙는 말이 아님). rank.prefix에는 zh 값만 있고
+       나머지 언어는 아예 키가 없는데, t()로 읽으면 현재 언어 값이
+       비어 있을 때 객체 안의 아무 값이나(=중국어 값) 집어 옵니다(다른
+       칸이 빈 값을 "번역 안 됨"으로 보고 대체하는 것과 같은 동작) —
+       그러면 한/영/일에서도 "第"가 붙어 버립니다. 그래서 t()를 거치지
+       않고 현재 언어 키가 있을 때만 직접 읽습니다. */
+    var rankPrefixHost = document.querySelector('[data-sct-rank-prefix]');
+    if (rankPrefixHost) {
+      var rk2 = pick(ctx, 'sencoretech.rank') || {};
+      var lang = SEN.i18n.get();
+      rankPrefixHost.textContent = (rk2.prefix && rk2.prefix[lang]) || '';
+    }
+
     /* 센코어테크 총 인원 큰 숫자·소속 내역 — 총 인원·센코어테크 소속·
        협력업체 소속 세 숫자 모두 Pages CMS의 [⑤ 센코어테크 역량 → 임직원
        수]에서 각각 입력합니다(총 인원이 두 소속의 합과 항상 같지는
