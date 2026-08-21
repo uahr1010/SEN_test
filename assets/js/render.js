@@ -457,9 +457,9 @@ window.SEN = window.SEN || {};
     }
 
     /* 센코어테크 총 인원 큰 숫자·소속 내역 — 큰 숫자(521)는 별도 입력칸
-       없이 소속(402) + 협력업체(119) 인원의 합입니다. 소속 내역 줄은
-       "센코어테크 소속 402명 · 협력업체 소속 119명"처럼 라벨과 숫자를
-       합쳐야 해서 data-bind 하나로 못 채웁니다. */
+       없이 소속(402) + 협력업체(119) 인원의 합입니다. 소속 내역은
+       "센코어테크 소속 402명"·"협력업체 소속 119명" 두 줄로, 라벨과
+       숫자를 합쳐야 해서 data-bind 하나로 못 채웁니다. */
     var hcValueHost = document.querySelector('[data-sct-headcount-value]');
     var hcBreakdownHost = document.querySelector('[data-sct-headcount-breakdown]');
     var hc = pick(ctx, 'sencoretech.headcount') || {};
@@ -468,10 +468,9 @@ window.SEN = window.SEN || {};
       var hcTotal = (Number(hc.own) || 0) + (Number(hc.partner) || 0);
       if (hcValueHost) hcValueHost.textContent = hcTotal.toLocaleString();
       if (hcBreakdownHost) {
-        hcBreakdownHost.textContent =
-          t(pick(hc, 'breakdown.own')) + ' ' + (Number(hc.own) || 0).toLocaleString() + hcUnit +
-          ' · ' +
-          t(pick(hc, 'breakdown.partner')) + ' ' + (Number(hc.partner) || 0).toLocaleString() + hcUnit;
+        var hcOwnLine = t(pick(hc, 'breakdown.own')) + ' ' + (Number(hc.own) || 0).toLocaleString() + hcUnit;
+        var hcPartnerLine = t(pick(hc, 'breakdown.partner')) + ' ' + (Number(hc.partner) || 0).toLocaleString() + hcUnit;
+        hcBreakdownHost.innerHTML = esc(hcOwnLine) + '<br>' + esc(hcPartnerLine);
       }
     }
 
