@@ -38,7 +38,9 @@ LEADING_NUM = re.compile(r'^\s*(\d+)')
 ANTON = os.path.join(ROOT, 'assets', 'fonts', 'Anton-Regular.ttf')
 NEWSREADER = os.path.join(ROOT, 'assets', 'fonts', 'Newsreader-Light.ttf')
 
-BRAND = 'SEN ENGINEERING'   # index.html 의 .cover__brand 기본 표기와 동일
+BRAND = 'SEN ENGINEERING GROUP'   # index.html 의 .cover__brand 기본 표기와 동일
+BRAND_ACCENT = 'SEN'   # 이 앞부분만 파란색(.cover__brand-accent) — 나머지는 흰색
+BRAND_ACCENT_COLOR = (0x00, 0x71, 0xE3, 255)   # atlas.css --blue: #0071e3
 W, H = 1200, 630
 BRAND_PAD = 46   # 실제 표지의 좌우 여백(clamp(20px,3.4vw,46px))과 같은 값
 
@@ -169,6 +171,28 @@ def draw_centered_text(canvas, lines, font, y, fill, shadow_alpha, line_gap=1.4)
         yy += lh * line_gap
 
 
+def draw_centered_two_tone(canvas, part1, part2, font, y, color1, color2, shadow_alpha):
+    """part1(색1)+part2(색2)를 이어 붙인 한 줄을, 실제 표지의 "SEN"(파란색)
+    + " ENGINEERING GROUP"(흰색)처럼 두 색으로 나눠 그리되 전체를 가운데
+    정렬합니다. draw_centered_text()와 같은 그림자 처리를 씁니다."""
+    w, h = canvas.size
+    probe = ImageDraw.Draw(canvas)
+    full = part1 + part2
+    bbox_full = probe.textbbox((0, 0), full, font=font)
+    fw = bbox_full[2] - bbox_full[0]
+    x0 = (w - fw) / 2 - bbox_full[0]
+    w1 = probe.textbbox((0, 0), part1, font=font)[2]
+
+    shadow = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shadow)
+    sd.text((x0, y + 3), full, font=font, fill=(0, 0, 0, shadow_alpha))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(4))
+    canvas.alpha_composite(shadow)
+
+    probe.text((x0, y), part1, font=font, fill=color1)
+    probe.text((x0 + w1, y), part2, font=font, fill=color2)
+
+
 def main():
     photo_path = find_cover_photo()
     vision = load_vision_text()
@@ -189,8 +213,11 @@ def main():
     # textbbox 의 y1은 글자가 실제로 그려지는 가장 아래 지점까지의 거리이므로,
     # 이 값을 그대로 빼야 여백이 실제 픽셀 기준으로 맞습니다.
     brand_y = H - 56 - brand_bbox[3]
-    draw_centered_text(canvas, [BRAND], brand_font, y=brand_y,
-                        fill=(255, 255, 255, 255), shadow_alpha=190, line_gap=1.0)
+    # 실제 표지(.cover__brand-accent)와 같이 "SEN"만 파란색, 나머지는
+    # 흰색입니다 — BRAND 앞부분이 정확히 BRAND_ACCENT로 시작해야 합니다.
+    assert BRAND.startswith(BRAND_ACCENT), 'BRAND는 BRAND_ACCENT로 시작해야 합니다'
+    draw_centered_two_tone(canvas, BRAND_ACCENT, BRAND[len(BRAND_ACCENT):], brand_font, y=brand_y,
+                            color1=BRAND_ACCENT_COLOR, color2=(255, 255, 255, 255), shadow_alpha=190)
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     canvas.convert('RGB').save(OUT, 'JPEG', quality=90)
