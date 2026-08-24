@@ -151,8 +151,8 @@ window.SEN = window.SEN || {};
       return s + Object.keys(g).reduce(function (s2, gb) { return s2 + g[gb]; }, 0);
     }, 0);
     var sub = patCount
-      ? '<img class="arow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14"> ' +
-        fmt(patCount) + esc(SEN.i18n.t(UNIT_LABEL))
+      ? '<span class="oproj-patlogo"><img src="assets/img/project-logo-mark.png" alt="" width="14" height="14">' +
+        '<span>' + fmt(patCount) + esc(SEN.i18n.t(UNIT_LABEL)) + '</span></span>'
       : null;
     elSide.innerHTML = '<div class="panel">' +
       headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(countryName(ko)) + '</span>', countryName(ko), C.n, sub) +
@@ -162,9 +162,7 @@ window.SEN = window.SEN || {};
         var detail = Object.keys(g).map(function (gb) {
           return esc(gubunLabel(gb)) + ' ' + fmt(g[gb]) + esc(SEN.i18n.t(UNIT_LABEL));
         }).join(' · ');
-        return '<div class="arow"><span class="arow__nm">' + y +
-          (PATENT_YEARS[y + '|' + ko] ? '<img class="arow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14">' : '') +
-          '</span>' +
+        return '<div class="arow"><span class="arow__nm">' + y + '</span>' +
           '<span class="arow__ct"><b>' + fmt(yTotal) + '</b>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</span>' +
           '<span class="arow__detail">' + detail + '</span></div>';
       }).join('') + '</div>' +

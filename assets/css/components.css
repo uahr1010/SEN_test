@@ -994,8 +994,6 @@
 }
 .arow:hover { background: var(--c-tint); }
 .arow__nm { font-weight: 700; font-size: var(--fs-small); color: var(--c-ink); }
-/* 해외 실적 연도 행 중 특허공법 지정 연도에 붙는 로고 — .prow__logo와 같음 */
-.arow__logo { width: 14px; height: 14px; margin-left: 5px; vertical-align: -2px; }
 .arow__ct { font-size: var(--fs-xs); color: var(--c-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .arow__ct b { color: var(--c-ink); }
 .arow__bar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: var(--c-tint); overflow: hidden; }
@@ -1011,6 +1009,10 @@
    기준선을 글자 중앙에 맞춥니다. */
 .prow__logo { width: 14px; height: 14px; margin-left: 5px; vertical-align: -2px; }
 .prow__kd { color: var(--c-muted); font-size: .75rem; margin-top: 2px; }
+/* 해외 나라 상세, 큰 건수 옆의 "[로고] N건" — 로고와 숫자가 줄바꿈 없이
+   항상 가로 한 줄로 나란히 놓이도록 inline-flex로 묶습니다. */
+.oproj-patlogo { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.oproj-patlogo img { width: 14px; height: 14px; flex: 0 0 auto; }
 .pmap-chip {
   display: inline-block; font-size: .625rem; font-weight: 700; letter-spacing: .08em;
   color: var(--c-white); background: var(--c-blue); border-radius: 5px; padding: 1px 7px;
