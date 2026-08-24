@@ -269,7 +269,7 @@ body {
 }
 .ltf__text {
   font-size: calc(1.5rem + 10pt); font-weight: 700; letter-spacing: -.025em;
-  color: var(--ink);
+  color: var(--ink); white-space: nowrap;
   filter: drop-shadow(0 4px 3px rgba(0,0,0,.07));
 }
 .ltf__box {
@@ -295,14 +295,13 @@ body {
   .ltf__text { font-size: calc(2.25rem + 10pt); }
   .ltf__box { font-size: calc(1.35rem + 4pt); }
 }
-/* "SEN STRUCTURAL ENGINEERING CO., LTD."처럼 긴 단어는 한 줄(nowrap)로
-   재면 좁은 화면 폭보다 넓어질 수 있습니다 — hero.js의 fitBox()가 그
-   너비를 그대로 칸 폭으로 넣어 버리기 전에, 위 max-width로 칸 자체를
-   화면 폭 안에 가두고, 안의 글자는 2줄까지 접히도록(word-wrap) 둬서
-   가로로 넘치지 않게 합니다. */
+/* "SEN STRUCTURAL ENGINEERING CO., LTD."처럼 긴 단어도 절대 줄바꿈하지
+   않습니다(nowrap) — 단어가 바뀔 때마다 칸 높이까지 들쭉날쭉 바뀌면
+   전환이 버벅이는 것처럼 보였습니다. 대신 hero.js의 fitBox()가 칸 폭을
+   넘는 경우에만 그 단어의 글자 크기를 줄여 한 줄 안에 맞춥니다. */
 .ltf__word {
-  display: inline-block; white-space: normal; overflow-wrap: break-word;
-  text-align: center; will-change: transform, filter, opacity;
+  display: inline-block; white-space: nowrap;
+  will-change: transform, filter, opacity;
 }
 .ltf__word--out { position: absolute; left: .85rem; top: .4rem; }
 .ltf__word--in  { animation: ltf-in  .5s cubic-bezier(.22,1,.36,1) both; }

@@ -88,12 +88,30 @@ window.SEN = window.SEN || {};
     var firstIdx = WORDS.indexOf(FIRST_WORD);
     var index = firstIdx > -1 ? firstIdx : 0;
 
+    /* 화면 폭보다 넓은 계열사 이름("SEN STRUCTURAL ENGINEERING CO., LTD."
+       처럼 긴 것)이 있어도 절대 줄바꿈하지 않습니다 — 줄바꿈은 칸 높이가
+       단어마다 들쭉날쭉 바뀌면서(1줄→여러 줄) 전환이 버벅이는 것처럼
+       보였습니다. 대신 칸이 실제로 넘칠 때만 그 단어의 글자 크기를
+       살짝 줄여 한 줄 안에 맞춥니다(sizer가 box의 자식이라 font-size를
+       box에 주면 같이 작아지는 것을 이용). */
+    function availWidth() {
+      var hero = box.closest('.hero');
+      return (hero || box.parentElement).getBoundingClientRect().width;
+    }
     function fitBox(word) {
       if (word != null) sizer.textContent = word;
+      box.style.fontSize = '';   // 먼저 CSS 기본 크기로 되돌리고 다시 잽니다
       var w = sizer.getBoundingClientRect().width;
       if (!w) return;
       var cs = getComputedStyle(box);
       var pad = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+      var avail = availWidth();
+      if (avail && w + pad > avail) {
+        var baseSize = parseFloat(cs.fontSize);
+        var targetW = Math.max(avail - pad, 10);
+        box.style.fontSize = Math.max(10, Math.floor(baseSize * targetW / w)) + 'px';
+        w = sizer.getBoundingClientRect().width;   // 줄어든 크기로 다시 측정
+      }
       box.style.width = Math.ceil(w + pad) + 'px';
     }
 
@@ -154,9 +172,37 @@ window.SEN = window.SEN || {};
     }
   }
 
+  /* ---------- "Welcome to SEN ENGINEERING GROUP" 고정 제목 ----------
+     이 문구도 줄바꿈 없이 한 줄로 둡니다. 위 플립 단어와 같은 방식 —
+     칸(.hero) 폭보다 넓으면 그만큼만 글자 크기를 줄입니다. */
+  function fitFixedText() {
+    var el = document.querySelector('.ltf__text');
+    if (!el) return;
+    el.style.fontSize = '';
+    var hero = el.closest('.hero');
+    var avail = (hero || el.parentElement).getBoundingClientRect().width;
+    var w = el.scrollWidth;
+    if (avail && w > avail) {
+      var baseSize = parseFloat(getComputedStyle(el).fontSize);
+      el.style.fontSize = Math.max(10, Math.floor(baseSize * avail / w)) + 'px';
+    }
+  }
+
   function init(data) {
     renderFlags(data);
     initFlip(data);
+    fitFixedText();
+    addEventListener('resize', fitFixedText);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitFixedText);
+    }
+    /* 웹폰트 로딩·표지 레이아웃이 자리 잡는 타이밍 등으로 init() 시점엔
+       .hero 폭이 아직 최종값이 아닐 수 있습니다 — 그 뒤로도 폭이 실제로
+       바뀔 때마다(resize 이벤트가 못 잡는 경우 포함) 다시 재 봅니다. */
+    var heroEl = document.querySelector('.hero');
+    if (heroEl && window.ResizeObserver) {
+      new ResizeObserver(fitFixedText).observe(heroEl);
+    }
   }
 
   SEN.hero = { init: init };
