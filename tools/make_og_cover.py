@@ -29,9 +29,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
 MAIN_DIR = os.path.join(ROOT, 'uploads', 'main')
-EXTS = ['png', 'jpg', 'jpeg', 'webp']   # cover.js 와 같은 순서로 찾습니다
+EXTS = ('.png', '.jpg', '.jpeg', '.webp', '.gif')   # compile_cover_photos.py 와 같은 확장자 목록
 OUT = os.path.join(ROOT, 'assets', 'img', 'og-cover.jpg')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
+
+LEADING_NUM = re.compile(r'^\s*(\d+)')
 
 ANTON = os.path.join(ROOT, 'assets', 'fonts', 'Anton-Regular.ttf')
 NEWSREADER = os.path.join(ROOT, 'assets', 'fonts', 'Newsreader-Light.ttf')
@@ -42,11 +44,26 @@ BRAND_PAD = 46   # 실제 표지의 좌우 여백(clamp(20px,3.4vw,46px))과 같
 
 
 def find_cover_photo():
-    for ext in EXTS:
-        path = os.path.join(MAIN_DIR, 'main_1.' + ext)
-        if os.path.isfile(path):
-            return path
-    raise SystemExit('uploads/main/main_1.<png|jpg|jpeg|webp> 를 찾을 수 없습니다.')
+    """실제 표지 화면(cover.js)이 맨 처음 보여주는 사진과 똑같은 걸 고릅니다.
+    예전엔 "uploads/main/main_1.<확장자>"라는 정해진 파일명 하나만 찾았는데,
+    표지 사진 관리 방식이 "아무 이름이나 올리고 파일명 앞 번호로 순서만
+    정하기"(compile_cover_photos.py, assets/js/cover.js 참고)로 바뀐 뒤로는
+    그 이름의 파일이 더 이상 존재하지 않아 이 스크립트가 조용히 실패하고
+    있었습니다(og-cover.jpg가 예전 사진에 멈춰 있던 원인) — 같은 자연 정렬
+    규칙으로 폴더를 직접 훑어 첫 번째 사진을 고릅니다."""
+    if not os.path.isdir(MAIN_DIR):
+        raise SystemExit('uploads/main 폴더를 찾을 수 없습니다.')
+    names = [n for n in os.listdir(MAIN_DIR) if n.lower().endswith(EXTS)]
+    if not names:
+        raise SystemExit('uploads/main 안에 표지 사진이 없습니다.')
+
+    def sort_key(name):
+        m = LEADING_NUM.match(name)
+        num = int(m.group(1)) if m else float('inf')
+        return (num, name.lower())
+
+    names.sort(key=sort_key)
+    return os.path.join(MAIN_DIR, names[0])
 
 
 def load_vision_text():
