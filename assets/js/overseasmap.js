@@ -56,7 +56,8 @@ window.SEN = window.SEN || {};
     '러시아':     { en: 'Russia',         zh: '俄罗斯',     ja: 'ロシア',       lat: 55.7558,  lng: 37.6173 },
     '이라크':     { en: 'Iraq',           zh: '伊拉克',     ja: 'イラク',       lat: 33.3152,  lng: 44.3661 },
     '헝가리':     { en: 'Hungary',        zh: '匈牙利',     ja: 'ハンガリー',   lat: 47.4979,  lng: 19.0402 },
-    '멕시코':     { en: 'Mexico',         zh: '墨西哥',     ja: 'メキシコ',     lat: 19.4326,  lng: -99.1332 }
+    '멕시코':     { en: 'Mexico',         zh: '墨西哥',     ja: 'メキシコ',     lat: 19.4326,  lng: -99.1332 },
+    '말레이시아': { en: 'Malaysia',       zh: '马来西亚',   ja: 'マレーシア',   lat: 3.1390,   lng: 101.6869 }
   };
   function countryName(ko) {
     var lang = SEN.i18n.get();
@@ -97,14 +98,14 @@ window.SEN = window.SEN || {};
      .panel.is-foldable), 데스크톱에서는 버튼이 감춰져 늘 펼쳐진 그대로입니다. */
   var cardsFolded = true;
 
-  /* 나라 상세(openCountry)의 연도 행 중, 관리자가 특허공법이라고 지정한
-     연도·나라 조합에만 작은 로고를 붙입니다(국내 지도의 LOGO_NAMES와
-     같은 방식 — assets/img/project-logo-mark.png). 관리자가 준 4건
-     (2025/2018/2020 싱가포르, 2022 말레이시아) 중 실제 데이터
-     (assets/data/overseas_projects_base.json)에 있는 건 "2025 싱가포르"
-     뿐이었습니다 — 2018·2020 싱가포르, 2022 말레이시아는 그 해당 연도의
-     실적 자체가 없어(말레이시아는 국가 자체가 없음) 넣지 않았습니다. */
-  var PATENT_YEARS = { '2025|싱가포르': 1 };
+  /* 나라 상세(openCountry)의 큰 건수 옆에, 관리자가 특허공법이라고 지정한
+     연도·나라 조합의 합계만 로고와 함께 보여줍니다(국내 지도의
+     LOGO_NAMES와 같은 방식 — assets/img/project-logo-mark.png). 관리자가
+     처음 준 4건(2025/2018/2020 싱가포르, 2022 말레이시아) 중 2018·2020
+     싱가포르·2022 말레이시아는 당시 데이터(assets/data/
+     overseas_projects_base.json)에 없어서, 그 3건을 새 항목으로 추가한
+     뒤 여기 반영했습니다. */
+  var PATENT_YEARS = { '2025|싱가포르': 1, '2018|싱가포르': 1, '2020|싱가포르': 1, '2022|말레이시아': 1 };
 
   function renderCards() {
     if (!elSide) return;
