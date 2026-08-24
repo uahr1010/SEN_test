@@ -30,6 +30,8 @@ window.SEN = window.SEN || {};
     cardsTitle: { ko: '국가별 실적', en: 'Results by Country', zh: '各国实绩', ja: '国別実績' },
     cardsLead: { ko: '카드를 누르면 지구본이 그 나라로 움직이고 연도별 실적이 열립니다 · 전체 <b>{n}건</b>', en: 'Click a card to turn the globe there and open yearly results · <b>{n} projects</b> in total', zh: '点击卡片后地球仪会转向该国并展开年度实绩 · 共<b>{n}件</b>', ja: 'カードを押すと地球儀がその国へ動き、年度別実績が開きます · 全体<b>{n}件</b>' },
     cardsFoot: { ko: '막대는 국가 간 실적 비교', en: 'Bars compare results across countries', zh: '柱状条用于比较各国实绩', ja: '棒グラフは国別の実績比較です' },
+    foldOpen: { ko: '국가별 실적 펼치기', en: 'Show results by country', zh: '展开各国实绩', ja: '国別実績を開く' },
+    foldClose: { ko: '국가별 실적 접기', en: 'Hide results by country', zh: '收起各国实绩', ja: '国別実績を閉じる' },
     backToAll: { ko: '← 국가 전체', en: '← All countries', zh: '← 全部国家', ja: '← 国全体' },
     countryFoot: { ko: '연도별 구조설계·안전진단 건수', en: 'Structural design and safety diagnosis counts by year', zh: '按年度显示结构设计与安全诊断件数', ja: '年度別の構造設計・安全診断件数' }
   };
@@ -86,12 +88,22 @@ window.SEN = window.SEN || {};
     if (elR) elR.textContent = ORDER.length;
   }
 
+  /* 국내 지도 쪽(projectmap.js)과 같은 방식입니다 — 좁은 화면에서 나라
+     목록이 세로로 길게 늘어지지 않도록 +/- 버튼으로 여닫고 처음에는 접어
+     둡니다. 접힘은 640px 이하에서만 효력이 있고(components.css의
+     .panel.is-foldable), 데스크톱에서는 버튼이 감춰져 늘 펼쳐진 그대로입니다. */
+  var cardsFolded = true;
+
   function renderCards() {
     if (!elSide) return;
     pState.view = 'cards'; pState.country = null;
     var maxN = ORDER.reduce(function (m, c) { return Math.max(m, COUNTRY_AGG[c].n); }, 1);
     var totN = ORDER.reduce(function (s, c) { return s + COUNTRY_AGG[c].n; }, 0);
-    elSide.innerHTML = '<div class="panel"><div class="panel__head panel__head--tight"><div class="panel__title">' + esc(tf(UI.cardsTitle)) + '</div>' +
+    elSide.innerHTML = '<div class="panel is-foldable' + (cardsFolded ? ' is-folded' : '') + '">' +
+      '<div class="panel__head panel__head--tight panel__head--fold"><div class="panel__title">' + esc(tf(UI.cardsTitle)) + '</div>' +
+      '<button type="button" class="panel__fold" data-panel-fold aria-expanded="' + (cardsFolded ? 'false' : 'true') + '" ' +
+        'aria-label="' + esc(tf(cardsFolded ? UI.foldOpen : UI.foldClose)) + '">' +
+        '<span class="panel__fold-sign" aria-hidden="true">' + (cardsFolded ? '+' : '−') + '</span></button>' +
       '<div class="panel__sub">' + tf(UI.cardsLead, { n: fmt(totN) }) + '</div></div>' +
       '<div class="panel__body"><div class="prov-cards">' + ORDER.map(function (c) {
         var C = COUNTRY_AGG[c];
@@ -103,6 +115,13 @@ window.SEN = window.SEN || {};
       '<div class="panel__foot"><span class="panel__lgd">' + esc(tf(UI.cardsFoot)) + '</span></div></div>';
     elSide.querySelectorAll('[data-country]').forEach(function (b) {
       b.addEventListener('click', function () { openCountry(b.getAttribute('data-country')); });
+    });
+    var pnl = elSide.querySelector('.panel'), fld = elSide.querySelector('[data-panel-fold]');
+    if (fld) fld.addEventListener('click', function () {
+      cardsFolded = pnl.classList.toggle('is-folded');
+      fld.setAttribute('aria-expanded', cardsFolded ? 'false' : 'true');
+      fld.setAttribute('aria-label', tf(cardsFolded ? UI.foldOpen : UI.foldClose));
+      fld.querySelector('.panel__fold-sign').textContent = cardsFolded ? '+' : '−';
     });
   }
 

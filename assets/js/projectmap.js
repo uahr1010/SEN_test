@@ -84,6 +84,8 @@ window.SEN = window.SEN || {};
     cardsTitle:    { ko: '시/도별 실적', en: 'Results by province', zh: '各省市实绩', ja: '都道府県別実績' },
     cardsLead:     { ko: '카드를 누르면 지도가 그 지역으로 이동하고 시군구 실적이 열립니다 · 전체 <b>{n}건</b>', en: 'Click a card to move the map there and open district results · <b>{n} projects</b> in total', zh: '点击卡片可将地图移至该地区并展开市区县实绩 · 共<b>{n}件</b>', ja: 'カードを押すと地図がその地域へ移動し、市区町村別実績が開きます · 全体<b>{n}件</b>' },
     cardsFoot:     { ko: '막대는 시/도 간 실적 비교', en: 'Bars compare results across provinces', zh: '柱状条用于比较各省市实绩', ja: '棒グラフは都道府県間の実績比較です' },
+    foldOpen:      { ko: '시/도별 실적 펼치기', en: 'Show results by province', zh: '展开各省市实绩', ja: '都道府県別実績を開く' },
+    foldClose:     { ko: '시/도별 실적 접기', en: 'Hide results by province', zh: '收起各省市实绩', ja: '都道府県別実績を閉じる' },
     backToAll:     { ko: '← 시/도 전체', en: '← All provinces', zh: '← 全部省市', ja: '← 都道府県全体' },
     districtCount: { ko: '시군구 {n}곳', en: '{n} districts', zh: '{n}个市区县', ja: '{n}市区町村' },
     provFoot:      { ko: '시군구를 누르면 프로젝트 목록이 열립니다', en: 'Click a district to open its project list', zh: '点击市区县可展开项目列表', ja: '市区町村をクリックするとプロジェクト一覧が開きます' },
@@ -589,6 +591,14 @@ window.SEN = window.SEN || {};
     map.fitBounds(P.bounds, { padding: { top: 40, bottom: 40, left: 40, right: 40 }, maxZoom: 9.6, duration: 800 });
   }
 
+  /* 좁은 화면에서는 시/도 17개가 세로로 쭉 늘어서 화면을 다 잡아먹기에
+     이 목록을 +/- 버튼으로 여닫고, 처음에는 접어 둡니다. 접힘 여부는
+     여닫는 CSS와 함께 640px 이하에서만 뜻이 있고(components.css의
+     .panel.is-foldable), 데스크톱에서는 버튼이 감춰져 늘 펼친 그대로입니다.
+     한 번 펼쳐 두면 시/도 → 시군구로 들어갔다 "← 시/도 전체"로 돌아와도
+     펼친 채로 남도록, 상태를 이 변수에 기억합니다. */
+  var cardsFolded = true;
+
   function renderCards() {
     if (!elSide) return;
     pState.view = 'cards'; pState.prov = null; pState.area = null;
@@ -596,7 +606,11 @@ window.SEN = window.SEN || {};
     var totN = 0; rows.forEach(function (r) { totN += r.n; });
     var title = tf(UI.cardsTitle);
     var lead = tf(UI.cardsLead, { n: fmt(totN) });
-    elSide.innerHTML = '<div class="panel"><div class="panel__head panel__head--tight"><div class="panel__title">' + esc(title) + '</div>' +
+    elSide.innerHTML = '<div class="panel is-foldable' + (cardsFolded ? ' is-folded' : '') + '">' +
+      '<div class="panel__head panel__head--tight panel__head--fold"><div class="panel__title">' + esc(title) + '</div>' +
+      '<button type="button" class="panel__fold" data-panel-fold aria-expanded="' + (cardsFolded ? 'false' : 'true') + '" ' +
+        'aria-label="' + esc(tf(cardsFolded ? UI.foldOpen : UI.foldClose)) + '">' +
+        '<span class="panel__fold-sign" aria-hidden="true">' + (cardsFolded ? '+' : '−') + '</span></button>' +
       '<div class="panel__sub">' + lead + '</div></div>' +
       '<div class="panel__body"><div class="prov-cards">' + rows.map(function (r) {
         return '<button type="button" class="prov-card" data-prov="' + r.key + '">' +
@@ -607,6 +621,13 @@ window.SEN = window.SEN || {};
       '<div class="panel__foot"><span class="panel__lgd">' + esc(tf(UI.cardsFoot)) + '</span></div></div>';
     elSide.querySelectorAll('[data-prov]').forEach(function (b) {
       b.addEventListener('click', function () { var k = b.getAttribute('data-prov'); openProv(k); flyToProv(k); });
+    });
+    var pnl = elSide.querySelector('.panel'), fld = elSide.querySelector('[data-panel-fold]');
+    if (fld) fld.addEventListener('click', function () {
+      cardsFolded = pnl.classList.toggle('is-folded');
+      fld.setAttribute('aria-expanded', cardsFolded ? 'false' : 'true');
+      fld.setAttribute('aria-label', tf(cardsFolded ? UI.foldOpen : UI.foldClose));
+      fld.querySelector('.panel__fold-sign').textContent = cardsFolded ? '+' : '−';
     });
   }
 
