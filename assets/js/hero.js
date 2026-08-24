@@ -4,9 +4,9 @@
    원본은 카카오톡으로 받은 LayoutTextFlip 미리보기(Aceternity UI를 순수
    HTML/CSS/JS로 옮긴 것)입니다. 여기서는 그 동작은 그대로 두고,
      · 단어 목록을 site.json(site.hero.flipWords)에서 가져오고
-     · "we are hiring" 배지는 content/careers.json 의 채용공고 개수로
+     · "We are hiring" 배지는 content/careers.json 의 채용공고 개수로
        실제 채용중 여부를 판단하고(0건이면 스위치가 꺼짐)
-     · "we have new news" 배지는 뉴스가 하나라도 있을 때만 보이도록
+     · "Latest news" 배지는 뉴스가 하나라도 있을 때만 보이도록
    데이터에 연결했습니다.
    ========================================================================== */
 window.SEN = window.SEN || {};
@@ -32,13 +32,13 @@ window.SEN = window.SEN || {};
     html += '<a class="flag flag--hiring ' + (hiring ? 'flag--on' : 'flag--off') + '"' +
               ' href="#scene-careers"' +
               ' aria-label="' + (hiring ? '채용 진행중 — 채용 공고 보기' : '현재 진행 중인 채용 없음') + '">' +
-              '<span>we are hiring</span>' +
+              '<span>We are hiring</span>' +
               '<span class="flag__switch" aria-hidden="true"><i></i></span>' +
             '</a>';
 
     if (hasNews) {
       html += '<a class="flag flag--news" href="#scene-news" aria-label="새 소식 보기">' +
-                '<span>we have new news</span>' +
+                '<span>Latest news</span>' +
                 '<img class="flag__icon" src="assets/img/mail-icon.png" alt="" data-news-icon>' +
               '</a>';
     }

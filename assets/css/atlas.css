@@ -258,13 +258,14 @@ body {
 }
 .hero { width: min(760px, 92vw); margin: 0 auto; text-align: center; padding: 90px 0 64px; }
 
+/* "Welcome to SEN ENGINEERING GROUP"(고정 제목) 아래, 계열사 이름이
+   작은 글씨로 번갈아 넘어가는 배지가 옵니다 — 예전엔 "Welcome to" +
+   플립 단어가 한 줄로 이어지는 문장이었는데, 제목을 고정 문구로 바꾸면서
+   플립은 그 아래 자기 줄로 내렸습니다. */
 .ltf {
   position: relative; margin: 1rem auto;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 1rem; text-align: center;
-}
-@media (min-width: 640px) {
-  .ltf { flex-direction: row; }
+  gap: .85rem; text-align: center;
 }
 .ltf__text {
   font-size: calc(1.5rem + 10pt); font-weight: 700; letter-spacing: -.025em;
@@ -274,18 +275,36 @@ body {
 .ltf__box {
   position: relative; overflow: hidden;
   display: inline-block; vertical-align: middle; flex-shrink: 0;
+  /* %가 아니라 뷰포트 기준으로 직접 잡습니다 — flex 아이템의 max-width:%
+     는 align-items:center(=cross-size auto)일 때 브라우저마다 기준값
+     해석이 갈릴 수 있어 자칫 무시될 수 있습니다. .hero와 같은 공식을
+     써서 항상 화면 폭 안에 확실히 들어오게 합니다. */
+  max-width: min(760px, 92vw);
+  /* flex 아이템은 기본 min-width:auto(=내용 기준 최소폭)라, hero.js가
+     fitBox()로 더 좁은 width를 줘도 이 자동 최소폭보다는 못 좁아집니다
+     — 0으로 꺼서 fitBox()가 정한 값이 그대로 먹히게 합니다. */
+  min-width: 0;
   border-radius: 6px;
   background: #fff; color: var(--blue);
-  padding: .5rem 1rem;
-  font-size: calc(1.5rem + 10pt); font-weight: 700; letter-spacing: -.025em;
+  padding: .4rem .85rem;
+  font-size: calc(1rem + 4pt); font-weight: 700; letter-spacing: -.025em;
   box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 0 0 1px var(--line);
   transition: width .5s cubic-bezier(.22,1,.36,1);
 }
 @media (min-width: 768px) {
-  .ltf__text, .ltf__box { font-size: calc(2.25rem + 10pt); }
+  .ltf__text { font-size: calc(2.25rem + 10pt); }
+  .ltf__box { font-size: calc(1.35rem + 4pt); }
 }
-.ltf__word { display: inline-block; white-space: nowrap; will-change: transform, filter, opacity; }
-.ltf__word--out { position: absolute; left: 1rem; top: .5rem; }
+/* "SEN STRUCTURAL ENGINEERING CO., LTD."처럼 긴 단어는 한 줄(nowrap)로
+   재면 좁은 화면 폭보다 넓어질 수 있습니다 — hero.js의 fitBox()가 그
+   너비를 그대로 칸 폭으로 넣어 버리기 전에, 위 max-width로 칸 자체를
+   화면 폭 안에 가두고, 안의 글자는 2줄까지 접히도록(word-wrap) 둬서
+   가로로 넘치지 않게 합니다. */
+.ltf__word {
+  display: inline-block; white-space: normal; overflow-wrap: break-word;
+  text-align: center; will-change: transform, filter, opacity;
+}
+.ltf__word--out { position: absolute; left: .85rem; top: .4rem; }
 .ltf__word--in  { animation: ltf-in  .5s cubic-bezier(.22,1,.36,1) both; }
 .ltf__word--out { animation: ltf-out .5s cubic-bezier(.22,1,.36,1) both; }
 @keyframes ltf-in {
