@@ -105,7 +105,7 @@ window.SEN = window.SEN || {};
      싱가포르·2022 말레이시아는 당시 데이터(assets/data/
      overseas_projects_base.json)에 없어서, 그 3건을 새 항목으로 추가한
      뒤 여기 반영했습니다. */
-  var PATENT_YEARS = { '2025|싱가포르': 1, '2018|싱가포르': 1, '2020|싱가포르': 1, '2022|말레이시아': 1 };
+  var PATENT_YEARS = { '2025|싱가포르': 1, '2018|싱가포르': 1, '2020|싱가포르': 1, '2022|말레이시아': 1, '2023|베트남': 1 };
 
   function renderCards() {
     if (!elSide) return;
