@@ -33,8 +33,7 @@ window.SEN = window.SEN || {};
     foldOpen: { ko: '국가별 실적 펼치기', en: 'Show results by country', zh: '展开各国实绩', ja: '国別実績を開く' },
     foldClose: { ko: '국가별 실적 접기', en: 'Hide results by country', zh: '收起各国实绩', ja: '国別実績を閉じる' },
     backToAll: { ko: '← 국가 전체', en: '← All countries', zh: '← 全部国家', ja: '← 国全体' },
-    countryFoot: { ko: '연도별 구조설계·안전진단 건수', en: 'Structural design and safety diagnosis counts by year', zh: '按年度显示结构设计与安全诊断件数', ja: '年度別の構造設計・安全診断件数' },
-    patLine: { ko: '로고 · {n}건', en: 'Logo · {n}', zh: '标志 · {n}件', ja: 'ロゴ · {n}件' }
+    countryFoot: { ko: '연도별 구조설계·안전진단 건수', en: 'Structural design and safety diagnosis counts by year', zh: '按年度显示结构设计与安全诊断件数', ja: '年度別の構造設計・安全診断件数' }
   };
   function tf(dict, vars) {
     var s = SEN.i18n.t(dict);
@@ -70,9 +69,12 @@ window.SEN = window.SEN || {};
   var COUNTRY_AGG = {}, ORDER = [];
   var pState = { view: 'cards', country: null };
 
+  /* sub는 crumbs와 마찬가지로 이미 안전하게(esc 처리 다 해서) 만들어진
+     HTML 조각을 그대로 받습니다 — 특허공법 로고(이미지)처럼 텍스트가
+     아닌 것도 넣어야 해서, 여기서 또 esc()로 감싸면 안 됩니다. */
   function headHTML(crumbs, title, n, sub) {
     return '<div class="panel__head"><div class="panel__crumb">' + crumbs + '</div><div class="panel__title">' + esc(title) + '</div>' +
-      '<div class="panel__big">' + fmt(n) + '<small>' + esc(SEN.i18n.t(UNIT_LABEL)) + (sub ? ' · ' + esc(sub) : '') + '</small></div></div>';
+      '<div class="panel__big">' + fmt(n) + '<small>' + esc(SEN.i18n.t(UNIT_LABEL)) + (sub ? ' · ' + sub : '') + '</small></div></div>';
   }
 
   /* 상단 "누적 실적/수행 지역" 숫자(main.js가 그리는 data-globe-stats
@@ -141,14 +143,17 @@ window.SEN = window.SEN || {};
     pState.view = 'country'; pState.country = ko;
     var years = Object.keys(C.years).map(Number).sort(function (a, b) { return b - a; });
     /* 나라 이름 아래 큰 건수 옆에, 특허공법 로고가 붙은 연도들의 건수만
-       따로 더해 "로고 · N건"으로 보여줍니다(PATENT_YEARS에 없으면 0건이라
-       아예 안 보임). */
+       따로 더해 "[로고 이미지] N건"으로 보여줍니다(글자 "로고"가 아니라
+       실제 로고 그림입니다 — PATENT_YEARS에 없으면 0건이라 아예 안 보임). */
     var patCount = years.reduce(function (s, y) {
       if (!PATENT_YEARS[y + '|' + ko]) return s;
       var g = C.years[y];
       return s + Object.keys(g).reduce(function (s2, gb) { return s2 + g[gb]; }, 0);
     }, 0);
-    var sub = patCount ? tf(UI.patLine, { n: fmt(patCount) }) : null;
+    var sub = patCount
+      ? '<img class="arow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14"> ' +
+        fmt(patCount) + esc(SEN.i18n.t(UNIT_LABEL))
+      : null;
     elSide.innerHTML = '<div class="panel">' +
       headHTML('<button type="button" data-back-rank>' + esc(tf(UI.backToAll)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(countryName(ko)) + '</span>', countryName(ko), C.n, sub) +
       '<div class="panel__body">' + years.map(function (y) {
