@@ -32,6 +32,7 @@
     { "year": 2017, "gubun": "안전진단", "country": "필리핀" },
     { "year": 2018, "gubun": "구조설계", "country": "싱가포르" },
     { "year": 2020, "gubun": "구조설계", "country": "싱가포르" },
-    { "year": 2022, "gubun": "구조설계", "country": "말레이시아" }
+    { "year": 2022, "gubun": "구조설계", "country": "말레이시아" },
+    { "year": 2023, "gubun": "구조설계", "country": "베트남" }
   ]
 }
