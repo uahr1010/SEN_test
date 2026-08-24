@@ -94,6 +94,15 @@ window.SEN = window.SEN || {};
      .panel.is-foldable), 데스크톱에서는 버튼이 감춰져 늘 펼쳐진 그대로입니다. */
   var cardsFolded = true;
 
+  /* 나라 상세(openCountry)의 연도 행 중, 관리자가 특허공법이라고 지정한
+     연도·나라 조합에만 작은 로고를 붙입니다(국내 지도의 LOGO_NAMES와
+     같은 방식 — assets/img/project-logo-mark.png). 관리자가 준 4건
+     (2025/2018/2020 싱가포르, 2022 말레이시아) 중 실제 데이터
+     (assets/data/overseas_projects_base.json)에 있는 건 "2025 싱가포르"
+     뿐이었습니다 — 2018·2020 싱가포르, 2022 말레이시아는 그 해당 연도의
+     실적 자체가 없어(말레이시아는 국가 자체가 없음) 넣지 않았습니다. */
+  var PATENT_YEARS = { '2025|싱가포르': 1 };
+
   function renderCards() {
     if (!elSide) return;
     pState.view = 'cards'; pState.country = null;
@@ -138,7 +147,9 @@ window.SEN = window.SEN || {};
         var detail = Object.keys(g).map(function (gb) {
           return esc(gubunLabel(gb)) + ' ' + fmt(g[gb]) + esc(SEN.i18n.t(UNIT_LABEL));
         }).join(' · ');
-        return '<div class="arow"><span class="arow__nm">' + y + '</span>' +
+        return '<div class="arow"><span class="arow__nm">' + y +
+          (PATENT_YEARS[y + '|' + ko] ? '<img class="arow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14">' : '') +
+          '</span>' +
           '<span class="arow__ct"><b>' + fmt(yTotal) + '</b>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</span>' +
           '<span class="arow__detail">' + detail + '</span></div>';
       }).join('') + '</div>' +

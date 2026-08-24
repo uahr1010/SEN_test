@@ -994,6 +994,8 @@
 }
 .arow:hover { background: var(--c-tint); }
 .arow__nm { font-weight: 700; font-size: var(--fs-small); color: var(--c-ink); }
+/* 해외 실적 연도 행 중 특허공법 지정 연도에 붙는 로고 — .prow__logo와 같음 */
+.arow__logo { width: 14px; height: 14px; margin-left: 5px; vertical-align: -2px; }
 .arow__ct { font-size: var(--fs-xs); color: var(--c-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .arow__ct b { color: var(--c-ink); }
 .arow__bar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: var(--c-tint); overflow: hidden; }
