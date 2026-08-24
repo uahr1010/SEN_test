@@ -1076,9 +1076,14 @@
 @media (max-width: 760px) {
   .sct-stats { flex-direction: row; }
 }
+/* justify-content는 center가 아니라 flex-start입니다 — 순위 카드(값+
+   라벨)와 총 인원 카드(값+라벨+소속 내역)는 아래에 붙는 줄 수가
+   달라서, 가운데 정렬이면 "4위"와 "521명"처럼 맨 위 숫자의 높이가
+   카드마다 서로 달라져 버립니다. flex-start로 둘 다 카드 위쪽에서
+   시작하게 하면 숫자 높이가 항상 맞습니다. */
 .sct-stat {
   flex: 1 1 0;
-  display: flex; flex-direction: column; justify-content: center; gap: 8px;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 8px;
   padding: var(--sp-4); border-radius: var(--radius-lg);
   background: var(--c-white); border: 1px solid var(--c-line); box-shadow: var(--shadow-sm);
 }
@@ -1107,8 +1112,8 @@
      떨어지도록) 카드 안쪽 여백도 함께 줄여 문구가 앉을 자리를 넓힙니다.
      .sct-stat__label은 순위 라벨과 "센코어테크의 임직원 수" 라벨이
      같은 클래스라 여기서 크기를 맞추면 둘 다 함께 맞춰집니다. */
-  .sct-stat { padding: 16px; }
-  .sct-stat__label { font-size: 11px; }
+  .sct-stat { padding: 10px; }
+  .sct-stat__label { font-size: 13px; }
   .sct-stat__sublabel { font-size: 10px; }
   .sct-rank-break { display: block; }
 }
