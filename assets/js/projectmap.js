@@ -853,7 +853,16 @@ window.SEN = window.SEN || {};
       map = new window.maplibregl.Map({
         container: els.canvas, style: styleSpec(),
         center: [129.5, 37.5], zoom: 5.2,
-        minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true
+        minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true,
+        /* 모바일에서 손가락 한 개로 페이지를 스크롤하려다 지도가 먼저
+           반응해 버리는 문제 — 두 손가락으로만 지도를 조작하게 하고,
+           한 손가락 터치는 그대로 페이지 스크롤로 넘어가게 합니다. */
+        cooperativeGestures: true,
+        locale: {
+          'CooperativeGesturesHandler.MobileHelpText': '두 손가락으로 지도를 움직일 수 있어요',
+          'CooperativeGesturesHandler.WindowsHelpText': 'Ctrl + 스크롤로 지도를 확대/축소할 수 있어요',
+          'CooperativeGesturesHandler.MacHelpText': '⌘ + 스크롤로 지도를 확대/축소할 수 있어요'
+        }
       });
       map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.on('load', function () { build(cnt, cntPat, exactFC, areaFC, regionFC); });
