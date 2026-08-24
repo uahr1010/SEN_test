@@ -288,9 +288,16 @@ body {
   border-radius: 6px;
   background: #fff; color: var(--blue);
   padding: .4rem .85rem;
-  font-size: calc(1rem + 6pt); font-weight: 700; letter-spacing: -.025em;
+  font-size: calc(1rem + 2pt); font-weight: 700; letter-spacing: -.025em;
   box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 0 0 1px var(--line);
   transition: width .5s cubic-bezier(.22,1,.36,1);
+}
+/* 모바일은 제목이 "Welcome to / SEN ENGINEERING GROUP" 두 줄로 커지므로,
+   아래 계열사 이름이 번갈아 넘어가는 배지는 제목보다 작아 보이도록
+   글자 크기를 줄여 둡니다(데스크톱은 원래 크기 그대로, 아래 min-width:768px
+   규칙에서 다시 키움). */
+@media (max-width: 760px) {
+  .ltf__line2 { display: block; }
 }
 @media (min-width: 768px) {
   .ltf__text { font-size: calc(2.25rem + 25pt); }

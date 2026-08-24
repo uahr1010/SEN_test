@@ -184,7 +184,7 @@ window.SEN = window.SEN || {};
     var el = document.querySelector('.ltf__text');
     if (!el) return;
     el.style.fontSize = '';
-    var avail = Math.min(1120, window.innerWidth * 0.92);
+    var avail = Math.min(1060, window.innerWidth * 0.92);
     var w = el.scrollWidth;
     if (avail && w > avail) {
       var baseSize = parseFloat(getComputedStyle(el).fontSize);
