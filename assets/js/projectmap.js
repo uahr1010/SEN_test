@@ -40,6 +40,63 @@ window.SEN = window.SEN || {};
   /* 번지·도로명까지 잡힌 것으로 보는 값들. */
   var EXACT = { ROAD_ADDR: 1, REGION_ADDR: 1, KEYWORD: 1 };
 
+  /* 시/군/구를 열었을 때 보이는 프로젝트 목록에서, 이 목록에 있는
+     프로젝트명과 정확히 같으면(project_points.json의 name 값 그대로)
+     이름 끝에 작은 로고를 붙입니다(assets/img/project-logo-mark.png).
+     관리자가 준 프로젝트명 목록 중 project_points.json에 실제로 있는
+     것만 골라 옮긴 것입니다 — 없는 건 여기 추가하지 말고, 데이터
+     자체(assets/data/project_points_base.json)에 그 프로젝트를 먼저
+     넣어야 합니다. */
+  var LOGO_NAMES = {
+    '500KV 동해안 변환소 신축공사\n(PSRC제작납품)': 1,
+    'LGES 오창 2 산단 전지생산 2동 옥내 파이프랙 구조설계 용역': 1,
+    'LGES 오창 에너지플랜 2공장 POS-H 기술지원용역': 1,
+    'LGES 오창 에너지플랜트2 전지생산2동 흡연부스 구조설계': 1,
+    'LG전자 평택 시험동공장': 1,
+    'LG하우시스 옥산공장': 1,
+    'M14 층간리프트(2호기) 설치용 SLAB 타공 공사 설계 용역': 1,
+    'Merck BioP PJT': 1,
+    'N-PJT Form PSRC 제작 및 납품 2차': 1,
+    'P2-PJT 그린동/자재동/정수장  철골공사': 1,
+    'SK Hynix M15 Ph-4 F02 구조설계 용역': 1,
+    'SK Hynix M15X TRUSS DECK SHOP STANDARD DWG 작성 및 구조설계 용역': 1,
+    'SK Hynix 용인 Y1 PJT TRUSS DECK 구조설계 용역 계약서': 1,
+    'SK Hynix 청주 M15X PJT TRUSS DECK 구조설계': 1,
+    'SK On 서산3동 전극조립동 및 화성동': 1,
+    'SK실트론 N-Project WF동': 1,
+    'SK하이닉스 M15 청주 반도체공장': 1,
+    '과천 지식정보타운 11-3블럭 신축공사 구조감리': 1,
+    '과천 지식정보타운 11-3블럭 신축공사 구조분야': 1,
+    '과천지식정보타운 11-18L 철골공사': 1,
+    '과천지식정보타운 11-3블럭 신축공사 실시설계': 1,
+    '남산스퀘어 리모델링 증축공사 / 24층 구조보강공사': 1,
+    '대전 Infra 구축 Project 중\nPh-1 F-PSRC 및 TSC 공사': 1,
+    '동해 LS 전선': 1,
+    '두호 SK VIEW PRUGIO 하자보수 - 지하주차장 보 균열 보강공사 중 WIRE TENSION 보강공사 (WT+철판)': 1,
+    '머크 바이오 대전공장 신축공사 설계용역': 1,
+    '복합동 A,B': 1,
+    '삼성바이오로직스 P3': 1,
+    '송도 롯데바이오(K1 PJT)\n기둥 제작납품': 1,
+    '송도 싸토리우스 바이오소재\nEPC(Earlywork) 중 F-PSRC 설계 및 제작': 1,
+    '송도 에디슨 프로젝트 P4 생산동': 1,
+    '안산 성곡동 (SEL02) 데이터센터 실시설계': 1,
+    '안산 성곡동(SEL02) 데이터센터': 1,
+    '용인 Hynix Y1-PJT': 1,
+    '울산 AIDC A동 \n신축공사 제작설치': 1,
+    '인천지방합동청사 신축공사(T/K)설계용역': 1,
+    '전략적 업무제휴 계약(공동연구)': 1,
+    '천안 극판 M라인 \n신축공사 중 철골공사': 1,
+    '청주 SK 하이닉스 M15X F02 4F X43~48, Y5~7 트러스데크 구조설계': 1,
+    '청주 SK하이닉스  M15x 현장 PSRC 및 TSC': 1,
+    '청주P&T7 신축공사': 1,
+    '탕정 N-PJT': 1,
+    '평촌 LG유플러스 2단계 데이터센터': 1,
+    '평택 사무3동 철골공사 중 \nPSRC, TSC 제작납품': 1,
+    '평택기술2동신축공사': 1,
+    '하이닉스 M16 FAB/CUB': 1,
+    '하이닉스 용인 CLUSTER 지원시설신축공사': 1
+  };
+
   var MIN_ZOOM = 3.6, MAX_ZOOM = 18, CLUSTER_MAX_ZOOM = 16, CLUSTER_RADIUS = 46;
   /* 원이 나타나는 배율. 자동 병합을 껐으므로(행정구역 기준만 씀) 전국이
      한 화면에 들어오는 배율에서는 시/도 색칠 + 숫자만 맡고, 원은 조금 더
@@ -680,6 +737,7 @@ window.SEN = window.SEN || {};
         regionFullName(areaFull), A.n, null) +
       '<div class="panel__body">' + A.items.slice().sort(function (a, b) { return (b.year || 0) - (a.year || 0); }).map(function (it) {
         return '<div class="prow"><div class="prow__nm">' + esc(it.name || it.addr) +
+          (LOGO_NAMES[it.name] ? '<img class="prow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14">' : '') +
           ((SHOW_PAT && it.method) ? '<span class="pmap-chip' + (it.method === 'TSC' ? ' is-tsc' : '') + '">' + esc(it.method) + '</span>' : '') + '</div>' +
           '<div class="prow__kd">' + (it.year ? it.year + ' · ' : '') + esc(gubunLabel(it.gubun)) + (it.addr ? ' · ' + esc(it.addr) : '') + '</div></div>';
       }).join('') + (A.items.length ? '' : '<div class="panel__empty">' + esc(tf(UI.emptyProjects)) + '</div>') + '</div>' +

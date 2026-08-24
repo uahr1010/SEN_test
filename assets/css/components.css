@@ -1004,6 +1004,10 @@
 /* 시/군/구 안의 프로젝트 목록 */
 .prow { padding: 10px 20px 10px 26px; border-bottom: 1px solid var(--c-tint); font-size: var(--fs-xs); line-height: 1.5; }
 .prow__nm { font-weight: 600; color: var(--c-ink); }
+/* 관리자가 지정한 몇몇 프로젝트명 끝에 붙는 작은 로고(projectmap.js의
+   LOGO_NAMES 참고) — 글자 옆에 자연스럽게 놓이도록 살짝 띄우고
+   기준선을 글자 중앙에 맞춥니다. */
+.prow__logo { width: 14px; height: 14px; margin-left: 5px; vertical-align: -2px; }
 .prow__kd { color: var(--c-muted); font-size: .75rem; margin-top: 2px; }
 .pmap-chip {
   display: inline-block; font-size: .625rem; font-weight: 700; letter-spacing: .08em;
