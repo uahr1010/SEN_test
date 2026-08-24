@@ -1108,8 +1108,8 @@
      .sct-stat__label은 순위 라벨과 "센코어테크의 임직원 수" 라벨이
      같은 클래스라 여기서 크기를 맞추면 둘 다 함께 맞춰집니다. */
   .sct-stat { padding: 16px; }
-  .sct-stat__label { font-size: 10px; }
-  .sct-stat__sublabel { font-size: 9px; }
+  .sct-stat__label { font-size: 11px; }
+  .sct-stat__sublabel { font-size: 10px; }
   .sct-rank-break { display: block; }
 }
 
