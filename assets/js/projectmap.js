@@ -102,6 +102,18 @@ window.SEN = window.SEN || {};
     '하이닉스 M16 FAB/CUB': 1,
     '하이닉스 용인 CLUSTER 지원시설신축공사': 1
   };
+  /* LOGO_NAMES에 걸린 프로젝트명 뒤에 로고를 붙일 때, 이름이 길어 여러
+     줄로 줄바꿈되면 로고 이미지만 그 다음 줄에 혼자 뚝 떨어져 보였습니다
+     — 로고를 마지막 단어와 한 덩어리(white-space:nowrap, .prow__nm-tail)
+     로 묶어서, 줄이 바뀌더라도 항상 마지막 단어와 붙어서만 넘어가게
+     합니다(로고 혼자 남는 일이 없음). */
+  function nameHTML(name, withLogo) {
+    if (!withLogo) return esc(name);
+    var m = /^([\s\S]*\s)?(\S+)$/.exec(name);
+    var head = m[1] || '', tail = m[2] || name;
+    return esc(head) + '<span class="prow__nm-tail">' + esc(tail) +
+      '<img class="prow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14"></span>';
+  }
 
   var MIN_ZOOM = 3.6, MAX_ZOOM = 18, CLUSTER_MAX_ZOOM = 16, CLUSTER_RADIUS = 46;
   /* 원이 나타나는 배율. 자동 병합을 껐으므로(행정구역 기준만 씀) 전국이
@@ -742,8 +754,7 @@ window.SEN = window.SEN || {};
         '<button type="button" data-back-prov>' + esc(regionPart(P.label)) + '</button><span class="panel__sep">›</span><span class="panel__cur">' + esc(nm) + '</span>',
         regionFullName(areaFull), A.n, null) +
       '<div class="panel__body">' + A.items.slice().sort(function (a, b) { return (b.year || 0) - (a.year || 0); }).map(function (it) {
-        return '<div class="prow"><div class="prow__nm">' + esc(it.name || it.addr) +
-          (LOGO_NAMES[it.name] ? '<img class="prow__logo" src="assets/img/project-logo-mark.png" alt="" width="14" height="14">' : '') +
+        return '<div class="prow"><div class="prow__nm">' + nameHTML(it.name || it.addr, !!LOGO_NAMES[it.name]) +
           ((SHOW_PAT && it.method) ? '<span class="pmap-chip' + (it.method === 'TSC' ? ' is-tsc' : '') + '">' + esc(it.method) + '</span>' : '') + '</div>' +
           '<div class="prow__kd">' + (it.year ? it.year + ' · ' : '') + esc(gubunLabel(it.gubun)) + (it.addr ? ' · ' + esc(it.addr) : '') + '</div></div>';
       }).join('') + (A.items.length ? '' : '<div class="panel__empty">' + esc(tf(UI.emptyProjects)) + '</div>') + '</div>' +

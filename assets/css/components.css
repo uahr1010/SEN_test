@@ -1027,7 +1027,14 @@
 /* 관리자가 지정한 몇몇 프로젝트명 끝에 붙는 작은 로고(projectmap.js의
    LOGO_NAMES 참고) — 글자 옆에 자연스럽게 놓이도록 살짝 띄우고
    기준선을 글자 중앙에 맞춥니다. */
-.prow__logo { width: 14px; height: 14px; margin-left: 5px; vertical-align: -2px; }
+/* 전역 리셋(base.css)이 img를 기본 block으로 바꿔 두어서, 그대로 두면
+   글자 옆이 아니라 무조건 다음 줄에 혼자 떨어져 보입니다 — 여기서만
+   inline-block으로 되돌려 글자와 한 줄에 나란히 놓이게 합니다. */
+.prow__logo { display: inline-block; width: 14px; height: 14px; margin-left: 5px; vertical-align: -2px; }
+/* 이름이 길어 줄바꿈될 때 로고만 다음 줄에 혼자 떨어지지 않도록,
+   마지막 단어 + 로고를 한 덩어리로 묶어 줄바꿈 단위를 통째로 만듭니다
+   (nameHTML() 참고) — 그래도 줄이 바뀌면 이 덩어리째로 다음 줄로. */
+.prow__nm-tail { white-space: nowrap; }
 .prow__kd { color: var(--c-muted); font-size: .75rem; margin-top: 2px; }
 /* 해외 나라 상세, 큰 건수 옆의 "[로고] N건" — 로고와 숫자가 줄바꿈 없이
    항상 가로 한 줄로 나란히 놓이도록 inline-flex로 묶습니다. */
