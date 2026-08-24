@@ -200,7 +200,8 @@ window.SEN = window.SEN || {};
           canvas: kmapStage.querySelector('[data-pmap-canvas]'),
           back: kmapStage.querySelector('[data-pmap-back]'),
           legendMax: document.querySelector('[data-pmap-legend-max]'),
-          side: document.querySelector('[data-pmap-side]')
+          side: document.querySelector('[data-pmap-side]'),
+          gate: kmapStage.querySelector('[data-pmap-gate]')
         });
       }
 

@@ -843,6 +843,20 @@
   .pmap { height: 280px; min-height: 280px; }
 }
 .pmap__canvas { position: absolute; inset: 0; }
+/* 첫 탭 전까지 지도 위 모든 터치를 대신 받는 오버레이 — 지도(캔버스)는
+   이 밑에서 아예 터치를 못 받으므로 스크롤이 그대로 통과됩니다. 탭하면
+   is-hidden이 붙어 사라지고, 그 뒤로는 지도가 평소처럼 조작됩니다. */
+.pmap__gate {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.pmap__gate span {
+  padding: 8px 16px; border-radius: 999px;
+  background: rgba(17, 24, 39, .55); backdrop-filter: blur(2px);
+  color: #fff; font-size: var(--fs-small); font-weight: 700;
+}
+.pmap__gate.is-hidden { display: none; }
 .pmap__back {
   position: absolute; left: 12px; top: 12px; z-index: 2;
   display: inline-flex; align-items: center; gap: 7px;

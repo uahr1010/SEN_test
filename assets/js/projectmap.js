@@ -756,7 +756,7 @@ window.SEN = window.SEN || {};
   }
 
   /* ---------- 진입점 ----------
-     els: { wrap, canvas, back, legendMax, side } */
+     els: { wrap, canvas, back, legendMax, side, gate } */
   function init(els) {
     if (started) return;   // 언어 전환 등으로 다시 불려도 중복 초기화 안 함
     if (!window.maplibregl) { if (els.wrap) els.wrap.classList.add('is-unavailable'); return; }
@@ -853,19 +853,23 @@ window.SEN = window.SEN || {};
       map = new window.maplibregl.Map({
         container: els.canvas, style: styleSpec(),
         center: [129.5, 37.5], zoom: 5.2,
-        minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true,
-        /* 모바일에서 손가락 한 개로 페이지를 스크롤하려다 지도가 먼저
-           반응해 버리는 문제 — 두 손가락으로만 지도를 조작하게 하고,
-           한 손가락 터치는 그대로 페이지 스크롤로 넘어가게 합니다. */
-        cooperativeGestures: true,
-        locale: {
-          'CooperativeGesturesHandler.MobileHelpText': '두 손가락으로 지도를 움직일 수 있어요',
-          'CooperativeGesturesHandler.WindowsHelpText': 'Ctrl + 스크롤로 지도를 확대/축소할 수 있어요',
-          'CooperativeGesturesHandler.MacHelpText': '⌘ + 스크롤로 지도를 확대/축소할 수 있어요'
-        }
+        minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM, attributionControl: true
       });
       map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.on('load', function () { build(cnt, cntPat, exactFC, areaFC, regionFC); });
+
+      /* 스크롤하다 지도 위를 스쳐 지나가면 지도가 그 터치를 가로채(팬/줌)
+         페이지가 안 내려가는 문제 — 처음 한 번은 지도 위에 안내 오버레이를
+         씌워 두어 모든 터치가 오버레이에서 끝나게 하고(그 아래 지도는
+         손대지 못하니 스크롤이 그대로 통과됩니다), 탭(click — 스크롤처럼
+         이동이 있었던 터치에는 브라우저가 click을 발생시키지 않으므로
+         "탭"과 "스크롤"이 자동으로 구분됩니다)하면 오버레이를 치우고
+         그 뒤로는 평소처럼 한 손가락으로 자유롭게 조작합니다. */
+      if (els.gate) {
+        els.gate.addEventListener('click', function () {
+          els.gate.classList.add('is-hidden');
+        }, { once: true });
+      }
 
       /* MapLibre는 창(window) 크기 변화만 자동으로 따라갑니다. 이 칸의
          높이(.pmap)는 제목·리드문 줄바꿈, 웹폰트 로딩, 헤더가 나타나는
