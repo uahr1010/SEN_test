@@ -33,7 +33,8 @@ window.SEN = window.SEN || {};
     foldOpen: { ko: '국가별 실적 펼치기', en: 'Show results by country', zh: '展开各国实绩', ja: '国別実績を開く' },
     foldClose: { ko: '국가별 실적 접기', en: 'Hide results by country', zh: '收起各国实绩', ja: '国別実績を閉じる' },
     backToAll: { ko: '← 국가 전체', en: '← All countries', zh: '← 全部国家', ja: '← 国全体' },
-    countryFoot: { ko: '연도별 구조설계·안전진단 건수', en: 'Structural design and safety diagnosis counts by year', zh: '按年度显示结构设计与安全诊断件数', ja: '年度別の構造設計・安全診断件数' }
+    countryFoot: { ko: '연도별 구조설계·안전진단 건수', en: 'Structural design and safety diagnosis counts by year', zh: '按年度显示结构设计与安全诊断件数', ja: '年度別の構造設計・安全診断件数' },
+    patNote:     { ko: '이 로고는 특허공법(TSC·PSRC)이 적용된 프로젝트임을 나타냅니다', en: 'This logo marks a project built with a patented method (TSC/PSRC)', zh: '此徽标表示采用了专利工法（TSC・PSRC）的项目', ja: 'このロゴは特許工法（TSC・PSRC）が適用されたプロジェクトを示します' }
   };
   function tf(dict, vars) {
     var s = SEN.i18n.t(dict);
@@ -167,7 +168,9 @@ window.SEN = window.SEN || {};
           '<span class="arow__ct"><b>' + fmt(yTotal) + '</b>' + esc(SEN.i18n.t(UNIT_LABEL)) + '</span>' +
           '<span class="arow__detail">' + detail + '</span></div>';
       }).join('') + '</div>' +
-      '<div class="panel__foot">' + esc(tf(UI.countryFoot)) + '</div></div>';
+      '<div class="panel__foot">' + esc(tf(UI.countryFoot)) +
+      '<div class="panel__foot-note"><img src="assets/img/project-logo-mark.png" alt="" width="12" height="12">' + esc(tf(UI.patNote)) + '</div>' +
+      '</div></div>';
     var panel = elSide.querySelector('.panel');
     panel.querySelector('[data-back-rank]').addEventListener('click', renderCards);
     if (!skipFocus) {

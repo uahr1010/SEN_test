@@ -165,7 +165,8 @@ window.SEN = window.SEN || {};
     districtCount: { ko: '시군구 {n}곳', en: '{n} districts', zh: '{n}个市区县', ja: '{n}市区町村' },
     provFoot:      { ko: '시군구를 누르면 프로젝트 목록이 열립니다', en: 'Click a district to open its project list', zh: '点击市区县可展开项目列表', ja: '市区町村をクリックするとプロジェクト一覧が開きます' },
     emptyProjects: { ko: '표시할 프로젝트가 없습니다', en: 'No projects to display', zh: '暂无可显示的项目', ja: '表示できるプロジェクトがありません' },
-    areaFoot:      { ko: '{n}건 · 담당자 등 내부 정보는 표시하지 않습니다', en: '{n} projects · Internal details such as staff names are not shown', zh: '{n}件 · 不显示负责人等内部信息', ja: '{n}件 · 担当者等の内部情報は表示しません' }
+    areaFoot:      { ko: '{n}건 · 담당자 등 내부 정보는 표시하지 않습니다', en: '{n} projects · Internal details such as staff names are not shown', zh: '{n}件 · 不显示负责人等内部信息', ja: '{n}件 · 担当者等の内部情報は表示しません' },
+    patNote:       { ko: '이 로고는 특허공법(TSC·PSRC)이 적용된 프로젝트임을 나타냅니다', en: 'This logo marks a project built with a patented method (TSC/PSRC)', zh: '此徽标表示采用了专利工法（TSC・PSRC）的项目', ja: 'このロゴは特許工法（TSC・PSRC）が適用されたプロジェクトを示します' }
   };
   function tf(dict, vars) {
     var s = SEN.i18n.t(dict);
@@ -758,7 +759,9 @@ window.SEN = window.SEN || {};
           ((SHOW_PAT && it.method) ? '<span class="pmap-chip' + (it.method === 'TSC' ? ' is-tsc' : '') + '">' + esc(it.method) + '</span>' : '') + '</div>' +
           '<div class="prow__kd">' + (it.year ? it.year + ' · ' : '') + esc(gubunLabel(it.gubun)) + (it.addr ? ' · ' + esc(it.addr) : '') + '</div></div>';
       }).join('') + (A.items.length ? '' : '<div class="panel__empty">' + esc(tf(UI.emptyProjects)) + '</div>') + '</div>' +
-      '<div class="panel__foot">' + esc(tf(UI.areaFoot, { n: fmt(A.items.length) })) + '</div></div>';
+      '<div class="panel__foot">' + esc(tf(UI.areaFoot, { n: fmt(A.items.length) })) +
+      '<div class="panel__foot-note"><img src="assets/img/project-logo-mark.png" alt="" width="12" height="12">' + esc(tf(UI.patNote)) + '</div>' +
+      '</div></div>';
     var panel = elSide.querySelector('.panel');
     panel.querySelector('[data-back-rank]').addEventListener('click', function () { renderCards(); map.fitBounds(HOME_BOUNDS, { padding: 24, duration: 700 }); });
     panel.querySelector('[data-back-prov]').addEventListener('click', function () { openProv(key); flyToProv(key); });

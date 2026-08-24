@@ -943,6 +943,14 @@
   padding: 10px 20px; border-top: 1px solid var(--c-line);
   font-size: var(--fs-xs); color: var(--c-muted);
 }
+/* 목록 맨 아래, 로고 아이콘이 뜻하는 바를 설명하는 작은 줄(국내
+   시/군/구 목록·해외 나라 상세 둘 다 씁니다) — 위 문구보다 한 단
+   더 작고 옅게 둡니다. */
+.panel__foot-note {
+  display: flex; align-items: flex-start; gap: 5px;
+  margin-top: 4px; font-size: 11px; color: var(--c-muted); line-height: 1.4;
+}
+.panel__foot-note img { width: 12px; height: 12px; flex: 0 0 auto; margin-top: 1px; }
 
 /* 시/도 카드 그리드 — 클래스명이 .cards/.card 이면 뉴스 카드(.cards--news
    .card, components.css 위쪽 342행 부근)와 이름이 겹쳐 스타일이 서로
