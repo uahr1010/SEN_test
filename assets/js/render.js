@@ -505,7 +505,19 @@ window.SEN = window.SEN || {};
     if (rankLabelHost) {
       var rk = pick(ctx, 'sencoretech.rank') || {};
       var rankLabel = t(rk.label).replace('{year}', t(rk.year));
-      if (rankLabel) rankLabelHost.textContent = rankLabel;
+      if (rankLabel) {
+        /* 모바일(카드가 좁아지는 화면)에서 "2026년 기준 강구조시공능력
+           순위"가 단어 중간에서 부자연스럽게 잘렸습니다 — 한국어일 때만
+           "기준" 뒤에 줄바꿈을 넣어 "2026년 기준 / 강구조시공능력 순위"
+           두 줄로 깔끔하게 떨어지게 합니다(<br>은 CSS에서 480px 이하
+           에서만 보이도록 감춰 뒀다 켬 — .sct-rank-break 참고). 다른
+           언어는 문장 구조가 달라 그대로 둡니다. */
+        if (SEN.i18n.get() === 'ko') {
+          rankLabelHost.innerHTML = esc(rankLabel).replace('기준 ', '기준<br class="sct-rank-break">');
+        } else {
+          rankLabelHost.textContent = rankLabel;
+        }
+      }
     }
 
     /* 순위 앞에 붙는 말 — 중국어는 "第4名"처럼 서수를 숫자 앞에 씁니다

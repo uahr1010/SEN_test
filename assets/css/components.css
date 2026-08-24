@@ -1093,9 +1093,24 @@
 .sct-stat__prefix { font-size: 1.5rem; font-weight: 700; color: var(--c-muted); }
 .sct-stat__prefix:not(:empty) { margin-right: 2px; }
 .sct-stat__label { font-size: var(--fs-small); color: var(--c-ink); font-weight: 600; }
+/* 480px 이하에서만 켜지는 강제 줄바꿈(render.js가 한국어일 때만
+   "기준" 뒤에 심어 둡니다) — 데스크톱 등 카드가 넓을 때는 굳이
+   끊을 필요가 없어 기본은 숨겨 둡니다. */
+.sct-rank-break { display: none; }
 .sct-stat__sublabel { font-size: var(--fs-xs); color: var(--c-muted); }
 @media (max-width: 480px) {
   .sct-stat__value { font-size: 2.5rem; }
+  /* 좁은 화면에서는 두 카드가 나란히(row) 배치되어 칸이 매우 좁아져,
+     "2026년 기준 강구조시공능력 순위"·"OO 소속 000명" 같은 문구가
+     단어 중간에서 부자연스럽게 여러 줄로 잘렸습니다 — 글자를 줄이고
+     (2026년 기준 / 강구조시공능력 순위, 소속 / 명이 한 줄씩 깨끗하게
+     떨어지도록) 카드 안쪽 여백도 함께 줄여 문구가 앉을 자리를 넓힙니다.
+     .sct-stat__label은 순위 라벨과 "센코어테크의 임직원 수" 라벨이
+     같은 클래스라 여기서 크기를 맞추면 둘 다 함께 맞춰집니다. */
+  .sct-stat { padding: 16px; }
+  .sct-stat__label { font-size: 10px; }
+  .sct-stat__sublabel { font-size: 9px; }
+  .sct-rank-break { display: block; }
 }
 
 /* 오른쪽 — 기준연도 매출액 + 곡선 그래프 카드 */
