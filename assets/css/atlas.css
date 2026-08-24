@@ -268,10 +268,11 @@ body {
   gap: .85rem; text-align: center;
 }
 .ltf__text {
-  font-size: calc(1.5rem + 10pt); font-weight: 700; letter-spacing: -.025em;
+  font-size: calc(1.5rem + 15pt); font-weight: 700; letter-spacing: -.025em;
   color: var(--ink); white-space: nowrap;
   filter: drop-shadow(0 4px 3px rgba(0,0,0,.07));
 }
+.ltf__accent { color: var(--blue); }
 .ltf__box {
   position: relative; overflow: hidden;
   display: inline-block; vertical-align: middle; flex-shrink: 0;
@@ -287,13 +288,13 @@ body {
   border-radius: 6px;
   background: #fff; color: var(--blue);
   padding: .4rem .85rem;
-  font-size: calc(1rem + 4pt); font-weight: 700; letter-spacing: -.025em;
+  font-size: calc(1rem + 6pt); font-weight: 700; letter-spacing: -.025em;
   box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 0 0 1px var(--line);
   transition: width .5s cubic-bezier(.22,1,.36,1);
 }
 @media (min-width: 768px) {
-  .ltf__text { font-size: calc(2.25rem + 10pt); }
-  .ltf__box { font-size: calc(1.35rem + 4pt); }
+  .ltf__text { font-size: calc(2.25rem + 15pt); }
+  .ltf__box { font-size: calc(1.35rem + 6pt); }
 }
 /* "SEN STRUCTURAL ENGINEERING CO., LTD."처럼 긴 단어도 절대 줄바꿈하지
    않습니다(nowrap) — 단어가 바뀔 때마다 칸 높이까지 들쭉날쭉 바뀌면
