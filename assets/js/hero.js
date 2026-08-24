@@ -174,13 +174,17 @@ window.SEN = window.SEN || {};
 
   /* ---------- "Welcome to SEN ENGINEERING GROUP" 고정 제목 ----------
      이 문구도 줄바꿈 없이 한 줄로 둡니다. 위 플립 단어와 같은 방식 —
-     칸(.hero) 폭보다 넓으면 그만큼만 글자 크기를 줄입니다. */
+     기준 폭보다 넓으면 그만큼만 글자 크기를 줄입니다.
+     기준 폭은 .hero의 실제 폭(리드문·배지 등과 함께 쓰는 760px 칸)이
+     아니라 이 제목만을 위한 더 넓은 값을 씁니다 — 그래야 .hero 폭을
+     그대로 둔 채 제목만 더 크게 키울 수 있습니다(다른 요소는 영향
+     없음). 사이트의 "넓은 섹션" 기준(.scene__inner의 1180px)보다
+     살짝 좁게 잡아 여유를 둡니다. */
   function fitFixedText() {
     var el = document.querySelector('.ltf__text');
     if (!el) return;
     el.style.fontSize = '';
-    var hero = el.closest('.hero');
-    var avail = (hero || el.parentElement).getBoundingClientRect().width;
+    var avail = Math.min(1120, window.innerWidth * 0.92);
     var w = el.scrollWidth;
     if (avail && w > avail) {
       var baseSize = parseFloat(getComputedStyle(el).fontSize);

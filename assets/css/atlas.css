@@ -268,7 +268,7 @@ body {
   gap: .85rem; text-align: center;
 }
 .ltf__text {
-  font-size: calc(1.5rem + 20pt); font-weight: 700; letter-spacing: -.025em;
+  font-size: calc(1.5rem + 25pt); font-weight: 700; letter-spacing: -.025em;
   color: var(--ink); white-space: nowrap;
   filter: drop-shadow(0 4px 3px rgba(0,0,0,.07));
 }
@@ -293,7 +293,7 @@ body {
   transition: width .5s cubic-bezier(.22,1,.36,1);
 }
 @media (min-width: 768px) {
-  .ltf__text { font-size: calc(2.25rem + 20pt); }
+  .ltf__text { font-size: calc(2.25rem + 25pt); }
   .ltf__box { font-size: calc(1.35rem + 6pt); }
 }
 /* "SEN STRUCTURAL ENGINEERING CO., LTD."처럼 긴 단어도 절대 줄바꿈하지
