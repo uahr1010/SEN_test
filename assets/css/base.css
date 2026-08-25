@@ -109,8 +109,14 @@ body {
   background: var(--c-white);
   overflow-x: hidden;
   overscroll-behavior-y: none;   /* html과 같은 이유 — 브라우저마다 스크롤 주체가 다름 */
-  word-break: keep-all;   /* 한국어 줄바꿈을 어절 단위로 */
 }
+/* 한국어 줄바꿈만 어절 단위로 — 일본어·중국어는 띄어쓰기가 거의 없어
+   keep-all을 그대로 적용하면 문장 하나가 통째로 안 끊기는 한 덩어리가
+   되어(예: 주요공법 카드 요약문) 카드 밖으로 넘쳐 잘려 보였습니다.
+   i18n.js가 언어를 바꿀 때 <html lang="..">을 같이 바꿔 주므로, 한국어
+   일 때만 :lang(ko)로 켭니다 — 영/중/일은 각 언어의 기본 줄바꿈(문자
+   단위) 그대로 둡니다. */
+html:lang(ko) { word-break: keep-all; }
 body.is-locked { overflow: hidden; }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
